@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk Loot Tables Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Corepunk Loot Tables Explorer</h1>
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="table-search" placeholder="Search loot tables...">
+                    <button id="clear-table-search">✕</button>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="item-search" placeholder="Search items...">
+                    <button id="clear-item-search">✕</button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="content">
+                <div class="tables-section">
+                    <h2>Loot Tables</h2>
+                    <div class="tables-list-container">
+                        <ul id="tables-list"></ul>
+                    </div>
+                </div>
+
+                <div class="items-section">
+                    <h2 id="selected-table">Select a loot table</h2>
+                    <div class="items-list-container">
+                        <ul id="items-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Created using data extracted from Corepunk game files.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
