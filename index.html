@@ -69,13 +69,28 @@
                 <div class="items-section">
                     <div class="section-header">
                         <h2 id="selected-table">Select a loot table</h2>
-                        <div class="search-box">
-                            <input type="text" id="item-search" placeholder="Search items in selected table...">
-                            <button id="clear-item-search">✕</button>
-                        </div>
+                    </div>
+                    <div class="search-box item-search-box">
+                        <input type="text" id="item-search" placeholder="Search items in selected table...">
+                        <button id="clear-item-search">✕</button>
                     </div>
                     <div class="items-list-container">
                         <ul id="items-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tables-selection-view" class="content hidden">
+                <div class="tables-section">
+                    <div class="section-header">
+                        <h2>Select Tables for Comparison</h2>
+                    </div>
+                    <div class="search-box table-search-box">
+                        <input type="text" id="compare-table-search" placeholder="Search loot tables...">
+                        <button id="clear-compare-table-search">✕</button>
+                    </div>
+                    <div class="tables-list-container">
+                        <ul id="compare-tables-list"></ul>
                     </div>
                 </div>
             </div>
@@ -84,10 +99,10 @@
                 <div class="tables-section compare-section">
                     <div class="section-header">
                         <h2 id="table1-heading">Table 1</h2>
-                        <div class="search-box">
-                            <input type="text" id="table1-item-search" placeholder="Search items...">
-                            <button id="clear-table1-search">✕</button>
-                        </div>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" id="table1-item-search" placeholder="Search items...">
+                        <button id="clear-table1-search">✕</button>
                     </div>
                     <div class="tables-list-container">
                         <ul id="table1-items"></ul>
@@ -97,10 +112,10 @@
                 <div class="tables-section compare-section">
                     <div class="section-header">
                         <h2 id="table2-heading">Table 2</h2>
-                        <div class="search-box">
-                            <input type="text" id="table2-item-search" placeholder="Search items...">
-                            <button id="clear-table2-search">✕</button>
-                        </div>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" id="table2-item-search" placeholder="Search items...">
+                        <button id="clear-table2-search">✕</button>
                     </div>
                     <div class="tables-list-container">
                         <ul id="table2-items"></ul>

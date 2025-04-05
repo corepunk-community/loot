@@ -60,7 +60,7 @@ header h1 {
     max-width: 600px;
 }
 
-.table-search-box {
+.table-search-box, .item-search-box {
     margin-bottom: 15px;
 }
 
@@ -236,6 +236,11 @@ header h1 {
 .tables-list-container li.active-second {
     background-color: #2ecc71;
     color: white;
+}
+
+/* Make hidden tables truly hidden */
+.tables-list-container li.hidden-table {
+    display: none;
 }
 
 .no-tables-message, .no-items-message {

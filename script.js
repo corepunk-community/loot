@@ -15,6 +15,12 @@ const itemSearchInput = document.getElementById('item-search');
 const clearTableSearchBtn = document.getElementById('clear-table-search');
 const clearItemSearchBtn = document.getElementById('clear-item-search');
 
+// Tables selection for comparison
+const tablesSelectionView = document.getElementById('tables-selection-view');
+const compareTablesList = document.getElementById('compare-tables-list');
+const compareTableSearchInput = document.getElementById('compare-table-search');
+const clearCompareTableSearchBtn = document.getElementById('clear-compare-table-search');
+
 // Comparison elements
 const table1ItemSearch = document.getElementById('table1-item-search');
 const table2ItemSearch = document.getElementById('table2-item-search');
@@ -84,6 +90,8 @@ function applyFilters() {
     // Get all table elements
     const tableItems = document.querySelectorAll('#tables-list li');
     
+    let visibleCount = 0;
+    
     tableItems.forEach(item => {
         const tableName = item.textContent;
         const category = getTableCategory(tableName);
@@ -93,26 +101,66 @@ function applyFilters() {
         // Show/hide based on both filters
         if (matchesCategory && matchesSearch) {
             item.classList.remove('hidden-table');
+            visibleCount++;
         } else {
             item.classList.add('hidden-table');
         }
     });
     
     // Check if no tables are visible and show a message if needed
-    const visibleTables = document.querySelectorAll('#tables-list li:not(.hidden-table)');
-    if (visibleTables.length === 0) {
+    if (visibleCount === 0) {
         let noResultsMsg = document.getElementById('no-results-msg');
         if (!noResultsMsg) {
             noResultsMsg = document.createElement('li');
             noResultsMsg.id = 'no-results-msg';
             noResultsMsg.textContent = 'No matching tables found';
             noResultsMsg.style.cursor = 'default';
-            noResultsMsg.style.backgroundColor = '#f8d7da';
-            noResultsMsg.style.color = '#721c24';
+            noResultsMsg.classList.add('no-tables-message');
             tablesList.appendChild(noResultsMsg);
         }
     } else {
         const noResultsMsg = document.getElementById('no-results-msg');
+        if (noResultsMsg) {
+            noResultsMsg.remove();
+        }
+    }
+}
+
+// Apply filters for comparison table list
+function applyCompareFilters() {
+    const searchTerm = compareTableSearchInput.value.trim().toLowerCase();
+    
+    // Get all table elements
+    const tableItems = document.querySelectorAll('#compare-tables-list li');
+    
+    let visibleCount = 0;
+    
+    tableItems.forEach(item => {
+        const tableName = item.textContent;
+        const matchesSearch = !searchTerm || tableName.toLowerCase().includes(searchTerm);
+        
+        // Show/hide based on search term
+        if (matchesSearch) {
+            item.classList.remove('hidden-table');
+            visibleCount++;
+        } else {
+            item.classList.add('hidden-table');
+        }
+    });
+    
+    // Check if no tables are visible and show a message if needed
+    if (visibleCount === 0) {
+        let noResultsMsg = document.getElementById('compare-no-results-msg');
+        if (!noResultsMsg) {
+            noResultsMsg = document.createElement('li');
+            noResultsMsg.id = 'compare-no-results-msg';
+            noResultsMsg.textContent = 'No matching tables found';
+            noResultsMsg.style.cursor = 'default';
+            noResultsMsg.classList.add('no-tables-message');
+            compareTablesList.appendChild(noResultsMsg);
+        }
+    } else {
+        const noResultsMsg = document.getElementById('compare-no-results-msg');
         if (noResultsMsg) {
             noResultsMsg.remove();
         }
@@ -146,21 +194,17 @@ function populateTablesList() {
         }
         
         li.addEventListener('click', () => {
-            // If compare mode is active, handle differently
-            if (compareMode) {
-                handleCompareTableSelection(tableName);
-            } else {
-                // Remove active class from all list items
-                document.querySelectorAll('#tables-list li').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Add active class to clicked item
-                li.classList.add('active');
-                
-                // Display items for this table
-                displayTableItems(tableName);
-            }
+            // Always handle as normal table selection in this view
+            // Remove active class from all list items
+            document.querySelectorAll('#tables-list li').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Add active class to clicked item
+            li.classList.add('active');
+            
+            // Display items for this table
+            displayTableItems(tableName);
         });
         
         tablesList.appendChild(li);
@@ -172,21 +216,51 @@ function populateTablesList() {
     }
 }
 
+// Populate tables list for comparison mode
+function populateCompareTablesList() {
+    compareTablesList.innerHTML = '';
+    
+    // Sort table names alphabetically
+    const sortedTableNames = Object.keys(lootTables).sort();
+    
+    sortedTableNames.forEach(tableName => {
+        const li = document.createElement('li');
+        li.textContent = tableName;
+        li.dataset.table = tableName;
+        
+        // Add class if this is one of the selected tables
+        if (tableName === currentTable) {
+            li.classList.add('active');
+        } else if (tableName === secondTable) {
+            li.classList.add('active-second');
+        }
+        
+        li.addEventListener('click', () => {
+            handleCompareTableSelection(tableName);
+        });
+        
+        compareTablesList.appendChild(li);
+    });
+    
+    // Apply search filter if there's already a term
+    if (compareTableSearchInput.value.trim()) {
+        applyCompareFilters();
+    }
+}
+
 // Handle table selection in compare mode
 function handleCompareTableSelection(tableName) {
     // If no primary table selected yet
     if (!currentTable) {
         currentTable = tableName;
-        // Set the first table and display items
-        table1Name.textContent = currentTable;
-        table1Heading.textContent = currentTable;
         
-        // After selecting first table, hide normal view and show compare view fully
-        normalView.classList.add('hidden');
-        
-        // Update UI for table selection
+        // Update the UI
         updateTableSelectionUI();
-        displayCompareTables();
+        
+        // If we now have both tables, move to compare view
+        if (currentTable && secondTable) {
+            showCompareView();
+        }
         return;
     }
     
@@ -198,15 +272,12 @@ function handleCompareTableSelection(tableName) {
         }
         
         secondTable = tableName;
-        // Update the UI to show both tables are selected
-        comparisonInfo.classList.remove('hidden');
         
-        // Update UI and display comparison
+        // Update the UI
         updateTableSelectionUI();
-        displayCompareTables();
         
-        // Update button text since selection is complete
-        compareToggleBtn.textContent = 'Compare Mode';
+        // Now we have both tables, move to compare view
+        showCompareView();
         return;
     }
     
@@ -218,10 +289,28 @@ function handleCompareTableSelection(tableName) {
     }
 }
 
+// Show the compare view with both tables
+function showCompareView() {
+    // Hide tables selection view
+    tablesSelectionView.classList.add('hidden');
+    
+    // Show compare view
+    compareView.classList.remove('hidden');
+    
+    // Update button text
+    compareToggleBtn.textContent = 'Compare Mode';
+    
+    // Show comparison info
+    comparisonInfo.classList.remove('hidden');
+    
+    // Display the tables comparison
+    displayCompareTables();
+}
+
 // Update the UI to reflect current table selections
 function updateTableSelectionUI() {
-    // Update table list selection highlighting
-    document.querySelectorAll('#tables-list li').forEach(item => {
+    // Update selection list highlighting
+    document.querySelectorAll('#compare-tables-list li').forEach(item => {
         item.classList.remove('active', 'active-second');
         
         const tableName = item.dataset.table;
@@ -241,10 +330,8 @@ function updateTableSelectionUI() {
     if (secondTable) {
         table2Name.textContent = secondTable;
         table2Heading.textContent = secondTable;
-        comparisonInfo.classList.remove('hidden');
     } else {
         table2Heading.textContent = 'Select second table';
-        comparisonInfo.classList.add('hidden');
     }
     
     // Clear comparison search inputs
@@ -284,6 +371,7 @@ function filterItems(items, searchTerm, containerElement) {
     if (itemsFound === 0) {
         const li = document.createElement('li');
         li.textContent = 'No matching items found';
+        li.classList.add('no-items-message');
         containerElement.appendChild(li);
     }
 }
@@ -330,6 +418,7 @@ function displayCompareTables() {
     if (items1.length === 0) {
         const li = document.createElement('li');
         li.textContent = 'No items in this loot table';
+        li.classList.add('no-items-message');
         table1Items.appendChild(li);
     } else {
         // Sort items alphabetically
@@ -357,6 +446,7 @@ function displayCompareTables() {
         if (itemsFound === 0) {
             const li = document.createElement('li');
             li.textContent = 'No matching items found';
+            li.classList.add('no-items-message');
             table1Items.appendChild(li);
         }
     }
@@ -365,10 +455,12 @@ function displayCompareTables() {
     if (!secondTable) {
         const li = document.createElement('li');
         li.textContent = 'Please select a second table for comparison';
+        li.classList.add('no-items-message');
         table2Items.appendChild(li);
     } else if (items2.length === 0) {
         const li = document.createElement('li');
         li.textContent = 'No items in this loot table';
+        li.classList.add('no-items-message');
         table2Items.appendChild(li);
     } else {
         // Sort items alphabetically
@@ -396,6 +488,7 @@ function displayCompareTables() {
         if (itemsFound === 0) {
             const li = document.createElement('li');
             li.textContent = 'No matching items found';
+            li.classList.add('no-items-message');
             table2Items.appendChild(li);
         }
     }
@@ -436,20 +529,21 @@ function performGlobalSearch(searchTerm) {
     // Create result elements
     sortedTableNames.forEach(tableName => {
         const tableResult = document.createElement('div');
-        tableResult.className = 'table-result';
+        tableResult.className = 'result-table';
         
         const tableHeader = document.createElement('div');
-        tableHeader.className = 'table-result-header';
+        tableHeader.className = 'result-table-header';
         tableHeader.textContent = `${tableName} (${matchingTables[tableName].length} items)`;
         
         const itemsList = document.createElement('ul');
-        itemsList.className = 'table-result-items';
+        itemsList.className = 'result-items';
         
         // Sort items alphabetically
         const sortedItems = [...matchingTables[tableName]].sort();
         
         sortedItems.forEach(item => {
             const li = document.createElement('li');
+            li.className = 'result-item';
             
             // Highlight the matching part
             const itemText = item;
@@ -493,25 +587,20 @@ function toggleCompareMode() {
         // Enter compare mode
         compareToggleBtn.textContent = 'Selecting Tables...';
         
-        // Don't hide normal view initially, need to keep tables list visible
-        // normalView.classList.add('hidden');
-        
-        // Set up to show tables for selection
-        document.querySelector('.items-section').classList.add('hidden');
+        // Hide normal view
+        normalView.classList.add('hidden');
         
         // Reset table selections
         currentTable = null;
         secondTable = null;
         
-        // Set up compare view display
-        compareView.classList.remove('hidden');
+        // Set up and show tables selection view
+        populateCompareTablesList();
+        tablesSelectionView.classList.remove('hidden');
+        compareView.classList.add('hidden');
+        
+        // Hide comparison info until tables are selected
         comparisonInfo.classList.add('hidden');
-        
-        // Update selection UI
-        updateTableSelectionUI();
-        
-        // Update heading to guide user
-        selectedTableHeading.textContent = 'Select tables for comparison';
         
         // Hide global search view if active
         globalSearchActive = false;
@@ -527,8 +616,10 @@ function toggleCompareMode() {
 function exitCompareMode() {
     compareMode = false;
     compareToggleBtn.textContent = 'Compare Tables';
+    
+    // Reset and hide compare views
     normalView.classList.remove('hidden');
-    document.querySelector('.items-section').classList.remove('hidden');
+    tablesSelectionView.classList.add('hidden');
     compareView.classList.add('hidden');
     
     // Reset table selections
@@ -550,6 +641,7 @@ function toggleGlobalSearch() {
         // Show global search results
         toggleGlobalSearchBtn.textContent = 'Hide Results';
         normalView.classList.add('hidden');
+        tablesSelectionView.classList.add('hidden');
         compareView.classList.add('hidden');
         globalSearchView.classList.remove('hidden');
         
@@ -608,6 +700,11 @@ function setupSearch() {
         }
     });
     
+    // Compare table search
+    compareTableSearchInput.addEventListener('input', () => {
+        applyCompareFilters();
+    });
+    
     // Clear buttons
     clearTableSearchBtn.addEventListener('click', () => {
         tableSearchInput.value = '';
@@ -619,6 +716,11 @@ function setupSearch() {
         if (currentTable) {
             displayTableItems(currentTable);
         }
+    });
+    
+    clearCompareTableSearchBtn.addEventListener('click', () => {
+        compareTableSearchInput.value = '';
+        applyCompareFilters();
     });
     
     // Comparison view search
