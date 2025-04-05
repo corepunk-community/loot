@@ -10,16 +10,6 @@
     <div class="container">
         <header>
             <h1>Corepunk Loot Tables Explorer</h1>
-            <div class="search-container">
-                <div class="search-box">
-                    <input type="text" id="table-search" placeholder="Search loot tables...">
-                    <button id="clear-table-search">✕</button>
-                </div>
-                <div class="search-box">
-                    <input type="text" id="item-search" placeholder="Search items in selected table...">
-                    <button id="clear-item-search">✕</button>
-                </div>
-            </div>
             <div class="search-container global-search">
                 <div class="search-box">
                     <input type="text" id="global-item-search" placeholder="Search items across all tables...">
@@ -43,14 +33,43 @@
 
             <div id="normal-view" class="content">
                 <div class="tables-section">
-                    <h2>Loot Tables</h2>
+                    <div class="section-header">
+                        <h2>Loot Tables</h2>
+                        <div class="search-box">
+                            <input type="text" id="table-search" placeholder="Search loot tables...">
+                            <button id="clear-table-search">✕</button>
+                        </div>
+                    </div>
+
+                    <div class="category-filters">
+                        <h3>Filter by Category:</h3>
+                        <div class="filter-buttons">
+                            <button class="filter-btn" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="camp chest">Camp Chest</button>
+                            <button class="filter-btn" data-filter="creeps">Animals</button>
+                            <button class="filter-btn" data-filter="destroyable">Destroyable</button>
+                            <button class="filter-btn" data-filter="dungeon boss">Dungeon Boss</button>
+                            <button class="filter-btn" data-filter="gathering">Gathering</button>
+                            <button class="filter-btn" data-filter="monster">Monster</button>
+                            <button class="filter-btn" data-filter="poi chest">POI Chest</button>
+                            <button class="filter-btn" data-filter="reactive">Reactive</button>
+                            <button class="filter-btn" data-filter="searchable">Searchable</button>
+                        </div>
+                    </div>
+
                     <div class="tables-list-container">
                         <ul id="tables-list"></ul>
                     </div>
                 </div>
 
                 <div class="items-section">
-                    <h2 id="selected-table">Select a loot table</h2>
+                    <div class="section-header">
+                        <h2 id="selected-table">Select a loot table</h2>
+                        <div class="search-box">
+                            <input type="text" id="item-search" placeholder="Search items in selected table...">
+                            <button id="clear-item-search">✕</button>
+                        </div>
+                    </div>
                     <div class="items-list-container">
                         <ul id="items-list"></ul>
                     </div>
@@ -59,14 +78,26 @@
 
             <div id="compare-view" class="content hidden">
                 <div class="tables-section compare-section">
-                    <h2 id="table1-heading">Table 1</h2>
+                    <div class="section-header">
+                        <h2 id="table1-heading">Table 1</h2>
+                        <div class="search-box">
+                            <input type="text" id="table1-item-search" placeholder="Search items...">
+                            <button id="clear-table1-search">✕</button>
+                        </div>
+                    </div>
                     <div class="tables-list-container">
                         <ul id="table1-items"></ul>
                     </div>
                 </div>
 
                 <div class="tables-section compare-section">
-                    <h2 id="table2-heading">Table 2</h2>
+                    <div class="section-header">
+                        <h2 id="table2-heading">Table 2</h2>
+                        <div class="search-box">
+                            <input type="text" id="table2-item-search" placeholder="Search items...">
+                            <button id="clear-table2-search">✕</button>
+                        </div>
+                    </div>
                     <div class="tables-list-container">
                         <ul id="table2-items"></ul>
                     </div>
@@ -84,7 +115,7 @@
         </main>
 
         <footer>
-            <p>Created using data extracted from Corepunk game files.</p>
+            <p>Created with ❤️</p>
         </footer>
     </div>
 

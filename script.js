@@ -4,6 +4,7 @@ let currentTable = null;
 let secondTable = null;
 let compareMode = false;
 let globalSearchActive = false;
+let currentCategoryFilter = "all";
 
 // DOM elements
 const tablesList = document.getElementById('tables-list');
@@ -13,6 +14,12 @@ const tableSearchInput = document.getElementById('table-search');
 const itemSearchInput = document.getElementById('item-search');
 const clearTableSearchBtn = document.getElementById('clear-table-search');
 const clearItemSearchBtn = document.getElementById('clear-item-search');
+
+// Comparison elements
+const table1ItemSearch = document.getElementById('table1-item-search');
+const table2ItemSearch = document.getElementById('table2-item-search');
+const clearTable1SearchBtn = document.getElementById('clear-table1-search');
+const clearTable2SearchBtn = document.getElementById('clear-table2-search');
 
 // Global search elements
 const globalItemSearchInput = document.getElementById('global-item-search');
@@ -35,6 +42,9 @@ const table2Name = document.getElementById('table2-name');
 const table1Items = document.getElementById('table1-items');
 const table2Items = document.getElementById('table2-items');
 
+// Category filter elements
+const filterButtons = document.querySelectorAll('.filter-btn');
+
 // Fetch loot tables data
 async function fetchLootTables() {
     try {
@@ -50,32 +60,89 @@ async function fetchLootTables() {
     }
 }
 
+// Determine category based on table name
+function getTableCategory(tableName) {
+    const lowerName = tableName.toLowerCase();
+    
+    if (lowerName.includes('camp chest')) return 'camp chest';
+    if (lowerName.includes('creeps')) return 'creeps';
+    if (lowerName.includes('destroyable')) return 'destroyable';
+    if (lowerName.includes('dungeon boss')) return 'dungeon boss';
+    if (lowerName.includes('gathering')) return 'gathering';
+    if (lowerName.includes('monster')) return 'monster';
+    if (lowerName.includes('poi chest')) return 'poi chest';
+    if (lowerName.includes('reactive')) return 'reactive';
+    if (lowerName.includes('searchable')) return 'searchable';
+    
+    return 'other';
+}
+
+// Apply category and search filters
+function applyFilters() {
+    const searchTerm = tableSearchInput.value.trim().toLowerCase();
+    
+    // Get all table elements
+    const tableItems = document.querySelectorAll('#tables-list li');
+    
+    tableItems.forEach(item => {
+        const tableName = item.textContent;
+        const category = getTableCategory(tableName);
+        const matchesCategory = currentCategoryFilter === 'all' || category === currentCategoryFilter;
+        const matchesSearch = !searchTerm || tableName.toLowerCase().includes(searchTerm);
+        
+        // Show/hide based on both filters
+        if (matchesCategory && matchesSearch) {
+            item.classList.remove('hidden-table');
+        } else {
+            item.classList.add('hidden-table');
+        }
+    });
+    
+    // Check if no tables are visible and show a message if needed
+    const visibleTables = document.querySelectorAll('#tables-list li:not(.hidden-table)');
+    if (visibleTables.length === 0) {
+        let noResultsMsg = document.getElementById('no-results-msg');
+        if (!noResultsMsg) {
+            noResultsMsg = document.createElement('li');
+            noResultsMsg.id = 'no-results-msg';
+            noResultsMsg.textContent = 'No matching tables found';
+            noResultsMsg.style.cursor = 'default';
+            noResultsMsg.style.backgroundColor = '#f8d7da';
+            noResultsMsg.style.color = '#721c24';
+            tablesList.appendChild(noResultsMsg);
+        }
+    } else {
+        const noResultsMsg = document.getElementById('no-results-msg');
+        if (noResultsMsg) {
+            noResultsMsg.remove();
+        }
+    }
+}
+
 // Populate tables list
-function populateTablesList(searchTerm = '') {
+function populateTablesList() {
     tablesList.innerHTML = '';
     
     // Sort table names alphabetically
     const sortedTableNames = Object.keys(lootTables).sort();
     
-    let tablesFound = 0;
-    
     sortedTableNames.forEach(tableName => {
-        // Filter by search term if provided
-        if (searchTerm && !tableName.toLowerCase().includes(searchTerm.toLowerCase())) {
-            return;
-        }
-        
-        tablesFound++;
-        
         const li = document.createElement('li');
         li.textContent = tableName;
         li.dataset.table = tableName;
+        li.dataset.category = getTableCategory(tableName);
         
         // Add class if this is one of the selected tables
         if (tableName === currentTable) {
             li.classList.add('active');
         } else if (tableName === secondTable) {
             li.classList.add('active-second');
+        }
+        
+        // Apply current filters
+        const category = getTableCategory(tableName);
+        if (currentCategoryFilter !== 'all' && category !== currentCategoryFilter) {
+            li.classList.add('hidden-table');
         }
         
         li.addEventListener('click', () => {
@@ -99,11 +166,9 @@ function populateTablesList(searchTerm = '') {
         tablesList.appendChild(li);
     });
     
-    if (tablesFound === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'No matching tables found';
-        li.style.cursor = 'default';
-        tablesList.appendChild(li);
+    // Apply search filter if there's already a term
+    if (tableSearchInput.value.trim()) {
+        applyFilters();
     }
 }
 
@@ -163,28 +228,31 @@ function updateTableSelectionUI() {
     // Update comparison info section
     if (currentTable) {
         table1Name.textContent = currentTable;
+        table1Heading.textContent = currentTable;
     }
     
     if (secondTable) {
         table2Name.textContent = secondTable;
+        table2Heading.textContent = secondTable;
         comparisonInfo.classList.remove('hidden');
     } else {
+        table2Heading.textContent = 'Select second table';
         comparisonInfo.classList.add('hidden');
     }
+    
+    // Clear comparison search inputs
+    table1ItemSearch.value = '';
+    table2ItemSearch.value = '';
 }
 
-// Display items for a specific table
-function displayTableItems(tableName, searchTerm = '') {
-    currentTable = tableName;
-    selectedTableHeading.textContent = tableName;
-    itemsList.innerHTML = '';
-    
-    const items = lootTables[tableName];
+// Filter items in a list based on search term
+function filterItems(items, searchTerm, containerElement) {
+    containerElement.innerHTML = '';
     
     if (!items || items.length === 0) {
         const li = document.createElement('li');
         li.textContent = 'No items in this loot table';
-        itemsList.appendChild(li);
+        containerElement.appendChild(li);
         return;
     }
     
@@ -203,14 +271,23 @@ function displayTableItems(tableName, searchTerm = '') {
         
         const li = document.createElement('li');
         li.textContent = item;
-        itemsList.appendChild(li);
+        containerElement.appendChild(li);
     });
     
     if (itemsFound === 0) {
         const li = document.createElement('li');
         li.textContent = 'No matching items found';
-        itemsList.appendChild(li);
+        containerElement.appendChild(li);
     }
+}
+
+// Display items for a specific table
+function displayTableItems(tableName, searchTerm = '') {
+    currentTable = tableName;
+    selectedTableHeading.textContent = tableName;
+    
+    const items = lootTables[tableName];
+    filterItems(items, searchTerm, itemsList);
 }
 
 // Display comparison between two tables
@@ -218,10 +295,6 @@ function displayCompareTables() {
     if (!currentTable) {
         return;
     }
-    
-    // Update headings
-    table1Heading.textContent = currentTable;
-    table2Heading.textContent = secondTable || 'Select second table';
     
     // Clear existing items
     table1Items.innerHTML = '';
@@ -242,6 +315,10 @@ function displayCompareTables() {
         ? items2.filter(item => !items1.includes(item))
         : [];
     
+    // Apply search filters
+    const searchTerm1 = table1ItemSearch.value.trim();
+    const searchTerm2 = table2ItemSearch.value.trim();
+    
     // Display items for first table
     if (items1.length === 0) {
         const li = document.createElement('li');
@@ -250,8 +327,15 @@ function displayCompareTables() {
     } else {
         // Sort items alphabetically
         const sortedItems = [...items1].sort();
+        let itemsFound = 0;
         
         sortedItems.forEach(item => {
+            // Apply search filter
+            if (searchTerm1 && !item.toLowerCase().includes(searchTerm1.toLowerCase())) {
+                return;
+            }
+            
+            itemsFound++;
             const li = document.createElement('li');
             li.textContent = item;
             
@@ -262,6 +346,12 @@ function displayCompareTables() {
             
             table1Items.appendChild(li);
         });
+        
+        if (itemsFound === 0) {
+            const li = document.createElement('li');
+            li.textContent = 'No matching items found';
+            table1Items.appendChild(li);
+        }
     }
     
     // Display items for second table if selected
@@ -276,8 +366,15 @@ function displayCompareTables() {
     } else {
         // Sort items alphabetically
         const sortedItems = [...items2].sort();
+        let itemsFound = 0;
         
         sortedItems.forEach(item => {
+            // Apply search filter
+            if (searchTerm2 && !item.toLowerCase().includes(searchTerm2.toLowerCase())) {
+                return;
+            }
+            
+            itemsFound++;
             const li = document.createElement('li');
             li.textContent = item;
             
@@ -288,6 +385,12 @@ function displayCompareTables() {
             
             table2Items.appendChild(li);
         });
+        
+        if (itemsFound === 0) {
+            const li = document.createElement('li');
+            li.textContent = 'No matching items found';
+            table2Items.appendChild(li);
+        }
     }
 }
 
@@ -445,21 +548,46 @@ function toggleGlobalSearch() {
     }
 }
 
-// Search functionality
-function setupSearch() {
-    tableSearchInput.addEventListener('input', () => {
-        populateTablesList(tableSearchInput.value.trim());
+// Setup category filter functionality
+function setupCategoryFilter() {
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            // Set current filter
+            currentCategoryFilter = button.dataset.filter;
+            
+            // Apply filters
+            applyFilters();
+        });
     });
     
+    // Set "All" as active by default
+    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+}
+
+// Search functionality
+function setupSearch() {
+    // Main table search
+    tableSearchInput.addEventListener('input', () => {
+        applyFilters();
+    });
+    
+    // Item search in selected table
     itemSearchInput.addEventListener('input', () => {
         if (currentTable) {
             displayTableItems(currentTable, itemSearchInput.value.trim());
         }
     });
     
+    // Clear buttons
     clearTableSearchBtn.addEventListener('click', () => {
         tableSearchInput.value = '';
-        populateTablesList();
+        applyFilters();
     });
     
     clearItemSearchBtn.addEventListener('click', () => {
@@ -467,6 +595,25 @@ function setupSearch() {
         if (currentTable) {
             displayTableItems(currentTable);
         }
+    });
+    
+    // Comparison view search
+    table1ItemSearch.addEventListener('input', () => {
+        displayCompareTables();
+    });
+    
+    table2ItemSearch.addEventListener('input', () => {
+        displayCompareTables();
+    });
+    
+    clearTable1SearchBtn.addEventListener('click', () => {
+        table1ItemSearch.value = '';
+        displayCompareTables();
+    });
+    
+    clearTable2SearchBtn.addEventListener('click', () => {
+        table2ItemSearch.value = '';
+        displayCompareTables();
     });
     
     // Global search
@@ -521,6 +668,7 @@ function init() {
     fetchLootTables();
     setupSearch();
     setupCompare();
+    setupCategoryFilter();
 }
 
 // Start the application when the page loads
