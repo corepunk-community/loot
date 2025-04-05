@@ -573,10 +573,48 @@ function performGlobalSearch(searchTerm) {
             }
         });
         
+        // Add button to view full table
+        const viewTableBtn = document.createElement('button');
+        viewTableBtn.className = 'view-table-btn';
+        viewTableBtn.textContent = 'View Full Table';
+        viewTableBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent toggling the items list
+            exitGlobalSearchAndViewTable(tableName);
+        });
+        
+        tableHeader.appendChild(viewTableBtn);
         tableResult.appendChild(tableHeader);
         tableResult.appendChild(itemsList);
         globalResults.appendChild(tableResult);
     });
+}
+
+// Exit global search and view a specific table
+function exitGlobalSearchAndViewTable(tableName) {
+    // Exit global search mode
+    globalSearchActive = false;
+    toggleGlobalSearchBtn.textContent = 'Show Results';
+    globalSearchView.classList.add('hidden');
+    
+    // Show normal view
+    normalView.classList.remove('hidden');
+    
+    // Display the table
+    currentTable = tableName;
+    
+    // Update the UI to show the selected table
+    document.querySelectorAll('#tables-list li').forEach(item => {
+        item.classList.remove('active');
+        
+        if (item.dataset.table === tableName) {
+            item.classList.add('active');
+            // Ensure the table is visible by scrolling to it
+            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+    
+    // Display items for this table
+    displayTableItems(tableName);
 }
 
 // Toggle compare mode
