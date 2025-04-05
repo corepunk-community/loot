@@ -16,14 +16,32 @@
                     <button id="clear-table-search">✕</button>
                 </div>
                 <div class="search-box">
-                    <input type="text" id="item-search" placeholder="Search items...">
+                    <input type="text" id="item-search" placeholder="Search items in selected table...">
                     <button id="clear-item-search">✕</button>
                 </div>
+            </div>
+            <div class="search-container global-search">
+                <div class="search-box">
+                    <input type="text" id="global-item-search" placeholder="Search items across all tables...">
+                    <button id="clear-global-search">✕</button>
+                </div>
+                <button id="toggle-global-search" class="action-button">Show Results</button>
             </div>
         </header>
 
         <main>
-            <div class="content">
+            <div id="comparison-controls" class="comparison-controls">
+                <button id="compare-mode-toggle" class="action-button">Compare Tables</button>
+                <div id="comparison-info" class="comparison-info hidden">
+                    <span>Comparing:</span>
+                    <div id="table1-name" class="table-pill">Table 1</div>
+                    <span>with</span>
+                    <div id="table2-name" class="table-pill">Table 2</div>
+                    <button id="exit-compare" class="action-button">Exit Compare</button>
+                </div>
+            </div>
+
+            <div id="normal-view" class="content">
                 <div class="tables-section">
                     <h2>Loot Tables</h2>
                     <div class="tables-list-container">
@@ -35,6 +53,31 @@
                     <h2 id="selected-table">Select a loot table</h2>
                     <div class="items-list-container">
                         <ul id="items-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="compare-view" class="content hidden">
+                <div class="tables-section compare-section">
+                    <h2 id="table1-heading">Table 1</h2>
+                    <div class="tables-list-container">
+                        <ul id="table1-items"></ul>
+                    </div>
+                </div>
+
+                <div class="tables-section compare-section">
+                    <h2 id="table2-heading">Table 2</h2>
+                    <div class="tables-list-container">
+                        <ul id="table2-items"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="global-search-view" class="content hidden">
+                <div class="global-results-section">
+                    <h2>Search Results <span id="search-term-display"></span></h2>
+                    <div class="global-results-container">
+                        <div id="global-results"></div>
                     </div>
                 </div>
             </div>
