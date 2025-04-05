@@ -22,6 +22,9 @@
         <main>
             <div id="comparison-controls" class="comparison-controls">
                 <button id="compare-mode-toggle" class="action-button">Compare Tables</button>
+                <div class="compare-instructions">
+                    Click "Compare Tables" then select two tables from the list to compare
+                </div>
                 <div id="comparison-info" class="comparison-info hidden">
                     <span>Comparing:</span>
                     <div id="table1-name" class="table-pill">Table 1</div>
@@ -35,10 +38,6 @@
                 <div class="tables-section">
                     <div class="section-header">
                         <h2>Loot Tables</h2>
-                        <div class="search-box">
-                            <input type="text" id="table-search" placeholder="Search loot tables...">
-                            <button id="clear-table-search">✕</button>
-                        </div>
                     </div>
 
                     <div class="category-filters">
@@ -55,6 +54,11 @@
                             <button class="filter-btn" data-filter="reactive">Reactive</button>
                             <button class="filter-btn" data-filter="searchable">Searchable</button>
                         </div>
+                    </div>
+
+                    <div class="search-box table-search-box">
+                        <input type="text" id="table-search" placeholder="Search loot tables...">
+                        <button id="clear-table-search">✕</button>
                     </div>
 
                     <div class="tables-list-container">

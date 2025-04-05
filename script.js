@@ -174,41 +174,48 @@ function populateTablesList() {
 
 // Handle table selection in compare mode
 function handleCompareTableSelection(tableName) {
-    // If already selected as primary table, do nothing
-    if (tableName === currentTable) {
-        return;
-    }
-    
-    // If already selected as secondary table, swap
-    if (tableName === secondTable) {
-        const temp = currentTable;
-        currentTable = secondTable;
-        secondTable = temp;
-        displayCompareTables();
-        updateTableSelectionUI();
-        return;
-    }
-    
     // If no primary table selected yet
     if (!currentTable) {
         currentTable = tableName;
-        displayCompareTables();
+        // Set the first table and display items
+        table1Name.textContent = currentTable;
+        table1Heading.textContent = currentTable;
+        
+        // After selecting first table, hide normal view and show compare view fully
+        normalView.classList.add('hidden');
+        
+        // Update UI for table selection
         updateTableSelectionUI();
+        displayCompareTables();
         return;
     }
     
     // If primary table is selected but no secondary
     if (!secondTable) {
+        // Don't allow selecting the same table twice
+        if (tableName === currentTable) {
+            return;
+        }
+        
         secondTable = tableName;
-        displayCompareTables();
+        // Update the UI to show both tables are selected
+        comparisonInfo.classList.remove('hidden');
+        
+        // Update UI and display comparison
         updateTableSelectionUI();
+        displayCompareTables();
+        
+        // Update button text since selection is complete
+        compareToggleBtn.textContent = 'Compare Mode';
         return;
     }
     
-    // If both tables are selected, replace secondary
-    secondTable = tableName;
-    displayCompareTables();
-    updateTableSelectionUI();
+    // If both tables are already selected, allow changing second table
+    if (tableName !== currentTable) {
+        secondTable = tableName;
+        updateTableSelectionUI();
+        displayCompareTables();
+    }
 }
 
 // Update the UI to reflect current table selections
@@ -485,20 +492,31 @@ function toggleCompareMode() {
     if (compareMode) {
         // Enter compare mode
         compareToggleBtn.textContent = 'Selecting Tables...';
-        normalView.classList.add('hidden');
+        
+        // Don't hide normal view initially, need to keep tables list visible
+        // normalView.classList.add('hidden');
+        
+        // Set up to show tables for selection
+        document.querySelector('.items-section').classList.add('hidden');
+        
+        // Reset table selections
+        currentTable = null;
+        secondTable = null;
+        
+        // Set up compare view display
         compareView.classList.remove('hidden');
+        comparisonInfo.classList.add('hidden');
+        
+        // Update selection UI
+        updateTableSelectionUI();
+        
+        // Update heading to guide user
+        selectedTableHeading.textContent = 'Select tables for comparison';
         
         // Hide global search view if active
         globalSearchActive = false;
         globalSearchView.classList.add('hidden');
         toggleGlobalSearchBtn.textContent = 'Show Results';
-        
-        // Reset table selections if needed
-        if (!currentTable) {
-            comparisonInfo.classList.add('hidden');
-        } else {
-            displayCompareTables();
-        }
     } else {
         // Exit compare mode
         exitCompareMode();
@@ -510,12 +528,18 @@ function exitCompareMode() {
     compareMode = false;
     compareToggleBtn.textContent = 'Compare Tables';
     normalView.classList.remove('hidden');
+    document.querySelector('.items-section').classList.remove('hidden');
     compareView.classList.add('hidden');
     
-    // If we had a selected table before, show it again
-    if (currentTable) {
-        displayTableItems(currentTable);
-    }
+    // Reset table selections
+    currentTable = null;
+    secondTable = null;
+    
+    // Reset the selection heading
+    selectedTableHeading.textContent = 'Select a loot table';
+    
+    // Clear the items list
+    itemsList.innerHTML = '';
 }
 
 // Toggle global search view
