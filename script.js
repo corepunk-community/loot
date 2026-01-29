@@ -58,7 +58,12 @@ async function fetchLootTables() {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        lootTables = await response.json();
+        const data = await response.json();
+
+        // Filter out Camp Chest entries (no longer dropping loot)
+        lootTables = Object.fromEntries(
+            Object.entries(data).filter(([key]) => !key.startsWith('Camp Chest'))
+        );
         populateTablesList();
     } catch (error) {
         console.error('Error fetching loot tables:', error);
