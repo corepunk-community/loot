@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk Loot Tables - Patch Diff</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Corepunk Patch Diff</h1>
+            <nav class="site-nav">
+                <a href="index.html">Loot Tables</a>
+                <a href="diff.html" class="active">Patch Diff</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="diff-controls">
+                <div class="version-selector">
+                    <label for="version-old">Old Version:</label>
+                    <select id="version-old"></select>
+                </div>
+                <span class="diff-arrow">&#x2192;</span>
+                <div class="version-selector">
+                    <label for="version-new">New Version:</label>
+                    <select id="version-new"></select>
+                </div>
+                <button id="run-diff" class="action-button">Compare Versions</button>
+            </div>
+
+            <div id="diff-loading" class="hidden">
+                <p>Loading loot tables...</p>
+            </div>
+
+            <div id="diff-summary" class="diff-summary hidden">
+                <div class="summary-stat added">
+                    <span class="stat-count" id="count-added">0</span> Added
+                </div>
+                <div class="summary-stat removed">
+                    <span class="stat-count" id="count-removed">0</span> Removed
+                </div>
+                <div class="summary-stat modified">
+                    <span class="stat-count" id="count-modified">0</span> Modified
+                </div>
+                <div class="summary-stat unchanged">
+                    <span class="stat-count" id="count-unchanged">0</span> Unchanged
+                </div>
+            </div>
+
+            <div id="diff-filter-bar" class="diff-filter-bar hidden">
+                <div class="search-box">
+                    <input type="text" id="diff-search" placeholder="Search tables or items...">
+                    <button id="clear-diff-search">&#x2715;</button>
+                </div>
+                <div class="diff-type-filters">
+                    <button class="filter-btn active" data-diff-filter="all">All Changes</button>
+                    <button class="filter-btn" data-diff-filter="added">Added</button>
+                    <button class="filter-btn" data-diff-filter="removed">Removed</button>
+                    <button class="filter-btn" data-diff-filter="modified">Modified</button>
+                </div>
+            </div>
+
+            <div id="diff-results"></div>
+        </main>
+
+        <footer>
+            <p>Created with &#x2764;&#xFE0F;</p>
+        </footer>
+    </div>
+
+    <script src="diff.js"></script>
+</body>
+</html>

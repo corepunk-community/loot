@@ -54,7 +54,15 @@ const filterButtons = document.querySelectorAll('.filter-btn');
 // Fetch loot tables data
 async function fetchLootTables() {
     try {
-        const response = await fetch('loot_tables.json');
+        // Load version manifest and use the latest version
+        const versionsResponse = await fetch('versions.json');
+        if (!versionsResponse.ok) {
+            throw new Error(`Failed to load versions manifest`);
+        }
+        const versions = await versionsResponse.json();
+        const latestVersion = versions[versions.length - 1];
+
+        const response = await fetch(latestVersion.file);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }

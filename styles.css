@@ -341,6 +341,221 @@ footer {
     font-size: 14px;
 }
 
+/* Site navigation */
+.site-nav {
+    margin-bottom: 5px;
+}
+
+.site-nav a {
+    color: #ecf0f1;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* === Patch Diff Page === */
+
+.diff-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    background-color: white;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.version-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.version-selector label {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.version-selector select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.diff-arrow {
+    font-size: 1.5rem;
+    color: #666;
+}
+
+/* Summary bar */
+.diff-summary {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.summary-stat {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.summary-stat .stat-count {
+    font-size: 1.4rem;
+    margin-right: 5px;
+}
+
+.summary-stat.added {
+    background-color: #e6ffed;
+    color: #22863a;
+    border: 1px solid #a3d9a5;
+}
+
+.summary-stat.removed {
+    background-color: #ffeef0;
+    color: #cb2431;
+    border: 1px solid #f5c6cb;
+}
+
+.summary-stat.modified {
+    background-color: #fff8e1;
+    color: #b08800;
+    border: 1px solid #ffe082;
+}
+
+.summary-stat.unchanged {
+    background-color: #f1f1f1;
+    color: #666;
+    border: 1px solid #ddd;
+}
+
+/* Diff filter bar */
+.diff-filter-bar {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.diff-type-filters {
+    display: flex;
+    gap: 8px;
+}
+
+/* Diff cards */
+.diff-card {
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-left: 4px solid #ddd;
+}
+
+.diff-card-added {
+    border-left-color: #22863a;
+}
+
+.diff-card-removed {
+    border-left-color: #cb2431;
+}
+
+.diff-card-modified {
+    border-left-color: #b08800;
+}
+
+.diff-card-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: #f6f8fa;
+    gap: 10px;
+}
+
+.diff-card-header:hover {
+    background-color: #eef0f2;
+}
+
+.diff-card-name {
+    font-weight: 600;
+    flex-grow: 1;
+}
+
+.diff-card-stat {
+    font-size: 13px;
+    color: #666;
+    white-space: nowrap;
+}
+
+.diff-card-chevron {
+    transition: transform 0.2s;
+    font-size: 12px;
+    color: #999;
+}
+
+.diff-card-chevron.expanded {
+    transform: rotate(90deg);
+}
+
+.diff-card-body {
+    padding: 0 15px 15px 15px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Individual diff items */
+.diff-item {
+    padding: 4px 8px;
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.diff-item-added {
+    background-color: #e6ffed;
+    color: #22863a;
+}
+
+.diff-item-removed {
+    background-color: #ffeef0;
+    color: #cb2431;
+    text-decoration: line-through;
+}
+
+/* Full table side-by-side view */
+.full-table-view {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #eee;
+}
+
+.full-table-col {
+    flex: 1;
+    min-width: 0;
+}
+
+.full-table-col h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #555;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .content {
