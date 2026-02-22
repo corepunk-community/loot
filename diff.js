@@ -81,7 +81,7 @@ function computeDiff(oldTables, newTables) {
     const modified = [];
     const unchanged = [];
 
-    for (const key of [...allKeys].sort()) {
+    for (const key of [...allKeys].sort().filter(k => !k.startsWith('Camp Chest'))) {
         const inOld = key in oldTables;
         const inNew = key in newTables;
 
@@ -213,7 +213,7 @@ function createDiffCard(name, type, statText) {
     statSpan.textContent = statText;
 
     const chevron = document.createElement('span');
-    chevron.className = 'diff-card-chevron';
+    chevron.className = 'diff-card-chevron expanded';
     chevron.innerHTML = '&#x25B6;';
 
     header.appendChild(nameSpan);
@@ -221,7 +221,7 @@ function createDiffCard(name, type, statText) {
     header.appendChild(chevron);
 
     const body = document.createElement('div');
-    body.className = 'diff-card-body hidden';
+    body.className = 'diff-card-body';
 
     header.addEventListener('click', () => {
         body.classList.toggle('hidden');
