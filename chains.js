@@ -791,8 +791,22 @@ function renderChains() {
     });
 }
 
+function redrawAllEdges() {
+    document.querySelectorAll('.chain-graph').forEach(g => {
+        if (g._edgeData && g.offsetParent !== null) {
+            const d = g._edgeData;
+            drawEdgeLines(g, d.grid, d.edges, d.colMap, d.nameToNode, d.maxDepth, d.totalCols);
+        }
+    });
+}
+
 function init() {
     fetchData();
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(redrawAllEdges, 150);
+    });
 }
 
 window.addEventListener('DOMContentLoaded', init);
