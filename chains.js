@@ -1,5 +1,14 @@
 let chainGroups = [];
 let questRewards = {};
+let apiQuests = {};
+
+function toSlug(name) {
+    return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
+}
+
+function getApiQuest(questName) {
+    return apiQuests[toSlug(questName)] || null;
+}
 
 async function fetchData() {
     try {
@@ -11,14 +20,22 @@ async function fetchData() {
         if (!chainsRes.ok) throw new Error('Failed to load chain data');
         chainGroups = await chainsRes.json();
 
-        // Load latest quest rewards from version manifest
+        // Load latest data from version manifest
         if (versionsRes.ok) {
             const versions = await versionsRes.json();
             const latestVersion = versions[versions.length - 1];
+
             const rewardsFile = latestVersion.quest_rewards_file || 'quest_rewards.json';
-            const rewardsRes = await fetch(rewardsFile);
+            const fetches = [fetch(rewardsFile)];
+            if (latestVersion.api_quests_file) fetches.push(fetch(latestVersion.api_quests_file));
+
+            const [rewardsRes, apiRes] = await Promise.all(fetches);
             if (rewardsRes.ok) {
                 questRewards = await rewardsRes.json();
+            }
+            if (apiRes && apiRes.ok) {
+                const apiData = await apiRes.json();
+                apiData.forEach(q => { apiQuests[q.slug] = q; });
             }
         }
 
@@ -153,25 +170,41 @@ function renderChains() {
                 node.className = 'chain-node';
 
                 const hasRewards = questRewards.hasOwnProperty(q.name);
+                const api = getApiQuest(q.name);
 
-                // Node title
+                // Node title with level
                 const title = document.createElement('div');
                 title.className = 'chain-node-title';
+
+                if (api && api.level) {
+                    const lvl = document.createElement('span');
+                    lvl.className = 'quest-level-badge';
+                    lvl.textContent = api.level;
+                    title.appendChild(lvl);
+                }
+
                 if (hasRewards) {
                     const link = document.createElement('a');
                     link.href = `quests.html`;
                     link.textContent = q.name;
                     link.className = 'chain-quest-link';
                     link.addEventListener('click', (e) => {
-                        // Store the quest name so the quests page can pick it up
                         sessionStorage.setItem('selectedQuest', q.name);
                     });
                     title.appendChild(link);
                 } else {
-                    title.textContent = q.name;
+                    title.appendChild(document.createTextNode(q.name));
                     title.classList.add('chain-node-dim');
                 }
                 node.appendChild(title);
+
+                // Location
+                if (api && api.location) {
+                    const locDiv = document.createElement('div');
+                    locDiv.className = 'chain-node-meta';
+                    locDiv.innerHTML = `<span class="chain-meta-label">Location:</span> ${api.location}`;
+                    node.appendChild(locDiv);
+                }
 
                 // Connections info
                 if (q.requires && q.requires.length > 0) {

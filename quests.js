@@ -1,6 +1,7 @@
 // Global variables
 let questRewards = {};
 let questChains = {};
+let apiQuests = {};  // slug -> API quest data
 let currentQuest = null;
 let globalSearchActive = false;
 let currentRewardFilter = "all";
@@ -47,10 +48,20 @@ function questMatchesFilter(questName, filter) {
     return items.some(item => getItemType(item) === filter);
 }
 
-// Fetch quest rewards and chain data
+// Convert a quest name to a slug for API matching
+function toSlug(name) {
+    return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
+}
+
+// Look up API data for a quest name
+function getApiQuest(questName) {
+    return apiQuests[toSlug(questName)] || null;
+}
+
+// Fetch quest rewards, chain data, and API quest data
 async function fetchQuestRewards() {
     try {
-        // Load version manifest to find latest quest rewards file
+        // Load version manifest to find latest files
         const [versionsResponse, chainsResponse] = await Promise.all([
             fetch('versions.json'),
             fetch('quest_chains.json')
@@ -62,8 +73,13 @@ async function fetchQuestRewards() {
         const versions = await versionsResponse.json();
         const latestVersion = versions[versions.length - 1];
         const rewardsFile = latestVersion.quest_rewards_file || 'quest_rewards.json';
+        const apiQuestsFile = latestVersion.api_quests_file;
 
-        const rewardsResponse = await fetch(rewardsFile);
+        const fetches = [fetch(rewardsFile)];
+        if (apiQuestsFile) fetches.push(fetch(apiQuestsFile));
+
+        const [rewardsResponse, apiResponse] = await Promise.all(fetches);
+
         if (!rewardsResponse.ok) {
             throw new Error(`HTTP error! Status: ${rewardsResponse.status}`);
         }
@@ -73,9 +89,15 @@ async function fetchQuestRewards() {
             questChains = await chainsResponse.json();
         }
 
+        // Build API quest lookup by slug
+        if (apiResponse && apiResponse.ok) {
+            const apiData = await apiResponse.json();
+            apiData.forEach(q => { apiQuests[q.slug] = q; });
+        }
+
         populateTablesList();
 
-        // Check if navigated here from chains page
+        // Check if navigated here from chains page or analysis page
         const selectedQuest = sessionStorage.getItem('selectedQuest');
         if (selectedQuest && questRewards[selectedQuest]) {
             sessionStorage.removeItem('selectedQuest');
@@ -132,16 +154,26 @@ function populateTablesList() {
         const li = document.createElement('li');
         li.dataset.table = questName;
 
-        // Add chain indicator if this quest has chain data
+        const api = getApiQuest(questName);
+
+        // Level badge
+        if (api && api.level) {
+            const lvl = document.createElement('span');
+            lvl.className = 'quest-level-badge';
+            lvl.textContent = api.level;
+            lvl.title = `Level ${api.level}`;
+            li.appendChild(lvl);
+        }
+
+        li.appendChild(document.createTextNode(questName));
+
+        // Chain indicator
         if (questChains[questName]) {
             const chainIcon = document.createElement('span');
             chainIcon.className = 'chain-icon';
             chainIcon.title = 'Part of a quest chain';
             chainIcon.textContent = '\u26D3';
-            li.appendChild(document.createTextNode(questName));
             li.appendChild(chainIcon);
-        } else {
-            li.textContent = questName;
         }
 
         if (questName === currentQuest) {
@@ -240,12 +272,60 @@ function navigateToQuest(questName) {
     }
 }
 
+// Build quest detail HTML from API data
+function buildQuestDetailHTML(questName) {
+    const api = getApiQuest(questName);
+    if (!api) return '';
+
+    let html = '<div class="quest-detail-info">';
+
+    // Level and location row
+    const meta = [];
+    if (api.level) meta.push(`<span class="quest-detail-level">Lv. ${api.level}</span>`);
+    if (api.location) meta.push(`<span class="quest-detail-location">${api.location}</span>`);
+    if (meta.length) html += `<div class="quest-detail-meta">${meta.join('')}</div>`;
+
+    // Quest giver / finisher
+    const giver = api.questGiver?.name;
+    const finisher = api.questFinisher?.name;
+    if (giver || finisher) {
+        html += '<div class="quest-detail-npcs">';
+        if (giver) html += `<span class="quest-detail-npc"><span class="quest-detail-label">Giver:</span> ${giver}</span>`;
+        if (finisher && finisher !== giver) html += `<span class="quest-detail-npc"><span class="quest-detail-label">Finisher:</span> ${finisher}</span>`;
+        html += '</div>';
+    }
+
+    // Goals
+    if (api.goals && api.goals.length > 0) {
+        html += '<div class="quest-detail-goals"><span class="quest-detail-label">Goals:</span><ul>';
+        api.goals.forEach(g => {
+            const qty = g.quantity > 1 ? ` (${g.quantity})` : '';
+            html += `<li>${g.description}${qty}</li>`;
+        });
+        html += '</ul></div>';
+    }
+
+    html += '</div>';
+    return html;
+}
+
 // Display items for a specific quest
 function displayQuestItems(questName, searchTerm = '') {
     currentQuest = questName;
     selectedTableHeading.textContent = questName;
 
     const items = questRewards[questName] || [];
+
+    // Show quest detail info from API
+    const detailContainer = document.getElementById('quest-detail');
+    const detailHTML = buildQuestDetailHTML(questName);
+    if (detailHTML) {
+        detailContainer.innerHTML = detailHTML;
+        detailContainer.classList.remove('hidden');
+    } else {
+        detailContainer.innerHTML = '';
+        detailContainer.classList.add('hidden');
+    }
 
     // Show quest chain info
     const chainContainer = document.getElementById('quest-chain');

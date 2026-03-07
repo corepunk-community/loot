@@ -1,4 +1,13 @@
 let questRewards = {};
+let apiQuests = {};
+
+function toSlug(name) {
+    return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
+}
+
+function getApiQuest(questName) {
+    return apiQuests[toSlug(questName)] || null;
+}
 
 function getItemType(itemName) {
     const lower = itemName.toLowerCase();
@@ -20,9 +29,17 @@ async function init() {
         const latest = versions[versions.length - 1];
         const rewardsFile = latest.quest_rewards_file || 'quest_rewards.json';
 
-        const rewardsRes = await fetch(rewardsFile);
+        const fetches = [fetch(rewardsFile)];
+        if (latest.api_quests_file) fetches.push(fetch(latest.api_quests_file));
+
+        const [rewardsRes, apiRes] = await Promise.all(fetches);
         if (!rewardsRes.ok) throw new Error('Failed to load quest rewards');
         questRewards = await rewardsRes.json();
+
+        if (apiRes && apiRes.ok) {
+            const apiData = await apiRes.json();
+            apiData.forEach(q => { apiQuests[q.slug] = q; });
+        }
 
         renderStats();
         renderQuestLists();
@@ -158,6 +175,16 @@ function renderQuestLists() {
             results.forEach(({ quest, items }) => {
                 const row = document.createElement('div');
                 row.className = 'analysis-quest-row';
+
+                const api = getApiQuest(quest);
+
+                // Level badge
+                if (api && api.level) {
+                    const lvl = document.createElement('span');
+                    lvl.className = 'quest-level-badge';
+                    lvl.textContent = api.level;
+                    row.appendChild(lvl);
+                }
 
                 const link = document.createElement('a');
                 link.className = 'analysis-quest-link';
