@@ -1286,6 +1286,7 @@ footer {
     padding: 20px;
 }
 
+/* Linear chain layout */
 .chain-timeline {
     display: flex;
     flex-direction: column;
@@ -1317,15 +1318,61 @@ footer {
     flex: 1;
 }
 
+/* Grid-based forked chain layout */
+.chain-graph {
+    position: relative;
+    overflow-x: auto;
+}
+
+.chain-grid {
+    display: grid;
+    gap: 0;
+    align-items: start;
+    min-width: fit-content;
+}
+
+.chain-grid-label {
+    min-width: 60px;
+    padding: 10px 8px 10px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #999;
+    text-align: right;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    align-self: start;
+}
+
+.chain-grid-cell {
+    padding: 4px 6px;
+    min-width: 180px;
+}
+
+.chain-grid-connector-label {
+    min-width: 60px;
+    height: 24px;
+}
+
+.chain-grid-connector {
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+}
+
+.chain-grid-arrow {
+    color: #888;
+    font-size: 12px;
+}
+
 .chain-node {
     background-color: #f6f8fa;
     border: 1px solid #d1d5da;
     border-left: 4px solid #3498db;
     border-radius: 6px;
     padding: 10px 14px;
-    min-width: 200px;
-    max-width: 360px;
-    flex: 1 1 200px;
+    min-width: 170px;
 }
 
 .chain-node-title {
@@ -1424,6 +1471,14 @@ footer {
     .chain-node {
         max-width: 100%;
     }
+
+    .chain-grid {
+        overflow-x: auto;
+    }
+
+    .chain-grid-cell {
+        min-width: 150px;
+    }
 }
 
 /* Quest detail modal */
@@ -1501,6 +1556,29 @@ footer {
 }
 .quest-modal-body .quest-detail-location {
     color: #aaa;
+}
+.quest-modal-note {
+    background-color: #fff8e1;
+    border: 1px solid #ffe082;
+    border-left: 4px solid #3498db;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+}
+.quest-modal-note .quest-detail-label {
+    color: #2c3e50;
+}
+.quest-modal-body .quest-modal-note {
+    background-color: #2a2a3a;
+    border-color: #4a4a5a;
+    border-left-color: #3498db;
+    color: #ccc;
+}
+.quest-modal-body .quest-modal-note .quest-detail-label {
+    color: #e0e0e0;
 }
 .quest-modal-body .quest-unverified-notice {
     background-color: #2a2a3a;

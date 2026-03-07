@@ -126,11 +126,17 @@ const QuestModal = (() => {
             html += '</ul></div>';
         }
 
-        // Unverified notice
+        // Notes
+        const note = data.questNotes[questName]?.note;
+        if (note) {
+            html += `<div class="quest-modal-note"><span class="quest-detail-label">Notes:</span> ${note}</div>`;
+        }
+
+        // Unverified notice / external link
         if (!api) {
-            const note = data.questNotes[questName]?.note;
-            const noticeText = note || 'Not listed on corepunk.help \u2014 data from game files only.';
-            html += `<div class="quest-unverified-notice">${noticeText}</div>`;
+            if (!note) {
+                html += `<div class="quest-unverified-notice">Not listed on corepunk.help \u2014 data from game files only.</div>`;
+            }
         } else {
             html += `<div class="quest-modal-ext-link"><a href="https://corepunk.help/quests/${api.slug}" target="_blank" rel="noopener" class="npc-map-link">View on corepunk.help &#8599;</a></div>`;
         }

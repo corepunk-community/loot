@@ -283,9 +283,8 @@ function renderSummary() {
     `;
 }
 
-// Build a depth map using topological sort (longest path)
+// Build a depth map using topological sort (longest path from roots)
 function buildDepthMap(chain) {
-    const depthMap = {};
     const nameToNode = {};
     const inDegree = {};
 
@@ -295,13 +294,12 @@ function buildDepthMap(chain) {
     });
 
     chain.forEach(q => {
-        let count = 0;
-        if (q.requires) {
-            q.requires.forEach(req => { if (nameToNode[req]) count++; });
-        }
-        inDegree[q.name] = count;
+        (q.requires || []).forEach(req => {
+            if (nameToNode[req]) inDegree[q.name]++;
+        });
     });
 
+    const depthMap = {};
     const queue = [];
     chain.forEach(q => {
         if (inDegree[q.name] === 0) {
@@ -313,32 +311,327 @@ function buildDepthMap(chain) {
     while (queue.length > 0) {
         const current = queue.shift();
         const node = nameToNode[current];
-        if (!node || !node.unlocks) continue;
-
-        node.unlocks.forEach(next => {
+        if (!node) continue;
+        (node.unlocks || []).forEach(next => {
             if (!nameToNode[next]) return;
-            const newDepth = depthMap[current] + 1;
-            if (depthMap[next] === undefined || depthMap[next] < newDepth) {
-                depthMap[next] = newDepth;
-            }
+            const d = depthMap[current] + 1;
+            if (depthMap[next] === undefined || depthMap[next] < d) depthMap[next] = d;
             inDegree[next]--;
-            if (inDegree[next] === 0) {
-                queue.push(next);
-            }
+            if (inDegree[next] === 0) queue.push(next);
         });
     }
 
+    // Handle any remaining (cycles) — assign depth 0
+    chain.forEach(q => { if (depthMap[q.name] === undefined) depthMap[q.name] = 0; });
     return depthMap;
 }
 
-function groupByDepth(chain, depthMap) {
-    const groups = {};
+// Build edges: parent name -> [child names] (within chain)
+function buildEdges(chain) {
+    const nameSet = new Set(chain.map(q => q.name));
+    const edges = {};
     chain.forEach(q => {
-        const depth = depthMap[q.name] !== undefined ? depthMap[q.name] : 0;
-        if (!groups[depth]) groups[depth] = [];
-        groups[depth].push(q);
+        const children = (q.unlocks || []).filter(n => nameSet.has(n));
+        if (children.length > 0) edges[q.name] = children;
     });
-    return groups;
+    return edges;
+}
+
+// Create a quest node DOM element
+function createQuestNode(q) {
+    const node = document.createElement('div');
+    node.className = 'chain-node';
+
+    const hasRewards = q.hasRewards !== undefined ? q.hasRewards : questRewards.hasOwnProperty(q.name);
+    const api = apiQuests[q.slug] || getApiQuest(q.name);
+
+    const title = document.createElement('div');
+    title.className = 'chain-node-title';
+
+    if (api && api.level) {
+        const lvl = document.createElement('span');
+        lvl.className = 'quest-level-badge';
+        lvl.textContent = api.level;
+        title.appendChild(lvl);
+    }
+
+    const link = document.createElement('a');
+    link.href = '#';
+    link.textContent = q.name;
+    link.className = 'chain-quest-link';
+    if (!hasRewards) link.classList.add('chain-quest-link-dim');
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        QuestModal.show(q.name, q.slug);
+    });
+    title.appendChild(link);
+    node.appendChild(title);
+
+    if (api && api.location) {
+        const locDiv = document.createElement('div');
+        locDiv.className = 'chain-node-meta';
+        locDiv.innerHTML = `<span class="chain-meta-label">Location:</span> ${api.location}`;
+        node.appendChild(locDiv);
+    }
+
+    return node;
+}
+
+// Render a chain as a graph with fork/merge visualization
+function renderChainGraph(chain) {
+    const depthMap = buildDepthMap(chain);
+    const edges = buildEdges(chain);
+    const nameToNode = {};
+    chain.forEach(q => { nameToNode[q.name] = q; });
+
+    const maxDepth = Math.max(...Object.values(depthMap));
+
+    // Group quests by depth
+    const byDepth = {};
+    chain.forEach(q => {
+        const d = depthMap[q.name];
+        if (!byDepth[d]) byDepth[d] = [];
+        byDepth[d].push(q);
+    });
+
+    // Determine if this is a simple linear chain (no forks)
+    const isLinear = chain.every(q => (q.unlocks || []).filter(n => nameToNode[n]).length <= 1)
+        && chain.every(q => (q.requires || []).filter(n => nameToNode[n]).length <= 1);
+
+    if (isLinear) {
+        return renderLinearChain(chain, byDepth, maxDepth);
+    }
+
+    // Complex chain with forks — use grid layout with connectors
+    return renderForkedChain(chain, byDepth, maxDepth, edges, depthMap, nameToNode);
+}
+
+// Simple linear chain — just a vertical sequence
+function renderLinearChain(chain, byDepth, maxDepth) {
+    const container = document.createElement('div');
+    container.className = 'chain-timeline';
+
+    for (let d = 0; d <= maxDepth; d++) {
+        const quests = byDepth[d] || [];
+        if (quests.length === 0) continue;
+
+        const step = document.createElement('div');
+        step.className = 'chain-step';
+
+        const label = document.createElement('div');
+        label.className = 'chain-step-label';
+        label.textContent = d === 0 ? 'Start' : `Step ${d}`;
+        step.appendChild(label);
+
+        const nodesRow = document.createElement('div');
+        nodesRow.className = 'chain-step-nodes';
+        quests.forEach(q => nodesRow.appendChild(createQuestNode(q)));
+        step.appendChild(nodesRow);
+        container.appendChild(step);
+
+        if (d < maxDepth) {
+            const conn = document.createElement('div');
+            conn.className = 'chain-connector';
+            conn.innerHTML = '&#9660;';
+            container.appendChild(conn);
+        }
+    }
+    return container;
+}
+
+// Forked chain — assign columns to each branch, draw SVG connectors
+function renderForkedChain(chain, byDepth, maxDepth, edges, depthMap, nameToNode) {
+    const container = document.createElement('div');
+    container.className = 'chain-graph';
+
+    // Assign each quest a column. Walk depth-first from roots, spreading forks into columns.
+    const colMap = {}; // quest name -> column index
+    let nextCol = 0;
+
+    // Sort roots for deterministic ordering
+    const roots = (byDepth[0] || []).slice().sort((a, b) => {
+        const ac = (edges[a.name] || []).length;
+        const bc = (edges[b.name] || []).length;
+        return bc - ac; // wider forks first
+    });
+
+    function assignColumns(name, preferredCol) {
+        if (colMap[name] !== undefined) return;
+        colMap[name] = preferredCol;
+        if (preferredCol >= nextCol) nextCol = preferredCol + 1;
+
+        const children = (edges[name] || []).filter(n => nameToNode[n]);
+        if (children.length === 0) return;
+
+        if (children.length === 1) {
+            // Single child inherits parent's column
+            assignColumns(children[0], preferredCol);
+        } else {
+            // Fork: spread children across columns
+            // Center them around parent's column
+            const startCol = nextCol;
+            children.forEach((child, i) => {
+                assignColumns(child, startCol + i);
+            });
+        }
+    }
+
+    roots.forEach(q => {
+        assignColumns(q.name, nextCol);
+    });
+
+    // Assign any unvisited quests
+    chain.forEach(q => {
+        if (colMap[q.name] === undefined) {
+            colMap[q.name] = nextCol++;
+        }
+    });
+
+    const totalCols = nextCol;
+
+    // Build the grid: rows (depths) × columns
+    // Each cell is either a quest node or empty
+    const grid = [];
+    for (let d = 0; d <= maxDepth; d++) {
+        const row = new Array(totalCols).fill(null);
+        (byDepth[d] || []).forEach(q => {
+            row[colMap[q.name]] = q;
+        });
+        grid.push(row);
+    }
+
+    // Render grid as HTML
+    const graphEl = document.createElement('div');
+    graphEl.className = 'chain-grid';
+    graphEl.style.gridTemplateColumns = `60px repeat(${totalCols}, 1fr)`;
+
+    for (let d = 0; d <= maxDepth; d++) {
+        // Step label
+        const label = document.createElement('div');
+        label.className = 'chain-grid-label';
+        label.textContent = d === 0 ? 'Start' : `Step ${d}`;
+        graphEl.appendChild(label);
+
+        // Quest cells
+        for (let c = 0; c < totalCols; c++) {
+            const cell = document.createElement('div');
+            cell.className = 'chain-grid-cell';
+            const q = grid[d][c];
+            if (q) {
+                cell.appendChild(createQuestNode(q));
+            }
+            graphEl.appendChild(cell);
+        }
+
+        // Spacer row between depths (SVG lines handle visual connections)
+        if (d < maxDepth) {
+            const spacer = document.createElement('div');
+            spacer.className = 'chain-grid-connector-label';
+            graphEl.appendChild(spacer);
+
+            for (let c = 0; c < totalCols; c++) {
+                const connCell = document.createElement('div');
+                connCell.className = 'chain-grid-connector';
+                graphEl.appendChild(connCell);
+            }
+        }
+    }
+
+    container.appendChild(graphEl);
+
+    // Store edge data for redraw on expand
+    container._edgeData = { grid, edges, colMap, nameToNode, maxDepth, totalCols };
+
+    // Add SVG overlay for edge lines
+    requestAnimationFrame(() => {
+        drawEdgeLines(container, grid, edges, colMap, nameToNode, maxDepth, totalCols);
+    });
+
+    return container;
+}
+
+// Draw SVG lines connecting parent nodes to child nodes
+function drawEdgeLines(container, grid, edges, colMap, nameToNode, maxDepth, totalCols) {
+    const graphEl = container.querySelector('.chain-grid');
+    if (!graphEl) return;
+
+    // Remove any existing SVG
+    const existing = container.querySelector('.chain-edge-svg');
+    if (existing) existing.remove();
+
+    const rect = graphEl.getBoundingClientRect();
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.classList.add('chain-edge-svg');
+    svg.setAttribute('width', rect.width);
+    svg.setAttribute('height', rect.height);
+    svg.style.position = 'absolute';
+    svg.style.top = '0';
+    svg.style.left = '0';
+    svg.style.pointerEvents = 'none';
+
+    container.style.position = 'relative';
+
+    // Find all node elements and their positions
+    const nodePositions = {};
+    graphEl.querySelectorAll('.chain-grid-cell').forEach(cell => {
+        const nodeEl = cell.querySelector('.chain-node');
+        if (!nodeEl) return;
+        const link = nodeEl.querySelector('.chain-quest-link');
+        if (!link) return;
+        const name = link.textContent;
+        const cellRect = cell.getBoundingClientRect();
+        const graphRect = graphEl.getBoundingClientRect();
+        nodePositions[name] = {
+            cx: cellRect.left - graphRect.left + cellRect.width / 2,
+            bottom: cellRect.top - graphRect.top + cellRect.height,
+            top: cellRect.top - graphRect.top
+        };
+    });
+
+    // Draw edges
+    Object.entries(edges).forEach(([parent, children]) => {
+        const pPos = nodePositions[parent];
+        if (!pPos) return;
+
+        children.forEach(child => {
+            if (!nameToNode[child]) return;
+            const cPos = nodePositions[child];
+            if (!cPos) return;
+
+            const isSameCol = colMap[parent] === colMap[child];
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+            const x1 = pPos.cx;
+            const y1 = pPos.bottom + 2;
+            const x2 = cPos.cx;
+            const y2 = cPos.top - 2;
+            const midY = (y1 + y2) / 2;
+
+            if (isSameCol) {
+                path.setAttribute('d', `M ${x1} ${y1} L ${x2} ${y2}`);
+            } else {
+                // Curved path for cross-column edges
+                path.setAttribute('d', `M ${x1} ${y1} C ${x1} ${midY}, ${x2} ${midY}, ${x2} ${y2}`);
+            }
+
+            path.setAttribute('fill', 'none');
+            path.setAttribute('stroke', isSameCol ? '#555' : '#666');
+            path.setAttribute('stroke-width', '1.5');
+            path.setAttribute('stroke-dasharray', isSameCol ? 'none' : '4 3');
+
+            svg.appendChild(path);
+
+            // Arrowhead
+            const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+            const ax = x2;
+            const ay = y2;
+            arrow.setAttribute('points', `${ax},${ay} ${ax - 4},${ay - 7} ${ax + 4},${ay - 7}`);
+            arrow.setAttribute('fill', isSameCol ? '#555' : '#666');
+            svg.appendChild(arrow);
+        });
+    });
+
+    container.appendChild(svg);
 }
 
 function renderChains() {
@@ -350,7 +643,7 @@ function renderChains() {
         const section = document.createElement('div');
         section.className = 'chain-group';
 
-        // Build chain title from first quest or longest path root
+        // Build chain title from roots
         const depthMap = buildDepthMap(chain);
         const roots = chain.filter(q => depthMap[q.name] === 0);
         const chainTitle = roots.length > 0 ? roots[0].name : chain[0].name;
@@ -360,7 +653,6 @@ function renderChains() {
             : group.source === 'binary' ? ' <span class="chain-source-badge chain-source-binary">Binary Only</span>'
             : ' <span class="chain-source-badge chain-source-both">Verified</span>';
 
-        // Chain header
         const header = document.createElement('div');
         header.className = 'chain-group-header';
         header.innerHTML = `
@@ -377,93 +669,21 @@ function renderChains() {
         header.addEventListener('click', () => {
             body.classList.toggle('hidden');
             header.querySelector('.chain-group-chevron').classList.toggle('expanded');
+            // Redraw SVG lines after body becomes visible
+            if (!body.classList.contains('hidden')) {
+                requestAnimationFrame(() => {
+                    body.querySelectorAll('.chain-graph').forEach(g => {
+                        const grid = g.querySelector('.chain-grid');
+                        if (grid && g._edgeData) {
+                            const d = g._edgeData;
+                            drawEdgeLines(g, d.grid, d.edges, d.colMap, d.nameToNode, d.maxDepth, d.totalCols);
+                        }
+                    });
+                });
+            }
         });
 
-        const groups = groupByDepth(chain, depthMap);
-        const maxDepth = Math.max(...Object.keys(groups).map(Number));
-
-        const timeline = document.createElement('div');
-        timeline.className = 'chain-timeline';
-
-        for (let depth = 0; depth <= maxDepth; depth++) {
-            const stepQuests = groups[depth] || [];
-            if (stepQuests.length === 0) continue;
-
-            const step = document.createElement('div');
-            step.className = 'chain-step';
-
-            const label = document.createElement('div');
-            label.className = 'chain-step-label';
-            label.textContent = depth === 0 ? 'Start' : `Step ${depth}`;
-            step.appendChild(label);
-
-            const nodesRow = document.createElement('div');
-            nodesRow.className = 'chain-step-nodes';
-
-            stepQuests.forEach(q => {
-                const node = document.createElement('div');
-                node.className = 'chain-node';
-
-                const hasRewards = q.hasRewards !== undefined ? q.hasRewards : questRewards.hasOwnProperty(q.name);
-                const api = apiQuests[q.slug] || getApiQuest(q.name);
-
-                const title = document.createElement('div');
-                title.className = 'chain-node-title';
-
-                if (api && api.level) {
-                    const lvl = document.createElement('span');
-                    lvl.className = 'quest-level-badge';
-                    lvl.textContent = api.level;
-                    title.appendChild(lvl);
-                }
-
-                const link = document.createElement('a');
-                link.href = '#';
-                link.textContent = q.name;
-                link.className = 'chain-quest-link';
-                if (!hasRewards) link.classList.add('chain-quest-link-dim');
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    QuestModal.show(q.name, q.slug);
-                });
-                title.appendChild(link);
-                node.appendChild(title);
-
-                if (api && api.location) {
-                    const locDiv = document.createElement('div');
-                    locDiv.className = 'chain-node-meta';
-                    locDiv.innerHTML = `<span class="chain-meta-label">Location:</span> ${api.location}`;
-                    node.appendChild(locDiv);
-                }
-
-                if (q.requires && q.requires.length > 0) {
-                    const reqDiv = document.createElement('div');
-                    reqDiv.className = 'chain-node-meta chain-node-requires';
-                    reqDiv.innerHTML = `<span class="chain-meta-label">Requires:</span> ${q.requires.join(', ')}`;
-                    node.appendChild(reqDiv);
-                }
-                if (q.unlocks && q.unlocks.length > 0) {
-                    const unlDiv = document.createElement('div');
-                    unlDiv.className = 'chain-node-meta chain-node-unlocks';
-                    unlDiv.innerHTML = `<span class="chain-meta-label">Unlocks:</span> ${q.unlocks.join(', ')}`;
-                    node.appendChild(unlDiv);
-                }
-
-                nodesRow.appendChild(node);
-            });
-
-            step.appendChild(nodesRow);
-            timeline.appendChild(step);
-
-            if (depth < maxDepth) {
-                const connector = document.createElement('div');
-                connector.className = 'chain-connector';
-                connector.innerHTML = '&#9660;';
-                timeline.appendChild(connector);
-            }
-        }
-
-        body.appendChild(timeline);
+        body.appendChild(renderChainGraph(chain));
         section.appendChild(header);
         section.appendChild(body);
         container.appendChild(section);
