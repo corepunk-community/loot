@@ -31,7 +31,7 @@ const searchTermDisplay = document.getElementById('search-term-display');
 const normalView = document.getElementById('normal-view');
 
 // Category filter elements
-const filterButtons = document.querySelectorAll('.filter-btn');
+const filterButtons = document.querySelectorAll('.filter-buttons .filter-btn');
 
 // Reward type classification
 function getItemType(itemName) {
