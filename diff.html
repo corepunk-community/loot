@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Corepunk Loot Tables - Patch Diff</title>
+    <title>Corepunk Patch Diff</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,12 +13,21 @@
             <nav class="site-nav">
                 <a href="index.html">Loot Tables</a>
                 <a href="quests.html">Quest Rewards</a>
+                <a href="chains.html">Quest Chains</a>
+                <a href="analysis.html">Analysis</a>
                 <a href="diff.html" class="active">Patch Diff</a>
             </nav>
         </header>
 
         <main>
             <div class="diff-controls">
+                <div class="version-selector">
+                    <label for="diff-data-type">Compare:</label>
+                    <select id="diff-data-type">
+                        <option value="loot">Loot Tables</option>
+                        <option value="quests">Quest Rewards</option>
+                    </select>
+                </div>
                 <div class="version-selector">
                     <label for="version-old">Old Version:</label>
                     <select id="version-old"></select>
@@ -32,7 +41,7 @@
             </div>
 
             <div id="diff-loading" class="hidden">
-                <p>Loading loot tables...</p>
+                <p>Loading data...</p>
             </div>
 
             <div id="diff-summary" class="diff-summary hidden">

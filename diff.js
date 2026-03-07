@@ -3,6 +3,7 @@ let versions = [];
 let diffResult = null;
 
 // DOM elements
+const dataTypeSelect = document.getElementById('diff-data-type');
 const versionOldSelect = document.getElementById('version-old');
 const versionNewSelect = document.getElementById('version-new');
 const runDiffBtn = document.getElementById('run-diff');
@@ -31,24 +32,42 @@ async function loadVersionManifest() {
     versions = await response.json();
 }
 
+function getFileKey() {
+    return dataTypeSelect.value === 'quests' ? 'quest_rewards_file' : 'file';
+}
+
+function getAvailableVersions() {
+    const key = getFileKey();
+    return versions.filter(v => v[key]);
+}
+
 function populateDropdowns() {
     versionOldSelect.innerHTML = '';
     versionNewSelect.innerHTML = '';
 
-    versions.forEach((v, i) => {
-        versionOldSelect.add(new Option(`v${v.version}`, v.file));
-        versionNewSelect.add(new Option(`v${v.version}`, v.file));
+    const available = getAvailableVersions();
+    const key = getFileKey();
+
+    available.forEach(v => {
+        versionOldSelect.add(new Option(`v${v.version}`, v[key]));
+        versionNewSelect.add(new Option(`v${v.version}`, v[key]));
     });
 
-    // Auto-select: second-to-last as old, last as new
-    if (versions.length >= 2) {
-        versionOldSelect.selectedIndex = versions.length - 2;
-        versionNewSelect.selectedIndex = versions.length - 1;
+    if (available.length >= 2) {
+        versionOldSelect.selectedIndex = available.length - 2;
+        versionNewSelect.selectedIndex = available.length - 1;
     }
+
+    // Clear previous results when switching data type
+    diffResult = null;
+    diffResults.innerHTML = '';
+    diffSummary.classList.add('hidden');
+    diffFilterBar.classList.add('hidden');
 }
 
 function setupEventListeners() {
     runDiffBtn.addEventListener('click', runDiff);
+    dataTypeSelect.addEventListener('change', populateDropdowns);
 
     // Filter buttons
     diffFilterBar.querySelectorAll('.filter-btn').forEach(btn => {
@@ -73,25 +92,28 @@ async function fetchVersion(file) {
     return response.json();
 }
 
-function computeDiff(oldTables, newTables) {
-    const allKeys = new Set([...Object.keys(oldTables), ...Object.keys(newTables)]);
+function computeDiff(oldData, newData) {
+    const allKeys = new Set([...Object.keys(oldData), ...Object.keys(newData)]);
+    const skipPrefix = dataTypeSelect.value === 'loot' ? 'Camp Chest' : null;
 
     const added = [];
     const removed = [];
     const modified = [];
     const unchanged = [];
 
-    for (const key of [...allKeys].sort().filter(k => !k.startsWith('Camp Chest'))) {
-        const inOld = key in oldTables;
-        const inNew = key in newTables;
+    for (const key of [...allKeys].sort()) {
+        if (skipPrefix && key.startsWith(skipPrefix)) continue;
+
+        const inOld = key in oldData;
+        const inNew = key in newData;
 
         if (!inOld && inNew) {
-            added.push({ name: key, items: newTables[key] });
+            added.push({ name: key, items: newData[key] });
         } else if (inOld && !inNew) {
-            removed.push({ name: key, items: oldTables[key] });
+            removed.push({ name: key, items: oldData[key] });
         } else {
-            const oldItems = new Set(oldTables[key]);
-            const newItems = new Set(newTables[key]);
+            const oldItems = new Set(oldData[key]);
+            const newItems = new Set(newData[key]);
 
             const addedItems = [...newItems].filter(i => !oldItems.has(i)).sort();
             const removedItems = [...oldItems].filter(i => !newItems.has(i)).sort();
@@ -101,8 +123,8 @@ function computeDiff(oldTables, newTables) {
                     name: key,
                     addedItems,
                     removedItems,
-                    oldItems: [...oldTables[key]].sort(),
-                    newItems: [...newTables[key]].sort()
+                    oldItems: [...oldData[key]].sort(),
+                    newItems: [...newData[key]].sort()
                 });
             } else {
                 unchanged.push(key);
@@ -173,17 +195,18 @@ function renderDiff() {
     diffResults.innerHTML = '';
     const activeFilter = getActiveFilter();
     const searchTerm = diffSearchInput.value.trim().toLowerCase();
+    const label = dataTypeSelect.value === 'quests' ? 'quest' : 'table';
 
     if (activeFilter === 'all' || activeFilter === 'added') {
         diffResult.added
             .filter(t => matchesSearch(t, searchTerm, 'added'))
-            .forEach(t => diffResults.appendChild(renderAddedTable(t)));
+            .forEach(t => diffResults.appendChild(renderAddedTable(t, label)));
     }
 
     if (activeFilter === 'all' || activeFilter === 'removed') {
         diffResult.removed
             .filter(t => matchesSearch(t, searchTerm, 'removed'))
-            .forEach(t => diffResults.appendChild(renderRemovedTable(t)));
+            .forEach(t => diffResults.appendChild(renderRemovedTable(t, label)));
     }
 
     if (activeFilter === 'all' || activeFilter === 'modified') {
@@ -233,7 +256,7 @@ function createDiffCard(name, type, statText) {
     return card;
 }
 
-function renderAddedTable(table) {
+function renderAddedTable(table, label) {
     const card = createDiffCard(table.name, 'added', `+${table.items.length} items`);
     const body = card.querySelector('.diff-card-body');
     table.items.sort().forEach(item => {
@@ -245,7 +268,7 @@ function renderAddedTable(table) {
     return card;
 }
 
-function renderRemovedTable(table) {
+function renderRemovedTable(table, label) {
     const card = createDiffCard(table.name, 'removed', `-${table.items.length} items`);
     const body = card.querySelector('.diff-card-body');
     table.items.sort().forEach(item => {

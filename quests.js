@@ -24,10 +24,6 @@ const globalResults = document.getElementById('global-results');
 const searchTermDisplay = document.getElementById('search-term-display');
 const normalView = document.getElementById('normal-view');
 
-// Stats elements
-const statsPanel = document.getElementById('stats-panel');
-const toggleStatsBtn = document.getElementById('toggle-stats');
-
 // Category filter elements
 const filterButtons = document.querySelectorAll('.filter-btn');
 
@@ -39,6 +35,7 @@ function getItemType(itemName) {
     if (lower.startsWith('con ') || lower.startsWith('con_')) return 'consumable';
     if (lower.startsWith('bas cp') || lower.startsWith('adv cp')) return 'chip';
     if (lower.startsWith('synthesis') || lower.startsWith('reforge') || lower.startsWith('talent')) return 'synthesis';
+    if (lower.startsWith('wp ') || lower.startsWith('wp_')) return 'weapon';
     if (lower.includes('ancient coin')) return 'currency';
     return 'other';
 }
@@ -53,11 +50,20 @@ function questMatchesFilter(questName, filter) {
 // Fetch quest rewards and chain data
 async function fetchQuestRewards() {
     try {
-        const [rewardsResponse, chainsResponse] = await Promise.all([
-            fetch('quest_rewards.json'),
+        // Load version manifest to find latest quest rewards file
+        const [versionsResponse, chainsResponse] = await Promise.all([
+            fetch('versions.json'),
             fetch('quest_chains.json')
         ]);
 
+        if (!versionsResponse.ok) {
+            throw new Error('Failed to load versions manifest');
+        }
+        const versions = await versionsResponse.json();
+        const latestVersion = versions[versions.length - 1];
+        const rewardsFile = latestVersion.quest_rewards_file || 'quest_rewards.json';
+
+        const rewardsResponse = await fetch(rewardsFile);
         if (!rewardsResponse.ok) {
             throw new Error(`HTTP error! Status: ${rewardsResponse.status}`);
         }
@@ -68,82 +74,17 @@ async function fetchQuestRewards() {
         }
 
         populateTablesList();
-        renderStats();
+
+        // Check if navigated here from chains page
+        const selectedQuest = sessionStorage.getItem('selectedQuest');
+        if (selectedQuest && questRewards[selectedQuest]) {
+            sessionStorage.removeItem('selectedQuest');
+            navigateToQuest(selectedQuest);
+        }
     } catch (error) {
         console.error('Error fetching quest rewards:', error);
         showError('Failed to load quest rewards data. Please try again later.');
     }
-}
-
-// Render analysis stats
-function renderStats() {
-    const quests = Object.keys(questRewards);
-    const allItems = Object.values(questRewards).flat();
-    const uniqueItems = [...new Set(allItems)];
-    const avgItems = quests.length > 0 ? (allItems.length / quests.length).toFixed(1) : 0;
-
-    document.getElementById('stat-total-quests').textContent = quests.length;
-    document.getElementById('stat-unique-items').textContent = uniqueItems.length;
-    document.getElementById('stat-avg-items').textContent = avgItems;
-    document.getElementById('stat-total-items').textContent = allItems.length.toLocaleString();
-
-    // Top rewards - most common items across all quests
-    const itemCounts = {};
-    allItems.forEach(item => {
-        itemCounts[item] = (itemCounts[item] || 0) + 1;
-    });
-    const topItems = Object.entries(itemCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 8);
-
-    const topList = document.getElementById('top-rewards-list');
-    topList.innerHTML = '';
-    topItems.forEach(([item, count]) => {
-        const li = document.createElement('li');
-        const pct = ((count / quests.length) * 100).toFixed(0);
-        li.innerHTML = `<span class="top-item-name">${item}</span><span class="top-item-count">${count} quests (${pct}%)</span>`;
-        topList.appendChild(li);
-    });
-
-    // Reward type breakdown
-    const typeCounts = {};
-    const typeLabels = {
-        artifact: 'Artifacts',
-        recipe: 'Recipes',
-        consumable: 'Consumables',
-        chip: 'Chip Parts',
-        synthesis: 'Synthesis',
-        currency: 'Currency',
-        other: 'Other'
-    };
-
-    allItems.forEach(item => {
-        const type = getItemType(item);
-        typeCounts[type] = (typeCounts[type] || 0) + 1;
-    });
-
-    const maxCount = Math.max(...Object.values(typeCounts));
-    const barsContainer = document.getElementById('reward-type-bars');
-    barsContainer.innerHTML = '';
-
-    // Sort by count descending
-    const sortedTypes = Object.entries(typeCounts).sort((a, b) => b[1] - a[1]);
-
-    sortedTypes.forEach(([type, count]) => {
-        const pct = ((count / allItems.length) * 100).toFixed(1);
-        const barWidth = ((count / maxCount) * 100).toFixed(0);
-
-        const row = document.createElement('div');
-        row.className = 'bar-row';
-        row.innerHTML = `
-            <span class="bar-label">${typeLabels[type] || type}</span>
-            <div class="bar-track">
-                <div class="bar-fill bar-${type}" style="width: ${barWidth}%"></div>
-            </div>
-            <span class="bar-value">${count} (${pct}%)</span>
-        `;
-        barsContainer.appendChild(row);
-    });
 }
 
 // Apply filters (reward type + search)
@@ -239,8 +180,9 @@ function buildRewardSummary(items) {
         artifact: 'Artifacts',
         recipe: 'Recipes',
         consumable: 'Consumables',
-        chip: 'Chip Parts',
+        chip: 'Chips',
         synthesis: 'Synthesis',
+        weapon: 'Weapons',
         currency: 'Currency',
         other: 'Other'
     };
@@ -557,25 +499,6 @@ function setupSearch() {
     toggleGlobalSearchBtn.addEventListener('click', toggleGlobalSearch);
 }
 
-// Setup stats panel toggle
-function setupStats() {
-    let statsVisible = true;
-    toggleStatsBtn.addEventListener('click', () => {
-        statsVisible = !statsVisible;
-        const detail = statsPanel.querySelector('.stats-detail');
-        const grid = statsPanel.querySelector('.stats-grid');
-        if (statsVisible) {
-            detail.classList.remove('hidden');
-            grid.classList.remove('hidden');
-            toggleStatsBtn.textContent = 'Hide Analysis';
-        } else {
-            detail.classList.add('hidden');
-            grid.classList.add('hidden');
-            toggleStatsBtn.textContent = 'Show Analysis';
-        }
-    });
-}
-
 // Show error message
 function showError(message) {
     const errorElement = document.createElement('div');
@@ -589,7 +512,6 @@ function init() {
     fetchQuestRewards();
     setupSearch();
     setupCategoryFilter();
-    setupStats();
 }
 
 window.addEventListener('DOMContentLoaded', init);

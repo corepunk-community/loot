@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk Quest Rewards Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Corepunk Quest Rewards Analysis</h1>
+            <nav class="site-nav">
+                <a href="index.html">Loot Tables</a>
+                <a href="quests.html">Quest Rewards</a>
+                <a href="chains.html">Quest Chains</a>
+                <a href="analysis.html" class="active">Analysis</a>
+                <a href="diff.html">Patch Diff</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="stats-panel">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-quests">--</div>
+                        <div class="stat-label">Quests</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-unique-items">--</div>
+                        <div class="stat-label">Unique Items</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-avg-items">--</div>
+                        <div class="stat-label">Avg Items/Quest</div>
+                    </div>
+                </div>
+                <div class="stats-detail">
+                    <div class="top-rewards">
+                        <h3>Most Awarded Items</h3>
+                        <ol id="top-rewards-list"></ol>
+                    </div>
+                    <div class="reward-types-breakdown">
+                        <h3>Rewards by Category</h3>
+                        <div id="reward-type-bars"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quest-lists"></div>
+        </main>
+
+        <footer>
+            <p>Created with &#10084;&#65039;</p>
+        </footer>
+    </div>
+
+    <script src="analysis.js"></script>
+</body>
+</html>

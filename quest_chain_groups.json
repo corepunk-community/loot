@@ -1,0 +1,568 @@
+[
+  [
+    {
+      "name": "Call To Arms",
+      "unlocks": [
+        "Reluctant Reinforcement"
+      ]
+    },
+    {
+      "name": "Secrets Unearthed",
+      "unlocks": [
+        "Sending The Alert",
+        "Unsettling Return"
+      ]
+    },
+    {
+      "name": "A Quiet Disposal",
+      "unlocks": [
+        "Unsettling Return"
+      ]
+    },
+    {
+      "name": "Valuable Research",
+      "unlocks": [
+        "Spirited Away"
+      ]
+    },
+    {
+      "name": "Allergy Free Flora",
+      "unlocks": [
+        "Desert Data Dilemma",
+        "Furnishing The Future"
+      ]
+    },
+    {
+      "name": "Magnetic Intentions",
+      "unlocks": [
+        "Desert Data Dilemma"
+      ]
+    },
+    {
+      "name": "Flowers For Friendship",
+      "unlocks": [
+        "Desert Data Dilemma"
+      ]
+    },
+    {
+      "name": "A Skullful Of Solace",
+      "unlocks": [
+        "Desert Data Dilemma"
+      ]
+    },
+    {
+      "name": "Echoes In The Sand",
+      "unlocks": [
+        "Desert Data Dilemma"
+      ]
+    },
+    {
+      "name": "An Ethical Appetite",
+      "unlocks": [
+        "Defectors Round Up"
+      ]
+    },
+    {
+      "name": "Sunburned Escape",
+      "unlocks": [
+        "Defectors Round Up"
+      ]
+    },
+    {
+      "name": "The Blades Dilemma",
+      "unlocks": [
+        "Defectors Round Up"
+      ]
+    },
+    {
+      "name": "The Great Pretender",
+      "unlocks": [
+        "Defectors Round Up"
+      ]
+    },
+    {
+      "name": "Sending The Alert",
+      "requires": [
+        "Secrets Unearthed"
+      ],
+      "unlocks": [
+        "Reluctant Reinforcement"
+      ]
+    },
+    {
+      "name": "Unsettling Return",
+      "requires": [
+        "A Quiet Disposal"
+      ],
+      "unlocks": [
+        "Secrets Unearthed"
+      ]
+    },
+    {
+      "name": "Spirited Away",
+      "requires": [
+        "Valuable Research"
+      ],
+      "unlocks": [
+        "Desert Decryption"
+      ]
+    },
+    {
+      "name": "Furnishing The Future",
+      "requires": [
+        "Allergy Free Flora"
+      ],
+      "unlocks": [
+        "Desert Data Dilemma"
+      ]
+    },
+    {
+      "name": "Defectors Round Up",
+      "requires": [
+        "An Ethical Appetite",
+        "Sunburned Escape",
+        "The Blades Dilemma",
+        "The Great Pretender"
+      ],
+      "unlocks": [
+        "Deserted Hopes"
+      ]
+    },
+    {
+      "name": "Desert Decryption",
+      "requires": [
+        "Spirited Away"
+      ],
+      "unlocks": [
+        "Harvesting The Fallen"
+      ]
+    },
+    {
+      "name": "Deserted Hopes",
+      "requires": [
+        "Defectors Round Up"
+      ],
+      "unlocks": [
+        "Herbal Aid"
+      ]
+    },
+    {
+      "name": "Harvesting The Fallen",
+      "requires": [
+        "Desert Decryption"
+      ],
+      "unlocks": [
+        "Sensing The Sands"
+      ]
+    },
+    {
+      "name": "Herbal Aid",
+      "requires": [
+        "Deserted Hopes"
+      ],
+      "unlocks": [
+        "Crafting Concerns"
+      ]
+    },
+    {
+      "name": "Sensing The Sands",
+      "requires": [
+        "Harvesting The Fallen"
+      ],
+      "unlocks": [
+        "Substances Of Suspicion"
+      ]
+    },
+    {
+      "name": "Crafting Concerns",
+      "requires": [
+        "Herbal Aid"
+      ],
+      "unlocks": [
+        "Sharpening Resolve"
+      ]
+    },
+    {
+      "name": "Substances Of Suspicion",
+      "requires": [
+        "Sensing The Sands"
+      ],
+      "unlocks": [
+        "Hangover Helper"
+      ]
+    },
+    {
+      "name": "Sharpening Resolve",
+      "requires": [
+        "Crafting Concerns"
+      ],
+      "unlocks": [
+        "A Pacifists Dilemma"
+      ]
+    },
+    {
+      "name": "Hangover Helper",
+      "requires": [
+        "Substances Of Suspicion"
+      ],
+      "unlocks": [
+        "Desert Data Dilemma"
+      ]
+    },
+    {
+      "name": "A Pacifists Dilemma",
+      "requires": [
+        "Sharpening Resolve"
+      ],
+      "unlocks": [
+        "Resurrection Research"
+      ]
+    },
+    {
+      "name": "Desert Data Dilemma",
+      "requires": [
+        "Hangover Helper"
+      ],
+      "unlocks": [
+        "A Skullful Of Solace",
+        "Accords And Accidents",
+        "Allergy Free Flora",
+        "Echoes In The Sand",
+        "Flowers For Friendship",
+        "Furnishing The Future",
+        "Magnetic Intentions"
+      ]
+    },
+    {
+      "name": "Resurrection Research",
+      "requires": [
+        "A Pacifists Dilemma"
+      ],
+      "unlocks": [
+        "Revival Overdrive"
+      ]
+    },
+    {
+      "name": "Accords And Accidents",
+      "requires": [
+        "Desert Data Dilemma"
+      ],
+      "unlocks": [
+        "Reluctant Reinforcement"
+      ]
+    },
+    {
+      "name": "Revival Overdrive",
+      "requires": [
+        "Resurrection Research"
+      ],
+      "unlocks": [
+        "Beacon Of Confidence"
+      ]
+    },
+    {
+      "name": "Beacon Of Confidence",
+      "requires": [
+        "Revival Overdrive"
+      ],
+      "unlocks": [
+        "Reluctant Reinforcement"
+      ]
+    },
+    {
+      "name": "Reluctant Reinforcement",
+      "requires": [
+        "Accords And Accidents",
+        "Beacon Of Confidence",
+        "Call To Arms",
+        "Sending The Alert"
+      ],
+      "unlocks": [
+        "Stamp Of Peace"
+      ]
+    },
+    {
+      "name": "Stamp Of Peace",
+      "requires": [
+        "Reluctant Reinforcement"
+      ],
+      "unlocks": [
+        "Energized Spirits"
+      ]
+    },
+    {
+      "name": "Energized Spirits",
+      "requires": [
+        "Stamp Of Peace"
+      ],
+      "unlocks": [
+        "Silencing The Rumors"
+      ]
+    },
+    {
+      "name": "Silencing The Rumors",
+      "requires": [
+        "Energized Spirits"
+      ],
+      "unlocks": [
+        "Desert Diplomacy"
+      ]
+    },
+    {
+      "name": "Desert Diplomacy",
+      "requires": [
+        "Silencing The Rumors"
+      ],
+      "unlocks": [
+        "Unearthing The Truth"
+      ]
+    },
+    {
+      "name": "Unearthing The Truth",
+      "requires": [
+        "Desert Diplomacy"
+      ],
+      "unlocks": [
+        "Echoes Of The Feral Artifact"
+      ]
+    },
+    {
+      "name": "Echoes Of The Feral Artifact",
+      "requires": [
+        "Unearthing The Truth"
+      ],
+      "unlocks": [
+        "A Brothers Shadow"
+      ]
+    },
+    {
+      "name": "A Brothers Shadow",
+      "requires": [
+        "Echoes Of The Feral Artifact"
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Quelling The Rage",
+      "unlocks": [
+        "Proving Loyalties",
+        "The Deserts Secret"
+      ]
+    },
+    {
+      "name": "Brotherly Loss",
+      "unlocks": [
+        "Evidence In The Shadows"
+      ]
+    },
+    {
+      "name": "Proving Loyalties",
+      "requires": [
+        "Quelling The Rage"
+      ],
+      "unlocks": [
+        "Artifact Of Fury"
+      ]
+    },
+    {
+      "name": "Evidence In The Shadows",
+      "requires": [
+        "Brotherly Loss"
+      ],
+      "unlocks": [
+        "Shadows Beneath The Sands"
+      ]
+    },
+    {
+      "name": "Artifact Of Fury",
+      "requires": [
+        "Proving Loyalties"
+      ],
+      "unlocks": [
+        "The Role Of A Lifetime"
+      ]
+    },
+    {
+      "name": "Shadows Beneath The Sands",
+      "requires": [
+        "Evidence In The Shadows"
+      ],
+      "unlocks": [
+        "The Deserts Secret"
+      ]
+    },
+    {
+      "name": "The Role Of A Lifetime",
+      "requires": [
+        "Artifact Of Fury"
+      ],
+      "unlocks": [
+        "Fragments Of Fury"
+      ]
+    },
+    {
+      "name": "Fragments Of Fury",
+      "requires": [
+        "The Role Of A Lifetime"
+      ]
+    },
+    {
+      "name": "The Deserts Secret",
+      "requires": [
+        "Quelling The Rage",
+        "Shadows Beneath The Sands"
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Echoes Of Atonement",
+      "unlocks": [
+        "Beacon Of Hope"
+      ]
+    },
+    {
+      "name": "Beacon Of Hope",
+      "requires": [
+        "Echoes Of Atonement"
+      ],
+      "unlocks": [
+        "A Second Chance"
+      ]
+    },
+    {
+      "name": "A Second Chance",
+      "requires": [
+        "Beacon Of Hope"
+      ],
+      "unlocks": [
+        "Secrets Of The Invaders"
+      ]
+    },
+    {
+      "name": "Secrets Of The Invaders",
+      "requires": [
+        "A Second Chance"
+      ],
+      "unlocks": [
+        "Thirst For Understanding"
+      ]
+    },
+    {
+      "name": "Thirst For Understanding",
+      "requires": [
+        "Secrets Of The Invaders"
+      ],
+      "unlocks": [
+        "A Bitter Brew"
+      ]
+    },
+    {
+      "name": "A Bitter Brew",
+      "requires": [
+        "Thirst For Understanding"
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Double Trouble",
+      "unlocks": [
+        "Bearing Light"
+      ]
+    },
+    {
+      "name": "Turning The Tide",
+      "unlocks": [
+        "Bearing Light"
+      ]
+    },
+    {
+      "name": "Bearing Light",
+      "requires": [
+        "Double Trouble",
+        "Turning The Tide"
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Digging At The Truth",
+      "unlocks": [
+        "The Betrayers Blade"
+      ]
+    },
+    {
+      "name": "The Betrayers Blade",
+      "requires": [
+        "Digging At The Truth"
+      ],
+      "unlocks": [
+        "Guarding Shadows"
+      ]
+    },
+    {
+      "name": "Guarding Shadows",
+      "requires": [
+        "The Betrayers Blade"
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Desert Denial",
+      "unlocks": [
+        "Allergic To Duty"
+      ]
+    },
+    {
+      "name": "Allergic To Duty",
+      "requires": [
+        "Desert Denial"
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Juice For The Journey",
+      "unlocks": [
+        "Blitzs Escape Clause"
+      ]
+    },
+    {
+      "name": "Blitzs Escape Clause",
+      "requires": [
+        "Juice For The Journey"
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Lights Camera Action",
+      "unlocks": [
+        "The Draft Dodgers Dilemma"
+      ]
+    },
+    {
+      "name": "The Draft Dodgers Dilemma",
+      "requires": [
+        "Lights Camera Action"
+      ]
+    }
+  ],
+  [
+    {
+      "name": "Lost And Found",
+      "unlocks": [
+        "Salvation From Madness"
+      ]
+    },
+    {
+      "name": "Salvation From Madness",
+      "requires": [
+        "Lost And Found"
+      ]
+    }
+  ]
+]

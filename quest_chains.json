@@ -31,9 +31,6 @@
     ]
   },
   "A Skullful Of Solace": {
-    "prerequisites": [
-      "Desert Data Dilemma"
-    ],
     "followups": [
       "Desert Data Dilemma"
     ]
@@ -52,9 +49,6 @@
     ]
   },
   "Allergy Free Flora": {
-    "prerequisites": [
-      "Desert Data Dilemma"
-    ],
     "followups": [
       "Desert Data Dilemma",
       "Furnishing The Future"
@@ -92,8 +86,7 @@
   "Bearing Light": {
     "prerequisites": [
       "Double Trouble",
-      "Turning The Tide",
-      "Unveiling The Hidden Truth"
+      "Turning The Tide"
     ]
   },
   "Blitzs Escape Clause": {
@@ -132,13 +125,7 @@
   },
   "Desert Data Dilemma": {
     "prerequisites": [
-      "A Skullful Of Solace",
-      "Allergy Free Flora",
-      "Echoes In The Sand",
-      "Flowers For Friendship",
-      "Furnishing The Future",
-      "Hangover Helper",
-      "Magnetic Intentions"
+      "Hangover Helper"
     ],
     "followups": [
       "A Skullful Of Solace",
@@ -190,9 +177,6 @@
     ]
   },
   "Echoes In The Sand": {
-    "prerequisites": [
-      "Desert Data Dilemma"
-    ],
     "followups": [
       "Desert Data Dilemma"
     ]
@@ -227,9 +211,6 @@
     ]
   },
   "Flowers For Friendship": {
-    "prerequisites": [
-      "Desert Data Dilemma"
-    ],
     "followups": [
       "Desert Data Dilemma"
     ]
@@ -241,8 +222,7 @@
   },
   "Furnishing The Future": {
     "prerequisites": [
-      "Allergy Free Flora",
-      "Desert Data Dilemma"
+      "Allergy Free Flora"
     ],
     "followups": [
       "Desert Data Dilemma"
@@ -293,9 +273,6 @@
     ]
   },
   "Magnetic Intentions": {
-    "prerequisites": [
-      "Desert Data Dilemma"
-    ],
     "followups": [
       "Desert Data Dilemma"
     ]
@@ -355,9 +332,6 @@
     ]
   },
   "Secrets Unearthed": {
-    "prerequisites": [
-      "Unsettling Return"
-    ],
     "followups": [
       "Sending The Alert",
       "Unsettling Return"
@@ -492,16 +466,10 @@
   },
   "Unsettling Return": {
     "prerequisites": [
-      "A Quiet Disposal",
-      "Secrets Unearthed"
+      "A Quiet Disposal"
     ],
     "followups": [
       "Secrets Unearthed"
-    ]
-  },
-  "Unveiling The Hidden Truth": {
-    "followups": [
-      "Bearing Light"
     ]
   },
   "Valuable Research": {
