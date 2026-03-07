@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk Quest Rewards Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Corepunk Quest Rewards Explorer</h1>
+            <nav class="site-nav">
+                <a href="index.html">Loot Tables</a>
+                <a href="quests.html" class="active">Quest Rewards</a>
+                <a href="diff.html">Patch Diff</a>
+            </nav>
+            <div class="search-container global-search">
+                <div class="search-box">
+                    <input type="text" id="global-item-search" placeholder="Search items across all quests...">
+                    <button id="clear-global-search">&#10005;</button>
+                </div>
+                <button id="toggle-global-search" class="action-button">Show Results</button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Analysis stats panel -->
+            <div id="stats-panel" class="stats-panel">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-quests">--</div>
+                        <div class="stat-label">Quests</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-unique-items">--</div>
+                        <div class="stat-label">Unique Items</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-avg-items">--</div>
+                        <div class="stat-label">Avg Items/Quest</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="stat-total-items">--</div>
+                        <div class="stat-label">Total Item Refs</div>
+                    </div>
+                </div>
+                <div class="stats-detail">
+                    <div class="top-rewards">
+                        <h3>Most Common Rewards</h3>
+                        <ol id="top-rewards-list"></ol>
+                    </div>
+                    <div class="reward-types-breakdown">
+                        <h3>Reward Breakdown</h3>
+                        <div id="reward-type-bars"></div>
+                    </div>
+                </div>
+                <button id="toggle-stats" class="action-button stats-toggle">Hide Analysis</button>
+            </div>
+
+            <div id="normal-view" class="content">
+                <div class="tables-section">
+                    <div class="section-header">
+                        <h2>Quests</h2>
+                    </div>
+
+                    <div class="category-filters">
+                        <h3>Filter by Reward Type:</h3>
+                        <div class="filter-buttons">
+                            <button class="filter-btn" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="artifact">Artifacts</button>
+                            <button class="filter-btn" data-filter="recipe">Recipes</button>
+                            <button class="filter-btn" data-filter="consumable">Consumables</button>
+                            <button class="filter-btn" data-filter="chip">Chip Parts</button>
+                            <button class="filter-btn" data-filter="synthesis">Synthesis</button>
+                            <button class="filter-btn" data-filter="currency">Currency</button>
+                        </div>
+                    </div>
+
+                    <div class="search-box table-search-box">
+                        <input type="text" id="table-search" placeholder="Search quests...">
+                        <button id="clear-table-search">&#10005;</button>
+                    </div>
+
+                    <div class="tables-list-container">
+                        <ul id="tables-list"></ul>
+                    </div>
+                </div>
+
+                <div class="items-section">
+                    <div class="section-header">
+                        <h2 id="selected-table">Select a quest</h2>
+                    </div>
+                    <div id="quest-chain" class="hidden"></div>
+                    <div id="reward-summary" class="reward-summary hidden"></div>
+                    <div class="search-box item-search-box">
+                        <input type="text" id="item-search" placeholder="Search items in selected quest...">
+                        <button id="clear-item-search">&#10005;</button>
+                    </div>
+                    <div class="items-list-container">
+                        <ul id="items-list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="global-search-view" class="content hidden">
+                <div class="global-results-section">
+                    <h2>Search Results <span id="search-term-display"></span></h2>
+                    <div class="global-results-container">
+                        <div id="global-results"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Created with &#10084;&#65039;</p>
+        </footer>
+    </div>
+
+    <script src="quests.js"></script>
+</body>
+</html>

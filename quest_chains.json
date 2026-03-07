@@ -1,0 +1,512 @@
+{
+  "A Bitter Brew": {
+    "prerequisites": [
+      "Thirst For Understanding"
+    ]
+  },
+  "A Brothers Shadow": {
+    "prerequisites": [
+      "Echoes Of The Feral Artifact"
+    ]
+  },
+  "A Pacifists Dilemma": {
+    "prerequisites": [
+      "Sharpening Resolve"
+    ],
+    "followups": [
+      "Resurrection Research"
+    ]
+  },
+  "A Quiet Disposal": {
+    "followups": [
+      "Unsettling Return"
+    ]
+  },
+  "A Second Chance": {
+    "prerequisites": [
+      "Beacon Of Hope"
+    ],
+    "followups": [
+      "Secrets Of The Invaders"
+    ]
+  },
+  "A Skullful Of Solace": {
+    "prerequisites": [
+      "Desert Data Dilemma"
+    ],
+    "followups": [
+      "Desert Data Dilemma"
+    ]
+  },
+  "Accords And Accidents": {
+    "prerequisites": [
+      "Desert Data Dilemma"
+    ],
+    "followups": [
+      "Reluctant Reinforcement"
+    ]
+  },
+  "Allergic To Duty": {
+    "prerequisites": [
+      "Desert Denial"
+    ]
+  },
+  "Allergy Free Flora": {
+    "prerequisites": [
+      "Desert Data Dilemma"
+    ],
+    "followups": [
+      "Desert Data Dilemma",
+      "Furnishing The Future"
+    ]
+  },
+  "An Ethical Appetite": {
+    "followups": [
+      "Defectors Round Up"
+    ]
+  },
+  "Artifact Of Fury": {
+    "prerequisites": [
+      "Proving Loyalties"
+    ],
+    "followups": [
+      "The Role Of A Lifetime"
+    ]
+  },
+  "Beacon Of Confidence": {
+    "prerequisites": [
+      "Revival Overdrive"
+    ],
+    "followups": [
+      "Reluctant Reinforcement"
+    ]
+  },
+  "Beacon Of Hope": {
+    "prerequisites": [
+      "Echoes Of Atonement"
+    ],
+    "followups": [
+      "A Second Chance"
+    ]
+  },
+  "Bearing Light": {
+    "prerequisites": [
+      "Double Trouble",
+      "Turning The Tide",
+      "Unveiling The Hidden Truth"
+    ]
+  },
+  "Blitzs Escape Clause": {
+    "prerequisites": [
+      "Juice For The Journey"
+    ]
+  },
+  "Brotherly Loss": {
+    "followups": [
+      "Evidence In The Shadows"
+    ]
+  },
+  "Call To Arms": {
+    "followups": [
+      "Reluctant Reinforcement"
+    ]
+  },
+  "Crafting Concerns": {
+    "prerequisites": [
+      "Herbal Aid"
+    ],
+    "followups": [
+      "Sharpening Resolve"
+    ]
+  },
+  "Defectors Round Up": {
+    "prerequisites": [
+      "An Ethical Appetite",
+      "Sunburned Escape",
+      "The Blades Dilemma",
+      "The Great Pretender"
+    ],
+    "followups": [
+      "Deserted Hopes"
+    ]
+  },
+  "Desert Data Dilemma": {
+    "prerequisites": [
+      "A Skullful Of Solace",
+      "Allergy Free Flora",
+      "Echoes In The Sand",
+      "Flowers For Friendship",
+      "Furnishing The Future",
+      "Hangover Helper",
+      "Magnetic Intentions"
+    ],
+    "followups": [
+      "A Skullful Of Solace",
+      "Accords And Accidents",
+      "Allergy Free Flora",
+      "Echoes In The Sand",
+      "Flowers For Friendship",
+      "Furnishing The Future",
+      "Magnetic Intentions"
+    ]
+  },
+  "Desert Decryption": {
+    "prerequisites": [
+      "Spirited Away"
+    ],
+    "followups": [
+      "Harvesting The Fallen"
+    ]
+  },
+  "Desert Denial": {
+    "followups": [
+      "Allergic To Duty"
+    ]
+  },
+  "Desert Diplomacy": {
+    "prerequisites": [
+      "Silencing The Rumors"
+    ],
+    "followups": [
+      "Unearthing The Truth"
+    ]
+  },
+  "Deserted Hopes": {
+    "prerequisites": [
+      "Defectors Round Up"
+    ],
+    "followups": [
+      "Herbal Aid"
+    ]
+  },
+  "Digging At The Truth": {
+    "followups": [
+      "The Betrayers Blade"
+    ]
+  },
+  "Double Trouble": {
+    "followups": [
+      "Bearing Light"
+    ]
+  },
+  "Echoes In The Sand": {
+    "prerequisites": [
+      "Desert Data Dilemma"
+    ],
+    "followups": [
+      "Desert Data Dilemma"
+    ]
+  },
+  "Echoes Of Atonement": {
+    "followups": [
+      "Beacon Of Hope"
+    ]
+  },
+  "Echoes Of The Feral Artifact": {
+    "prerequisites": [
+      "Unearthing The Truth"
+    ],
+    "followups": [
+      "A Brothers Shadow"
+    ]
+  },
+  "Energized Spirits": {
+    "prerequisites": [
+      "Stamp Of Peace"
+    ],
+    "followups": [
+      "Silencing The Rumors"
+    ]
+  },
+  "Evidence In The Shadows": {
+    "prerequisites": [
+      "Brotherly Loss"
+    ],
+    "followups": [
+      "Shadows Beneath The Sands"
+    ]
+  },
+  "Flowers For Friendship": {
+    "prerequisites": [
+      "Desert Data Dilemma"
+    ],
+    "followups": [
+      "Desert Data Dilemma"
+    ]
+  },
+  "Fragments Of Fury": {
+    "prerequisites": [
+      "The Role Of A Lifetime"
+    ]
+  },
+  "Furnishing The Future": {
+    "prerequisites": [
+      "Allergy Free Flora",
+      "Desert Data Dilemma"
+    ],
+    "followups": [
+      "Desert Data Dilemma"
+    ]
+  },
+  "Guarding Shadows": {
+    "prerequisites": [
+      "The Betrayers Blade"
+    ]
+  },
+  "Hangover Helper": {
+    "prerequisites": [
+      "Substances Of Suspicion"
+    ],
+    "followups": [
+      "Desert Data Dilemma"
+    ]
+  },
+  "Harvesting The Fallen": {
+    "prerequisites": [
+      "Desert Decryption"
+    ],
+    "followups": [
+      "Sensing The Sands"
+    ]
+  },
+  "Herbal Aid": {
+    "prerequisites": [
+      "Deserted Hopes"
+    ],
+    "followups": [
+      "Crafting Concerns"
+    ]
+  },
+  "Juice For The Journey": {
+    "followups": [
+      "Blitzs Escape Clause"
+    ]
+  },
+  "Lights Camera Action": {
+    "followups": [
+      "The Draft Dodgers Dilemma"
+    ]
+  },
+  "Lost And Found": {
+    "followups": [
+      "Salvation From Madness"
+    ]
+  },
+  "Magnetic Intentions": {
+    "prerequisites": [
+      "Desert Data Dilemma"
+    ],
+    "followups": [
+      "Desert Data Dilemma"
+    ]
+  },
+  "Proving Loyalties": {
+    "prerequisites": [
+      "Quelling The Rage"
+    ],
+    "followups": [
+      "Artifact Of Fury"
+    ]
+  },
+  "Quelling The Rage": {
+    "followups": [
+      "Proving Loyalties",
+      "The Deserts Secret"
+    ]
+  },
+  "Reluctant Reinforcement": {
+    "prerequisites": [
+      "Accords And Accidents",
+      "Beacon Of Confidence",
+      "Call To Arms",
+      "Sending The Alert"
+    ],
+    "followups": [
+      "Stamp Of Peace"
+    ]
+  },
+  "Resurrection Research": {
+    "prerequisites": [
+      "A Pacifists Dilemma"
+    ],
+    "followups": [
+      "Revival Overdrive"
+    ]
+  },
+  "Revival Overdrive": {
+    "prerequisites": [
+      "Resurrection Research"
+    ],
+    "followups": [
+      "Beacon Of Confidence"
+    ]
+  },
+  "Salvation From Madness": {
+    "prerequisites": [
+      "Lost And Found"
+    ]
+  },
+  "Secrets Of The Invaders": {
+    "prerequisites": [
+      "A Second Chance"
+    ],
+    "followups": [
+      "Thirst For Understanding"
+    ]
+  },
+  "Secrets Unearthed": {
+    "prerequisites": [
+      "Unsettling Return"
+    ],
+    "followups": [
+      "Sending The Alert",
+      "Unsettling Return"
+    ]
+  },
+  "Sending The Alert": {
+    "prerequisites": [
+      "Secrets Unearthed"
+    ],
+    "followups": [
+      "Reluctant Reinforcement"
+    ]
+  },
+  "Sensing The Sands": {
+    "prerequisites": [
+      "Harvesting The Fallen"
+    ],
+    "followups": [
+      "Substances Of Suspicion"
+    ]
+  },
+  "Shadows Beneath The Sands": {
+    "prerequisites": [
+      "Evidence In The Shadows"
+    ],
+    "followups": [
+      "The Deserts Secret"
+    ]
+  },
+  "Sharpening Resolve": {
+    "prerequisites": [
+      "Crafting Concerns"
+    ],
+    "followups": [
+      "A Pacifists Dilemma"
+    ]
+  },
+  "Silencing The Rumors": {
+    "prerequisites": [
+      "Energized Spirits"
+    ],
+    "followups": [
+      "Desert Diplomacy"
+    ]
+  },
+  "Spirited Away": {
+    "prerequisites": [
+      "Valuable Research"
+    ],
+    "followups": [
+      "Desert Decryption"
+    ]
+  },
+  "Stamp Of Peace": {
+    "prerequisites": [
+      "Reluctant Reinforcement"
+    ],
+    "followups": [
+      "Energized Spirits"
+    ]
+  },
+  "Substances Of Suspicion": {
+    "prerequisites": [
+      "Sensing The Sands"
+    ],
+    "followups": [
+      "Hangover Helper"
+    ]
+  },
+  "Sunburned Escape": {
+    "followups": [
+      "Defectors Round Up"
+    ]
+  },
+  "The Betrayers Blade": {
+    "prerequisites": [
+      "Digging At The Truth"
+    ],
+    "followups": [
+      "Guarding Shadows"
+    ]
+  },
+  "The Blades Dilemma": {
+    "followups": [
+      "Defectors Round Up"
+    ]
+  },
+  "The Deserts Secret": {
+    "prerequisites": [
+      "Quelling The Rage",
+      "Shadows Beneath The Sands"
+    ]
+  },
+  "The Draft Dodgers Dilemma": {
+    "prerequisites": [
+      "Lights Camera Action"
+    ]
+  },
+  "The Great Pretender": {
+    "followups": [
+      "Defectors Round Up"
+    ]
+  },
+  "The Role Of A Lifetime": {
+    "prerequisites": [
+      "Artifact Of Fury"
+    ],
+    "followups": [
+      "Fragments Of Fury"
+    ]
+  },
+  "Thirst For Understanding": {
+    "prerequisites": [
+      "Secrets Of The Invaders"
+    ],
+    "followups": [
+      "A Bitter Brew"
+    ]
+  },
+  "Turning The Tide": {
+    "followups": [
+      "Bearing Light"
+    ]
+  },
+  "Unearthing The Truth": {
+    "prerequisites": [
+      "Desert Diplomacy"
+    ],
+    "followups": [
+      "Echoes Of The Feral Artifact"
+    ]
+  },
+  "Unsettling Return": {
+    "prerequisites": [
+      "A Quiet Disposal",
+      "Secrets Unearthed"
+    ],
+    "followups": [
+      "Secrets Unearthed"
+    ]
+  },
+  "Unveiling The Hidden Truth": {
+    "followups": [
+      "Bearing Light"
+    ]
+  },
+  "Valuable Research": {
+    "followups": [
+      "Spirited Away"
+    ]
+  }
+}
