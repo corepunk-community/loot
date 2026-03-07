@@ -232,6 +232,7 @@ function populateTablesList() {
         li.dataset.table = questName;
 
         const api = getApiQuest(questName);
+        const meta = getQuestMeta(questName);
 
         // Level badge
         if (api && api.level) {

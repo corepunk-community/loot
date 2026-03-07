@@ -1437,8 +1437,7 @@ footer {
     background: rgba(0, 0, 0, 0.6);
     z-index: 1000;
     justify-content: center;
-    align-items: flex-start;
-    padding-top: 60px;
+    align-items: center;
     overflow-y: auto;
 }
 .quest-modal-overlay.visible {
@@ -1590,8 +1589,5 @@ footer {
     .quest-modal {
         width: 98%;
         max-height: calc(100vh - 40px);
-    }
-    .quest-modal-overlay {
-        padding-top: 20px;
     }
 }

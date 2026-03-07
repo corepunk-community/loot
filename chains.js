@@ -424,7 +424,7 @@ function renderChains() {
                 if (!hasRewards) link.classList.add('chain-quest-link-dim');
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    QuestModal.show(q.name);
+                    QuestModal.show(q.name, q.slug);
                 });
                 title.appendChild(link);
                 node.appendChild(title);

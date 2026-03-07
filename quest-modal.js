@@ -7,14 +7,24 @@
 const QuestModal = (() => {
     let data = {};
     let overlay = null;
+    let currentSlug = null;
 
     function toSlug(name) {
         return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
     }
 
-    function getApiQuest(questName) {
-        const slug = toSlug(questName);
-        return data.apiQuests[slug] || data.apiQuests[data.slugMap[slug]] || null;
+    function getApiQuest(questName, slug) {
+        // Direct slug lookup first (if provided)
+        if (slug && data.apiQuests[slug]) return data.apiQuests[slug];
+        // Convert name to slug
+        const derivedSlug = toSlug(questName);
+        if (data.apiQuests[derivedSlug]) return data.apiQuests[derivedSlug];
+        if (data.slugMap[derivedSlug] && data.apiQuests[data.slugMap[derivedSlug]]) return data.apiQuests[data.slugMap[derivedSlug]];
+        // Fallback: search by name (for API quests with different slugs)
+        for (const q of Object.values(data.apiQuests)) {
+            if (q.name === questName) return q;
+        }
+        return null;
     }
 
     function getQuestMeta(questName) {
@@ -59,7 +69,7 @@ const QuestModal = (() => {
     }
 
     function buildDetailHTML(questName) {
-        const api = getApiQuest(questName);
+        const api = getApiQuest(questName, currentSlug);
         const meta = getQuestMeta(questName);
 
         if (!api && !meta) {
@@ -131,7 +141,7 @@ const QuestModal = (() => {
 
     function buildChainHTML(questName) {
         const meta = getQuestMeta(questName);
-        const api = getApiQuest(questName);
+        const api = getApiQuest(questName, currentSlug);
 
         const prerequisites = [];
         const followups = [];
@@ -241,8 +251,11 @@ const QuestModal = (() => {
         document.body.appendChild(overlay);
     }
 
-    function show(questName) {
+    function show(questName, slug) {
         if (!overlay) createOverlay();
+
+        // Store current slug for internal lookups
+        currentSlug = slug || null;
 
         const titleEl = overlay.querySelector('.quest-modal-title');
         const bodyEl = overlay.querySelector('.quest-modal-body');
