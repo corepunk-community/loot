@@ -14,7 +14,7 @@ body {
 }
 
 .container {
-    max-width: 1600px;
+    max-width: clamp(1200px, 92vw, 2800px);
     margin: 0 auto;
     padding: 20px;
 }
@@ -1322,6 +1322,40 @@ footer {
 .chain-graph {
     position: relative;
     overflow-x: auto;
+    cursor: grab;
+    scrollbar-width: thin;
+    scrollbar-color: #b0b0b0 transparent;
+}
+.chain-graph:active {
+    cursor: grabbing;
+}
+.chain-graph.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+.chain-graph.is-dragging a,
+.chain-graph.is-dragging .chain-quest-link {
+    pointer-events: none;
+}
+.chain-scroll-hint {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 11px;
+    color: #999;
+    background: rgba(255,255,255,0.85);
+    padding: 2px 8px;
+    border-radius: 10px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+.chain-graph.has-overflow .chain-scroll-hint {
+    opacity: 1;
+}
+.chain-graph.has-scrolled .chain-scroll-hint {
+    opacity: 0;
 }
 
 .chain-grid {

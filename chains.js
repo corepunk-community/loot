@@ -568,12 +568,20 @@ function renderForkedChain(chain, byDepth, maxDepth, edges, depthMap, nameToNode
         }
     }
 
+    // Scroll hint
+    const hint = document.createElement('div');
+    hint.className = 'chain-scroll-hint';
+    hint.textContent = 'Drag to scroll \u2194';
+    container.appendChild(hint);
+
     container.appendChild(graphEl);
     container._edgeData = { grid, edges, colMap, nameToNode, maxDepth, totalCols };
 
     requestAnimationFrame(() => {
         drawEdgeLines(container, grid, edges, colMap, nameToNode, maxDepth, totalCols);
     });
+
+    enableDragPan(container);
 
     return container;
 }
@@ -660,6 +668,71 @@ function drawEdgeLines(container, grid, edges, colMap, nameToNode, maxDepth, tot
     });
 
     container.appendChild(svg);
+}
+
+// Enable click-and-drag horizontal panning on a scrollable element
+function enableDragPan(el) {
+    let isDown = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let hasMoved = false;
+
+    el.addEventListener('mousedown', (e) => {
+        // Don't intercept clicks on links/buttons
+        if (e.target.closest('a, button')) return;
+        isDown = true;
+        hasMoved = false;
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+        el.classList.add('is-dragging');
+    });
+
+    el.addEventListener('mouseleave', () => {
+        if (isDown) {
+            isDown = false;
+            el.classList.remove('is-dragging');
+        }
+    });
+
+    el.addEventListener('mouseup', () => {
+        isDown = false;
+        el.classList.remove('is-dragging');
+    });
+
+    el.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        const walk = x - startX;
+        if (Math.abs(walk) > 3) hasMoved = true;
+        el.scrollLeft = scrollLeft - walk;
+    });
+
+    // Suppress click after drag
+    el.addEventListener('click', (e) => {
+        if (hasMoved) {
+            e.stopPropagation();
+            e.preventDefault();
+            hasMoved = false;
+        }
+    }, true);
+
+    // Add scroll hint if content overflows
+    function checkOverflow() {
+        if (el.scrollWidth > el.clientWidth + 10) {
+            el.classList.add('has-overflow');
+        } else {
+            el.classList.remove('has-overflow');
+        }
+    }
+
+    el.addEventListener('scroll', () => {
+        el.classList.add('has-scrolled');
+    }, { once: true });
+
+    // Check on load and resize
+    requestAnimationFrame(checkOverflow);
+    window.addEventListener('resize', checkOverflow);
 }
 
 function renderChains() {
