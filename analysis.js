@@ -157,8 +157,8 @@ function renderQuestLists() {
             predicate: item => item === 'Synthesis Item Upgrade T3 Epic'
         },
         {
-            id: 't3-weapons',
-            title: 'T3 Weapons or Weapon Recipes',
+            id: 'weapons',
+            title: 'Weapons or Weapon Recipes',
             predicate: item => {
                 const lower = item.toLowerCase();
                 return (lower.startsWith('wp ') || lower.startsWith('rec wp '));
@@ -191,8 +191,6 @@ function renderQuestLists() {
     const tocList = document.createElement('ul');
 
     // Pre-compute results and render sections
-    const sectionEls = [];
-
     sections.forEach(section => {
         const results = findQuests(section.predicate);
 
@@ -255,6 +253,16 @@ function renderQuestLists() {
 
         renderUnverifiedSection(container, unverified, tocLink);
     }
+
+    // Quests by Region
+    const regionsTocItem = document.createElement('li');
+    const regionsTocLink = document.createElement('a');
+    regionsTocLink.href = '#regions';
+    regionsTocLink.textContent = 'Quests by Region';
+    regionsTocItem.appendChild(regionsTocLink);
+    tocList.appendChild(regionsTocItem);
+
+    renderLocationAnalysis(container, regionsTocLink);
 }
 
 function buildQuestTable(results) {
@@ -262,18 +270,19 @@ function buildQuestTable(results) {
     table.className = 'analysis-table';
 
     const thead = document.createElement('thead');
-    thead.innerHTML = '<tr><th>Lv</th><th>Quest</th><th>Matching Items</th></tr>';
+    thead.innerHTML = '<tr><th>Lv</th><th>Quest</th><th>Location</th><th>Giver</th><th>Matching Items</th></tr>';
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
     results.forEach(({ quest, items }) => {
         const tr = document.createElement('tr');
         const api = getApiQuest(quest);
+        const meta = getQuestMeta(quest);
 
         // Level
         const tdLvl = document.createElement('td');
         tdLvl.className = 'analysis-table-level';
-        tdLvl.textContent = api?.level ?? '—';
+        tdLvl.textContent = api?.level ?? '';
         tr.appendChild(tdLvl);
 
         // Quest name
@@ -288,7 +297,6 @@ function buildQuestTable(results) {
             window.location.href = 'quests.html';
         });
         tdName.appendChild(link);
-        const meta = getQuestMeta(quest);
         if (meta?.region === 'Prison Island') {
             const badge = document.createElement('span');
             badge.className = 'region-badge region-badge-prison';
@@ -304,6 +312,22 @@ function buildQuestTable(results) {
             tdName.appendChild(tag);
         }
         tr.appendChild(tdName);
+
+        // Location
+        const tdLocation = document.createElement('td');
+        tdLocation.textContent = meta?.questLocation || meta?.region || api?.location || '';
+        tr.appendChild(tdLocation);
+
+        // Giver
+        const tdGiver = document.createElement('td');
+        const giverName = meta?.questGiver || api?.questGiver?.name || '';
+        const giverSlug = api?.questGiver?.slug || '';
+        if (giverName && giverSlug) {
+            tdGiver.innerHTML = `<a href="https://corepunk.help/npcs/${giverSlug}" target="_blank" rel="noopener" class="npc-map-link">${giverName}</a>`;
+        } else {
+            tdGiver.textContent = giverName;
+        }
+        tr.appendChild(tdGiver);
 
         // Items (plain text, comma-separated)
         const tdItems = document.createElement('td');
@@ -336,18 +360,21 @@ function renderUnverifiedSection(container, unverified, tocLink) {
 
     const note = document.createElement('p');
     note.className = 'analysis-section-note';
-    note.textContent = 'These quests were found in game files but are not listed on corepunk.help. They may not be accessible in-game.';
+    note.textContent = 'These quests exist in game files but are not on corepunk.help. They may be upcoming content, Prison Island (unreleased zone), or use different names on the API.';
     body.appendChild(note);
 
     const table = document.createElement('table');
     table.className = 'analysis-table';
     const thead = document.createElement('thead');
-    thead.innerHTML = '<tr><th>Quest</th><th>Reward Items</th></tr>';
+    thead.innerHTML = '<tr><th>Quest</th><th>Region</th><th>Location</th><th>Giver</th><th>Binary Slug</th><th>Items</th></tr>';
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
     unverified.forEach(quest => {
         const tr = document.createElement('tr');
+        const meta = getQuestMeta(quest);
+
+        // Quest name
         const tdName = document.createElement('td');
         const link = document.createElement('a');
         link.className = 'analysis-quest-link';
@@ -359,12 +386,122 @@ function renderUnverifiedSection(container, unverified, tocLink) {
             window.location.href = 'quests.html';
         });
         tdName.appendChild(link);
+        if (meta?.region === 'Prison Island') {
+            const badge = document.createElement('span');
+            badge.className = 'region-badge region-badge-prison';
+            badge.textContent = 'PI';
+            badge.title = 'Prison Island';
+            tdName.appendChild(badge);
+        }
         tr.appendChild(tdName);
 
+        // Region
+        const tdRegion = document.createElement('td');
+        tdRegion.textContent = meta?.region || '';
+        tr.appendChild(tdRegion);
+
+        // Location
+        const tdLocation = document.createElement('td');
+        tdLocation.textContent = meta?.questLocation || '';
+        tr.appendChild(tdLocation);
+
+        // Giver
+        const tdGiver = document.createElement('td');
+        tdGiver.textContent = meta?.questGiver || '';
+        tr.appendChild(tdGiver);
+
+        // Binary slug
+        const tdSlug = document.createElement('td');
+        tdSlug.className = 'analysis-table-slug';
+        tdSlug.textContent = toSlug(quest);
+        tr.appendChild(tdSlug);
+
+        // Items count
         const tdItems = document.createElement('td');
         tdItems.className = 'analysis-table-items';
         tdItems.textContent = `${questRewards[quest].length} items`;
         tr.appendChild(tdItems);
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    body.appendChild(table);
+
+    const chevron = header.querySelector('.analysis-section-chevron');
+    header.addEventListener('click', () => toggleSection(body, chevron));
+    tocLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (body.classList.contains('hidden')) {
+            toggleSection(body, chevron);
+        }
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    panel.appendChild(header);
+    panel.appendChild(body);
+    container.appendChild(panel);
+}
+
+function renderLocationAnalysis(container, tocLink) {
+    const allQuests = Object.keys(questRewards);
+    const regionGroups = {};
+
+    allQuests.forEach(quest => {
+        const meta = getQuestMeta(quest);
+        const region = meta?.region || 'Unknown';
+        if (!regionGroups[region]) {
+            regionGroups[region] = { quests: [], totalItems: 0 };
+        }
+        regionGroups[region].quests.push(quest);
+        regionGroups[region].totalItems += questRewards[quest].length;
+    });
+
+    const sortedRegions = Object.entries(regionGroups).sort((a, b) => b[1].quests.length - a[1].quests.length);
+
+    const panel = document.createElement('div');
+    panel.className = 'analysis-section';
+    panel.id = 'regions';
+
+    const header = document.createElement('div');
+    header.className = 'analysis-section-header';
+    header.innerHTML = `
+        <span class="analysis-section-title">Quests by Region</span>
+        <span class="analysis-section-count">${sortedRegions.length} regions</span>
+        <span class="analysis-section-chevron">&#9654;</span>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'analysis-section-body hidden';
+
+    const table = document.createElement('table');
+    table.className = 'analysis-table';
+
+    const thead = document.createElement('thead');
+    thead.innerHTML = '<tr><th>Region</th><th>Quests</th><th>% of Total</th><th>Avg Items</th></tr>';
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    sortedRegions.forEach(([region, data]) => {
+        const tr = document.createElement('tr');
+
+        const tdRegion = document.createElement('td');
+        tdRegion.textContent = region;
+        tr.appendChild(tdRegion);
+
+        const tdCount = document.createElement('td');
+        tdCount.textContent = data.quests.length;
+        tr.appendChild(tdCount);
+
+        const tdPct = document.createElement('td');
+        const pct = ((data.quests.length / allQuests.length) * 100).toFixed(1);
+        tdPct.textContent = `${pct}%`;
+        tr.appendChild(tdPct);
+
+        const tdAvg = document.createElement('td');
+        const avg = data.quests.length > 0 ? (data.totalItems / data.quests.length).toFixed(1) : '0';
+        tdAvg.textContent = avg;
+        tr.appendChild(tdAvg);
 
         tbody.appendChild(tr);
     });

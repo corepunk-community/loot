@@ -7,6 +7,8 @@ let currentQuest = null;
 let globalSearchActive = false;
 let currentRewardFilter = "all";
 let chainFilterActive = false;
+let showPIActive = false;
+let apiPrereqTargets = new Set(); // slugs that are prerequisites of other quests
 
 // DOM elements
 const tablesList = document.getElementById('tables-list');
@@ -82,9 +84,12 @@ function getQuestRegion(questName) {
 // Check if a quest is part of a chain
 function isInChain(questName) {
     const meta = getQuestMeta(questName);
-    if (meta && (meta.nextQuests || meta.prevQuests)) return true;
+    if (meta && ((meta.nextQuests && meta.nextQuests.length > 0) || (meta.prevQuests && meta.prevQuests.length > 0))) return true;
     const api = getApiQuest(questName);
-    if (api && api.prerequisiteQuests && api.prerequisiteQuests.length > 0) return true;
+    if (api && api.prerequisiteQuests && api.prerequisiteQuests.filter(s => s).length > 0) return true;
+    // Check if another API quest lists this as a prerequisite
+    const thisSlug = toSlug(questName);
+    if (apiPrereqTargets.has(thisSlug)) return true;
     return false;
 }
 
@@ -127,6 +132,13 @@ async function fetchQuestRewards() {
             questMeta = await metaResponse.json();
         }
 
+        // Build reverse prereq index (slugs that are listed as prerequisites by other quests)
+        Object.values(apiQuests).forEach(q => {
+            (q.prerequisiteQuests || []).forEach(slug => {
+                if (slug) apiPrereqTargets.add(slug);
+            });
+        });
+
         populateTablesList();
 
         // Check if navigated here from chains page or analysis page
@@ -162,7 +174,12 @@ function applyFilters() {
         // Chain filter
         const matchesChain = !chainFilterActive || isInChain(questName);
 
-        if (matchesFilter && matchesSearch && matchesLevel && matchesChain) {
+        // Prison Island filter: hide unverified PI quests unless toggled
+        const region = getQuestRegion(questName);
+        const isUnverifiedPI = region === 'Prison Island' && !getApiQuest(questName);
+        const matchesPI = showPIActive || !isUnverifiedPI;
+
+        if (matchesFilter && matchesSearch && matchesLevel && matchesChain && matchesPI) {
             item.classList.remove('hidden-table');
             visibleCount++;
         } else {
@@ -240,7 +257,10 @@ function populateTablesList() {
             li.classList.add('active');
         }
 
-        if (currentRewardFilter !== 'all' && !questMatchesFilter(questName, currentRewardFilter)) {
+        // Apply initial filters
+        const isUnverifiedPI = region === 'Prison Island' && !api;
+        if ((currentRewardFilter !== 'all' && !questMatchesFilter(questName, currentRewardFilter))
+            || (!showPIActive && isUnverifiedPI)) {
             li.classList.add('hidden-table');
         }
 
@@ -255,9 +275,7 @@ function populateTablesList() {
         tablesList.appendChild(li);
     });
 
-    if (tableSearchInput.value.trim()) {
-        applyFilters();
-    }
+    applyFilters();
 }
 
 // Build a short summary of reward types for a quest
@@ -688,6 +706,16 @@ function setupCategoryFilter() {
         chainBtn.addEventListener('click', () => {
             chainFilterActive = !chainFilterActive;
             chainBtn.classList.toggle('active', chainFilterActive);
+            applyFilters();
+        });
+    }
+
+    // Prison Island filter
+    const piBtn = document.getElementById('pi-filter-btn');
+    if (piBtn) {
+        piBtn.addEventListener('click', () => {
+            showPIActive = !showPIActive;
+            piBtn.classList.toggle('active', showPIActive);
             applyFilters();
         });
     }
