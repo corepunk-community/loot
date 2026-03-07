@@ -1133,6 +1133,27 @@ footer {
     border-radius: 10px;
 }
 
+.chain-source-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.chain-source-api {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+}
+
+.chain-source-binary {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
 .chain-group-chevron {
     margin-left: auto;
     font-size: 12px;

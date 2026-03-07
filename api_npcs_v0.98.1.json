@@ -1,0 +1,2150 @@
+[
+  {
+    "name": "Ace",
+    "slug": "ace",
+    "location": "riverrise-city",
+    "position": [
+      803,
+      445
+    ]
+  },
+  {
+    "name": "Aedyn Chatfield",
+    "slug": "aedyn-chatfield",
+    "location": "faidens-camp",
+    "position": [
+      466,
+      149
+    ]
+  },
+  {
+    "name": "Alaric Stormshade",
+    "slug": "alaric-stormshade",
+    "location": "fort",
+    "position": [
+      376,
+      263
+    ]
+  },
+  {
+    "name": "Alexander Stones",
+    "slug": "alexander-stones",
+    "location": "westwind-quarry",
+    "position": [
+      155,
+      49
+    ]
+  },
+  {
+    "name": "Alex \"Hooty\" Howitzer",
+    "slug": "alex-hooty-howitzer",
+    "location": "great-steppe-stronghold",
+    "position": [
+      391,
+      675
+    ]
+  },
+  {
+    "name": "Anwir Morgan",
+    "slug": "anwir-morgan",
+    "location": "windreach-depot",
+    "position": [
+      71,
+      289
+    ]
+  },
+  {
+    "name": "Armbot",
+    "slug": "armbot",
+    "location": "westwind-woods",
+    "position": [
+      216,
+      160
+    ]
+  },
+  {
+    "name": "Ashley O'connell",
+    "slug": "ashley-oconnell",
+    "location": "prison-island",
+    "position": [
+      0,
+      0
+    ]
+  },
+  {
+    "name": "Balthazar \"Baz\" Grimble",
+    "slug": "balthazar-baz-grimble",
+    "location": "windreach-woods",
+    "position": [
+      411,
+      308
+    ]
+  },
+  {
+    "name": "Barkley Beats",
+    "slug": "barkley-beats",
+    "location": "riverrise-city",
+    "position": [
+      802,
+      446
+    ]
+  },
+  {
+    "name": "Barkowski",
+    "slug": "barkowski",
+    "location": "riverrise-city",
+    "position": [
+      792,
+      442
+    ]
+  },
+  {
+    "name": "Barnaby Crump",
+    "slug": "barnaby-crump",
+    "location": "windstone-village",
+    "position": [
+      471,
+      335
+    ]
+  },
+  {
+    "name": "Barnaby Thorn",
+    "slug": "barnaby-thorn",
+    "location": "great-steppe-stronghold",
+    "position": [
+      386,
+      126
+    ]
+  },
+  {
+    "name": "Bart Blaine",
+    "slug": "bart-blaine",
+    "location": "riverrise-city",
+    "position": [
+      808,
+      450
+    ]
+  },
+  {
+    "name": "Baxton \"Skip\" Malroth",
+    "slug": "baxton-skip-malroth",
+    "location": "windstone-village",
+    "position": [
+      438,
+      338
+    ]
+  },
+  {
+    "name": "Berg Stonefoot",
+    "slug": "berg-stonefoot",
+    "location": "goldenfield-town",
+    "position": [
+      593,
+      282
+    ]
+  },
+  {
+    "name": "Bernie Mcfeely",
+    "slug": "bernie-mcfeely",
+    "location": "westwind-woods",
+    "position": [
+      133,
+      198
+    ]
+  },
+  {
+    "name": "Biff \"Dozer\" Bromley",
+    "slug": "biff-dozer-bromley",
+    "location": "central-fort",
+    "position": [
+      460,
+      648
+    ]
+  },
+  {
+    "name": "Big Baz",
+    "slug": "big-baz",
+    "location": "windreach-woods",
+    "position": [
+      284,
+      367
+    ]
+  },
+  {
+    "name": "\"Big Mamma\" Martha Potterson",
+    "slug": "martha-big-mamma-potterson",
+    "location": "goldenfield-town",
+    "position": [
+      529,
+      177
+    ]
+  },
+  {
+    "name": "Blink-1n",
+    "slug": "blink-1n",
+    "location": "goldenfield-town",
+    "position": [
+      518,
+      168
+    ]
+  },
+  {
+    "name": "Blitz Hyperstorm",
+    "slug": "blitz-hyperstorm",
+    "location": "central-fort",
+    "position": [
+      457,
+      653
+    ]
+  },
+  {
+    "name": "Blix Ironsight",
+    "slug": "blix-ironsight",
+    "location": "windstone-village",
+    "position": [
+      453,
+      339
+    ]
+  },
+  {
+    "name": "Blorp Knurt",
+    "slug": "blorp-knurt",
+    "location": "riverrise-city",
+    "position": [
+      797,
+      442
+    ]
+  },
+  {
+    "name": "Bob Thurkle",
+    "slug": "bob-thurkle",
+    "location": "riverrise-city",
+    "position": [
+      799.8,
+      443.2
+    ]
+  },
+  {
+    "name": "Bombur",
+    "slug": "bombur",
+    "location": "westwind-woods",
+    "position": [
+      175,
+      128
+    ]
+  },
+  {
+    "name": "\"Bone Broth\" Bill",
+    "slug": "bone-broth-bill",
+    "location": "windreach-woods",
+    "position": [
+      237,
+      299
+    ]
+  },
+  {
+    "name": "Botanius-7",
+    "slug": "botanius-7",
+    "location": "goldenfield-town",
+    "position": [
+      592,
+      188
+    ]
+  },
+  {
+    "name": "Brawny Barrelbuckle",
+    "slug": "brawny-barrelbuckle",
+    "location": "windstone-village",
+    "position": [
+      462,
+      333
+    ]
+  },
+  {
+    "name": "Bronco \"Bowman\" Rivers",
+    "slug": "bronco-bowman-rivers",
+    "location": "windstone-village",
+    "position": [
+      439,
+      346
+    ]
+  },
+  {
+    "name": "Brother Thaddeus",
+    "slug": "brother-thaddeus",
+    "location": "western-fort",
+    "position": [
+      209,
+      633
+    ]
+  },
+  {
+    "name": "BSHL-02",
+    "slug": "bshl-02",
+    "location": "junkyard-slums",
+    "position": [
+      595,
+      752
+    ]
+  },
+  {
+    "name": "Buck",
+    "slug": "buck",
+    "location": "goldenfield-town",
+    "position": [
+      524,
+      172
+    ]
+  },
+  {
+    "name": "Butch O'Hara",
+    "slug": "butch-ohara",
+    "location": "goldenfield-town",
+    "position": [
+      564,
+      165
+    ]
+  },
+  {
+    "name": "Captain Mordrain schloss",
+    "slug": "captain-mordrain-schloss",
+    "location": "greystone-ruins",
+    "position": [
+      102,
+      105
+    ]
+  },
+  {
+    "name": "Captain Rob",
+    "slug": "captain-rob",
+    "location": "prison-island",
+    "position": [
+      0,
+      0
+    ]
+  },
+  {
+    "name": "Cassidy",
+    "slug": "cassidy",
+    "location": "yoga-house",
+    "position": [
+      454,
+      163
+    ]
+  },
+  {
+    "name": "Chad \"Buzz\" McNulty",
+    "slug": "chad-buzz-mcnulty",
+    "location": "riverrise-city",
+    "position": [
+      798,
+      443
+    ]
+  },
+  {
+    "name": "Clanker",
+    "slug": "clanker",
+    "location": "windreach-woods",
+    "position": [
+      53,
+      312
+    ]
+  },
+  {
+    "name": "Claudine Baxter",
+    "slug": "claudine-baxter",
+    "location": "goldenfield-town",
+    "position": [
+      641,
+      124
+    ]
+  },
+  {
+    "name": "Clyde",
+    "slug": "clyde",
+    "location": "riverrise-city",
+    "position": [
+      824,
+      438
+    ]
+  },
+  {
+    "name": "Colt \"Muffinman\" McGrady",
+    "slug": "colt-muffinman-mcgrady",
+    "location": "great-steppe-stronghold",
+    "position": [
+      381,
+      665
+    ]
+  },
+  {
+    "name": "Cyra \"Byte\" Kessler",
+    "slug": "cyra-byte-kessler",
+    "location": "riverrise-city",
+    "position": [
+      828,
+      463
+    ]
+  },
+  {
+    "name": "Daxton Vance",
+    "slug": "daxton-vance",
+    "location": "western-fort",
+    "position": [
+      195,
+      642
+    ]
+  },
+  {
+    "name": "Dax Treebill",
+    "slug": "dax-treebill",
+    "location": "reverie-hollow",
+    "position": [
+      301,
+      80
+    ]
+  },
+  {
+    "name": "Deep blue",
+    "slug": "deep-blue",
+    "location": "windreach-woods",
+    "position": [
+      404,
+      364
+    ]
+  },
+  {
+    "name": "Doc Greene",
+    "slug": "doc-greene",
+    "location": "prison-island",
+    "position": [
+      0,
+      0
+    ]
+  },
+  {
+    "name": "DOPY-03",
+    "slug": "dopy-03",
+    "location": "junkyard-slums",
+    "position": [
+      590,
+      755
+    ]
+  },
+  {
+    "name": "Dorik Oakenshield",
+    "slug": "dorik-oakenshield",
+    "location": "westwind-quarry",
+    "position": [
+      155,
+      52
+    ]
+  },
+  {
+    "name": "Draven Torvik",
+    "slug": "draven-torvik",
+    "location": "westwind-woods",
+    "position": [
+      372,
+      125
+    ]
+  },
+  {
+    "name": "D'Rek",
+    "slug": "drek",
+    "location": "goldenfield-town",
+    "position": [
+      505,
+      186
+    ]
+  },
+  {
+    "name": "Dr.Glimmiwop",
+    "slug": "dr-glimmiwop",
+    "location": "goldenfield-town",
+    "position": [
+      597,
+      256
+    ]
+  },
+  {
+    "name": "Driscoll-99",
+    "slug": "driscoll-99",
+    "location": "westwind-woods",
+    "position": [
+      362,
+      130
+    ]
+  },
+  {
+    "name": "Dr. Orion Bloom",
+    "slug": "dr-orion-bloom",
+    "location": "goldenfield-town",
+    "position": [
+      510,
+      242
+    ]
+  },
+  {
+    "name": "Dr. Queenie",
+    "slug": "dr-queenie",
+    "location": "northsteppe-fort",
+    "position": [
+      543,
+      669
+    ]
+  },
+  {
+    "name": "Durzo \"Dicey\" Dunwaddle",
+    "slug": "durzo-dicey-dunwaddle",
+    "location": "windstone-village",
+    "position": [
+      472,
+      350
+    ]
+  },
+  {
+    "name": "Dwarfaton Ironcheek",
+    "slug": "dwarfaton-ironcheek",
+    "location": "windstone-village",
+    "position": [
+      457,
+      338
+    ]
+  },
+  {
+    "name": "Eadric Barrow",
+    "slug": "eadric-barrow",
+    "location": "skylight-grasslands",
+    "position": [
+      485,
+      330
+    ]
+  },
+  {
+    "name": "Eamon Hardich",
+    "slug": "eamon-hardich",
+    "location": "westwind-sawmill",
+    "position": [
+      246,
+      248
+    ]
+  },
+  {
+    "name": "Eddie",
+    "slug": "eddie",
+    "location": "windstone-village",
+    "position": [
+      450,
+      350
+    ]
+  },
+  {
+    "name": "Elara Brightfall",
+    "slug": "elara-brightfall",
+    "location": "goldenfield-town",
+    "position": [
+      563,
+      196
+    ]
+  },
+  {
+    "name": "Energizer-21",
+    "slug": "energizer-21",
+    "location": "goldenfield-town",
+    "position": [
+      607,
+      149
+    ]
+  },
+  {
+    "name": "Eric",
+    "slug": "eric",
+    "location": "windstone-village",
+    "position": [
+      467,
+      344
+    ]
+  },
+  {
+    "name": "Erwin \"Bacon King\" Braux",
+    "slug": "erwin-bacon-king-braux",
+    "location": "riverrise-city",
+    "position": [
+      822,
+      450
+    ]
+  },
+  {
+    "name": "Escape pod",
+    "slug": "escape-pod",
+    "location": "prison-island",
+    "position": [
+      0,
+      0
+    ]
+  },
+  {
+    "name": "Eustice Crumble",
+    "slug": "eustice-crumble",
+    "location": "windreach-depot",
+    "position": [
+      74,
+      287
+    ]
+  },
+  {
+    "name": "Felix",
+    "slug": "felix",
+    "location": "riverrise-city",
+    "position": [
+      807,
+      450
+    ]
+  },
+  {
+    "name": "Fenwick \"Fen\" Harrow",
+    "slug": "fenwick-fen-harrow",
+    "location": "westwind-sawmill",
+    "position": [
+      243,
+      249
+    ]
+  },
+  {
+    "name": "Ferris Bonewright",
+    "slug": "ferris-bonewright",
+    "location": "windstone-village",
+    "position": [
+      461,
+      341
+    ]
+  },
+  {
+    "name": "Finn Hawthorne",
+    "slug": "finn-hawthorne",
+    "location": "adventures-outpost",
+    "position": [
+      533,
+      780
+    ]
+  },
+  {
+    "name": "Flint Thistlewick",
+    "slug": "flint-thistlewick",
+    "location": "great-steppe-stronghold",
+    "position": [
+      378,
+      667
+    ]
+  },
+  {
+    "name": "Furr",
+    "slug": "furr",
+    "location": "silent-mountains",
+    "position": [
+      472,
+      861
+    ]
+  },
+  {
+    "name": "Gareth Rucker",
+    "slug": "gareth-rucker",
+    "location": "adventures-outpost",
+    "position": [
+      539,
+      782
+    ]
+  },
+  {
+    "name": "Gary Grapes",
+    "slug": "gary-grapes",
+    "location": "windstone-village",
+    "position": [
+      461,
+      324
+    ]
+  },
+  {
+    "name": "Gideon Stroud",
+    "slug": "gideon-stroud",
+    "location": "the-shore-of-a-thousands-bones",
+    "position": [
+      190,
+      918
+    ]
+  },
+  {
+    "name": " \"GIGA\" Greg Wattson",
+    "slug": "greg-giga-greg-wattson",
+    "location": "westwind-woods",
+    "position": [
+      379,
+      187
+    ]
+  },
+  {
+    "name": "Gimlor",
+    "slug": "gimlor",
+    "location": "riverrise-city",
+    "position": [
+      805,
+      421
+    ]
+  },
+  {
+    "name": "Gizmo Greasethumb",
+    "slug": "gizmo-greasethumb",
+    "location": "windreach-woods",
+    "position": [
+      205,
+      366
+    ]
+  },
+  {
+    "name": "Glubgrath",
+    "slug": "glubgrath",
+    "location": "skylight-grasslands",
+    "position": [
+      511,
+      314
+    ]
+  },
+  {
+    "name": "Goat the Bounty Hunter",
+    "slug": "goat-the-bounty-hunter",
+    "location": "westwind-woods",
+    "position": [
+      115,
+      222
+    ]
+  },
+  {
+    "name": "Gragthar",
+    "slug": "gragthar",
+    "location": "riverrise-city",
+    "position": [
+      802,
+      444
+    ]
+  },
+  {
+    "name": "Granny Hilde",
+    "slug": "granny-hilde",
+    "location": "goldenfield-town",
+    "position": [
+      572,
+      198
+    ]
+  },
+  {
+    "name": "Gregory",
+    "slug": "gregory",
+    "location": "windstone-village",
+    "position": [
+      467,
+      348
+    ]
+  },
+  {
+    "name": "Greta Grubb",
+    "slug": "greta-grubb",
+    "location": "goldenfield-town",
+    "position": [
+      532,
+      103
+    ]
+  },
+  {
+    "name": "Greta Grubb",
+    "slug": "greta-grubb-steppe",
+    "location": "western-fort",
+    "position": [
+      204,
+      632
+    ]
+  },
+  {
+    "name": "Grimbleton",
+    "slug": "grimbleton",
+    "location": "riverrise-city",
+    "position": [
+      826,
+      456
+    ]
+  },
+  {
+    "name": "Grimwald Tinkerboot",
+    "slug": "grimwald-tinkerboot",
+    "location": "windreach-woods",
+    "position": [
+      135,
+      316
+    ]
+  },
+  {
+    "name": "Grizelda",
+    "slug": "grizelda",
+    "location": "windreach-woods",
+    "position": [
+      43,
+      263
+    ]
+  },
+  {
+    "name": "Griz Turner",
+    "slug": "griz-turner",
+    "location": "goldenfield-town",
+    "position": [
+      543,
+      157
+    ]
+  },
+  {
+    "name": "Grizzle Ironfoot",
+    "slug": "grizzle-ironfoot",
+    "location": "westwind-woods",
+    "position": [
+      263,
+      207
+    ]
+  },
+  {
+    "name": "Grizzle Thornfoot",
+    "slug": "grizzle-thornfoot",
+    "location": "windreach-depot",
+    "position": [
+      75,
+      284
+    ]
+  },
+  {
+    "name": "Grizzly O'Brien",
+    "slug": "grizzly-obrien",
+    "location": "riverrise-city",
+    "position": [
+      795,
+      441
+    ]
+  },
+  {
+    "name": "GRMP-07",
+    "slug": "grmp-07",
+    "location": "junkyard-slums",
+    "position": [
+      592,
+      752
+    ]
+  },
+  {
+    "name": "Grommuk Ironhand",
+    "slug": "grommuk-ironhand",
+    "location": "westwind-sawmill",
+    "position": [
+      262,
+      232
+    ]
+  },
+  {
+    "name": "Grulok",
+    "slug": "grulok",
+    "location": "westwind-woods",
+    "position": [
+      100,
+      241
+    ]
+  },
+  {
+    "name": "Guru David",
+    "slug": "guru-david",
+    "location": "yoga-house",
+    "position": [
+      458,
+      163
+    ]
+  },
+  {
+    "name": "Gusto Grubhunter",
+    "slug": "gusto-grubhunter",
+    "location": "windstone-village",
+    "position": [
+      455,
+      323
+    ]
+  },
+  {
+    "name": "Hank \"Boomstick\" Granger",
+    "slug": "hank-boomstick-granger",
+    "location": "goldenfield-town",
+    "position": [
+      522,
+      175
+    ]
+  },
+  {
+    "name": "Hank Mcallister",
+    "slug": "hank-mcallister",
+    "location": "westwind-woods",
+    "position": [
+      359,
+      58
+    ]
+  },
+  {
+    "name": "Hank Thornbuckle",
+    "slug": "hank-thornbuckle",
+    "location": "goldenfield-town",
+    "position": [
+      666,
+      184
+    ]
+  },
+  {
+    "name": "Harold \"Bloddlust\" Brindle",
+    "slug": "harold-bloddlust-brindle",
+    "location": "riverrise-city",
+    "position": [
+      823,
+      453
+    ]
+  },
+  {
+    "name": "Hilda Deeproot",
+    "slug": "hilda-deeproot",
+    "location": "westwind-woods",
+    "position": [
+      119,
+      128
+    ]
+  },
+  {
+    "name": "Horace Grumbles",
+    "slug": "horace-grumbles",
+    "location": "great-steppes",
+    "position": [
+      265,
+      836
+    ]
+  },
+  {
+    "name": "HPPY",
+    "slug": "hppy",
+    "location": "riverrise-city",
+    "position": [
+      813,
+      469
+    ]
+  },
+  {
+    "name": "HPPY-01",
+    "slug": "hppy-01",
+    "location": "junkyard-slums",
+    "position": [
+      597,
+      753
+    ]
+  },
+  {
+    "name": "Ivie Clarkson",
+    "slug": "ivie-clarkson",
+    "location": "goldenfield-town",
+    "position": [
+      533,
+      181
+    ]
+  },
+  {
+    "name": "Jahri Roots",
+    "slug": "jahri-roots",
+    "location": "goldenfield-town",
+    "position": [
+      464,
+      158
+    ]
+  },
+  {
+    "name": "Jax",
+    "slug": "jax",
+    "location": "prison-island",
+    "position": [
+      0,
+      0
+    ]
+  },
+  {
+    "name": "Jennifer Davyna",
+    "slug": "jennifer-davyna",
+    "location": "great-steppe-stronghold",
+    "position": [
+      380,
+      670
+    ]
+  },
+  {
+    "name": "Kaelyn \"Blaze\" Ainsley",
+    "slug": "kaelyn-blaze-ainsley",
+    "location": "faidens-camp",
+    "position": [
+      469,
+      152
+    ]
+  },
+  {
+    "name": "Kicheki",
+    "slug": "kicheki",
+    "location": "goldenfield-town",
+    "position": [
+      548,
+      188
+    ]
+  },
+  {
+    "name": "Kings head",
+    "slug": "kings-head",
+    "location": "prison-island",
+    "position": [
+      0,
+      0
+    ]
+  },
+  {
+    "name": "Kira",
+    "slug": "kira",
+    "location": "silent-mountains",
+    "position": [
+      470,
+      860
+    ]
+  },
+  {
+    "name": "Lana Cartouche",
+    "slug": "lana-cartouche",
+    "location": "reverie-hollow",
+    "position": [
+      286,
+      56
+    ]
+  },
+  {
+    "name": "Lenny",
+    "slug": "lenny",
+    "location": "central-fort",
+    "position": [
+      460,
+      652
+    ]
+  },
+  {
+    "name": "Lila Algernon",
+    "slug": "lila-algernon",
+    "location": "riverrise-city",
+    "position": [
+      798,
+      443
+    ]
+  },
+  {
+    "name": "Lil Timmy",
+    "slug": "lil-timmy",
+    "location": "goldenfield-town",
+    "position": [
+      663,
+      185
+    ]
+  },
+  {
+    "name": "Lily Baxter",
+    "slug": "lily-baxter",
+    "location": "goldenfield-town",
+    "position": [
+      638,
+      128
+    ]
+  },
+  {
+    "name": "Lingua",
+    "slug": "lingua",
+    "location": "reverie-hollow",
+    "position": [
+      292,
+      74
+    ]
+  },
+  {
+    "name": "Lola Vexar",
+    "slug": "lola-vexar",
+    "location": "riverrise-city",
+    "position": [
+      797.5,
+      445.3
+    ]
+  },
+  {
+    "name": "Louise Oldgarden",
+    "slug": "louise-oldgarden",
+    "location": "reverie-hollow",
+    "position": [
+      289,
+      51
+    ]
+  },
+  {
+    "name": "Ludwig Schatten",
+    "slug": "ludwig-schatten",
+    "location": "windreach-woods",
+    "position": [
+      112,
+      327
+    ]
+  },
+  {
+    "name": "Ludwig Stonecap",
+    "slug": "ludwig-stonecap",
+    "location": "dragonbane-fort",
+    "position": [
+      306,
+      669
+    ]
+  },
+  {
+    "name": "Lyra Thornfeld",
+    "slug": "lyra-thornfeld",
+    "location": "westwind-woods",
+    "position": [
+      43,
+      42
+    ]
+  },
+  {
+    "name": "Lyra Vex",
+    "slug": "lyra-vex",
+    "location": "western-fort",
+    "position": [
+      202,
+      634
+    ]
+  },
+  {
+    "name": "Mabel Thorn",
+    "slug": "mabel-thorn",
+    "location": "central-fort",
+    "position": [
+      462,
+      656
+    ]
+  },
+  {
+    "name": "Madame Mirage",
+    "slug": "madame-mirage",
+    "location": "western-fort",
+    "position": [
+      203,
+      635
+    ]
+  },
+  {
+    "name": "Mariel Venomtail",
+    "slug": "mariel-venomtail",
+    "location": "windreach-woods",
+    "position": [
+      84,
+      327
+    ]
+  },
+  {
+    "name": "Marigold Thornbuckle",
+    "slug": "marigold-thornbuckle",
+    "location": "goldenfield-town",
+    "position": [
+      665,
+      188
+    ]
+  },
+  {
+    "name": "Martin McMichael",
+    "slug": "martin-mcmichael",
+    "location": "goldenfield-town",
+    "position": [
+      543,
+      156
+    ]
+  },
+  {
+    "name": "Mary Jane Greenpuff",
+    "slug": "mary-jane-greenpuff",
+    "location": "windreach-woods",
+    "position": [
+      413,
+      308
+    ]
+  },
+  {
+    "name": "Mary Jane Greenpuff",
+    "slug": "mary-jane-greenpuff-steppe",
+    "location": "western-fort",
+    "position": [
+      203,
+      638
+    ]
+  },
+  {
+    "name": "Maverick \"Mav\" Gritt",
+    "slug": "maverick-mav-gritt",
+    "location": "riverrise-city",
+    "position": [
+      796,
+      449
+    ]
+  },
+  {
+    "name": "Max Starchaser",
+    "slug": "max-starchaser",
+    "location": "riverrise-city",
+    "position": [
+      803,
+      446
+    ]
+  },
+  {
+    "name": "Maxwell Sterling",
+    "slug": "maxwell-sterling",
+    "location": "dusktide-forest",
+    "position": [
+      521,
+      75
+    ]
+  },
+  {
+    "name": "Megabotan-7",
+    "slug": "megabotan-7",
+    "location": "goldenfield-town",
+    "position": [
+      495,
+      199
+    ]
+  },
+  {
+    "name": "Miguel \"El Caballo\" Rodriguez",
+    "slug": "miguel-el-caballo-rodriguez",
+    "location": "riverrise-stables",
+    "position": [
+      768,
+      432
+    ]
+  },
+  {
+    "name": "Mordo Klake",
+    "slug": "mordo-klake",
+    "location": "windstone-village",
+    "position": [
+      458,
+      354
+    ]
+  },
+  {
+    "name": "Morick Voss",
+    "slug": "morick-voss",
+    "location": "westwind-woods",
+    "position": [
+      43,
+      41
+    ]
+  },
+  {
+    "name": "Mort Decay",
+    "slug": "mort-decay",
+    "location": "northsteppe-fort",
+    "position": [
+      535,
+      675
+    ]
+  },
+  {
+    "name": "Mortimer Gloomsworth",
+    "slug": "mortimer-gloomsworth",
+    "location": "goldenfield-town",
+    "position": [
+      533,
+      201
+    ]
+  },
+  {
+    "name": "Nia Sundance",
+    "slug": "nia-sundance",
+    "location": "goldenfield-town",
+    "position": [
+      559,
+      179
+    ]
+  },
+  {
+    "name": "Nud-E Leroy",
+    "slug": "nud-e-leroy",
+    "location": "the-shore-of-a-thousands-bones",
+    "position": [
+      93,
+      772
+    ]
+  },
+  {
+    "name": "Oakley \"Dusty\" Fenn",
+    "slug": "oakley-dusty-fenn",
+    "location": "westwind-sawmill",
+    "position": [
+      251,
+      231
+    ]
+  },
+  {
+    "name": "Obadiah Flint",
+    "slug": "obadiah-flint",
+    "location": "greystone-ruins",
+    "position": [
+      75,
+      90
+    ]
+  },
+  {
+    "name": "Old Man Zephyr",
+    "slug": "old-man-zephyr",
+    "location": "riverrise-city",
+    "position": [
+      810,
+      448
+    ]
+  },
+  {
+    "name": "Ol' Fins",
+    "slug": "ol-fins",
+    "location": "windstone-village",
+    "position": [
+      440,
+      344
+    ]
+  },
+  {
+    "name": "Ophelia Voss",
+    "slug": "ophelia-voss",
+    "location": "riverrise-city",
+    "position": [
+      825,
+      460
+    ]
+  },
+  {
+    "name": "O.R.B.I.T",
+    "slug": "orbit",
+    "location": "dusktide-forest",
+    "position": [
+      526,
+      63
+    ]
+  },
+  {
+    "name": "Oswald",
+    "slug": "oswald",
+    "location": "goldenfield-town",
+    "position": [
+      533,
+      190
+    ]
+  },
+  {
+    "name": "Paddy O'Lantern",
+    "slug": "paddy-olantern",
+    "location": "goldenfield-town",
+    "position": [
+      527,
+      178
+    ]
+  },
+  {
+    "name": "Pappy Rick",
+    "slug": "pappy-rick",
+    "location": "windreach-woods",
+    "position": [
+      188,
+      357
+    ]
+  },
+  {
+    "name": "Pastor Fazool",
+    "slug": "pastor-fazool",
+    "location": "reverie-hollow",
+    "position": [
+      290,
+      59
+    ]
+  },
+  {
+    "name": "Pax Voss",
+    "slug": "pax-voss",
+    "location": "riverrise-city",
+    "position": [
+      823,
+      458
+    ]
+  },
+  {
+    "name": "Penny \"Stardust\" Furbank",
+    "slug": "penny-stardust-furbank",
+    "location": "reverie-hollow",
+    "position": [
+      271,
+      82
+    ]
+  },
+  {
+    "name": "Percival \"Percy\" Beamish",
+    "slug": "percival-percy-beamish",
+    "location": "goldenfield-town",
+    "position": [
+      533,
+      193
+    ]
+  },
+  {
+    "name": "Police-Tron 5000",
+    "slug": "police-tron-5000",
+    "location": "riverrise-city",
+    "position": [
+      806,
+      446
+    ]
+  },
+  {
+    "name": "Professor Zephyr Yule",
+    "slug": "professor-zephyr-yule",
+    "location": "skylight-grassland",
+    "position": [
+      0,
+      0
+    ]
+  },
+  {
+    "name": "Quadro-Sentinel 4.0",
+    "slug": "quadro-sentinel-4-0",
+    "location": "goldenfield-town",
+    "position": [
+      558,
+      192
+    ]
+  },
+  {
+    "name": "Quadro-Sentinel 4.1",
+    "slug": "quadro-sentinel-4-1",
+    "location": "goldenfield-town",
+    "position": [
+      521,
+      200
+    ]
+  },
+  {
+    "name": "Quaridor Vex",
+    "slug": "quaridor-vex",
+    "location": "windstone-village",
+    "position": [
+      440,
+      338
+    ]
+  },
+  {
+    "name": "Queenie Viper",
+    "slug": "queenie-viper",
+    "location": "riverrise-city",
+    "position": [
+      794.6,
+      443.4
+    ]
+  },
+  {
+    "name": "Quest-o-tron",
+    "slug": "quest-o-tron",
+    "location": "windreach-woods",
+    "position": [
+      284,
+      285
+    ]
+  },
+  {
+    "name": "Rancor K'zar",
+    "slug": "rancor-kzar",
+    "location": "northsteppe-fort",
+    "position": [
+      546,
+      668
+    ]
+  },
+  {
+    "name": "Ratchet",
+    "slug": "ratchet",
+    "location": "goldenfield-town",
+    "position": [
+      500,
+      184
+    ]
+  },
+  {
+    "name": "Razz Thundermaw",
+    "slug": "razz-thundermaw",
+    "location": "faidens-camp",
+    "position": [
+      471,
+      153
+    ]
+  },
+  {
+    "name": "Relkyn Stoutshield",
+    "slug": "relkyn-stoutshield",
+    "location": "faidens-camp",
+    "position": [
+      471,
+      149
+    ]
+  },
+  {
+    "name": "Reyalp",
+    "slug": "reyalp",
+    "location": "riverrise-city",
+    "position": [
+      817,
+      422
+    ]
+  },
+  {
+    "name": "Roark \"Redbeard\" Thunderbrew",
+    "slug": "roark-redbeard-thunderbrew",
+    "location": "windstone-village",
+    "position": [
+      465,
+      343
+    ]
+  },
+  {
+    "name": "Roddy",
+    "slug": "roddy",
+    "location": "western-fort",
+    "position": [
+      206,
+      638
+    ]
+  },
+  {
+    "name": "Roderick \"Darkspike\" Thinklatch",
+    "slug": "roderick-darkspike-thinklatch",
+    "location": "windstone-village",
+    "position": [
+      471,
+      351
+    ]
+  },
+  {
+    "name": "Roger Matthews",
+    "slug": "roger-matthews",
+    "location": "northeast-fort",
+    "position": [
+      577,
+      635
+    ]
+  },
+  {
+    "name": "Rogers Matthew",
+    "slug": "rogers-matthew",
+    "location": "northeast-fort",
+    "position": [
+      565,
+      639
+    ]
+  },
+  {
+    "name": "Ronny Lunar",
+    "slug": "ronny-lunar",
+    "location": "windreach-woods",
+    "position": [
+      418,
+      363
+    ]
+  },
+  {
+    "name": "Rufus",
+    "slug": "rufus",
+    "location": "riverrise-city",
+    "position": [
+      821,
+      450
+    ]
+  },
+  {
+    "name": "Rusty Bowen",
+    "slug": "rusty-bowen",
+    "location": "fort",
+    "position": [
+      368,
+      269
+    ]
+  },
+  {
+    "name": "Rusty McDrinkit",
+    "slug": "rusty-mcdrinkit",
+    "location": "riverrise-city",
+    "position": [
+      795,
+      449
+    ]
+  },
+  {
+    "name": "Scrapjack",
+    "slug": "scrapjack",
+    "location": "windreach-woods",
+    "position": [
+      138,
+      274
+    ]
+  },
+  {
+    "name": "Seaonna",
+    "slug": "seaonna",
+    "location": "windreach-woods",
+    "position": [
+      84,
+      325
+    ]
+  },
+  {
+    "name": "Seldon Moor",
+    "slug": "seldon-moor",
+    "location": "riverrise-city",
+    "position": [
+      823,
+      426
+    ]
+  },
+  {
+    "name": "Shawna Steelheart",
+    "slug": "shawna-steelheart",
+    "location": "adventures-outpost",
+    "position": [
+      531,
+      779
+    ]
+  },
+  {
+    "name": "Silas Thorne",
+    "slug": "silas-thorne",
+    "location": "western-fort",
+    "position": [
+      201,
+      635
+    ]
+  },
+  {
+    "name": "Silas Whitlock",
+    "slug": "silas-whitlock",
+    "location": "riverrise-city",
+    "position": [
+      822,
+      469
+    ]
+  },
+  {
+    "name": "Sirena Hexblade",
+    "slug": "sirena-hexblade",
+    "location": "westwind-woods",
+    "position": [
+      321,
+      101
+    ]
+  },
+  {
+    "name": "Skalberath",
+    "slug": "skalberath",
+    "location": "windreach-woods",
+    "position": [
+      221,
+      312
+    ]
+  },
+  {
+    "name": "Skip Stones",
+    "slug": "skip-stones",
+    "location": "prison-island",
+    "position": [
+      0,
+      0
+    ]
+  },
+  {
+    "name": "Skrizzik",
+    "slug": "skrizzik",
+    "location": "prison-island",
+    "position": [
+      0,
+      0
+    ]
+  },
+  {
+    "name": "Slick Shady",
+    "slug": "slick-shady",
+    "location": "coal-village",
+    "position": [
+      199,
+      792
+    ]
+  },
+  {
+    "name": "SLPY-05",
+    "slug": "slpy-05",
+    "location": "junkyard-slums",
+    "position": [
+      597,
+      756
+    ]
+  },
+  {
+    "name": "SNZY-04",
+    "slug": "snzy-04",
+    "location": "junkyard-slums",
+    "position": [
+      595,
+      758
+    ]
+  },
+  {
+    "name": "Sofia Dynatech",
+    "slug": "sofia-dynatech",
+    "location": "windreach-depot",
+    "position": [
+      71,
+      290
+    ]
+  },
+  {
+    "name": "Soko Uno",
+    "slug": "soko-uno",
+    "location": "riverrise-city",
+    "position": [
+      799.4,
+      445
+    ]
+  },
+  {
+    "name": "Spade",
+    "slug": "spade",
+    "location": "riverrise-city",
+    "position": [
+      807,
+      453
+    ]
+  },
+  {
+    "name": "Steel Stan",
+    "slug": "steel-stan",
+    "location": "great-steppes",
+    "position": [
+      316,
+      736
+    ]
+  },
+  {
+    "name": "Stumpy Barris",
+    "slug": "stumpy-barris",
+    "location": "windstone-village",
+    "position": [
+      460,
+      325
+    ]
+  },
+  {
+    "name": "Talora Vex",
+    "slug": "talora-vex",
+    "location": "greystone-ruins",
+    "position": [
+      101,
+      91
+    ]
+  },
+  {
+    "name": "Tazara Wildflame",
+    "slug": "tazara-wildflame",
+    "location": "dragonbane-fort",
+    "position": [
+      306,
+      668
+    ]
+  },
+  {
+    "name": "Tecaro Swiftwind",
+    "slug": "tecaro-swiftwind",
+    "location": "faidens-camp",
+    "position": [
+      466,
+      145
+    ]
+  },
+  {
+    "name": "Terrace Tenstone",
+    "slug": "terrace-tenstone",
+    "location": "northeast-fort",
+    "position": [
+      575,
+      632
+    ]
+  },
+  {
+    "name": "Thaddeus",
+    "slug": "thaddeus",
+    "location": "windstone-village",
+    "position": [
+      457,
+      354
+    ]
+  },
+  {
+    "name": "Tharkon",
+    "slug": "tharkon",
+    "location": "fort",
+    "position": [
+      371,
+      262
+    ]
+  },
+  {
+    "name": "The Guardinator",
+    "slug": "the-guardinator",
+    "location": "great-steppe-stronghold",
+    "position": [
+      386,
+      672
+    ]
+  },
+  {
+    "name": "Thelma Turtlebottom",
+    "slug": "thelma-turtlebottom",
+    "location": "windreach-woods",
+    "position": null
+  },
+  {
+    "name": "Themis",
+    "slug": "themis",
+    "location": "fort",
+    "position": [
+      374,
+      263
+    ]
+  },
+  {
+    "name": "Thistlebrook",
+    "slug": "thistlebrook",
+    "location": "riverrise-city",
+    "position": [
+      823,
+      459
+    ]
+  },
+  {
+    "name": "Thordal Ironvein",
+    "slug": "thordal-ironvein",
+    "location": "goldenfield-town",
+    "position": [
+      512,
+      170
+    ]
+  },
+  {
+    "name": "Thorin Toastbeard",
+    "slug": "thorin-toastbeard",
+    "location": "windstone-village",
+    "position": [
+      462,
+      327
+    ]
+  },
+  {
+    "name": "Thorn Blightwood",
+    "slug": "thorn-blightwood",
+    "location": "westwind-woods",
+    "position": [
+      60,
+      214
+    ]
+  },
+  {
+    "name": "Tiffany",
+    "slug": "tiffany",
+    "location": "yoga-house",
+    "position": [
+      454,
+      168
+    ]
+  },
+  {
+    "name": "T-Money",
+    "slug": "t-money",
+    "location": "riverrise-city",
+    "position": [
+      799.6,
+      444.2
+    ]
+  },
+  {
+    "name": "Tobias Crankshaw",
+    "slug": "tobias-crankshaw",
+    "location": "windreach-woods",
+    "position": [
+      101,
+      276
+    ]
+  },
+  {
+    "name": "Tor Drostin",
+    "slug": "tor-drostin",
+    "location": "central-fort",
+    "position": [
+      448,
+      655
+    ]
+  },
+  {
+    "name": "Tor MacDrummond",
+    "slug": "tor-macdrummond",
+    "location": "riverrise-city",
+    "position": [
+      801,
+      430
+    ]
+  },
+  {
+    "name": "Trevor Barlow",
+    "slug": "trevor-barlow",
+    "location": "fort",
+    "position": [
+      374,
+      264
+    ]
+  },
+  {
+    "name": "Triton",
+    "slug": "triton",
+    "location": "windreach-woods",
+    "position": [
+      248,
+      394
+    ]
+  },
+  {
+    "name": "Triton",
+    "slug": "triton-steppe",
+    "location": "the-shore-of-a-thousands-bones",
+    "position": [
+      203,
+      638
+    ]
+  },
+  {
+    "name": "Varkus Drov",
+    "slug": "varkus-drov",
+    "location": "westwind-sawmill",
+    "position": [
+      267,
+      220
+    ]
+  },
+  {
+    "name": "Velvet Viper",
+    "slug": "velvet-viper",
+    "location": "riverrise-city",
+    "position": [
+      804,
+      447
+    ]
+  },
+  {
+    "name": "Vexina Strider",
+    "slug": "vexina-strider",
+    "location": "great-steppe-stronghold",
+    "position": [
+      390,
+      665
+    ]
+  },
+  {
+    "name": "Wulbyan Bloodroar",
+    "slug": "wulbyan-bloodroar",
+    "location": "faidens-camp",
+    "position": [
+      473,
+      141
+    ]
+  },
+  {
+    "name": "Xelcor Zinn",
+    "slug": "xelcor-zinn",
+    "location": "northsteppe-fort",
+    "position": [
+      543,
+      669
+    ]
+  },
+  {
+    "name": "Yassma",
+    "slug": "yassma",
+    "location": "riverrise-city",
+    "position": [
+      804,
+      444
+    ]
+  },
+  {
+    "name": "Zara Ross",
+    "slug": "zara-ross",
+    "location": "dusktide-forest",
+    "position": [
+      601,
+      61
+    ]
+  },
+  {
+    "name": "Zara Thorne",
+    "slug": "zara-thorne",
+    "location": "faidens-camp",
+    "position": [
+      462,
+      148
+    ]
+  },
+  {
+    "name": "Zarnok",
+    "slug": "zarnok",
+    "location": "riverrise-city",
+    "position": [
+      806,
+      441
+    ]
+  },
+  {
+    "name": "Zazz Blorb",
+    "slug": "zazz-blorb",
+    "location": "riverrise-city",
+    "position": [
+      799.3,
+      443.7
+    ]
+  },
+  {
+    "name": "Zeek Solomon",
+    "slug": "zeek-solomon",
+    "location": "riverrise-city",
+    "position": [
+      823,
+      452
+    ]
+  },
+  {
+    "name": "Zeke \"Gearhead\" Thompson",
+    "slug": "zeke-gearhead-thompson",
+    "location": "northsteppe-fort",
+    "position": [
+      547,
+      665
+    ]
+  },
+  {
+    "name": "Zelda Choy",
+    "slug": "zelda-choy",
+    "location": "windreach-woods",
+    "position": [
+      264,
+      348
+    ]
+  },
+  {
+    "name": "Zelina Ironweave",
+    "slug": "zelina-ironweave",
+    "location": "adventures-outpost",
+    "position": [
+      541,
+      780
+    ]
+  },
+  {
+    "name": "Zendaya Wells",
+    "slug": "zendaya-wells",
+    "location": "windreach-woods",
+    "position": [
+      265,
+      349
+    ]
+  },
+  {
+    "name": "Zibb \"The Zest\" Throttlebreech",
+    "slug": "zibb-the-zest-throttlebreech",
+    "location": "riverrise-city",
+    "position": [
+      793,
+      441
+    ]
+  },
+  {
+    "name": "Zikk Clankwhistle",
+    "slug": "zikk-clankwhistle",
+    "location": "dusktide-forest",
+    "position": [
+      525,
+      64
+    ]
+  },
+  {
+    "name": "Zogar",
+    "slug": "zogar",
+    "location": "goldenfield-town",
+    "position": [
+      510,
+      160
+    ]
+  },
+  {
+    "name": "Zoltar Blipchain",
+    "slug": "zoltar-blipchain",
+    "location": "goldenfield-town",
+    "position": [
+      552,
+      143
+    ]
+  },
+  {
+    "name": "Zor",
+    "slug": "zor",
+    "location": "silent-mountains",
+    "position": [
+      471,
+      861
+    ]
+  },
+  {
+    "name": "Zorbul Z'Nar",
+    "slug": "zorbul-znar",
+    "location": "goldenfield-town",
+    "position": [
+      594,
+      254
+    ]
+  },
+  {
+    "name": "Zorgalon Na'Reeth",
+    "slug": "zorgalon-nareeth",
+    "location": "riverrise-city",
+    "position": [
+      816,
+      423
+    ]
+  },
+  {
+    "name": "Zugg Clankwhistle",
+    "slug": "zugg-clankwhistle",
+    "location": "goldenfield-town",
+    "position": [
+      529,
+      184
+    ]
+  }
+]

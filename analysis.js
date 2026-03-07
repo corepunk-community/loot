@@ -1,12 +1,14 @@
 let questRewards = {};
 let apiQuests = {};
+let slugMap = {};
 
 function toSlug(name) {
     return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
 }
 
 function getApiQuest(questName) {
-    return apiQuests[toSlug(questName)] || null;
+    const slug = toSlug(questName);
+    return apiQuests[slug] || apiQuests[slugMap[slug]] || null;
 }
 
 function getItemType(itemName) {
@@ -38,7 +40,9 @@ async function init() {
 
         if (apiRes && apiRes.ok) {
             const apiData = await apiRes.json();
-            apiData.forEach(q => { apiQuests[q.slug] = q; });
+            const questList = Array.isArray(apiData) ? apiData : apiData.quests || [];
+            questList.forEach(q => { apiQuests[q.slug] = q; });
+            if (apiData.slugMap) slugMap = apiData.slugMap;
         }
 
         renderStats();

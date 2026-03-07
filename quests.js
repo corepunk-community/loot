@@ -2,6 +2,7 @@
 let questRewards = {};
 let questChains = {};
 let apiQuests = {};  // slug -> API quest data
+let slugMap = {};    // binary slug -> API slug (for fuzzy matches)
 let currentQuest = null;
 let globalSearchActive = false;
 let currentRewardFilter = "all";
@@ -53,9 +54,10 @@ function toSlug(name) {
     return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
 }
 
-// Look up API data for a quest name
+// Look up API data for a quest name (with slug map fallback)
 function getApiQuest(questName) {
-    return apiQuests[toSlug(questName)] || null;
+    const slug = toSlug(questName);
+    return apiQuests[slug] || apiQuests[slugMap[slug]] || null;
 }
 
 // Fetch quest rewards, chain data, and API quest data
@@ -92,7 +94,10 @@ async function fetchQuestRewards() {
         // Build API quest lookup by slug
         if (apiResponse && apiResponse.ok) {
             const apiData = await apiResponse.json();
-            apiData.forEach(q => { apiQuests[q.slug] = q; });
+            // Handle both old format (array) and new format ({ quests, slugMap })
+            const questList = Array.isArray(apiData) ? apiData : apiData.quests || [];
+            questList.forEach(q => { apiQuests[q.slug] = q; });
+            if (apiData.slugMap) slugMap = apiData.slugMap;
         }
 
         populateTablesList();

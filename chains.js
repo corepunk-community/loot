@@ -1,13 +1,22 @@
-let chainGroups = [];
+let binaryChainGroups = [];
 let questRewards = {};
 let apiQuests = {};
+let slugMap = {};
+let allChainGroups = []; // Unified chain groups for rendering
 
 function toSlug(name) {
     return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
 }
 
 function getApiQuest(questName) {
-    return apiQuests[toSlug(questName)] || null;
+    const slug = toSlug(questName);
+    return apiQuests[slug] || apiQuests[slugMap[slug]] || null;
+}
+
+// Get display name for a quest (prefer API name, fall back to binary name or slug)
+function getDisplayName(slug) {
+    if (apiQuests[slug]) return apiQuests[slug].name;
+    return slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }
 
 async function fetchData() {
@@ -17,8 +26,9 @@ async function fetchData() {
             fetch('versions.json')
         ]);
 
-        if (!chainsRes.ok) throw new Error('Failed to load chain data');
-        chainGroups = await chainsRes.json();
+        if (chainsRes.ok) {
+            binaryChainGroups = await chainsRes.json();
+        }
 
         // Load latest data from version manifest
         if (versionsRes.ok) {
@@ -35,10 +45,13 @@ async function fetchData() {
             }
             if (apiRes && apiRes.ok) {
                 const apiData = await apiRes.json();
-                apiData.forEach(q => { apiQuests[q.slug] = q; });
+                const questList = Array.isArray(apiData) ? apiData : apiData.quests || [];
+                questList.forEach(q => { apiQuests[q.slug] = q; });
+                if (apiData.slugMap) slugMap = apiData.slugMap;
             }
         }
 
+        allChainGroups = buildUnifiedChains();
         renderSummary();
         renderChains();
     } catch (error) {
@@ -48,13 +61,137 @@ async function fetchData() {
     }
 }
 
+// Build unified chain groups from both binary and API data
+function buildUnifiedChains() {
+    // Build a graph from API prerequisiteQuests
+    const apiGraph = {}; // slug -> { requires: [slugs], unlocks: [slugs] }
+    Object.values(apiQuests).forEach(q => {
+        const slug = q.slug;
+        if (!apiGraph[slug]) apiGraph[slug] = { requires: [], unlocks: [] };
+        (q.prerequisiteQuests || []).forEach(prereq => {
+            if (!prereq) return;
+            if (!apiGraph[prereq]) apiGraph[prereq] = { requires: [], unlocks: [] };
+            apiGraph[slug].requires.push(prereq);
+            apiGraph[prereq].unlocks.push(slug);
+        });
+    });
+
+    // Find connected components in the API graph
+    const visited = new Set();
+    const apiComponents = [];
+
+    Object.keys(apiGraph).forEach(slug => {
+        if (visited.has(slug)) return;
+        if (apiGraph[slug].requires.length === 0 && apiGraph[slug].unlocks.length === 0) return;
+        const component = [];
+        const queue = [slug];
+        while (queue.length > 0) {
+            const current = queue.shift();
+            if (visited.has(current)) continue;
+            visited.add(current);
+            component.push(current);
+            apiGraph[current].requires.forEach(r => { if (!visited.has(r)) queue.push(r); });
+            apiGraph[current].unlocks.forEach(u => { if (!visited.has(u)) queue.push(u); });
+        }
+        if (component.length > 1) {
+            apiComponents.push(component);
+        }
+    });
+
+    // Convert API components to the chain format: [{name, requires, unlocks}, ...]
+    const apiChains = apiComponents.map(component => {
+        return component.map(slug => {
+            const q = apiQuests[slug];
+            return {
+                name: q ? q.name : getDisplayName(slug),
+                slug: slug,
+                requires: apiGraph[slug].requires.map(s => apiQuests[s] ? apiQuests[s].name : getDisplayName(s)),
+                unlocks: apiGraph[slug].unlocks.map(s => apiQuests[s] ? apiQuests[s].name : getDisplayName(s)),
+                source: 'api'
+            };
+        });
+    });
+
+    // Build a set of binary quest slugs that are in chains
+    const binaryChainSlugs = new Set();
+    binaryChainGroups.forEach(chain => {
+        chain.forEach(q => binaryChainSlugs.add(toSlug(q.name)));
+    });
+
+    // Merge: for API chains that overlap with binary chains, mark quests with binary data
+    // For API chains with no binary overlap, add as API-only chains
+    const merged = [];
+    const usedApiChainIndices = new Set();
+
+    // First, check each API chain for binary overlap
+    apiChains.forEach((apiChain, idx) => {
+        const apiSlugs = new Set(apiChain.map(q => q.slug));
+        let hasBinaryOverlap = false;
+        binaryChainGroups.forEach(binaryChain => {
+            binaryChain.forEach(q => {
+                const slug = toSlug(q.name);
+                const mappedSlug = slugMap[slug] || slug;
+                if (apiSlugs.has(slug) || apiSlugs.has(mappedSlug)) {
+                    hasBinaryOverlap = true;
+                }
+            });
+        });
+
+        // Mark quests that have binary reward data
+        apiChain.forEach(q => {
+            const hasRewards = Object.keys(questRewards).some(name => {
+                const s = toSlug(name);
+                return s === q.slug || slugMap[s] === q.slug;
+            });
+            q.hasRewards = hasRewards;
+        });
+
+        merged.push({
+            chain: apiChain,
+            source: hasBinaryOverlap ? 'both' : 'api',
+        });
+    });
+
+    // Add binary-only chains (those not covered by API)
+    binaryChainGroups.forEach(binaryChain => {
+        const binarySlugs = binaryChain.map(q => {
+            const s = toSlug(q.name);
+            return slugMap[s] || s;
+        });
+
+        // Check if this binary chain is already represented in an API chain
+        const isRepresented = merged.some(m => {
+            const apiSlugs = new Set(m.chain.map(q => q.slug));
+            return binarySlugs.some(s => apiSlugs.has(s));
+        });
+
+        if (!isRepresented) {
+            const converted = binaryChain.map(q => ({
+                name: q.name,
+                slug: toSlug(q.name),
+                requires: q.requires || [],
+                unlocks: q.unlocks || [],
+                hasRewards: questRewards.hasOwnProperty(q.name),
+                source: 'binary'
+            }));
+            merged.push({ chain: converted, source: 'binary' });
+        }
+    });
+
+    // Sort by chain length descending
+    merged.sort((a, b) => b.chain.length - a.chain.length);
+
+    return merged;
+}
+
 function renderSummary() {
-    const totalQuests = chainGroups.reduce((sum, c) => sum + c.length, 0);
+    const totalQuests = allChainGroups.reduce((sum, g) => sum + g.chain.length, 0);
+    const apiOnlyCount = allChainGroups.filter(g => g.source === 'api').length;
     const container = document.getElementById('chains-summary');
     container.innerHTML = `
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-value">${chainGroups.length}</div>
+                <div class="stat-value">${allChainGroups.length}</div>
                 <div class="stat-label">Quest Chains</div>
             </div>
             <div class="stat-card">
@@ -62,7 +199,7 @@ function renderSummary() {
                 <div class="stat-label">Linked Quests</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">${chainGroups[0] ? chainGroups[0].length : 0}</div>
+                <div class="stat-value">${allChainGroups[0] ? allChainGroups[0].chain.length : 0}</div>
                 <div class="stat-label">Longest Chain</div>
             </div>
         </div>
@@ -80,18 +217,6 @@ function buildDepthMap(chain) {
         inDegree[q.name] = 0;
     });
 
-    // Count in-degrees from requires
-    chain.forEach(q => {
-        if (q.requires) {
-            q.requires.forEach(req => {
-                if (nameToNode[req]) {
-                    inDegree[q.name] = (inDegree[q.name] || 0) + 1;
-                }
-            });
-        }
-    });
-
-    // Re-count properly: in-degree = number of requires that are in this chain
     chain.forEach(q => {
         let count = 0;
         if (q.requires) {
@@ -100,7 +225,6 @@ function buildDepthMap(chain) {
         inDegree[q.name] = count;
     });
 
-    // Start with roots (in-degree 0)
     const queue = [];
     chain.forEach(q => {
         if (inDegree[q.name] === 0) {
@@ -109,7 +233,6 @@ function buildDepthMap(chain) {
         }
     });
 
-    // Process in topological order, taking max depth from predecessors
     while (queue.length > 0) {
         const current = queue.shift();
         const node = nameToNode[current];
@@ -131,7 +254,6 @@ function buildDepthMap(chain) {
     return depthMap;
 }
 
-// Group quests by their depth (step number)
 function groupByDepth(chain, depthMap) {
     const groups = {};
     chain.forEach(q => {
@@ -146,20 +268,30 @@ function renderChains() {
     const container = document.getElementById('chains-container');
     container.innerHTML = '';
 
-    chainGroups.forEach((chain, idx) => {
+    allChainGroups.forEach((group, idx) => {
+        const chain = group.chain;
         const section = document.createElement('div');
         section.className = 'chain-group';
+
+        // Build chain title from first quest or longest path root
+        const depthMap = buildDepthMap(chain);
+        const roots = chain.filter(q => depthMap[q.name] === 0);
+        const chainTitle = roots.length > 0 ? roots[0].name : chain[0].name;
+
+        // Source badge
+        const sourceBadge = group.source === 'api' ? ' <span class="chain-source-badge chain-source-api">API</span>'
+            : group.source === 'binary' ? ' <span class="chain-source-badge chain-source-binary">Binary</span>'
+            : '';
 
         // Chain header
         const header = document.createElement('div');
         header.className = 'chain-group-header';
         header.innerHTML = `
-            <span class="chain-group-title">Chain ${idx + 1}</span>
+            <span class="chain-group-title">${chainTitle}${sourceBadge}</span>
             <span class="chain-group-count">${chain.length} quests</span>
             <span class="chain-group-chevron">&#9654;</span>
         `;
 
-        // Chain body (initially visible for first chain, collapsed for rest)
         const body = document.createElement('div');
         body.className = 'chain-group-body';
         if (idx > 0) body.classList.add('hidden');
@@ -170,8 +302,6 @@ function renderChains() {
             header.querySelector('.chain-group-chevron').classList.toggle('expanded');
         });
 
-        // Build the timeline
-        const depthMap = buildDepthMap(chain);
         const groups = groupByDepth(chain, depthMap);
         const maxDepth = Math.max(...Object.keys(groups).map(Number));
 
@@ -185,13 +315,11 @@ function renderChains() {
             const step = document.createElement('div');
             step.className = 'chain-step';
 
-            // Step label
             const label = document.createElement('div');
             label.className = 'chain-step-label';
             label.textContent = depth === 0 ? 'Start' : `Step ${depth}`;
             step.appendChild(label);
 
-            // Quest nodes at this step
             const nodesRow = document.createElement('div');
             nodesRow.className = 'chain-step-nodes';
 
@@ -199,10 +327,9 @@ function renderChains() {
                 const node = document.createElement('div');
                 node.className = 'chain-node';
 
-                const hasRewards = questRewards.hasOwnProperty(q.name);
-                const api = getApiQuest(q.name);
+                const hasRewards = q.hasRewards !== undefined ? q.hasRewards : questRewards.hasOwnProperty(q.name);
+                const api = apiQuests[q.slug] || getApiQuest(q.name);
 
-                // Node title with level
                 const title = document.createElement('div');
                 title.className = 'chain-node-title';
 
@@ -215,10 +342,10 @@ function renderChains() {
 
                 if (hasRewards) {
                     const link = document.createElement('a');
-                    link.href = `quests.html`;
+                    link.href = 'quests.html';
                     link.textContent = q.name;
                     link.className = 'chain-quest-link';
-                    link.addEventListener('click', (e) => {
+                    link.addEventListener('click', () => {
                         sessionStorage.setItem('selectedQuest', q.name);
                     });
                     title.appendChild(link);
@@ -228,7 +355,6 @@ function renderChains() {
                 }
                 node.appendChild(title);
 
-                // Location
                 if (api && api.location) {
                     const locDiv = document.createElement('div');
                     locDiv.className = 'chain-node-meta';
@@ -236,7 +362,6 @@ function renderChains() {
                     node.appendChild(locDiv);
                 }
 
-                // Connections info
                 if (q.requires && q.requires.length > 0) {
                     const reqDiv = document.createElement('div');
                     reqDiv.className = 'chain-node-meta chain-node-requires';
@@ -256,7 +381,6 @@ function renderChains() {
             step.appendChild(nodesRow);
             timeline.appendChild(step);
 
-            // Add connector arrow between steps (except after last)
             if (depth < maxDepth) {
                 const connector = document.createElement('div');
                 connector.className = 'chain-connector';
@@ -270,14 +394,6 @@ function renderChains() {
         section.appendChild(body);
         container.appendChild(section);
     });
-}
-
-// On quests.html, check for a selectedQuest from chains page
-function checkInboundNavigation() {
-    const selected = sessionStorage.getItem('selectedQuest');
-    if (selected) {
-        sessionStorage.removeItem('selectedQuest');
-    }
 }
 
 function init() {
