@@ -988,40 +988,107 @@ footer {
     padding: 15px 18px;
 }
 
-.analysis-quest-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 0;
-    border-bottom: 1px solid #f0f0f0;
-    flex-wrap: wrap;
+/* Analysis table of contents */
+.analysis-toc {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 16px 20px;
+    margin-bottom: 20px;
 }
 
-.analysis-quest-row:last-child {
-    border-bottom: none;
+.analysis-toc h3 {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+    color: #2c3e50;
+}
+
+.analysis-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.analysis-toc a {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    color: #3498db;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.15s;
+}
+
+.analysis-toc a:hover {
+    background-color: #e1e4e8;
+    color: #2c3e50;
+}
+
+/* Analysis section note */
+.analysis-section-note {
+    font-size: 13px;
+    color: #856404;
+    background-color: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+}
+
+/* Analysis data table */
+.analysis-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.analysis-table th {
+    text-align: left;
+    padding: 6px 10px;
+    border-bottom: 2px solid #e1e4e8;
+    color: #666;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.analysis-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+}
+
+.analysis-table tbody tr:hover {
+    background-color: #f6f8fa;
+}
+
+.analysis-table-level {
+    width: 36px;
+    text-align: center;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.analysis-table-items {
+    color: #555;
+    line-height: 1.5;
 }
 
 .analysis-quest-link {
     font-weight: 500;
     color: #3498db;
     text-decoration: none;
-    min-width: 200px;
     cursor: pointer;
 }
 
 .analysis-quest-link:hover {
     text-decoration: underline;
-}
-
-.analysis-quest-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-}
-
-.analysis-item-tag {
-    font-size: 11px;
-    padding: 2px 8px;
 }
 
 /* === Quest Chains Timeline === */

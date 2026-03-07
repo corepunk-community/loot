@@ -107,7 +107,6 @@ function renderStats() {
     });
 }
 
-// Find quests where at least one item matches the predicate
 function findQuests(predicate) {
     const results = [];
     Object.entries(questRewards).forEach(([quest, items]) => {
@@ -119,32 +118,48 @@ function findQuests(predicate) {
     return results.sort((a, b) => a.quest.localeCompare(b.quest));
 }
 
+function toggleSection(body, chevron) {
+    const isOpen = !body.classList.contains('hidden');
+    if (isOpen) {
+        body.classList.add('hidden');
+        chevron.classList.remove('expanded');
+    } else {
+        body.classList.remove('hidden');
+        chevron.classList.add('expanded');
+    }
+}
+
 function renderQuestLists() {
     const sections = [
         {
-            title: 'Quests Providing Item Upgrade T2 Epic',
+            id: 'upgrade-t2-epic',
+            title: 'Item Upgrade T2 Epic',
             predicate: item => item === 'Synthesis Item Upgrade T2 Epic'
         },
         {
-            title: 'Quests Providing Item Upgrade T3 Epic',
+            id: 'upgrade-t3-epic',
+            title: 'Item Upgrade T3 Epic',
             predicate: item => item === 'Synthesis Item Upgrade T3 Epic'
         },
         {
-            title: 'Quests Providing T3 Weapons or Weapon Recipes',
+            id: 't3-weapons',
+            title: 'T3 Weapons or Weapon Recipes',
             predicate: item => {
                 const lower = item.toLowerCase();
                 return (lower.startsWith('wp ') || lower.startsWith('rec wp '));
             }
         },
         {
-            title: 'Quests Providing T3 Artifacts or Artifact Recipes',
+            id: 't3-artifacts',
+            title: 'T3 Artifacts or Artifact Recipes',
             predicate: item => {
                 const lower = item.toLowerCase();
                 return (lower.startsWith('art t3 ') || lower.startsWith('rec art t3 '));
             }
         },
         {
-            title: 'Quests Providing Talent Fragmenters',
+            id: 'talent-fragmenters',
+            title: 'Talent Fragmenters',
             predicate: item => item === 'Talent Fragmenter'
         }
     ];
@@ -152,75 +167,58 @@ function renderQuestLists() {
     const container = document.getElementById('quest-lists');
     container.innerHTML = '';
 
+    // Build table of contents
+    const toc = document.getElementById('analysis-toc');
+    const tocTitle = document.createElement('h3');
+    tocTitle.textContent = 'Quest Reward Lookups';
+    toc.appendChild(tocTitle);
+
+    const tocList = document.createElement('ul');
+
+    // Pre-compute results and render sections
+    const sectionEls = [];
+
     sections.forEach(section => {
         const results = findQuests(section.predicate);
 
+        // TOC entry
+        const tocItem = document.createElement('li');
+        const tocLink = document.createElement('a');
+        tocLink.href = `#${section.id}`;
+        tocLink.textContent = `${section.title} (${results.length})`;
+        tocItem.appendChild(tocLink);
+        tocList.appendChild(tocItem);
+
+        // Section panel
         const panel = document.createElement('div');
         panel.className = 'analysis-section';
+        panel.id = section.id;
 
         const header = document.createElement('div');
         header.className = 'analysis-section-header';
         header.innerHTML = `
             <span class="analysis-section-title">${section.title}</span>
-            <span class="analysis-section-count">${results.length} quests</span>
-            <span class="analysis-section-chevron expanded">&#9654;</span>
+            <span class="analysis-section-count">${results.length}</span>
+            <span class="analysis-section-chevron">&#9654;</span>
         `;
 
         const body = document.createElement('div');
-        body.className = 'analysis-section-body';
+        body.className = 'analysis-section-body hidden';
 
         if (results.length === 0) {
             body.innerHTML = '<div class="no-results">No matching quests</div>';
         } else {
-            results.forEach(({ quest, items }) => {
-                const row = document.createElement('div');
-                row.className = 'analysis-quest-row';
-
-                const api = getApiQuest(quest);
-
-                // Level badge
-                if (api && api.level) {
-                    const lvl = document.createElement('span');
-                    lvl.className = 'quest-level-badge';
-                    lvl.textContent = api.level;
-                    row.appendChild(lvl);
-                }
-
-                const link = document.createElement('a');
-                link.className = 'analysis-quest-link';
-                link.textContent = quest;
-                link.href = 'quests.html';
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    sessionStorage.setItem('selectedQuest', quest);
-                    window.location.href = 'quests.html';
-                });
-
-                const itemTags = document.createElement('div');
-                itemTags.className = 'analysis-quest-items';
-                items.forEach(item => {
-                    const tag = document.createElement('span');
-                    tag.className = `analysis-item-tag reward-tag reward-tag-${getItemType(item)}`;
-                    tag.textContent = item;
-                    itemTags.appendChild(tag);
-                });
-
-                row.appendChild(link);
-                row.appendChild(itemTags);
-                body.appendChild(row);
-            });
+            body.appendChild(buildQuestTable(results));
         }
 
-        header.addEventListener('click', () => {
-            const chevron = header.querySelector('.analysis-section-chevron');
-            const isOpen = !body.classList.contains('hidden');
-            if (isOpen) {
-                body.classList.add('hidden');
-                chevron.classList.remove('expanded');
-            } else {
-                body.classList.remove('hidden');
-                chevron.classList.add('expanded');
+        const chevron = header.querySelector('.analysis-section-chevron');
+        header.addEventListener('click', () => toggleSection(body, chevron));
+        tocLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (body.classList.contains('hidden')) {
+                toggleSection(body, chevron);
             }
+            panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         panel.appendChild(header);
@@ -228,36 +226,43 @@ function renderQuestLists() {
         container.appendChild(panel);
     });
 
-    // Unverified quests section (in binary data but not on corepunk.help)
-    renderUnverifiedSection(container);
+    toc.appendChild(tocList);
+
+    // Unverified quests
+    const unverified = Object.keys(questRewards).filter(n => !getApiQuest(n)).sort();
+    if (unverified.length > 0) {
+        const tocItem = document.createElement('li');
+        const tocLink = document.createElement('a');
+        tocLink.href = '#unverified';
+        tocLink.textContent = `Unverified Quests (${unverified.length})`;
+        tocItem.appendChild(tocLink);
+        tocList.appendChild(tocItem);
+
+        renderUnverifiedSection(container, unverified, tocLink);
+    }
 }
 
-function renderUnverifiedSection(container) {
-    const unverified = Object.keys(questRewards)
-        .filter(name => !getApiQuest(name))
-        .sort();
+function buildQuestTable(results) {
+    const table = document.createElement('table');
+    table.className = 'analysis-table';
 
-    if (unverified.length === 0) return;
+    const thead = document.createElement('thead');
+    thead.innerHTML = '<tr><th>Lv</th><th>Quest</th><th>Matching Items</th></tr>';
+    table.appendChild(thead);
 
-    const panel = document.createElement('div');
-    panel.className = 'analysis-section';
+    const tbody = document.createElement('tbody');
+    results.forEach(({ quest, items }) => {
+        const tr = document.createElement('tr');
+        const api = getApiQuest(quest);
 
-    const header = document.createElement('div');
-    header.className = 'analysis-section-header';
-    header.innerHTML = `
-        <span class="analysis-section-title">Unverified Quests (in game files, not on corepunk.help)</span>
-        <span class="analysis-section-count">${unverified.length} quests</span>
-        <span class="analysis-section-chevron">&#9654;</span>
-    `;
+        // Level
+        const tdLvl = document.createElement('td');
+        tdLvl.className = 'analysis-table-level';
+        tdLvl.textContent = api?.level ?? '—';
+        tr.appendChild(tdLvl);
 
-    const body = document.createElement('div');
-    body.className = 'analysis-section-body hidden';
-
-    unverified.forEach(quest => {
-        const items = questRewards[quest];
-        const row = document.createElement('div');
-        row.className = 'analysis-quest-row';
-
+        // Quest name
+        const tdName = document.createElement('td');
         const link = document.createElement('a');
         link.className = 'analysis-quest-link';
         link.textContent = quest;
@@ -267,26 +272,91 @@ function renderUnverifiedSection(container) {
             sessionStorage.setItem('selectedQuest', quest);
             window.location.href = 'quests.html';
         });
+        tdName.appendChild(link);
+        if (!api) {
+            const tag = document.createElement('span');
+            tag.className = 'quest-unverified-tag';
+            tag.title = 'Not found on corepunk.help';
+            tag.textContent = '?';
+            tdName.appendChild(tag);
+        }
+        tr.appendChild(tdName);
 
-        const countTag = document.createElement('span');
-        countTag.className = 'analysis-item-tag reward-tag reward-tag-other';
-        countTag.textContent = `${items.length} items`;
+        // Items (plain text, comma-separated)
+        const tdItems = document.createElement('td');
+        tdItems.className = 'analysis-table-items';
+        tdItems.textContent = items.join(', ');
+        tr.appendChild(tdItems);
 
-        row.appendChild(link);
-        row.appendChild(countTag);
-        body.appendChild(row);
+        tbody.appendChild(tr);
     });
 
-    header.addEventListener('click', () => {
-        const chevron = header.querySelector('.analysis-section-chevron');
-        const isOpen = !body.classList.contains('hidden');
-        if (isOpen) {
-            body.classList.add('hidden');
-            chevron.classList.remove('expanded');
-        } else {
-            body.classList.remove('hidden');
-            chevron.classList.add('expanded');
+    table.appendChild(tbody);
+    return table;
+}
+
+function renderUnverifiedSection(container, unverified, tocLink) {
+    const panel = document.createElement('div');
+    panel.className = 'analysis-section';
+    panel.id = 'unverified';
+
+    const header = document.createElement('div');
+    header.className = 'analysis-section-header';
+    header.innerHTML = `
+        <span class="analysis-section-title">Unverified Quests</span>
+        <span class="analysis-section-count">${unverified.length}</span>
+        <span class="analysis-section-chevron">&#9654;</span>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'analysis-section-body hidden';
+
+    const note = document.createElement('p');
+    note.className = 'analysis-section-note';
+    note.textContent = 'These quests were found in game files but are not listed on corepunk.help. They may not be accessible in-game.';
+    body.appendChild(note);
+
+    const table = document.createElement('table');
+    table.className = 'analysis-table';
+    const thead = document.createElement('thead');
+    thead.innerHTML = '<tr><th>Quest</th><th>Reward Items</th></tr>';
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    unverified.forEach(quest => {
+        const tr = document.createElement('tr');
+        const tdName = document.createElement('td');
+        const link = document.createElement('a');
+        link.className = 'analysis-quest-link';
+        link.textContent = quest;
+        link.href = 'quests.html';
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.setItem('selectedQuest', quest);
+            window.location.href = 'quests.html';
+        });
+        tdName.appendChild(link);
+        tr.appendChild(tdName);
+
+        const tdItems = document.createElement('td');
+        tdItems.className = 'analysis-table-items';
+        tdItems.textContent = `${questRewards[quest].length} items`;
+        tr.appendChild(tdItems);
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    body.appendChild(table);
+
+    const chevron = header.querySelector('.analysis-section-chevron');
+    header.addEventListener('click', () => toggleSection(body, chevron));
+    tocLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (body.classList.contains('hidden')) {
+            toggleSection(body, chevron);
         }
+        panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     panel.appendChild(header);

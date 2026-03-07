@@ -69,30 +69,60 @@ function renderSummary() {
     `;
 }
 
-// Build a depth map using BFS from root nodes
+// Build a depth map using topological sort (longest path)
 function buildDepthMap(chain) {
     const depthMap = {};
     const nameToNode = {};
-    chain.forEach(q => { nameToNode[q.name] = q; });
+    const inDegree = {};
 
-    // Find roots (no requires)
-    const roots = chain.filter(q => !q.requires || q.requires.length === 0);
-
-    // BFS from roots
-    const queue = [];
-    roots.forEach(r => {
-        depthMap[r.name] = 0;
-        queue.push(r.name);
+    chain.forEach(q => {
+        nameToNode[q.name] = q;
+        inDegree[q.name] = 0;
     });
 
+    // Count in-degrees from requires
+    chain.forEach(q => {
+        if (q.requires) {
+            q.requires.forEach(req => {
+                if (nameToNode[req]) {
+                    inDegree[q.name] = (inDegree[q.name] || 0) + 1;
+                }
+            });
+        }
+    });
+
+    // Re-count properly: in-degree = number of requires that are in this chain
+    chain.forEach(q => {
+        let count = 0;
+        if (q.requires) {
+            q.requires.forEach(req => { if (nameToNode[req]) count++; });
+        }
+        inDegree[q.name] = count;
+    });
+
+    // Start with roots (in-degree 0)
+    const queue = [];
+    chain.forEach(q => {
+        if (inDegree[q.name] === 0) {
+            depthMap[q.name] = 0;
+            queue.push(q.name);
+        }
+    });
+
+    // Process in topological order, taking max depth from predecessors
     while (queue.length > 0) {
         const current = queue.shift();
         const node = nameToNode[current];
         if (!node || !node.unlocks) continue;
 
         node.unlocks.forEach(next => {
-            if (depthMap[next] === undefined || depthMap[next] < depthMap[current] + 1) {
-                depthMap[next] = depthMap[current] + 1;
+            if (!nameToNode[next]) return;
+            const newDepth = depthMap[current] + 1;
+            if (depthMap[next] === undefined || depthMap[next] < newDepth) {
+                depthMap[next] = newDepth;
+            }
+            inDegree[next]--;
+            if (inDegree[next] === 0) {
                 queue.push(next);
             }
         });
