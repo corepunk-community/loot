@@ -176,6 +176,15 @@ function populateTablesList() {
             li.appendChild(chainIcon);
         }
 
+        // Unverified tag for quests not on corepunk.help
+        if (!api) {
+            const tag = document.createElement('span');
+            tag.className = 'quest-unverified-tag';
+            tag.title = 'Not found on corepunk.help — may not be accessible in-game';
+            tag.textContent = '?';
+            li.appendChild(tag);
+        }
+
         if (questName === currentQuest) {
             li.classList.add('active');
         }
@@ -272,10 +281,19 @@ function navigateToQuest(questName) {
     }
 }
 
+// Build a clickable NPC map link
+function npcMapLink(slug, name) {
+    return `<a href="https://corepunk.help/tools/map?npc=${slug}" target="_blank" rel="noopener" class="npc-map-link" title="View on map">${name}</a>`;
+}
+
 // Build quest detail HTML from API data
 function buildQuestDetailHTML(questName) {
     const api = getApiQuest(questName);
-    if (!api) return '';
+
+    // Show unverified notice for quests not on corepunk.help
+    if (!api) {
+        return '<div class="quest-unverified-notice">This quest was found in game files but is not listed on corepunk.help. It may not be accessible in-game.</div>';
+    }
 
     let html = '<div class="quest-detail-info">';
 
@@ -286,12 +304,14 @@ function buildQuestDetailHTML(questName) {
     if (meta.length) html += `<div class="quest-detail-meta">${meta.join('')}</div>`;
 
     // Quest giver / finisher
-    const giver = api.questGiver?.name;
-    const finisher = api.questFinisher?.name;
-    if (giver || finisher) {
+    const giverSlug = api.questGiver?.slug;
+    const giverName = api.questGiver?.name;
+    const finisherSlug = api.questFinisher?.slug;
+    const finisherName = api.questFinisher?.name;
+    if (giverName || finisherName) {
         html += '<div class="quest-detail-npcs">';
-        if (giver) html += `<span class="quest-detail-npc"><span class="quest-detail-label">Giver:</span> ${giver}</span>`;
-        if (finisher && finisher !== giver) html += `<span class="quest-detail-npc"><span class="quest-detail-label">Finisher:</span> ${finisher}</span>`;
+        if (giverName) html += `<span class="quest-detail-npc"><span class="quest-detail-label">Giver:</span> ${npcMapLink(giverSlug, giverName)}</span>`;
+        if (finisherName && finisherSlug !== giverSlug) html += `<span class="quest-detail-npc"><span class="quest-detail-label">Finisher:</span> ${npcMapLink(finisherSlug, finisherName)}</span>`;
         html += '</div>';
     }
 
@@ -316,16 +336,10 @@ function displayQuestItems(questName, searchTerm = '') {
 
     const items = questRewards[questName] || [];
 
-    // Show quest detail info from API
+    // Show quest detail info from API (or unverified notice)
     const detailContainer = document.getElementById('quest-detail');
-    const detailHTML = buildQuestDetailHTML(questName);
-    if (detailHTML) {
-        detailContainer.innerHTML = detailHTML;
-        detailContainer.classList.remove('hidden');
-    } else {
-        detailContainer.innerHTML = '';
-        detailContainer.classList.add('hidden');
-    }
+    detailContainer.innerHTML = buildQuestDetailHTML(questName);
+    detailContainer.classList.remove('hidden');
 
     // Show quest chain info
     const chainContainer = document.getElementById('quest-chain');

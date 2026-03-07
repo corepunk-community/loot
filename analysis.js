@@ -227,6 +227,71 @@ function renderQuestLists() {
         panel.appendChild(body);
         container.appendChild(panel);
     });
+
+    // Unverified quests section (in binary data but not on corepunk.help)
+    renderUnverifiedSection(container);
+}
+
+function renderUnverifiedSection(container) {
+    const unverified = Object.keys(questRewards)
+        .filter(name => !getApiQuest(name))
+        .sort();
+
+    if (unverified.length === 0) return;
+
+    const panel = document.createElement('div');
+    panel.className = 'analysis-section';
+
+    const header = document.createElement('div');
+    header.className = 'analysis-section-header';
+    header.innerHTML = `
+        <span class="analysis-section-title">Unverified Quests (in game files, not on corepunk.help)</span>
+        <span class="analysis-section-count">${unverified.length} quests</span>
+        <span class="analysis-section-chevron">&#9654;</span>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'analysis-section-body hidden';
+
+    unverified.forEach(quest => {
+        const items = questRewards[quest];
+        const row = document.createElement('div');
+        row.className = 'analysis-quest-row';
+
+        const link = document.createElement('a');
+        link.className = 'analysis-quest-link';
+        link.textContent = quest;
+        link.href = 'quests.html';
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            sessionStorage.setItem('selectedQuest', quest);
+            window.location.href = 'quests.html';
+        });
+
+        const countTag = document.createElement('span');
+        countTag.className = 'analysis-item-tag reward-tag reward-tag-other';
+        countTag.textContent = `${items.length} items`;
+
+        row.appendChild(link);
+        row.appendChild(countTag);
+        body.appendChild(row);
+    });
+
+    header.addEventListener('click', () => {
+        const chevron = header.querySelector('.analysis-section-chevron');
+        const isOpen = !body.classList.contains('hidden');
+        if (isOpen) {
+            body.classList.add('hidden');
+            chevron.classList.remove('expanded');
+        } else {
+            body.classList.remove('hidden');
+            chevron.classList.add('expanded');
+        }
+    });
+
+    panel.appendChild(header);
+    panel.appendChild(body);
+    container.appendChild(panel);
 }
 
 window.addEventListener('DOMContentLoaded', init);

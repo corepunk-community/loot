@@ -879,6 +879,52 @@ footer {
     color: #444;
 }
 
+/* NPC map links */
+.npc-map-link {
+    color: #3498db;
+    text-decoration: none;
+    border-bottom: 1px dashed #3498db;
+}
+
+.npc-map-link:hover {
+    color: #2980b9;
+    border-bottom-style: solid;
+}
+
+.npc-map-link::after {
+    content: ' \2197';
+    font-size: 10px;
+    opacity: 0.6;
+}
+
+/* Unverified quest tag (in list) */
+.quest-unverified-tag {
+    display: inline-block;
+    background-color: #f39c12;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 50%;
+    margin-left: 6px;
+    cursor: help;
+}
+
+/* Unverified quest notice (in detail panel) */
+.quest-unverified-notice {
+    background-color: #fff8e1;
+    border: 1px solid #ffe082;
+    border-left: 4px solid #f39c12;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #856404;
+}
+
 /* Item type indicators (subtle left border) */
 .item-type-artifact   { border-left: 3px solid #9b59b6; }
 .item-type-recipe     { border-left: 3px solid #3498db; }
