@@ -200,18 +200,22 @@ function buildUnifiedChains() {
     const merged = [];
     const usedApiChainIndices = new Set();
 
+    // Build a set of all quest slugs found in binary metadata
+    const binaryMetaSlugs = new Set();
+    Object.values(questMeta).forEach(entry => {
+        binaryMetaSlugs.add(toSlug(entry.name));
+    });
+
     // First, check each API chain for binary overlap
     apiChains.forEach((apiChain, idx) => {
-        const apiSlugs = new Set(apiChain.map(q => q.slug));
+        // Check if any quest in this chain exists in binary game files
         let hasBinaryOverlap = false;
-        binaryChainGroups.forEach(binaryChain => {
-            binaryChain.forEach(q => {
-                const slug = toSlug(q.name);
-                const mappedSlug = slugMap[slug] || slug;
-                if (apiSlugs.has(slug) || apiSlugs.has(mappedSlug)) {
-                    hasBinaryOverlap = true;
-                }
-            });
+        apiChain.forEach(q => {
+            const slug = q.slug;
+            const mappedSlug = slugMap[slug] || slug;
+            if (binaryMetaSlugs.has(slug) || binaryMetaSlugs.has(mappedSlug) || binaryChainSlugs.has(slug) || binaryChainSlugs.has(mappedSlug)) {
+                hasBinaryOverlap = true;
+            }
         });
 
         // Mark quests that have binary reward data
@@ -490,15 +494,24 @@ function renderForkedChain(chain, byDepth, maxDepth, edges, depthMap, nameToNode
         // Heaviest (most forking) goes rightward
         children.sort((a, b) => weight(a) - weight(b));
 
-        // First child (most linear) inherits parent column
+        // First child (most linear) tries to inherit parent column
+        // but must verify the path is free (another branch may have claimed it)
         const c0d = depthMap[children[0]];
-        for (let dd = d + 1; dd < c0d; dd++) useCol(dd, col);
-        assignCol(children[0], col);
+        let c0col = col;
+        let pathBlocked = false;
+        for (let dd = d + 1; dd <= c0d; dd++) {
+            if (usedCols[dd] && usedCols[dd].has(col)) { pathBlocked = true; break; }
+        }
+        if (pathBlocked) {
+            c0col = findFreeCol(col, d + 1, c0d);
+        }
+        for (let dd = d + 1; dd < c0d; dd++) useCol(dd, c0col);
+        assignCol(children[0], c0col);
 
         // Other children get new columns nearby, reusing freed space
         for (let i = 1; i < children.length; i++) {
             const cd = depthMap[children[i]];
-            const nc = findFreeCol(col + 1, d + 1, cd);
+            const nc = findFreeCol(c0col + 1, d + 1, cd);
             for (let dd = d + 1; dd <= cd; dd++) useCol(dd, nc);
             assignCol(children[i], nc);
         }
