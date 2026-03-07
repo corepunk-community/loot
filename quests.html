@@ -14,6 +14,7 @@
                 <a href="index.html">Loot Tables</a>
                 <a href="quests.html" class="active">Quest Rewards</a>
                 <a href="chains.html">Quest Chains</a>
+                <a href="locations.html">Locations</a>
                 <a href="analysis.html">Analysis</a>
                 <a href="diff.html">Patch Diff</a>
             </nav>
@@ -44,6 +45,15 @@
                             <button class="filter-btn" data-filter="synthesis">Synthesis</button>
                             <button class="filter-btn" data-filter="weapon">Weapons</button>
                             <button class="filter-btn" data-filter="currency">Currency</button>
+                        </div>
+                        <div class="level-chain-filters">
+                            <div class="level-filter">
+                                <label>Level:</label>
+                                <input type="number" id="level-min" placeholder="Min" min="1" max="50">
+                                <span>-</span>
+                                <input type="number" id="level-max" placeholder="Max" min="1" max="50">
+                            </div>
+                            <button class="filter-btn" id="chain-filter-btn">Chains Only</button>
                         </div>
                     </div>
 

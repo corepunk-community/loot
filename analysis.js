@@ -1,6 +1,7 @@
 let questRewards = {};
 let apiQuests = {};
 let slugMap = {};
+let questMeta = {};
 
 function toSlug(name) {
     return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
@@ -9,6 +10,11 @@ function toSlug(name) {
 function getApiQuest(questName) {
     const slug = toSlug(questName);
     return apiQuests[slug] || apiQuests[slugMap[slug]] || null;
+}
+
+function getQuestMeta(questName) {
+    const id = questName.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '_').replace(/-/g, '_').trim();
+    return questMeta[id] || null;
 }
 
 function getItemType(itemName) {
@@ -33,8 +39,9 @@ async function init() {
 
         const fetches = [fetch(rewardsFile)];
         if (latest.api_quests_file) fetches.push(fetch(latest.api_quests_file));
+        if (latest.quest_metadata_file) fetches.push(fetch(latest.quest_metadata_file));
 
-        const [rewardsRes, apiRes] = await Promise.all(fetches);
+        const [rewardsRes, apiRes, metaRes] = await Promise.all(fetches);
         if (!rewardsRes.ok) throw new Error('Failed to load quest rewards');
         questRewards = await rewardsRes.json();
 
@@ -43,6 +50,10 @@ async function init() {
             const questList = Array.isArray(apiData) ? apiData : apiData.quests || [];
             questList.forEach(q => { apiQuests[q.slug] = q; });
             if (apiData.slugMap) slugMap = apiData.slugMap;
+        }
+
+        if (metaRes && metaRes.ok) {
+            questMeta = await metaRes.json();
         }
 
         renderStats();
@@ -277,6 +288,14 @@ function buildQuestTable(results) {
             window.location.href = 'quests.html';
         });
         tdName.appendChild(link);
+        const meta = getQuestMeta(quest);
+        if (meta?.region === 'Prison Island') {
+            const badge = document.createElement('span');
+            badge.className = 'region-badge region-badge-prison';
+            badge.textContent = 'PI';
+            badge.title = 'Prison Island';
+            tdName.appendChild(badge);
+        }
         if (!api) {
             const tag = document.createElement('span');
             tag.className = 'quest-unverified-tag';

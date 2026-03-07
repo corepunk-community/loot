@@ -1,0 +1,4419 @@
+{
+  "Drafts": {
+    "id": "Drafts",
+    "name": "Drafts"
+  },
+  "VoiceRequests": {
+    "id": "VoiceRequests",
+    "name": "Voicerequests"
+  },
+  "a_bitter_brew": {
+    "id": "a_bitter_brew",
+    "name": "A Bitter Brew",
+    "questGiver": "Furr",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Deliver poison to the water reservoir southwest of the Great Steppe Stronghold.",
+    "goals": [
+      "Poison the water in the barrel",
+      "Return to Furr"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "a_blooming_melon-drama": {
+    "id": "a_blooming_melon-drama",
+    "name": "A Blooming Melon-drama",
+    "questGiver": "Kicheki",
+    "questLocation": "Watermelon field",
+    "description": "Find Kicheki's guitar around Jahri and search bushes around Goldenfield for a red rose.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "a_bound_requiem": {
+    "id": "a_bound_requiem",
+    "name": "A Bound Requiem",
+    "goals": [
+      "Bring book to King Head",
+      "Forgotten item: The Bound Requiem"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "a_brothers_shadow": {
+    "id": "a_brothers_shadow",
+    "name": "A Brothers Shadow",
+    "questGiver": "Gideon Stroud",
+    "questLocation": "Steppe, North of the shore of Thousand Bones",
+    "description": "Search for any evidence of Gideon's brother just west of the Arid Canal.",
+    "goals": [
+      "Find any traces of Gideon's brother"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "a_brothers_trail": {
+    "id": "a_brothers_trail",
+    "name": "A Brothers Trail",
+    "questGiver": "Gideon Stroud",
+    "questLocation": "Steppe, North of the shore of Thousand Bones",
+    "description": "Following the note's directions, head south west to the coast in search for more evidence of Alaric's disappearance.",
+    "goals": [
+      "Return the note eaten by hyenas"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "a_fateful_bet": {
+    "id": "a_fateful_bet",
+    "name": "A Fateful Bet",
+    "questGiver": "Dr. Glimmiwop",
+    "questLocation": "Goldenfield, Distant Farm",
+    "description": "Find Beeswax around Nia, then locate Petroleum by D'Rek.",
+    "goals": [
+      "Talk to Durzo \"Dicey\" Dunwaddle",
+      "Combine the ingredients"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "diamond_eyes"
+    ]
+  },
+  "a_fishy_summons": {
+    "id": "a_fishy_summons",
+    "name": "A Fishy Summons",
+    "questGiver": "Triton",
+    "questLocation": "Windreach Woods, Lake house",
+    "description": "Search the shore near Triton.",
+    "goals": [
+      "Bring to Brawny Barrelbuckle"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "prevQuests": [
+      "lawsuit_of_the_lake"
+    ]
+  },
+  "a_fortune_forewarned": {
+    "id": "a_fortune_forewarned",
+    "name": "A Fortune Forewarned",
+    "questGiver": "Reyalp",
+    "questLocation": "Riverrise, First City Enter after the bridge",
+    "description": "Gather these rare materials from veins, bushes and trees around the area!",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "a_head_for_business": {
+    "id": "a_head_for_business",
+    "name": "A Head For Business",
+    "goals": [
+      "Bring Troll Head to Skrizzik",
+      "Forgotten item: Troll Head"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "a_masked_favor": {
+    "id": "a_masked_favor",
+    "name": "A Masked Favor",
+    "questGiver": "Miguel \"El Caballo\" Rodriguez",
+    "questLocation": "Riverrise, mount shop",
+    "description": "Transport the mysterious mask back to Skip Stones on Prison Island.",
+    "goals": [
+      "Bring Mask to Skip Stones",
+      "Forgotten item: Mysterious Luchador Mask",
+      "Find the lost mask in the treasures on Prison Island"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "a_nutty_situation": {
+    "id": "a_nutty_situation",
+    "name": "A Nutty Situation",
+    "questGiver": "Barkley Beats",
+    "questLocation": "Riverrise, City Center",
+    "description": "Use your cooking skill to bake some chokwalatte.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "a_pacifists_dilemma": {
+    "id": "a_pacifists_dilemma",
+    "name": "A Pacifists Dilemma",
+    "questGiver": "Brother Thaddeus",
+    "questLocation": "Steppe, Western fort",
+    "description": "Collect crystals from golems from the north for the celebration. Place the crystals in the projectors along the fort walls and speak with Madame Mirage in the Western Fort.",
+    "goals": [
+      "Talk to Madame Mirage"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "a_piece_of_zen": {
+    "id": "a_piece_of_zen",
+    "name": "A Piece Of Zen",
+    "questGiver": "Tiffany",
+    "questLocation": "Goldenfield, Yoga House",
+    "description": "Search the house south of Nia's shop. Then find an abandoned house southwest of Dr. Bloom in Goldenfield.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "a_prank_too_far": {
+    "id": "a_prank_too_far",
+    "name": "A Prank Too Far",
+    "questGiver": "Buck",
+    "questLocation": "Goldenfield, Violet Weed Field",
+    "description": "Go to the Hunter's Lodge in the forest to the northwest and find the notes.",
+    "goals": [
+      "Return to Buck"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "prevQuests": [
+      "phantom_fragment_recovery"
+    ]
+  },
+  "a_question_of_honor": {
+    "id": "a_question_of_honor",
+    "name": "A Question Of Honor",
+    "questGiver": "Themis",
+    "questLocation": "Windreach Woods, Fort",
+    "description": "Talk to Alaric Stormshade at the fort in Windreach Woods.",
+    "goals": [
+      "Talk to Alaric Stormshade"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "prevQuests": [
+      "guarding_fortunes"
+    ]
+  },
+  "a_quiet_disposal": {
+    "id": "a_quiet_disposal",
+    "name": "A Quiet Disposal",
+    "questGiver": "Finn Hawthorne",
+    "questLocation": "Steppe, Adventures outpost",
+    "description": "Head north of the outpost near the anomaly for Shroomageddon. Gather a Septic Seed from scolopendras. Finally, return to the Adventurer's Outpost and use the grinder to finish the drink.",
+    "goals": [
+      "Use a device to obtain Mindplague Essence",
+      "Give the poison to Gareth"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "a_second_chance": {
+    "id": "a_second_chance",
+    "name": "A Second Chance",
+    "questGiver": "Kira",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Kill hyenas and collect their blood for Kira. Mark fallen brothers by anomaly to the southeast.",
+    "goals": [
+      "Talk to Furr"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "a_sharp_donation": {
+    "id": "a_sharp_donation",
+    "name": "A Sharp Donation",
+    "questGiver": "Velvet Viper",
+    "questLocation": "Riverrise, City Center",
+    "description": "Search the bar for the knives.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "a_skullful_of_solace": {
+    "id": "a_skullful_of_solace",
+    "name": "A Skullful Of Solace",
+    "questGiver": "SLPY-05",
+    "questLocation": "Steppe, Junkyard slums",
+    "description": "Defeat golems and use the mechanical board reader to examine their contents.",
+    "goals": [
+      "Perform a successful board scan",
+      "Return to SLPY-05"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "a_special_meal_for_timmy": {
+    "id": "a_special_meal_for_timmy",
+    "name": "A Special Meal For Timmy",
+    "questGiver": "Marigold Thornbuckle",
+    "questLocation": "Goldenfield, Edge farm",
+    "description": "Head south to the Baxter's farm in Goldenfield.",
+    "goals": [
+      "Collect Special Stash",
+      "Bring to Marigold",
+      "Collect Marigold's Chore List"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "a_taste_of_the_unusual": {
+    "id": "a_taste_of_the_unusual",
+    "name": "A Taste Of The Unusual",
+    "questGiver": "Erwin \"Bacon King\" Braux",
+    "questLocation": "Riverrise, Butchery district",
+    "description": "Head to the abandoned village south or the railway depot and swamp to the east for scrags.",
+    "goals": [
+      "Deliver to Rufus"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "a_taste_to_die_for": {
+    "id": "a_taste_to_die_for",
+    "name": "A Taste To Die For",
+    "questGiver": "Gragthar",
+    "questLocation": "Riverrise, City Center",
+    "description": "Venture into the Ripplecrop Fields and search abandoned houses for pages of the cookbook.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "a_toast_to_enlightenment": {
+    "id": "a_toast_to_enlightenment",
+    "name": "A Toast To Enlightenment",
+    "questGiver": "Cassidy",
+    "questLocation": "Goldenfield, Yoga garden rocks",
+    "description": "Head north to the Welfare Kitchen in Goldenfield.",
+    "goals": [
+      "Collect the bottle of Lucas Lager out in the Welfare kitchen"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "a_yorner_trial": {
+    "id": "a_yorner_trial",
+    "name": "A Yorner Trial",
+    "goals": [
+      "Bring the Ovenheim Ring to Zara"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island",
+    "nextQuests": [
+      "trial_of_worthiness"
+    ]
+  },
+  "accords_and_accidents": {
+    "id": "accords_and_accidents",
+    "name": "Accords And Accidents",
+    "questGiver": "HPPY-01",
+    "questLocation": "Steppe, Junkyard slums",
+    "description": "Return the data to Dr. Queenie south at the Northsteppe Fort.",
+    "goals": [
+      "Deliver HPPY-01's research data to Dr. Queenie"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "agricultural_bots_refuel": {
+    "id": "agricultural_bots_refuel",
+    "name": "Agricultural Bots Refuel",
+    "questGiver": "Energizer-21",
+    "questLocation": "Goldenfield, near Farmhouse",
+    "description": "Collect mana resin from magic trees in the woods around Goldenfield.",
+    "goals": [
+      "Repair the charging station"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "aircraft_accident_searching": {
+    "id": "aircraft_accident_searching",
+    "name": "Aircraft Accident Searching",
+    "questGiver": "Zugg Clankwhistle",
+    "questLocation": "Goldenfield, near the Bureau",
+    "description": "Head deep southwest from Goldenfield into Westwind Woods. Search near the smoke and wreckage for the missing clone.",
+    "goals": [
+      "Go back to the goblin",
+      "Find another brother of Zugg.",
+      "Inspect the aircraft"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "alchemist_lesson": {
+    "id": "alchemist_lesson",
+    "name": "Alchemist Lesson",
+    "questGiver": "Percival \"Percy\" Beamish",
+    "questLocation": "Goldenfield, near the Bureau",
+    "description": "Percy needs help making Counterfeit Painkillers.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "alcohol_delivery": {
+    "id": "alcohol_delivery",
+    "name": "Alcohol Delivery",
+    "questGiver": "Paddy O'Lantern",
+    "questLocation": "Goldenfield, near Welfare kitchen",
+    "description": "Bring Paddy a bottle of Elanien Whiskey.",
+    "goals": [
+      "Deliver Elanien Whiskey to Paddy"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "allergic_to_duty": {
+    "id": "allergic_to_duty",
+    "name": "Allergic To Duty",
+    "questGiver": "Mabel Thorn",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Help Mabel avoid conscription by gathering allergens between the crossroads and lake north of the Central Fort to prove her condition.",
+    "goals": [
+      "Return to Mabel Thorn"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "allergy-free_flora": {
+    "id": "allergy-free_flora",
+    "name": "Allergy-free Flora",
+    "questGiver": "SNZY-04",
+    "questLocation": "Steppe, Junkyard slums",
+    "description": "Help SNZY-04 collect rare desert plant samples north along the northern coastline. Take the samples near the Hillside Well northwest of SNZY-04 , just short of the sandy beach and use the bio-machine.",
+    "goals": [
+      "Use the bio-machine to process the samples",
+      "Return to SNZY-04"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "amplify_the_catch": {
+    "id": "amplify_the_catch",
+    "name": "Amplify The Catch",
+    "questGiver": "Ol' Fins",
+    "questLocation": "Windstone Village, Windstone Lake's",
+    "description": "Go the market in Windstone Village to the east.",
+    "goals": [
+      "Collect Amplified Microphone",
+      "Return to Ol' Fins"
+    ],
+    "locationCode": "WDVI",
+    "region": "Windstone Village",
+    "nextQuests": [
+      "fish_prophets_decree"
+    ]
+  },
+  "an_ethical_appetite": {
+    "id": "an_ethical_appetite",
+    "name": "An Ethical Appetite",
+    "questGiver": "Triton",
+    "questLocation": "Steppe, near west Lost boats",
+    "description": "Kill some hyenas for Triton nearby. He'll gather the meat later.",
+    "goals": [
+      "Return to Triton"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "ancient_artifacts": {
+    "id": "ancient_artifacts",
+    "name": "Ancient Artifacts",
+    "questGiver": "Old Man Zephyr",
+    "questLocation": "Riverrise, City Center",
+    "description": "Look closely around the area for these objects.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "artifact_of_fury": {
+    "id": "artifact_of_fury",
+    "name": "Artifact Of Fury",
+    "questGiver": "Zor",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Find Slick Shady in Coal Village to the southwest of the Arid Canal.",
+    "goals": [
+      "Talk to Slick Shady"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "artifact_vendor_order": {
+    "id": "artifact_vendor_order",
+    "name": "Artifact Vendor Order",
+    "questGiver": "Griz Turner",
+    "questLocation": "Goldenfield, near Artifact Shop",
+    "description": "Help Griz Turner replenish his artifact stock.",
+    "goals": [
+      "Collect a Uncommon Mana Amulet"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "back_to_bigg_mama": {
+    "id": "back_to_bigg_mama",
+    "name": "Back To Bigg Mama",
+    "questGiver": "Hilda Deeproot",
+    "questLocation": "Westwind Woods, near Forest cabin",
+    "description": "Talk to Martha.",
+    "goals": [
+      "Talk to Martha"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods"
+  },
+  "bank_withdrawal_connection": {
+    "id": "bank_withdrawal_connection",
+    "name": "Bank Withdrawal Connection",
+    "questGiver": "Butch O'Hara",
+    "questLocation": "Goldenfield, near Pig farm",
+    "description": "Head west to the Goldenfield bank.",
+    "goals": [
+      "Talk to Oswald"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "beacon_of_confidence": {
+    "id": "beacon_of_confidence",
+    "name": "Beacon Of Confidence",
+    "questGiver": "Zeke \"Gearhead\" Thompson",
+    "questLocation": "Steppe, Northsteppe fort",
+    "description": "Find Roddy west at the Western Fort to share the news.",
+    "goals": [
+      "Find and talk to Roddy"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "beacon_of_hope": {
+    "id": "beacon_of_hope",
+    "name": "Beacon Of Hope",
+    "questGiver": "Kira",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Collect fuses on the island northeast of the Fishers camp and scattered around Smugglers Island and the several small islands that surround it. Afterward, light torches along the beach, starting east of Fishers Camp, down to the north of Silent Village.",
+    "goals": [
+      "Talk to Kira"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "bearing_light": {
+    "id": "bearing_light",
+    "name": "Bearing Light",
+    "questGiver": "Barnaby Thorn",
+    "questLocation": "Steppe, Great steppe stronghold",
+    "description": "Assist The Guardinator and Jennifer around the stronghold. Terrace was sent east to the Northeast Fort, you’ll find him there.",
+    "goals": [
+      "Help Terrace Tenstone",
+      "Help The Guardinator",
+      "Help Jennifer Davyna",
+      "Help Berg Stonefoot",
+      "Help Butch O'Hara",
+      "Help Percival \"Percy\" Beamish",
+      "Help Griz Turner",
+      "Help Paddy O'Lantern",
+      "Help Oswald",
+      "Help Quadro-Sentinel 4.0",
+      "Help Kicheki",
+      "Help Jahri Roots",
+      "Help Mortimer Gloomsworth",
+      "Help D'Rek",
+      "Help Ratchet",
+      "Talk to Zugg Clankwhistle",
+      "Return to Barnaby Thorn"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "beauty_in_the_mud": {
+    "id": "beauty_in_the_mud",
+    "name": "Beauty In The Mud",
+    "questGiver": "Zorbul Z'nar",
+    "questLocation": "Goldenfield, Distant Farm",
+    "description": "Head straight east to the lake. Search around the shore for eggs.",
+    "goals": [
+      "Return to Zorbul"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "prevQuests": [
+      "vanitys_elixir"
+    ]
+  },
+  "beggars_cant_be_roasters": {
+    "id": "beggars_cant_be_roasters",
+    "name": "Beggars Cant Be Roasters",
+    "questGiver": "Paddy O'Lantern",
+    "questLocation": "Goldenfield, Walfare Kitchen",
+    "description": "Hunt birds around Goldenfield for an animal carcass.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "behind_enemy_lines": {
+    "id": "behind_enemy_lines",
+    "name": "Behind Enemy Lines",
+    "questGiver": "Trevor Barlow",
+    "questLocation": "Windreach Woods, Fort",
+    "description": "Search the captain's trunks around the fort for his Calming Leaves.",
+    "goals": [
+      "Return to Tharkon"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "darkwood_dilemma"
+    ],
+    "prevQuests": [
+      "the_last_order"
+    ]
+  },
+  "beneath_the_surface": {
+    "id": "beneath_the_surface",
+    "name": "Beneath The Surface",
+    "questGiver": "Alexander Stones",
+    "questLocation": "Westwind Woods, Old Quarry overlooking platform",
+    "description": "Find a lamp and mine cart parts in the abandoned settlement to the northwest. Varkus will be waiting by the Westwind Sawmill.",
+    "goals": [
+      "Return to Varkus Drov"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "desperate_depths"
+    ],
+    "prevQuests": [
+      "the_big_reveal"
+    ]
+  },
+  "blitzs_escape_clause": {
+    "id": "blitzs_escape_clause",
+    "name": "Blitzs Escape Clause",
+    "questGiver": "Blitz Hyperstorm",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Follow Blitz's trail of crushed cans south into the forest. His contract should be at the end of the trail.",
+    "goals": [
+      "Find Blitz's contract and bring it to Blitz"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "bones_exhumation_reburial": {
+    "id": "bones_exhumation_reburial",
+    "name": "Bones Exhumation Reburial",
+    "questGiver": "Mortimer Gloomsworth",
+    "questLocation": "Goldenfield, near Cemetery",
+    "description": "Retrieve bones from around Goldenfield for Mortimer Gloomsworth to bury in the cemetery.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "bread_making_lesson": {
+    "id": "bread_making_lesson",
+    "name": "Bread Making Lesson",
+    "questGiver": "Martha \"Big Mamma\" Potterson",
+    "questLocation": "Goldenfield, near Welfare kitchen",
+    "description": "Find 3 Wheat Seeds in barrels, crates or around the fields.",
+    "goals": [
+      "Bring Wheat Flour to \"Big Mamma\""
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "breaking_the_chains": {
+    "id": "breaking_the_chains",
+    "name": "Breaking The Chains",
+    "questGiver": "Marigold Thornbuckle",
+    "questLocation": "Goldenfield, Edge farm",
+    "description": "Grab the smoker from near 'Lil Timmy and head north across the field to the hive. Use the smoker on the hive, retrieve the bottle and bring it back.",
+    "goals": [
+      "Collect green bottle",
+      "Return toy to Marigold Thornbuckle",
+      "Find smoker near Lil Timmy",
+      "Take the toy out of the hive."
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "prevQuests": [
+      "the_little_terror"
+    ]
+  },
+  "bridging_realms_with_friends": {
+    "id": "bridging_realms_with_friends",
+    "name": "Bridging Realms With Friends",
+    "questGiver": "Driscoll-99",
+    "questLocation": "Westwind Woods, Old Portal",
+    "description": "Find Pastor Fazool in Reverie Hollow to the southwest. Quest-O-Tron is southeast of the Hunter's Lodge and Grizelda is far east, just southwest of the Abandoned Railway Station.",
+    "goals": [
+      "Return to Driscoll-99",
+      "Talk to QUEST-O-TRON",
+      "Talk to Grizelda",
+      "Talk to Pastor Fazool"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "portal_purge_parade"
+    ]
+  },
+  "brotherly_loss": {
+    "id": "brotherly_loss",
+    "name": "Brotherly Loss",
+    "questGiver": "Gideon Stroud",
+    "questLocation": "Steppe, North of the shore of Thousand Bones",
+    "description": "Follow the clues from the note and head toward the western coast, past Coal Village. Alaric was last scene in this area.",
+    "goals": [
+      "Get proof of death of brother Gideon",
+      "Return to Tor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "built_to_extract": {
+    "id": "built_to_extract",
+    "name": "Built To Extract",
+    "questGiver": "Dwarfaton Ironchek",
+    "questLocation": "Windstone Village, Windstone blacksmith yard",
+    "description": "Look for the missing list and the extractor parts in the swamps on the southwestern fringe of the Creeping Marsh and in the houses on Prison Island.",
+    "goals": [
+      "Find list in the houses on Prison Island",
+      "Find list in Creeping Marsh",
+      "Find Targeting Chip",
+      "Find Pressure Core Housing",
+      "Combine note hint",
+      "Find Stabilizing Core Assembly",
+      "Bring fragments to Dwarfaton Ironchek"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "burnt_pages": {
+    "id": "burnt_pages",
+    "name": "Burnt Pages",
+    "goals": [
+      "Slay the beast",
+      "Forgotten item: Burnt Papers"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "butchery_lesson": {
+    "id": "butchery_lesson",
+    "name": "Butchery Lesson",
+    "questGiver": "Butch O'Hara",
+    "questLocation": "Goldenfield, near Pig farm",
+    "description": "Head to the Skylight Grasslands and Sunweave Glade to find boarmammoths.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "bytes_calling_card_investigation": {
+    "id": "bytes_calling_card_investigation",
+    "name": "Bytes Calling Card Investigation",
+    "questGiver": "Cyra \"Byte\" Kessler",
+    "questLocation": "Riverrise, River view",
+    "description": "Search the bar for the hidden cards.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "call_to_arms": {
+    "id": "call_to_arms",
+    "name": "Call To Arms",
+    "questGiver": "Biff \"Dozer\" Bromley",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Follow the road north into the Steppes to the Central Fort where you will find Biff \"Dozer\" Bromley.",
+    "goals": [
+      "Help Blitz",
+      "Help Mabel Thorn",
+      "Help Lenny",
+      "Talk to Biff",
+      "Return to Biff"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "campfire_crafting_lesson": {
+    "id": "campfire_crafting_lesson",
+    "name": "Campfire Crafting Lesson",
+    "questGiver": "Maxwell Sterling",
+    "questLocation": "Dusktide Forest, near Wheat tent",
+    "description": "Check the pile of wood near the tent.",
+    "locationCode": "DKTF",
+    "region": "Dusktide Forest"
+  },
+  "catch_of_the_day": {
+    "id": "catch_of_the_day",
+    "name": "Catch Of The Day",
+    "questGiver": "Thorin Toastbeard",
+    "questLocation": "Windstone Village, Tavern",
+    "description": "The tavern is in the northest of Windstone Village.",
+    "goals": [
+      "Bring to Glubgrath"
+    ],
+    "locationCode": "WDVI",
+    "region": "Windstone Village",
+    "prevQuests": [
+      "the_fishermans_bash"
+    ]
+  },
+  "catching_dreams": {
+    "id": "catching_dreams",
+    "name": "Catching Dreams",
+    "questGiver": "Pax Voss",
+    "questLocation": "Riverrise, Bench behind the alchemy",
+    "description": "Search for spiders south in the Ripplecrop Fields",
+    "goals": [
+      "Collect Cause of Death"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "cbt_cosmic_coordinates": {
+    "id": "cbt_cosmic_coordinates",
+    "name": "Cbt Cosmic Coordinates",
+    "questGiver": "Dr. Orion Bloom",
+    "questLocation": "Goldenfield, Tent near the road",
+    "description": "Search around the lake to the north west by Windstone Village.",
+    "goals": [
+      "Deliver Dr. Bloom's Coordinates"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "check_yourself_before_you_drek_yourself": {
+    "id": "check_yourself_before_you_drek_yourself",
+    "name": "Check Yourself Before You Drek Yourself",
+    "questGiver": "D'rek",
+    "questLocation": "Goldenfield, Construction Craft bench",
+    "description": "Search the nearby forests for boars and leaf monsters. Collect the iron rivets from nearby Ratchet.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "chuckling_intervention": {
+    "id": "chuckling_intervention",
+    "name": "Chuckling Intervention",
+    "questGiver": "Bob Thurkle",
+    "questLocation": "Riverrise, Scene",
+    "description": "Search old bushes for rare Chuckleberry leaves.",
+    "goals": [
+      "Return Chuckleberry Leaves to Zazz Blorb"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "cigar_tales_with_grizzly_obrien": {
+    "id": "cigar_tales_with_grizzly_obrien",
+    "name": "Cigar Tales With Grizzly Obrien",
+    "questGiver": "Grizzly O'Brien",
+    "questLocation": "Riverrise, Left side of the BAR yard",
+    "description": "Find scrags in the Abandoned Village to the south, as well as the Railway Depot and Swamps to the east.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "clean_up_on_bong_island": {
+    "id": "clean_up_on_bong_island",
+    "name": "Clean Up On Bong Island",
+    "questGiver": "Queenie Viper",
+    "questLocation": "Riverrise, Left side of the BAR yard",
+    "description": "Follow the road north out of town and look for the old house.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "cleansing_the_ride": {
+    "id": "cleansing_the_ride",
+    "name": "Cleansing The Ride",
+    "questGiver": "Dwarfaton Ironchek",
+    "questLocation": "Windstone Village, Windstone blacksmith yard",
+    "description": "Collect Gritgrub Paste from сhests, barrels, crates… on Prison Island.",
+    "goals": [
+      "Bring item to Dwarfaton Ironcheek"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "collect_bottles": {
+    "id": "collect_bottles",
+    "name": "Collect Bottles",
+    "questGiver": "Griz Turner",
+    "questLocation": "Goldenfield, near Artifact Shop",
+    "description": "Help Griz Ironfoot retrieve crucial artifact fragments from the Toxic Waste area in Dusktide Forest.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "confiscated_confections": {
+    "id": "confiscated_confections",
+    "name": "Confiscated Confections",
+    "questGiver": "Mary Jane Greenpuff",
+    "questLocation": "Windreach Woods, Road house",
+    "description": "Find the train tracks to the south and search for the material by following the track east.",
+    "goals": [
+      "Talk to Mary Jane Greenpuff"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "mystery_of_mary_jane"
+    ]
+  },
+  "construction_lesson": {
+    "id": "construction_lesson",
+    "name": "Construction Lesson",
+    "questGiver": "D'Rek",
+    "questLocation": "Goldenfield, near Workshop",
+    "description": "D'Rek needs you to craft an Immuno-Stimulating Implant using a new recipe to test a theory on his failed attempts.",
+    "goals": [
+      "Craft an Immuno-Stimulating Implant"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "copper_snack": {
+    "id": "copper_snack",
+    "name": "Copper Snack",
+    "questGiver": "Rusty McDrinkit",
+    "questLocation": "Riverrise, Alcohol truck",
+    "description": "Head to the Railway Deopt south east of Riverrise and find bolts and batteries to feed the recycling machine.",
+    "goals": [
+      "Use the recycling machine",
+      "Bring delicious liquid to Maverick \"Mav\" Gritt"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "corruption_clean-up": {
+    "id": "corruption_clean-up",
+    "name": "Corruption Clean-up",
+    "questGiver": "Morick Voss",
+    "questLocation": "Westwind Woods, Valley of sins infestation",
+    "description": "Kill some Occultists around the area.",
+    "goals": [
+      "Return to Morick"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "the_last_order"
+    ],
+    "prevQuests": [
+      "lost_signal"
+    ]
+  },
+  "cosmic_concotion_ingredients": {
+    "id": "cosmic_concotion_ingredients",
+    "name": "Cosmic Concotion Ingredients",
+    "questGiver": "D'Rek",
+    "questLocation": "Goldenfield, near Workshop",
+    "description": "Collect 5 Meteoric Metal and 1 Titanium Nugget for D'Rek's project.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "crafting_concerns": {
+    "id": "crafting_concerns",
+    "name": "Crafting Concerns",
+    "questGiver": "Lyra Vex",
+    "questLocation": "Steppe, Western fort",
+    "description": "Gather curved pipes around the fort, and assemble the weapon before delivering it to Silas.",
+    "goals": [
+      "Build a weapon on the anvil",
+      "Return the weapon to Silas"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "crafting_lessons": {
+    "id": "crafting_lessons",
+    "name": "Crafting Lessons",
+    "questGiver": "Martha \"Big Mamma\" Potterson",
+    "questLocation": "Goldenfield, near Welfare kitchen",
+    "description": "Help folks around Goldenfield.",
+    "goals": [
+      "Help Zogar",
+      "Help Greta Grubb",
+      "Help Thordal Ironvein",
+      "Help Zoltar Blipchain",
+      "Help Nia Sundance"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "culinary_diplomacy": {
+    "id": "culinary_diplomacy",
+    "name": "Culinary Diplomacy",
+    "questGiver": "Thorin Toastbeard",
+    "questLocation": "Windstone Village, Tavern",
+    "description": "Search for the Overgrown House to the north east of town. Professor Zephyr Yule should be around.",
+    "goals": [
+      "Return to Triton"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "lawsuit_of_the_lake"
+    ],
+    "prevQuests": [
+      "seasoned_delicacy"
+    ]
+  },
+  "darkwood_dilemma": {
+    "id": "darkwood_dilemma",
+    "name": "Darkwood Dilemma",
+    "questGiver": "Tharkon",
+    "questLocation": "Windreach Woods, Fort",
+    "description": "Search for the Captain's body near the Altar north of the Quarry and collect any proof you find.",
+    "goals": [
+      "Find the Captain's body",
+      "Pick up an item near the corpse as proof of death",
+      "Talk to Trevor Barlow"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "hidden_menace"
+    ],
+    "prevQuests": [
+      "behind_enemy_lines"
+    ]
+  },
+  "dead_names_and_living_circuits": {
+    "id": "dead_names_and_living_circuits",
+    "name": "Dead Names And Living Circuits",
+    "goals": [
+      "Finde Dead Morti"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "death_raven": {
+    "id": "death_raven",
+    "name": "Death Raven",
+    "goals": [
+      "Forgotten item: Page 4"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "decrypting_betrayal": {
+    "id": "decrypting_betrayal",
+    "name": "Decrypting Betrayal",
+    "questGiver": "Louise Oldgarden",
+    "questLocation": "Reverie Hollow, Pastor s house",
+    "description": "Kill 10 Dendroids around the forest.",
+    "goals": [
+      "Talk to Penny \"Stardust\" Furbank"
+    ],
+    "locationCode": "RVHL",
+    "region": "Reverie Hollow",
+    "nextQuests": [
+      "obscured_intentions"
+    ],
+    "prevQuests": [
+      "the_painted_betrayal"
+    ]
+  },
+  "defectors_round-up": {
+    "id": "defectors_round-up",
+    "name": "Defectors Round-up",
+    "questGiver": "Roddy",
+    "questLocation": "Steppe, Western fort",
+    "description": "Daxton and Greta are around the fort. Nud-E Leroy is northwest near Skeleton Cave on the beach. Triton is around the Lost Boats north of the Skeleton Cave and Slick Shady is at Coal Village to the north. You can find Horace around the Arid Canal, northeast of Coal Village.",
+    "goals": [
+      "Help Nud-E Leroy",
+      "Help Triton",
+      "Help Horace Grumbles",
+      "Help Slick Shady",
+      "Help Daxton Vance",
+      "Help Greta Grubb",
+      "Return to Roddy"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "dendroid_guard_hunt": {
+    "id": "dendroid_guard_hunt",
+    "name": "Dendroid Guard Hunt",
+    "questGiver": "Ludwig Schatten",
+    "questLocation": "Tempest Timberland, near the Hunter camp",
+    "description": "Ludwig tasks you with a dangerous hunt for a Dendroid Guard in the Tempest Timberland.",
+    "locationCode": "WRWD",
+    "region": "Windreach Woods"
+  },
+  "desert_data_dilemma": {
+    "id": "desert_data_dilemma",
+    "name": "Desert Data Dilemma",
+    "questGiver": "Dr. Queenie",
+    "questLocation": "Steppe, Northsteppe fort",
+    "description": "Help Dr. Queenie obtain ecological research data from HPPY-01 northeast at the Junkyard Slums, past the South Winery.",
+    "goals": [
+      "Return to HPPY-01"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "desert_decryption": {
+    "id": "desert_decryption",
+    "name": "Desert Decryption",
+    "questGiver": "Mort Decay",
+    "questLocation": "Steppe, Northsteppe fort",
+    "description": "Help Mort Decay retrieve mysterious artifacts. Collect them to the southeast, between the Northeast Fort and the Eastern-Marsh Fort.",
+    "goals": [
+      "Bring to Mort Decay"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "desert_denial": {
+    "id": "desert_denial",
+    "name": "Desert Denial",
+    "questGiver": "Mabel Thorn",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Use the Bramble Dust on the Leaf Queen to extract Anomalous Plants. Bring the samples back to Mabel Thorn.",
+    "goals": [
+      "Use the \"Bramble dust\" to",
+      "Return to Mabel Thorn"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "desert_diplomacy": {
+    "id": "desert_diplomacy",
+    "name": "Desert Diplomacy",
+    "questGiver": "Tor Drostin",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Find Zor by the coastline directly north, at the Fisher's Camp.",
+    "goals": [
+      "Talk to Zor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "deserted_hopes": {
+    "id": "deserted_hopes",
+    "name": "Deserted Hopes",
+    "questGiver": "Roddy",
+    "questLocation": "Steppe, Western fort",
+    "description": "Speak with Mary Jane Greenpuff in the Western Fort.",
+    "goals": [
+      "Talk to Mary Jane Greenpuff"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "desperate_depths": {
+    "id": "desperate_depths",
+    "name": "Desperate Depths",
+    "questGiver": "Varkus Drov",
+    "questLocation": "Westwind Woods, Old mine near sawmill",
+    "description": "Defeat Razorleaf Swarms around the forest.",
+    "goals": [
+      "Return to Varkus Drov"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "whispers_in_the_dark"
+    ],
+    "prevQuests": [
+      "beneath_the_surface"
+    ]
+  },
+  "desperate_for_dendroid": {
+    "id": "desperate_for_dendroid",
+    "name": "Desperate For Dendroid",
+    "questGiver": "Marigold Thornbuckle",
+    "questLocation": "Goldenfield, Edge farm",
+    "description": "Head south to the house on the edge of the fields and find the cookbook.",
+    "goals": [
+      "Return to Marigold Thornbuckle"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "diamond_eyes": {
+    "id": "diamond_eyes",
+    "name": "Diamond Eyes",
+    "questGiver": "Durzo \"Dicey\" Dunwaddle",
+    "questLocation": "Windstone Village, Guard's place: east",
+    "description": "Use the items around the Dr. to help him create a beautiful set of eyes for Dwarfaton.",
+    "goals": [
+      "Talk to Dwarfaton Ironcheek",
+      "Do Dwarfatona's missions",
+      "Return to Dwarfaton Ironcheeck"
+    ],
+    "locationCode": "WDVI",
+    "region": "Windstone Village",
+    "prevQuests": [
+      "a_fateful_bet"
+    ]
+  },
+  "digging_at_the_truth": {
+    "id": "digging_at_the_truth",
+    "name": "Digging At The Truth",
+    "questGiver": "Shawna Steelheart",
+    "questLocation": "Steppe, Adventures outpost",
+    "description": "Search for the journals in their Riverrise homes. Finn and Gareth’s houses are in the northern part of town, while Zelina’s is northeast of town, over the bridge, where the road forks.",
+    "goals": [
+      "Find Finn's journal",
+      "Find Zelina's journal",
+      "Find Gareth's journal",
+      "Return to Shawna Steelheart",
+      "Take the secret item from the house"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "digging_deeper": {
+    "id": "digging_deeper",
+    "name": "Digging Deeper",
+    "questGiver": "Alexander Stones",
+    "questLocation": "Westwind Woods, Old Quarry overlooking platform",
+    "description": "Talk to Dorik in the Westwind Quarry.",
+    "goals": [
+      "Collect Artifact from Old Quarry",
+      "Talk to Dorik Oakenshield"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "mystery_of_the_masks"
+    ]
+  },
+  "disorderly_consequences": {
+    "id": "disorderly_consequences",
+    "name": "Disorderly Consequences",
+    "questGiver": "Alaric Stormshade",
+    "questLocation": "Windreach Woods, Fort",
+    "description": "Find the paper next to Talora Vex, southwest at the Greystone Ruins. Deliver the note to Lyra Thornfeld southwest of Talora by The Last Order.",
+    "goals": [
+      "Bring to Lyra"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "lost_signal"
+    ]
+  },
+  "double_trouble": {
+    "id": "double_trouble",
+    "name": "Double Trouble",
+    "questGiver": "Terrace Tenstone",
+    "questLocation": "Steppe, Northeast fort",
+    "description": "Help Terrace by speaking with both the Rodgers' within the Northeast Fort about the draft mix-up.",
+    "goals": [
+      "Talk to Rogers Matthew",
+      "Talk to Roger Matthews",
+      "Return to Terrace Tenstone"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "dungeon_extraction_dam": {
+    "id": "dungeon_extraction_dam",
+    "name": "Dungeon Extraction Dam",
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "dungeon_extraction_king_head_door": {
+    "id": "dungeon_extraction_king_head_door",
+    "name": "Dungeon Extraction King Head Door",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "easy_rider": {
+    "id": "easy_rider",
+    "name": "Easy Rider",
+    "goals": [
+      "Speak with R",
+      "Talk to Dwarfaton Ironcheek",
+      "Speak with G",
+      "Speak with R and G"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "echoes_beyond": {
+    "id": "echoes_beyond",
+    "name": "Echoes Beyond",
+    "questGiver": "Hilda Deeproot",
+    "questLocation": "Westwind Woods, near Forest cabin",
+    "description": "Find the answers by speaking to the Wandering Spirit.",
+    "goals": [
+      "Talk to Wandering Spirit"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island",
+    "prevQuests": [
+      "unveiling_the_bound_requiem"
+    ]
+  },
+  "echoes_from_the_front": {
+    "id": "echoes_from_the_front",
+    "name": "Echoes From The Front",
+    "questGiver": "Barnaby Thorn",
+    "questLocation": "Steppe, Great steppe stronghold",
+    "description": "Help Barnaby gather information by finding Vexina Strider around the Stronghold.",
+    "goals": [
+      "Talk to Vexina Strider",
+      "Talk to Shawna"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "echoes_in_the_sand": {
+    "id": "echoes_in_the_sand",
+    "name": "Echoes In The Sand",
+    "questGiver": "DOPY-03",
+    "questLocation": "Steppe, Junkyard slums",
+    "description": "Help DOPY-03 retrieve a lost lightbearer's beacon from a Hyena in the northern desert.",
+    "goals": [
+      "Collect lightbearer's beacon",
+      "Return to DOPY"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "echoes_of_atonement": {
+    "id": "echoes_of_atonement",
+    "name": "Echoes Of Atonement",
+    "questGiver": "Kira",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Follow the coastline to the north west corner of the Silent Mountains. There you will find the lost altar to experience death for yourself.",
+    "goals": [
+      "Find the altar",
+      "Take the dagger from the altar",
+      "Return to Kira"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "echoes_of_paranoia": {
+    "id": "echoes_of_paranoia",
+    "name": "Echoes Of Paranoia",
+    "questGiver": "Alexander Stones",
+    "questLocation": "Westwind Woods, Old Quarry overlooking platform",
+    "description": "Get the key from the Ravangers to save the hostages in the Westwind Quarry.",
+    "goals": [
+      "Talk to Varkus Drov"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "prevQuests": [
+      "unveiling_dark_secrets"
+    ]
+  },
+  "echoes_of_the_bound_requiem": {
+    "id": "echoes_of_the_bound_requiem",
+    "name": "Echoes Of The Bound Requiem",
+    "questGiver": "Wandering Spirit",
+    "questLocation": "World of the dead",
+    "description": "Collect wisdom from the Damned Prophets and return to Kings Head on Prison Island.",
+    "goals": [
+      "Talk to Kings Head"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "echoes_of_the_feral_artifact": {
+    "id": "echoes_of_the_feral_artifact",
+    "name": "Echoes Of The Feral Artifact",
+    "questGiver": "Zor",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Follow the coastline west in search of an island, just northwest of the Lost Altar. Gideon should be residing on it.",
+    "goals": [
+      "Talk to Gideon Stroud"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "eggcellent_solution": {
+    "id": "eggcellent_solution",
+    "name": "Eggcellent Solution",
+    "questGiver": "Berg Stonefoot",
+    "questLocation": "Goldenfield, Forest Camp",
+    "description": "Eggs can be found on birds while corn flour is simple enough to grind.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "eggcellent_substitution": {
+    "id": "eggcellent_substitution",
+    "name": "Eggcellent Substitution",
+    "questGiver": "Triton",
+    "questLocation": "Windreach Woods, Lake house",
+    "description": "Kill imps in the Windreach Woods and collect eggs.",
+    "goals": [
+      "Return to Triton",
+      "Collect Artifact from Lakehouse"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "seasoned_delicacy"
+    ]
+  },
+  "eggplant_extravaganza": {
+    "id": "eggplant_extravaganza",
+    "name": "Eggplant Extravaganza",
+    "questGiver": "Greta Grubb",
+    "questLocation": "Goldenfield, Southern House",
+    "description": "Search barrels, crates or satchels on the side of the road full of eggplants.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "eight_legged_freaks": {
+    "id": "eight_legged_freaks",
+    "name": "Eight Legged Freaks",
+    "questGiver": "Ophelia Voss",
+    "questLocation": "Riverrise, Bench behind the alchemy",
+    "description": "Search for spiders south in the Ripplecrop Fields",
+    "goals": [
+      "Collect Time of Death"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "emerald_flame": {
+    "id": "emerald_flame",
+    "name": "Emerald Flame",
+    "goals": [
+      "Burn the papers in the green flame",
+      "All of the Blackened Pages required"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "energized_spirits": {
+    "id": "energized_spirits",
+    "name": "Energized Spirits",
+    "questGiver": "Tor Drostin",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Search for the ale to the northeast. You'll find the North Winery, northwest of the Adventurer's Outpost.",
+    "goals": [
+      "Throw the ingredients into the barrel of ale near Tor",
+      "Talk to Tor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "enter_to_riverrise_city_zone": {
+    "id": "enter_to_riverrise_city_zone",
+    "name": "Enter To Riverrise City Zone",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "escape_pod": {
+    "id": "escape_pod",
+    "name": "Escape Pod",
+    "goals": [
+      "Collect Access Code",
+      "Insert Access Code"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "essence_of_the_wild": {
+    "id": "essence_of_the_wild",
+    "name": "Essence Of The Wild",
+    "questGiver": "Dwarfaton Ironchek",
+    "questLocation": "Windstone Village, Windstone blacksmith yard",
+    "description": "Find a Werewolf Soldier on Prison Island, and beat it down to within an inch of its life. Then use the Essence Extractor and return the item to Dwarfaton.",
+    "goals": [
+      "Collect Essence of a Werewolf Soldier",
+      "Bring item to Dwarfaton Ironcheek",
+      "Forgotten item: Essence Extractor"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "evidence_in_the_shadows": {
+    "id": "evidence_in_the_shadows",
+    "name": "Evidence In The Shadows",
+    "questGiver": "Tor Drostin",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Search the Great Steppes Stronghold to the west for any evidence that may uncover the secret plan.",
+    "goals": [
+      "Find the clue",
+      "Talk to Jennifer",
+      "Return to Tor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "exit_stage_left": {
+    "id": "exit_stage_left",
+    "name": "Exit Stage Left",
+    "questGiver": "Zazz Blorb",
+    "questLocation": "Riverrise, Scene",
+    "description": "Head into the Riverrise Fields to find gnats for poison. Locate the quitting papers on the table next to the stage.",
+    "goals": [
+      "Return Zazz's Quitting Papers to Soko Uno",
+      "Cover the paper with poison"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "exotic_attire_acquisition": {
+    "id": "exotic_attire_acquisition",
+    "name": "Exotic Attire Acquisition",
+    "questGiver": "Yassma",
+    "questLocation": "Riverrise, City Center",
+    "description": "Search the tents behind the bar for these items.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "explosive_revenge": {
+    "id": "explosive_revenge",
+    "name": "Explosive Revenge",
+    "questGiver": "Maverick \"Mav\" Gritt",
+    "questLocation": "Riverrise, Alcohol truck",
+    "description": "Go to the TNT shop and pick up 5 explosive jugs.",
+    "goals": [
+      "Talk to Rusty McDrinkit"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "extraction_players_mine_gate": {
+    "id": "extraction_players_mine_gate",
+    "name": "Extraction Players Mine Gate",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "eye_see_you": {
+    "id": "eye_see_you",
+    "name": "Eye See You",
+    "questGiver": "Butch O'Hara",
+    "questLocation": "Goldenfield, Barn",
+    "description": "Hunt Boarmammoths in the woods around Goldenfield and collect their snouts after butchering the beasts.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "family_recipe_ingredients": {
+    "id": "family_recipe_ingredients",
+    "name": "Family Recipe Ingredients",
+    "questGiver": "Berg Stonefoot",
+    "questLocation": "Goldenfield, near Forest Camp",
+    "description": "Help Berg Stonefoot relive his grandma's famous Roasted Poultry Leg. Bring him Salt, and 2 Poultry Legs.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "farmer_robot_fueling": {
+    "id": "farmer_robot_fueling",
+    "name": "Farmer Robot Fueling",
+    "questGiver": "Greta Grubb",
+    "questLocation": "Goldenfield, near Southern house",
+    "description": "Help Greta Grubb with her pumpkin harvest by finding a Mana Vial to fuel her robot helper.",
+    "goals": [
+      "Collect Mana Vial"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "farmyard_mayhem": {
+    "id": "farmyard_mayhem",
+    "name": "Farmyard Mayhem",
+    "questGiver": "Hank Thornbuckle",
+    "questLocation": "Goldenfield, Efge farm",
+    "description": "Head north to the Ripplecrop Fields and collect spider eggs on the ground or off of spiders.",
+    "goals": [
+      "Return to Hank",
+      "Collect Hank's Chore List"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "the_art_of_deception"
+    ]
+  },
+  "feathers_and_fury": {
+    "id": "feathers_and_fury",
+    "name": "Feathers And Fury",
+    "questGiver": "Lily Baxter",
+    "questLocation": "Goldenfield, South farm",
+    "description": "Choke 6 chickens around Goldenfield.",
+    "goals": [
+      "Return to Lily Baxter"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "fowl_play"
+    ],
+    "prevQuests": [
+      "revenge_of_the_rabbit"
+    ]
+  },
+  "feed_the_lock": {
+    "id": "feed_the_lock",
+    "name": "Feed The Lock",
+    "questGiver": "Granny Hilde",
+    "questLocation": "Goldenfield, near Chicken farm",
+    "description": "Retrieve ten bundles of corn from the fields in Goldenfield town for Granny Hilde.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "feeding_frenzy": {
+    "id": "feeding_frenzy",
+    "name": "Feeding Frenzy",
+    "questGiver": "Max Starchaser",
+    "questLocation": "Riverrise, City Center",
+    "description": "Head to the swamps north of the marshes.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "felony_ferry_service": {
+    "id": "felony_ferry_service",
+    "name": "Felony Ferry Service",
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "fish_prophets_decree": {
+    "id": "fish_prophets_decree",
+    "name": "Fish Prophets Decree",
+    "questGiver": "Ol' Fins",
+    "questLocation": "Windstone Vallage, Windstone Lake's",
+    "description": "Search the shores of the lake to the west for lures and rope.",
+    "goals": [
+      "Return to 'Ol Fins"
+    ],
+    "locationCode": "WDVI",
+    "region": "Windstone Village",
+    "prevQuests": [
+      "amplify_the_catch"
+    ]
+  },
+  "fixing_leaking_pipes": {
+    "id": "fixing_leaking_pipes",
+    "name": "Fixing Leaking Pipes",
+    "questGiver": "Kicheki",
+    "questLocation": "Goldenfield, south east of the Well",
+    "description": "Turn off water supply and replace leaking pipes with new ones. Turn it back on after repairing.",
+    "goals": [
+      "Turn off water supply",
+      "Turn on water supply"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "flowers_for_friendship": {
+    "id": "flowers_for_friendship",
+    "name": "Flowers For Friendship",
+    "questGiver": "BSHL-02",
+    "questLocation": "Steppe, Junkyard slums",
+    "description": "Collect desert flowers. Follow the road northeast, nearly to the coastline. There you will find the flowers.",
+    "goals": [
+      "Return the Flowers"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "focus_fuel_issue": {
+    "id": "focus_fuel_issue",
+    "name": "Focus Fuel Issue",
+    "questGiver": "Nia Sundance",
+    "questLocation": "Goldenfield, near Summer house",
+    "description": "Help Nia enhance her productivity by collecting Transparent Leaves for her special joint recipe.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "forbidden_knowledge": {
+    "id": "forbidden_knowledge",
+    "name": "Forbidden Knowledge",
+    "questGiver": "Skip Stones",
+    "questLocation": "Prison Island",
+    "description": "Find Pastor Fazool in Reverie Hollow and tell him Skip sent you.",
+    "goals": [
+      "Talk to Pastor Fazool"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "fowl_play": {
+    "id": "fowl_play",
+    "name": "Fowl Play",
+    "questGiver": "Lily Baxter",
+    "questLocation": "Goldenfield, South farm",
+    "description": "Search the rat field for the scythe.",
+    "goals": [
+      "Collect Bloody Scythe",
+      "Bring to Buck"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "the_pranksters_peace"
+    ],
+    "prevQuests": [
+      "feathers_and_fury"
+    ]
+  },
+  "fragments_of_fury": {
+    "id": "fragments_of_fury",
+    "name": "Fragments Of Fury",
+    "questGiver": "Slick Shady",
+    "questLocation": "Steppe, Coal Village",
+    "description": "Head to the very north west of the Silent Mountains to find the Shoreline Ruins, just south of the large island.",
+    "goals": [
+      "Find Shoreline Ruins",
+      "Pick up the ancient artifact"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "fragments_of_the_forgotten": {
+    "id": "fragments_of_the_forgotten",
+    "name": "Fragments Of The Forgotten",
+    "questGiver": "Mary Jane Greenpuff",
+    "questLocation": "Windreach Woods, Road house",
+    "description": "Find the ruins east of Goldenfield, past the Thornbuckle farm.",
+    "goals": [
+      "Go to the ruins to look for the artifact",
+      "Return to Mary Jane",
+      "Take the paper"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "pages_to_protect_end"
+    ]
+  },
+  "from_seaonna_with_love": {
+    "id": "from_seaonna_with_love",
+    "name": "From Seaonna With Love",
+    "questGiver": "Seaonna",
+    "questLocation": "Windreach Woods, Mermaid Lake",
+    "description": "Search north east above Ludwig Shatten for the Pulsating Sphere.",
+    "goals": [
+      "Return to Seaonna"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods"
+  },
+  "funds_of_faith": {
+    "id": "funds_of_faith",
+    "name": "Funds Of Faith",
+    "questGiver": "Grizelda",
+    "questLocation": "Windreach Woods, Wooden mushroom house",
+    "description": "Go east across the railway and search the abandoned houses in the forest. Her stash is in one of them.",
+    "goals": [
+      "Bring to Grizelda",
+      "Find Grizelda's stash"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "prevQuests": [
+      "fungal_devotion"
+    ]
+  },
+  "fungal_devotion": {
+    "id": "fungal_devotion",
+    "name": "Fungal Devotion",
+    "questGiver": "Grizelda",
+    "questLocation": "Windreach Woods, Wooden mushroom house",
+    "description": "Collect mana resin from magic trees in the forest.",
+    "goals": [
+      "Talk to Grizelda"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "funds_of_faith"
+    ],
+    "prevQuests": [
+      "no_witnesses_to_glory"
+    ]
+  },
+  "fungal_phobia": {
+    "id": "fungal_phobia",
+    "name": "Fungal Phobia",
+    "questGiver": "Lingua",
+    "questLocation": "Reverie Hollow, Freshwater Well",
+    "description": "Kill Fungus around the forests then use Lingua's sewing kit from her home in the southwest corner of Reverie Hollow.",
+    "goals": [
+      "Talk to Lana Cartouche"
+    ],
+    "locationCode": "RVHL",
+    "region": "Reverie Hollow",
+    "prevQuests": [
+      "obscured_intentions"
+    ]
+  },
+  "funny_bunny": {
+    "id": "funny_bunny",
+    "name": "Funny Bunny",
+    "questGiver": "Barkowski",
+    "questLocation": "Riverrise, Left side of the BAR yard",
+    "description": "Head to the Creeping Marsh and kill 10 ribbits.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "furnishing_the_future": {
+    "id": "furnishing_the_future",
+    "name": "Furnishing The Future",
+    "questGiver": "HPPY-01",
+    "questLocation": "Steppe, Junkyard slums",
+    "description": "Help HPPY-01 salvage furniture around the outpost to make the bots' outpost more welcoming.",
+    "goals": [
+      "Collect pieces of furniture from the trash",
+      "Return pieces of furniture to HPPY"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "gathering_the_fragmented": {
+    "id": "gathering_the_fragmented",
+    "name": "Gathering The Fragmented",
+    "questGiver": "Mary Jane Greenpuff",
+    "questLocation": "Windreach Woods, Road house",
+    "description": "Help people at the Lakehouse, the Old Quarry, the Old Portal, and the Falling Planes in exchange for artifact pieces.",
+    "goals": [
+      "Talk to Clanker",
+      "Talk to Alexander Stones",
+      "Talk to Driscoll-99",
+      "Talk to Triton",
+      "Return to Mary Jane"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "guarding_green"
+    ]
+  },
+  "get_weapon": {
+    "id": "get_weapon",
+    "name": "Get Weapon",
+    "questGiver": "Ratchet",
+    "questLocation": "D'Rek and Griz are both in Goldenfield. You'll find Grizzle Ironfoot south of the sawmill in Westwind Woods",
+    "goals": [
+      "Collecting components from Grizzle Ironfoot",
+      "Collecting components from Griz",
+      "Collecting components from D'Rek",
+      "Talk to Ratchet"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "getting_the_account": {
+    "id": "getting_the_account",
+    "name": "Getting The Account",
+    "questGiver": "Oswald",
+    "questLocation": "Goldenfield, Bank",
+    "description": "Head south to Guru David's and find the masks laying around. Keep your eyes peeled.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "glimmer_of_innovation": {
+    "id": "glimmer_of_innovation",
+    "name": "Glimmer Of Innovation",
+    "questGiver": "Eamon Hardich",
+    "questLocation": "Westwind Woods, Sawmill Workers yard",
+    "description": "Collect batteries from around the settlement.",
+    "goals": [
+      "Return to Fenwick Harrow"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "nuts_for_the_stew"
+    ]
+  },
+  "glimmers_of_the_past": {
+    "id": "glimmers_of_the_past",
+    "name": "Glimmers Of The Past",
+    "questGiver": "Draven Torvik",
+    "questLocation": "Windreach Woods, Parking spot",
+    "description": "Search for the forest crystals to the southwest, across the railroad. If you hit the logging camp, you've gone too far.",
+    "goals": [
+      "Retrieve lost Cigarette Folder",
+      "Give Cigarette Folder to Draven"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods"
+  },
+  "gnat_a_problem": {
+    "id": "gnat_a_problem",
+    "name": "Gnat A Problem",
+    "questGiver": "Elara Brightfall",
+    "questLocation": "Goldenfield, west of the Chicken farm",
+    "description": "Find gnats around Elara and to the north of her.",
+    "goals": [
+      "Collect tracking devices from gnat bodies",
+      "Bring the tracking devices to the student"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "grimbletons_great_recipe_hunt": {
+    "id": "grimbletons_great_recipe_hunt",
+    "name": "Grimbletons Great Recipe Hunt",
+    "questGiver": "Grimbleton",
+    "questLocation": "Riverrise, Alchemy",
+    "description": "Find Triton near the Lake house in Windreach Woods!",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "guarding_fortunes": {
+    "id": "guarding_fortunes",
+    "name": "Guarding Fortunes",
+    "questGiver": "Themis",
+    "questLocation": "Windreach Woods, Fort",
+    "description": "Kill some Dendroid Scouts around the forest.",
+    "goals": [
+      "Return to Themis"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "a_question_of_honor"
+    ],
+    "prevQuests": [
+      "guarding_green"
+    ]
+  },
+  "guarding_green": {
+    "id": "guarding_green",
+    "name": "Guarding Green",
+    "questGiver": "Mary Jane Greenpuff",
+    "questLocation": "Windreach Woods, Road House",
+    "description": "Head south to the fort in the forest and talk to Themis.",
+    "goals": [
+      "Talk to Themis"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "guarding_fortunes"
+    ],
+    "prevQuests": [
+      "gathering_the_fragmented"
+    ]
+  },
+  "guarding_shadows": {
+    "id": "guarding_shadows",
+    "name": "Guarding Shadows",
+    "questGiver": "Zelina Ironweave",
+    "questLocation": "Steppe, Adventures outpost",
+    "description": "Help Zelina by finding the lost gun southwest in the Candlewick Slums. Finn can be found around the Adventurer's Outpost.",
+    "goals": [
+      "Find Finn Hawthorne's lost gun",
+      "Return the gun to Finn"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "guilt_and_gears": {
+    "id": "guilt_and_gears",
+    "name": "Guilt And Gears",
+    "questGiver": "Flint Thistlewick",
+    "questLocation": "Steppe, Great steppe stronghold",
+    "description": "Help Flint Thistlewick repair his steam-powered armor by collecting small gears from Small Golems.",
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "hangover_helper": {
+    "id": "hangover_helper",
+    "name": "Hangover Helper",
+    "questGiver": "Dr. Queenie",
+    "questLocation": "Steppe, Northsteppe fort",
+    "description": "Help Dr. Queenie recover from her hangover by gathering ingredients nearby for her hangover.",
+    "goals": [
+      "Return sugar and vodka to Queenie"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "harvesting_the_fallen": {
+    "id": "harvesting_the_fallen",
+    "name": "Harvesting The Fallen",
+    "questGiver": "Mort Decay",
+    "questLocation": "Steppe, Northsteppe fort",
+    "description": "Collect armor plates from Brisks for research purposes.",
+    "goals": [
+      "Return to Xelcor Zinn"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "heartbeat_of_the_party": {
+    "id": "heartbeat_of_the_party",
+    "name": "Heartbeat Of The Party",
+    "questGiver": "Zibb \"The Zest\" Throttlebreech",
+    "questLocation": "Riverrise, Left side of the BAR yard",
+    "description": "Find turtles around the waters of Riverrise.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "heartbreak_waters": {
+    "id": "heartbreak_waters",
+    "name": "Heartbreak Waters",
+    "questGiver": "Mariel Venomtail",
+    "questLocation": "Windrach Woods, Mermaid Lake",
+    "description": "Find Ivie Clarkson in Goldenfield.",
+    "goals": [
+      "Talk to Ivie Clarkson"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "prevQuests": [
+      "tides_of_vengeance"
+    ]
+  },
+  "heartwood_gethering": {
+    "id": "heartwood_gethering",
+    "name": "Heartwood Gethering",
+    "questGiver": "Zogar",
+    "questLocation": "Goldenfield, near the Fuel station",
+    "description": "Log Faint Timberheart Reserves around Goldenfield and surrounding forests.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "herb_your_enthusiasm": {
+    "id": "herb_your_enthusiasm",
+    "name": "Herb Your Enthusiasm",
+    "questGiver": "Jahri Roots",
+    "questLocation": "Goldenfield, west of Fuel station",
+    "description": "Kill wolves in Dusktide Forest to collect their bones",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "herbal_aid": {
+    "id": "herbal_aid",
+    "name": "Herbal Aid",
+    "questGiver": "Mary Jane",
+    "questLocation": "Steppe, Western fort",
+    "description": "Gather intoxicating flowers from the northwest, past the Westend Village. Return them to Lyra at the Western Fort.",
+    "goals": [
+      "Mix ointment and extract",
+      "Delivery to Lyra Vex"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "herbal_remedy": {
+    "id": "herbal_remedy",
+    "name": "Herbal Remedy",
+    "questGiver": "Claudine Baxter",
+    "questLocation": "Goldenfield, South farm",
+    "description": "Search the South Farm for barrels containing Skull Crusher Weed.",
+    "goals": [
+      "Return to Claudine Baxter"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "the_real_culprit"
+    ],
+    "prevQuests": [
+      "its_just_a_prank_bro"
+    ]
+  },
+  "herbalism_lesson": {
+    "id": "herbalism_lesson",
+    "name": "Herbalism Lesson",
+    "questGiver": "Nia Sundance",
+    "questLocation": "Goldenfield, near Summer house",
+    "description": "Help Nia make a Natural Oil face mask from Hazelnuts.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "hidden_menace": {
+    "id": "hidden_menace",
+    "name": "Hidden Menace",
+    "questGiver": "Trevor Barlow",
+    "questLocation": "Windreach Woods, Fort",
+    "description": "Track down the artifact held by a monstrous entity, kill the monster, and return the artifact to Themis.",
+    "goals": [
+      "Retrieve the Artifact from a Boss",
+      "Return to Themis"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "prevQuests": [
+      "darkwood_dilemma"
+    ]
+  },
+  "hunger_wolf": {
+    "id": "hunger_wolf",
+    "name": "Hunger Wolf",
+    "goals": [
+      "Forgotten item: Page 3"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "hungry_master": {
+    "id": "hungry_master",
+    "name": "Hungry Master",
+    "questGiver": "Relkyn Stoutshield",
+    "questLocation": "Goldenfield, Faidens camp top centre",
+    "description": "Use your cooking tradeskill to cook up some ribs for Relkyn.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "hunt_leaf_creatures": {
+    "id": "hunt_leaf_creatures",
+    "name": "Hunt Leaf Creatures",
+    "questGiver": "Butch O'Hara",
+    "questLocation": "Goldenfield, near Pig farm",
+    "description": "Head to the Skylight Grasslands to defeat Leaf Creatures.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "imp_brain_hunt": {
+    "id": "imp_brain_hunt",
+    "name": "Imp Brain Hunt",
+    "questGiver": "Zugg Clankwhistle",
+    "questLocation": "Goldenfield, near the Bureau",
+    "description": "Find the old hag at the forest cabin north of the quarry in the Westwind Woods.",
+    "goals": [
+      "Learn the details of the disaster from the old hag",
+      "Talk to Zugg Clankwhistle",
+      "Collect Imp Executioner's Brain",
+      "Collect Imp Firestarter's Brain",
+      "Collect Imp Witch's Brain"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "in_the_belly_of_the_beasts": {
+    "id": "in_the_belly_of_the_beasts",
+    "name": "In The Belly Of The Beasts",
+    "questGiver": "Miguel \"El Caballo\" Rodriguez",
+    "questLocation": "Riverrise, mount shop",
+    "description": "Travel to Prison Island and collect a shard from a Werewolf Alpha, Werewolf Rat, and Werewolf Soldier.",
+    "goals": [
+      "Bring items to Miguel Rodriguez"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "infiltrating_ironhand": {
+    "id": "infiltrating_ironhand",
+    "name": "Infiltrating Ironhand",
+    "questGiver": "Alexander Stones",
+    "questLocation": "Westwind Woods, Old Quarry overlooking platform",
+    "description": "Talk to Grommuk at the Logging Camp to the north on the edge of the Westwind Woods.",
+    "goals": [
+      "Talk to Grommuk Ironhand"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods"
+  },
+  "its_just_a_prank_bro": {
+    "id": "its_just_a_prank_bro",
+    "name": "Its Just A Prank Bro",
+    "questGiver": "Lily Baxter",
+    "questLocation": "Goldenfield, South farm",
+    "description": "Talk to Claudine at her farm in eastern Goldenfield.",
+    "goals": [
+      "Talk to Claudine Baxter"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "herbal_remedy"
+    ],
+    "prevQuests": [
+      "the_pranksters_peace"
+    ]
+  },
+  "jailhouse_rocket": {
+    "id": "jailhouse_rocket",
+    "name": "Jailhouse Rocket",
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "juice_for_the_journey": {
+    "id": "juice_for_the_journey",
+    "name": "Juice For The Journey",
+    "questGiver": "Blitz Hyperstorm",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Help Blitz gather Sparkleaf Extract from the supply crates nearby so he can brew more Zap Juice.",
+    "goals": [
+      "Return to Blitz"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "juricksic_quest": {
+    "id": "juricksic_quest",
+    "name": "Juricksic Quest",
+    "questGiver": "Pappy Rick",
+    "questLocation": "Windreach Woods, Fisher house",
+    "description": "Search Windstone Village to the east for a processor, battery and sensor.",
+    "goals": [
+      "Return to Pappy Rick"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "prevQuests": [
+      "pass_the_butter"
+    ]
+  },
+  "kill_the_maker": {
+    "id": "kill_the_maker",
+    "name": "Kill The Maker",
+    "questGiver": "QUEST-O-TRON",
+    "questLocation": "Windreach Woods, Camp near the shrine",
+    "description": "Venture to the Destroyed Bridge in the Windreach Woods, then search the crashed spaceship. Search Thornbuckle Farm in Goldenfield and finally stop at the Book Stop for Pappy's items",
+    "goals": [
+      "Return to QUEST-O-TRON",
+      "Collect T-Shirt",
+      "Collect Odd Plant",
+      "Collect Barbell",
+      "Collect Binoculars",
+      "Collect Pappy Rick's Portal Juice"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "pass_the_butter"
+    ]
+  },
+  "killig_creatures_field_robot": {
+    "id": "killig_creatures_field_robot",
+    "name": "Killig Creatures Field Robot",
+    "questGiver": "Quadro-Sentinel 4.1",
+    "questLocation": "Goldenfield, near",
+    "description": "Go to the surrounding forests of Goldenfield and eliminate boarmammoths.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "killing_dreads": {
+    "id": "killing_dreads",
+    "name": "Killing Dreads",
+    "questGiver": "Hank Granger",
+    "questLocation": "Goldenfield, near Tractor",
+    "description": "Head to the Windreach Woods or Tempest Timberlands and kill Dendroids.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "law_and_order_protocols": {
+    "id": "law_and_order_protocols",
+    "name": "Law And Order Protocols",
+    "questGiver": "Police-Tron 5000",
+    "questLocation": "Riverrise, City Center",
+    "description": "Look for the packages around Riverrise.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "lawsuit_of_the_lake": {
+    "id": "lawsuit_of_the_lake",
+    "name": "Lawsuit Of The Lake",
+    "questGiver": "Triton",
+    "questLocation": "Windreach Woods, Lake house",
+    "description": "Help people around the area for notes to help in his lawsuit.",
+    "goals": [
+      "Collect Seaonna's Note",
+      "Collect Venomtail's Note",
+      "Collect Ol Fin's Note",
+      "Collect Zorbul's Note",
+      "Collect Glubgrath's Note",
+      "Collect Dr. Glimmiwop's Note",
+      "Return to Triton"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "a_fishy_summons"
+    ],
+    "prevQuests": [
+      "culinary_diplomacy"
+    ]
+  },
+  "lighting_the_way": {
+    "id": "lighting_the_way",
+    "name": "Lighting The Way",
+    "questGiver": "Captain Rob",
+    "questLocation": "Prison Island",
+    "description": "Light torches around the island with the tool from Captain Rob, then return to Captain Barnaby in Riverrise.",
+    "goals": [
+      "Talk with Captain Barnaby Plank",
+      "Forgotten item: Lighter"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "lights_camera_action": {
+    "id": "lights_camera_action",
+    "name": "Lights Camera Action",
+    "questGiver": "Lenny",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Help Lenny capture film of you killing hyenas in the Steppes for his film, avoiding any explosions.",
+    "goals": [
+      "Return to Lenny"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "logging_lesson": {
+    "id": "logging_lesson",
+    "name": "Logging Lesson",
+    "questGiver": "Zogar",
+    "questLocation": "Goldenfield, near the Fuel station",
+    "description": "Use Tree Roots to craft Jewelry Wood.",
+    "goals": [
+      "Jewellery Wood"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "loose_ends": {
+    "id": "loose_ends",
+    "name": "Loose Ends",
+    "questGiver": "Tor Drostin",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Head down to Tor at the Central Fort to celebrate the end of the war.",
+    "goals": [
+      "Talk to Tor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "lost_and_found": {
+    "id": "lost_and_found",
+    "name": "Lost And Found",
+    "questGiver": "Zor",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Search for broken fragments of the artifact east along the shoreline, southeast of Crystal Cave.",
+    "goals": [
+      "Talk to Zor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "lost_crew_search": {
+    "id": "lost_crew_search",
+    "name": "Lost Crew Search",
+    "questGiver": "Ronny Lunar",
+    "questLocation": "Windreach Woods, near Crashed Spaceship",
+    "description": "Search the area for clues of the other crew's whereabouts.",
+    "goals": [
+      "Find other astronauts"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods"
+  },
+  "lost_mind_recovery": {
+    "id": "lost_mind_recovery",
+    "name": "Lost Mind Recovery",
+    "questGiver": "Jahri Roots",
+    "questLocation": "Goldenfield, west of Fuel station",
+    "description": "Help Jahri bounce back with a shot of adrenaline.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "lost_page_of_power": {
+    "id": "lost_page_of_power",
+    "name": "Lost Page Of Power",
+    "questGiver": "Mary Jane Greenpuff",
+    "questLocation": "Windreach Woods, Road house",
+    "description": "Search the abandoned road to the north for the lost page.",
+    "goals": [
+      "Return to Mary Jane Greenpuff"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "prevQuests": [
+      "pages_to_protect"
+    ]
+  },
+  "lost_signal": {
+    "id": "lost_signal",
+    "name": "Lost Signal",
+    "questGiver": "Lyra Thornfeld",
+    "questLocation": "Westwinds Woods, Valley of sins infistation",
+    "description": "Head north west to the Greystone Ruins and place a radio. Continue north west and find the second anomaly.",
+    "goals": [
+      "Return to Morick Voss"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "corruption_clean-up"
+    ],
+    "prevQuests": [
+      "disorderly_consequences"
+    ]
+  },
+  "lost_stock_recovery": {
+    "id": "lost_stock_recovery",
+    "name": "Lost Stock Recovery",
+    "questGiver": "Jahri Roots",
+    "questLocation": "Goldenfield, west of Fuel station",
+    "description": "Help Jahri gather ingredients for his stash.",
+    "goals": [
+      "Stash Raspberry in bubbler"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "love_potion_no_9": {
+    "id": "love_potion_no_9",
+    "name": "Love Potion No 9",
+    "questGiver": "Spade",
+    "questLocation": "Riverrise, Minibar in the upper part",
+    "description": "Head south to the Bog Slums. You'll find it just eas tof the Starbark Groves.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "lucky_love": {
+    "id": "lucky_love",
+    "name": "Lucky Love",
+    "questGiver": "Zorgalon Na'Reeth",
+    "questLocation": "Rivverrise, City Enter 1 after the bridge",
+    "description": "Go east from Riverrise, past the swamp to the forest.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "magnetic_intentions": {
+    "id": "magnetic_intentions",
+    "name": "Magnetic Intentions",
+    "questGiver": "GRMP-07",
+    "questLocation": "Steppe, Junkyard slums",
+    "description": "Collect magnets from Enriched and Ancient veins nearby for GRMP-07 using the Ore Extractor.",
+    "goals": [
+      "Extract magnets from ore veins using a device",
+      "Return to GRMP-07"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "main_next_lessons": {
+    "id": "main_next_lessons",
+    "name": "Main Next Lessons",
+    "questGiver": "Martha \"Big Mamma\" Potterson",
+    "questLocation": "Goldenfield, near Welfare kitchen",
+    "description": "Martha wants you to put the trade skills you learned to work by helping various people around the village.",
+    "goals": [
+      "Help Quadro-Sentinel 4.0",
+      "Help Percival \"Percy\" Beamish",
+      "Help Griz Turner",
+      "Help Paddy O'Lantern",
+      "Help Oswald",
+      "Help Butch O'Hara",
+      "Help Berg Stonefoot",
+      "Help Kicheki",
+      "Help Jahri Roots",
+      "Help Mortimer Gloomsworth",
+      "Talk to Zugg Clankwhistle",
+      "Help D'Rek",
+      "Help Ratchet"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "mana_market_resupply": {
+    "id": "mana_market_resupply",
+    "name": "Mana Market Resupply",
+    "questGiver": "Gimlor",
+    "questLocation": "Riverrise, Mana market",
+    "description": "Use your tradeskills to craft mana flasks.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "mana_tech_power": {
+    "id": "mana_tech_power",
+    "name": "Mana Tech Power",
+    "questGiver": "D'Rek",
+    "questLocation": "Goldenfield, near Workshop",
+    "description": "Head east to the edge of Goldenfield to find the ruins.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "memory_restoration": {
+    "id": "memory_restoration",
+    "name": "Memory Restoration",
+    "questGiver": "Ratchet",
+    "questLocation": "Goldenfield, near the Workshop",
+    "description": "Return the Memory Core to Doc Greene back on Prison Island.",
+    "goals": [
+      "Bring item Doc Greene",
+      "Forgotten item: Repair Memory Core"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "mine_over_matter": {
+    "id": "mine_over_matter",
+    "name": "Mine Over Matter",
+    "questGiver": "Greta Grubb",
+    "questLocation": "Steppe, Western fort",
+    "description": "Head north to plant land mines to defend against enemy forces. Just south of the Coal Village.",
+    "goals": [
+      "Be careful around mines [\"\\\" button]",
+      "Return to Greta Grubb"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "mining_lesson": {
+    "id": "mining_lesson",
+    "name": "Mining Lesson",
+    "questGiver": "Thordal Ironvein",
+    "questLocation": "Goldenfield, near the Fuel station",
+    "description": "Prove your worth by extracting Soft Crystal from Soft Crystal Veins and processing it into Powder Filler.",
+    "goals": [
+      "Powder Filler"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "mission_first_step": {
+    "id": "mission_first_step",
+    "name": "Mission First Step",
+    "questGiver": "Martha \"Big Mamma\" Potterson",
+    "questLocation": "Goldenfield, near Welfare kitchen",
+    "description": "Talk to Ratchet, Dr. Bloom, and Butcher about fighting imps.",
+    "goals": [
+      "Prepare to fight the imps.",
+      "Talk to Ratchet",
+      "Talk to Dr. Orion Bloom",
+      "Talk to Butch O'Hara",
+      "Return to Martha"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "monochrome_gardening_goldenfield": {
+    "id": "monochrome_gardening_goldenfield",
+    "name": "Monochrome Gardening Goldenfield",
+    "questGiver": "Blink-1n",
+    "questLocation": "Goldenfield, west of the Welfare kitchen",
+    "description": "Pull out the Violet weed species. Red species must remain untouched. It's important not to mix them up.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "mounting_evidence": {
+    "id": "mounting_evidence",
+    "name": "Mounting Evidence",
+    "questGiver": "Roderick \"DarkSpike\" Thinklatch",
+    "questLocation": "Windstone Village, Guard's place: east",
+    "description": "Search the Windstone Village Pier on the west side of the village.",
+    "goals": [
+      "Collect Recording Device",
+      "Bring to Gusto"
+    ],
+    "locationCode": "WDVI",
+    "region": "Windstone Village",
+    "nextQuests": [
+      "unsavory_evidence"
+    ],
+    "prevQuests": [
+      "the_case_against_triton"
+    ]
+  },
+  "mystery_of_mary_jane": {
+    "id": "mystery_of_mary_jane",
+    "name": "Mystery Of Mary Jane",
+    "questGiver": "Martha \"Big Mamma\" Potterson",
+    "questLocation": "Goldenfield, near Welfare kitchen",
+    "description": "Check on Mary Jane Greenpuff at the Road House in Windreach Woods.",
+    "goals": [
+      "Talk to Mary Jane Greenpuff"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "prevQuests": [
+      "confiscated_confections"
+    ]
+  },
+  "mystery_of_the_masks": {
+    "id": "mystery_of_the_masks",
+    "name": "Mystery Of The Masks",
+    "questGiver": "Dorik Oakenshield",
+    "questLocation": "Westwind Woods, Old Quarry bottom",
+    "description": "Search around the quarry for three myserious masks.",
+    "goals": [
+      "Return to Dorik Oakenshield"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "prevQuests": [
+      "digging_deeper"
+    ]
+  },
+  "mysticism_lesson": {
+    "id": "mysticism_lesson",
+    "name": "Mysticism Lesson",
+    "questGiver": "Mortimer Gloomsworth",
+    "questLocation": "Goldenfield, near Cemetery",
+    "description": "Help Mortimer refresh his memory by crafting a Scar rune.",
+    "goals": [
+      "Bring Dark Horse rune to Mortimer"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "natures_redemption": {
+    "id": "natures_redemption",
+    "name": "Natures Redemption",
+    "questGiver": "Mary Jane Greenpuff",
+    "questLocation": "Windreach Woods, Road house",
+    "description": "Bring the set to the Themis at the Fort to the south west.",
+    "goals": [
+      "Bring the assembled set to Fort Themis"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "prevQuests": [
+      "the_guards_dilemma"
+    ]
+  },
+  "neither_rain_nor_battlefield": {
+    "id": "neither_rain_nor_battlefield",
+    "name": "Neither Rain Nor Battlefield",
+    "questGiver": "Horace Grumbles",
+    "questLocation": "Steppe, near East of Arid canals",
+    "description": "Deliver the letter to Tazara south of the Dragonbane Fort.",
+    "goals": [
+      "Deliver letters to the Tazara"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "neon_mushrooms_gethering": {
+    "id": "neon_mushrooms_gethering",
+    "name": "Neon Mushrooms Gethering",
+    "questGiver": "Hilda Deeproot",
+    "questLocation": "Westwind Woods, near Forest cabin",
+    "description": "Find the dream catcher to the south. The hag doesn't think it's too far away and is probably on the ground.",
+    "goals": [
+      "Find Glass Eye",
+      "Talk to Hilda Deeproot"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods"
+  },
+  "new_quest_mount_01": {
+    "id": "new_quest_mount_01",
+    "name": "New Quest Mount 01",
+    "goals": [
+      "Talk with Martin",
+      "Find HoverBoard",
+      "Place hoverboard on the charge station",
+      "Talk to Martin McMichael"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "new_quest_mount_02": {
+    "id": "new_quest_mount_02",
+    "name": "New Quest Mount 02",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "new_quest_universal_ability": {
+    "id": "new_quest_universal_ability",
+    "name": "New Quest Universal Ability",
+    "goals": [
+      "Talk to Zara Thorne",
+      "Follow Zara's instructions",
+      "Fix the red chair",
+      "Use defibrillator",
+      "Use Energy drink",
+      "Use Electro item"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "newcomer_paperwork_goldenfield": {
+    "id": "newcomer_paperwork_goldenfield",
+    "name": "Newcomer Paperwork Goldenfield",
+    "questGiver": "Zikk Clankwhistle",
+    "questLocation": "Dusktide Forest, at the Portal",
+    "description": "Speak to the outworlder welcoming specialist. He should be in sight.",
+    "goals": [
+      "Meet with Zikk's brother in the village",
+      "Speak to the welcoming specialist.",
+      "Find newcomer form"
+    ],
+    "locationCode": "DKTF",
+    "region": "Dusktide Forest"
+  },
+  "no_witnesses_to_glory": {
+    "id": "no_witnesses_to_glory",
+    "name": "No Witnesses To Glory",
+    "questGiver": "Grizelda",
+    "questLocation": "Windreach Woods, Wooden mushroom house",
+    "description": "Search Goldenfield for 5 posters.",
+    "goals": [
+      "Talk to Grizelda",
+      "Collect Grizelda's Magic Mushroom"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "fungal_devotion"
+    ]
+  },
+  "nuts_for_the_stew": {
+    "id": "nuts_for_the_stew",
+    "name": "Nuts For The Stew",
+    "questGiver": "Fenwick \"Fen\" Harrow",
+    "questLocation": "Westwind Woods, Sawmill Workers yard",
+    "description": "Take the batteries and put them in the generators around camp, then turn on the main transformer.",
+    "goals": [
+      "Return to Oakley \"Dusty\" Fenn",
+      "Start the main transformer"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "strange_green_pots"
+    ],
+    "prevQuests": [
+      "glimmer_of_innovation"
+    ]
+  },
+  "obscured_intentions": {
+    "id": "obscured_intentions",
+    "name": "Obscured Intentions",
+    "questGiver": "Penny \"Stardust\" Furbank",
+    "questLocation": "Reverie Hollow, Open air dining area",
+    "description": "Search the gallows in Reverie Hollow for Penny's bong that has the deed hidden inside.",
+    "goals": [
+      "Return to Lingua",
+      "Collect Deed to Reverie's Hollow"
+    ],
+    "locationCode": "RVHL",
+    "region": "Reverie Hollow",
+    "nextQuests": [
+      "fungal_phobia"
+    ],
+    "prevQuests": [
+      "decrypting_betrayal"
+    ]
+  },
+  "off_with_the_head_again": {
+    "id": "off_with_the_head_again",
+    "name": "Off With The Head Again",
+    "goals": [
+      "Kill Werewolf Alpha",
+      "Kill Werewolf Rat",
+      "Kill Werewolf Soldier",
+      "Kill Armored Troll",
+      "Talk to King head",
+      "Kill Alpha Undead Wolf",
+      "Kill Leshy",
+      "Kill Yaga"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "offerings_of_the_forgotten": {
+    "id": "offerings_of_the_forgotten",
+    "name": "Offerings Of The Forgotten",
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "oil_be_back": {
+    "id": "oil_be_back",
+    "name": "Oil Be Back",
+    "questGiver": "Quadro-Sentinel 4.0",
+    "questLocation": "Goldenfield, Fields of Goldenfield",
+    "description": "Search crates, chests and barrels around Goldenfield for the spare machine parts.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "package_pilfered": {
+    "id": "package_pilfered",
+    "name": "Package Pilfered",
+    "questGiver": "Rusty Bowen",
+    "questLocation": "Windreach Woods, Railway stop near Fort",
+    "description": "Kill fungus around the Windreach Woods.",
+    "goals": [
+      "Return to Themis."
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "the_guards_dilemma"
+    ],
+    "prevQuests": [
+      "the_hunt_for_green_puff"
+    ]
+  },
+  "pages_to_protect": {
+    "id": "pages_to_protect",
+    "name": "Pages To Protect",
+    "questGiver": "Mary Jane Greenpuff",
+    "questLocation": "Windreach Woods, Road house",
+    "description": "Find Draven at the parking spot southeast of the fort. Balthazar hangs around the road house.",
+    "goals": [
+      "Ancient Page Draven",
+      "Ancient Page Balthazar",
+      "Return to Mary Jane"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "pages_to_protect_end",
+      "lost_page_of_power"
+    ]
+  },
+  "pass_the_butter": {
+    "id": "pass_the_butter",
+    "name": "Pass The Butter",
+    "questGiver": "QUEST-O-TRON",
+    "questLocation": "Windreach Woods, Camp near the shrine",
+    "description": "Take the jar and collect Noxious Spores from purple mushrooms. Once you get enough, combine it into a poison.",
+    "goals": [
+      "Combine Noxious Spores it into a poison",
+      "Bring poison to Pappy Rick"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "juricksic_quest"
+    ],
+    "prevQuests": [
+      "kill_the_maker"
+    ]
+  },
+  "percivals_restorative_ointment": {
+    "id": "percivals_restorative_ointment",
+    "name": "Percivals Restorative Ointment",
+    "questGiver": "Percival \"Percy\" Beamish",
+    "questLocation": "Goldenfield, Alcemy crafting yard",
+    "description": "Search for the flasks around the center of Goldenfield. The syringe has got to be around here close.",
+    "goals": [
+      "Collect yellow flask",
+      "Collect purple flask",
+      "Collect blue flask",
+      "Collect syringe"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "phantom_fragment_recovery": {
+    "id": "phantom_fragment_recovery",
+    "name": "Phantom Fragment Recovery",
+    "questGiver": "Clanker",
+    "questLocation": "Windreach Woods, Falling planes",
+    "description": "Find Buck in Goldenfield and talk to him.",
+    "goals": [
+      "Talk to Buck",
+      "Collect Artifact from Falling Planes"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "a_prank_too_far"
+    ]
+  },
+  "pig_crossbreed_experiment": {
+    "id": "pig_crossbreed_experiment",
+    "name": "Pig Crossbreed Experiment",
+    "questGiver": "Butch O'Hara",
+    "questLocation": "Goldenfield, near Pig farm",
+    "description": "Kill boarmammoth in the Skylight Grasslands.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "plague_frogs": {
+    "id": "plague_frogs",
+    "name": "Plague Frogs",
+    "goals": [
+      "Forgotten item: Page 1"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "portal_perils": {
+    "id": "portal_perils",
+    "name": "Portal Perils",
+    "questGiver": "Driscoll-99",
+    "questLocation": "Westwind Woods, Old Portal",
+    "description": "Kill timbers around the forest.",
+    "goals": [
+      "Return to Driscoll-99",
+      "Collect Artifact from Old Portal"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "portal_restorations"
+    ]
+  },
+  "portal_purge_parade": {
+    "id": "portal_purge_parade",
+    "name": "Portal Purge Parade",
+    "questGiver": "Driscoll-99",
+    "questLocation": "Weswind Woods, Old Portal",
+    "description": "Search the area and kill the monsters.",
+    "goals": [
+      "Return to Driscoll-99"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "prevQuests": [
+      "bridging_realms_with_friends"
+    ]
+  },
+  "portal_restorations": {
+    "id": "portal_restorations",
+    "name": "Portal Restorations",
+    "questGiver": "Driscoll-99",
+    "questLocation": "Westwind Woods, Old Portal",
+    "description": "Head northeast past Goldenfield to the Ripplecrop Fields, south of Riverrise and kill spiders.",
+    "goals": [
+      "Return to Driscoll-99"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "spore-tal_power"
+    ],
+    "prevQuests": [
+      "portal_perils"
+    ]
+  },
+  "precious_stones_mining": {
+    "id": "precious_stones_mining",
+    "name": "Precious Stones Mining",
+    "questGiver": "Grizzle Ironfoot",
+    "questLocation": "Westwind Woods, near the Old mine",
+    "description": "Embark on a daring adventure to unearth Rubies and Diamonds hidden deep within the Westwind Woods.",
+    "locationCode": "WSWD",
+    "region": "Westwind Woods"
+  },
+  "price_of_punishment": {
+    "id": "price_of_punishment",
+    "name": "Price Of Punishment",
+    "questGiver": "Ace",
+    "questLocation": "Riverrise, City Center",
+    "description": "Search for boars in the woods west of Riverrise, past the fields.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "proof_of_purification": {
+    "id": "proof_of_purification",
+    "name": "Proof Of Purification",
+    "questGiver": "Ludwig Stoncap",
+    "questLocation": "Steppe, Dragonbane fort",
+    "description": "Help Ludwig gather ammo northeast past the Candlewick Slums! The mushrooms are directly east of the ammo.",
+    "goals": [
+      "Talk to Ludwig Stoncap"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "proving_loyalties": {
+    "id": "proving_loyalties",
+    "name": "Proving Loyalties",
+    "questGiver": "Zor",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Kill the Ravager Hyena around the area to earn favor with Zor.",
+    "goals": [
+      "Return to Zor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "proving_the_steel": {
+    "id": "proving_the_steel",
+    "name": "Proving The Steel",
+    "questGiver": "Steel Stan",
+    "questLocation": "Steppe, Great Bones",
+    "description": "Gather Lightbearer Badges east outside Great Bones Village, between the roads.",
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "proving_your_worth": {
+    "id": "proving_your_worth",
+    "name": "Proving Your Worth",
+    "questGiver": "Zugg Clankwhistle",
+    "questLocation": "Goldenfield, near the Bureau",
+    "description": "Go east across the street to the welfare kitchen.",
+    "goals": [
+      "Find Martha \"Big Mamma\" Potterson"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "puzzles_of_the_afterlife": {
+    "id": "puzzles_of_the_afterlife",
+    "name": "Puzzles Of The Afterlife",
+    "questGiver": "Captain Barnaby Plank",
+    "questLocation": "Riverrise, City Pier",
+    "description": "Find the ghost on Prison Island, solve his puzzle and return to Captain Barnaby Plank with the item.",
+    "goals": [
+      "Find the ghost on Prison Island",
+      "Complete the ghost's challenge",
+      "Try your luck again!",
+      "Retrieve your prize from the ghost",
+      "Deliver the Gull Saddle to Captain Barnaby"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "quelling_the_rage": {
+    "id": "quelling_the_rage",
+    "name": "Quelling The Rage",
+    "goals": [
+      "Talk to Zor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "questionable_evidence": {
+    "id": "questionable_evidence",
+    "name": "Questionable Evidence",
+    "questGiver": "Quaridor Vex",
+    "questLocation": "Windstone Village, Guard's place: west",
+    "description": "Search forest camps to the west for a large jug that might have Triton's mask.",
+    "goals": [
+      "Find Triton's Mask",
+      "Bring to Baxton \"Skip\" Malroth"
+    ],
+    "locationCode": "WDVI",
+    "region": "Windstone Village",
+    "nextQuests": [
+      "the_final_verdict"
+    ]
+  },
+  "radioactive_isotope_mining": {
+    "id": "radioactive_isotope_mining",
+    "name": "Radioactive Isotope Mining",
+    "questGiver": "Grizzle Ironfoot",
+    "questLocation": "Westwind Woods, near the Old mine",
+    "description": "Search for Fungus camps in the Windreach Woods.",
+    "goals": [
+      "Venom from Fungus"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods"
+  },
+  "rat-ical_blockchain_solutions": {
+    "id": "rat-ical_blockchain_solutions",
+    "name": "Rat-ical Blockchain Solutions",
+    "questGiver": "Zoltar Blipchain",
+    "questLocation": "Goldenfield, near Wheat tent",
+    "description": "Pick-up mouse traps from the field, then find some of the rat corpses.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "rehearsed_sabotage": {
+    "id": "rehearsed_sabotage",
+    "name": "Rehearsed Sabotage",
+    "questGiver": "Blorp Knurt",
+    "questLocation": "Riverrise, Scene",
+    "description": "Search the Creeping Marsh to the north, just above the top of the river.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "reluctant_reinforcement": {
+    "id": "reluctant_reinforcement",
+    "name": "Reluctant Reinforcement",
+    "questGiver": "Biff \"Dozer\" Bromley",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Biff \"Dozer\" Bromley demands that you fulfill the duties of the recruits you scared off. Head west to the Great Steppe Stronghold and Western Fort. The Northsteppe Fort is east from Biff.",
+    "goals": [
+      "Talk to Barnaby",
+      "Talk to Rancor",
+      "Talk to Roddy",
+      "Talk to Tor",
+      "Help Barnaby",
+      "Help Rancor",
+      "Help Roddy",
+      "Find Griselda's stash"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "resurrection_research": {
+    "id": "resurrection_research",
+    "name": "Resurrection Research",
+    "questGiver": "Madame Mirage",
+    "questLocation": "Steppe, Western fort",
+    "description": "Collect Conductive Bones from the Hyena Alpha, Elastic Bands from the Scolopendras. Deliver the items to Zeke Thompson at the Northsteppe Fort to ze east.",
+    "goals": [
+      "Return parts to Zeke Thompson",
+      "Collect remains from Mutated Aberrations"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "revenge_of_the_rabbit": {
+    "id": "revenge_of_the_rabbit",
+    "name": "Revenge Of The Rabbit",
+    "questGiver": "Buck",
+    "questLocation": "Goldenfield, Violet Weed Field",
+    "description": "Kill an Alpha Wolf for their brain. Head to Zugg's to use the cloning machine. Then, head to the farm to the south east near Energizer-21 and clean them up in the tub. Lastly, search for a skeleton in Suncrest Fields off the fork in the road to the south east outside of town.",
+    "goals": [
+      "Talk to Lily Baxter",
+      "Clone a brain and get a double Wolf Alpha brain.",
+      "Clean the double brain Wolf Alpha",
+      "Combine brain and bones"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "feathers_and_fury"
+    ]
+  },
+  "revival_overdrive": {
+    "id": "revival_overdrive",
+    "name": "Revival Overdrive",
+    "questGiver": "Zeke \"Gearhead\" Thompson",
+    "questLocation": "Steppe, Northsteppe fort",
+    "description": "Collect Charge Particles from defeating nearby golems.",
+    "goals": [
+      "Return Charge Particles to Zeke Thompson"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "robot_details_gathering": {
+    "id": "robot_details_gathering",
+    "name": "Robot Details Gathering",
+    "questGiver": "Quadro-Sentinel 4.0",
+    "questLocation": "Goldenfield, Fields of Goldenfield",
+    "description": "Find gnats in the fields of Goldenfield.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "rock_and_keg_roll": {
+    "id": "rock_and_keg_roll",
+    "name": "Rock And Keg Roll",
+    "questGiver": "Lola Vexar",
+    "questLocation": "Riverrise, Scene",
+    "description": "Search the bar for the kegs.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "rusty_relics_for_rituals": {
+    "id": "rusty_relics_for_rituals",
+    "name": "Rusty Relics For Rituals",
+    "questGiver": "Zugg Clankwhistle",
+    "questLocation": "Goldenfield, near the Bureau",
+    "description": "Search Prison Island for rare junk. Collect Rust-Eaten Weapon Chains, Tattered Beastskin Mantles, and Fractured Binding Stones and deliver them to Skrizzik.",
+    "goals": [
+      "Finde item for Doc Greene",
+      "Bring all the items to Skrizzik",
+      "Check your pocket for the item",
+      "Forgotten item: Fractured Binding Stones",
+      "Forgotten item: Rust-Eaten Weapon Chains",
+      "Forgotten item: Tattered Beastskin Mantles"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "scarecrow_showdown"
+    ]
+  },
+  "salvation_from_madness": {
+    "id": "salvation_from_madness",
+    "name": "Salvation From Madness",
+    "questGiver": "Zor",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Search the Great Steppes for the dangerous, wandering Archosaur and slay it for the final artifact piece!",
+    "goals": [
+      "Get a trophies from the Archosaur",
+      "Impale the head on a pike near Tor",
+      "Talk to Zor",
+      "talk_npc_zor",
+      "Make a choice:",
+      "Bring piece of artifact to Zor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "scarecrow_showdown": {
+    "id": "scarecrow_showdown",
+    "name": "Scarecrow Showdown",
+    "questGiver": "Skrizzik",
+    "questLocation": "Prison Island",
+    "description": "Place the scarecrow in front of Zugg's office in Goldenfield and make sure to speak with him after to rub it in.",
+    "goals": [
+      "Put the scarecrow back in place",
+      "Talk to Zugg"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island",
+    "prevQuests": [
+      "rusty_relics_for_rituals"
+    ]
+  },
+  "scattered_collectibles": {
+    "id": "scattered_collectibles",
+    "name": "Scattered Collectibles",
+    "questGiver": "Clyde",
+    "questLocation": "Riverrise, Market in old town",
+    "description": "Search Riverrise for all the Trading Cards.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "seasoned_delicacy": {
+    "id": "seasoned_delicacy",
+    "name": "Seasoned Delicacy",
+    "questGiver": "Triton",
+    "questLocation": "Windreach Woods, Lake house",
+    "description": "Find Thorin in Windstone Village to the east, past the lake.",
+    "goals": [
+      "Talk to Thorin Toastbeard"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "culinary_diplomacy"
+    ],
+    "prevQuests": [
+      "eggcellent_substitution"
+    ]
+  },
+  "secrets_beneath": {
+    "id": "secrets_beneath",
+    "name": "Secrets Beneath",
+    "questGiver": "Silas Whitlock",
+    "questLocation": "Riverrise, Hidden Chest",
+    "description": "Assist Silas Whitlock in dealing with the Fungus that keeps digging up his buried chest.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "secrets_of_the_bound_requiem": {
+    "id": "secrets_of_the_bound_requiem",
+    "name": "Secrets Of The Bound Requiem",
+    "questGiver": "Kings Head",
+    "questLocation": "Prison Island",
+    "description": "Defeat the Yaga on Prison Island, attain whatever knowledge you can and return to Kings Head.",
+    "goals": [
+      "Talk to Kings Head"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "secrets_of_the_invaders": {
+    "id": "secrets_of_the_invaders",
+    "name": "Secrets Of The Invaders",
+    "questGiver": "Furr",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Help Furr understand the human invaders by collecting their valuables within the Adventurer's Outpost.",
+    "goals": [
+      "Return to Furr"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "secrets_unearthed": {
+    "id": "secrets_unearthed",
+    "name": "Secrets Unearthed",
+    "questGiver": "Colt \"Muffinman\" McGrady",
+    "questLocation": "Steppe, Great steppe stronghold",
+    "description": "Help Colt \"Muffinman\" McGrady by finding the Spellbreaker Amulet to the north in the Candlewick Slums. After, head southwest to find the hidden stash.",
+    "goals": [
+      "Find the Spellbreaker Amulet",
+      "Return to Colt",
+      "Use the Spellbreaker Amulet to see caches"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "secure_the_assets": {
+    "id": "secure_the_assets",
+    "name": "Secure The Assets",
+    "questGiver": "Oswald",
+    "questLocation": "Goldenfield, Bank",
+    "description": "Bring Oswald materials to reinforce the bank's vault.",
+    "goals": [
+      "Give the items to Glubgrath"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "security_measures": {
+    "id": "security_measures",
+    "name": "Security Measures",
+    "questGiver": "Oswald",
+    "questLocation": "Goldenfield, Bank",
+    "description": "Use the blueprint to craft a Plazma Gun.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "sending_the_alert": {
+    "id": "sending_the_alert",
+    "name": "Sending The Alert",
+    "questGiver": "Colt \"Muffinman\" McGrady",
+    "questLocation": "Steppe, Great steppe stronghold",
+    "description": "Head northwest and find the transmitter south of the Arid Canal, past the lake. The parts are located around the Great Steppe Stronghold.",
+    "goals": [
+      "Repair radio transmitter and call to the king",
+      "Return to Colt McGrady"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "sensing_the_sands": {
+    "id": "sensing_the_sands",
+    "name": "Sensing The Sands",
+    "questGiver": "Xelcor Zinn",
+    "questLocation": "Steppe, Northsteppe fort",
+    "description": "Grab four sensors from the fort and place one to the west of the South Winery. Go west and place on the rocky shore of the lake. Head east out of the fort and place one and finally to the south, just off the road.",
+    "goals": [
+      "Return to Xelcor Zinn"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "shadows_beneath_the_sands": {
+    "id": "shadows_beneath_the_sands",
+    "name": "Shadows Beneath The Sands",
+    "questGiver": "Tor Drostin",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Head west to the Great Steppes Stronghold and sabotage the fort.",
+    "goals": [
+      "Return to Tor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "sharpening_resolve": {
+    "id": "sharpening_resolve",
+    "name": "Sharpening Resolve",
+    "questGiver": "Silas Thorne",
+    "questLocation": "Steppe, Western fort",
+    "description": "Gather the weapon parts directly north of the Western Fort. When the road turns, continue straight north. Return with the pieces and use the anvil in the Western Fort to construct the new weapon.",
+    "goals": [
+      "Build a reinforced weapon on the anvil",
+      "Bring weapon to Brother Thaddeus"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "shattered_memory": {
+    "id": "shattered_memory",
+    "name": "Shattered Memory",
+    "questGiver": "Mortimer Gloomsworth",
+    "questLocation": "Goldenfield, near Cemetery",
+    "description": "Venture back to Prison Island and find the ancient consoles to unlock the door and find the item for Doc Greene.",
+    "goals": [
+      "Use the two ancient consoles that will open the door",
+      "Find Memory Core",
+      "Bring item to Doc Greene",
+      "Forgotten item: Memory Core"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "shell_we_eat": {
+    "id": "shell_we_eat",
+    "name": "Shell We Eat",
+    "questGiver": "Butch O'Hara",
+    "questLocation": "Goldenfield, Barn",
+    "description": "Search for turtles around bodies of water.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "signal_in_the_sands": {
+    "id": "signal_in_the_sands",
+    "name": "Signal In The Sands",
+    "questGiver": "Colt \"Muffinman\" McGrady",
+    "questLocation": "Steppe, Great steppe stronghold",
+    "description": "Help Colt 'Muffinman' McGrady restore the transmission systems northwest by the village, north to the cemetery, and northeast up the road from the slums.",
+    "goals": [
+      "Activate all radio towers",
+      "Find part for northeast",
+      "Report to Colt McGrady that all towers are operational"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "silencing_the_rumors": {
+    "id": "silencing_the_rumors",
+    "name": "Silencing The Rumors",
+    "questGiver": "Tor Drostin",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Help Tor Drostin remove the inflammatory posters causing unrest at the outpost.",
+    "goals": [
+      "Return to Tor Drostin"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "slippery_passage": {
+    "id": "slippery_passage",
+    "name": "Slippery Passage",
+    "questGiver": "Chad \"Buzz\" McNulty",
+    "questLocation": "Riverrise, Scene",
+    "description": "Go south of the Ripplecrop Fields to the Train Station. Kill scrags to find a key and save the hostages.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "something_suspicious": {
+    "id": "something_suspicious",
+    "name": "Something Suspicious",
+    "questGiver": "Alexander Stones",
+    "questLocation": "Westwind Woods, Old Quarry overlooking platform",
+    "description": "Search the mine to the south, nearby Grizzle Ironfoot for the notes.",
+    "goals": [
+      "Talk to Alexander Stones"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "prevQuests": [
+      "whispers_in_the_dark"
+    ]
+  },
+  "spirited_away": {
+    "id": "spirited_away",
+    "name": "Spirited Away",
+    "questGiver": "Dr. Queenie",
+    "questLocation": "Steppe, Northsteppe fort",
+    "description": "Fetch liquor from the ruins to the northeast near the swamp line.",
+    "goals": [
+      "Bring bottles to Mort Decay"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "spiritual_cleansing_rocks_and_a_hard_place": {
+    "id": "spiritual_cleansing_rocks_and_a_hard_place",
+    "name": "Spiritual Cleansing Rocks And A Hard Place",
+    "questGiver": "Guru David",
+    "questLocation": "Goldenfield, Yoga Lake",
+    "description": "Search for Leaf Monster camps in the Skylight Grasslands.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "spiritual_cleansing_the_fragrant_gel": {
+    "id": "spiritual_cleansing_the_fragrant_gel",
+    "name": "Spiritual Cleansing The Fragrant Gel",
+    "questGiver": "Guru David",
+    "questLocation": "Goldenfield, Yoga Lake",
+    "description": "Find gnats lurking in the fields and collect their wings.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "spiritual_cleansing_the_ruby_of_vitality": {
+    "id": "spiritual_cleansing_the_ruby_of_vitality",
+    "name": "Spiritual Cleansing The Ruby Of Vitality",
+    "questGiver": "Guru David",
+    "questLocation": "Goldenfield, Yoga Lake",
+    "description": "Search the clearings southwest for the Purple Poppy and Yellow Crystal.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "spore-tal_power": {
+    "id": "spore-tal_power",
+    "name": "Spore-tal Power",
+    "questGiver": "Driscoll-99",
+    "questLocation": "Westwind Woods, Old Portal",
+    "description": "Kill fungus around the forest.",
+    "goals": [
+      "Return to Driscoll-99"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "prevQuests": [
+      "portal_restorations"
+    ]
+  },
+  "stamp_of_peace": {
+    "id": "stamp_of_peace",
+    "name": "Stamp Of Peace",
+    "questGiver": "Tor Drostin",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Search for the notary northeast at the Winery.",
+    "goals": [
+      "Find a clue about the notary's location",
+      "Free the notary",
+      "Find key to cell",
+      "Talk to Tor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "star-powered_shot": {
+    "id": "star-powered_shot",
+    "name": "Star-powered Shot",
+    "questGiver": "Thordal Ironvei",
+    "questLocation": "Goldenfield, Miner's crafting bench",
+    "description": "Look for an old tent among rocks and trees about halfway between Greta’s and the Faidens Camp.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "stitched_in_silence": {
+    "id": "stitched_in_silence",
+    "name": "Stitched In Silence",
+    "goals": [
+      "Collect Ring",
+      "Collect Pearl of the sea",
+      "Talk with Captain Rob",
+      "Forgotten item: Pearl Of The Sea",
+      "Forgotten item: Silver Ring",
+      "Forgotten item: Taddy Bear"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "strange_green_pots": {
+    "id": "strange_green_pots",
+    "name": "Strange Green Pots",
+    "questGiver": "Oakley \"Dusty\" Fenn",
+    "questLocation": "Westwind Woods, Sawmill kitchen",
+    "description": "Find Dendroid Scouts in the forest around the sawmill.",
+    "goals": [
+      "Talk to Grommuk",
+      "Talk to Grommuk Ironhand"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "the_big_reveal"
+    ],
+    "prevQuests": [
+      "nuts_for_the_stew"
+    ]
+  },
+  "strumming_sorrow": {
+    "id": "strumming_sorrow",
+    "name": "Strumming Sorrow",
+    "questGiver": "Felix",
+    "questLocation": "Riverrise, Musical Instrument Shop",
+    "description": "Search the bars around Riverrise for the reciept and return it to Bart.",
+    "goals": [
+      "Deliver Felix's Receipt to Bart"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "substances_of_suspicion": {
+    "id": "substances_of_suspicion",
+    "name": "Substances Of Suspicion",
+    "questGiver": "Xelcor Zinn",
+    "questLocation": "Steppe, Northsteppe fort",
+    "description": "Collect scolopendra hormones from creatures outside the fort.",
+    "goals": [
+      "Bring to Queenie",
+      "asdasd"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "sunburned_escape": {
+    "id": "sunburned_escape",
+    "name": "Sunburned Escape",
+    "questGiver": "Nud-E Leroy",
+    "questLocation": "Steppe, near Skeleton Cave",
+    "description": "Defeat Leaf Dragons around the Steppe for leaf extract. Take the extract near Nud-E Leroy and mix it up into burn relief ointment for him.",
+    "goals": [
+      "Return to Nud-E Leroy",
+      "Mix ointment and extract"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "supply_and_command": {
+    "id": "supply_and_command",
+    "name": "Supply And Command",
+    "questGiver": "Ratchet",
+    "questLocation": "Goldenfield, Weaponsmithing craft bench",
+    "description": "Search veins outside Goldenfield for all the resources needed.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "test_craft_trigger": {
+    "id": "test_craft_trigger",
+    "name": "Test Craft Trigger",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "testament_of_strength": {
+    "id": "testament_of_strength",
+    "name": "Testament Of Strength",
+    "questGiver": "Pastor Fazool",
+    "questLocation": "Reverie Hollow, Church",
+    "description": "Travel once again to Prison Island and slay beasts and adventurers alike to appease Pastor Fazool.",
+    "goals": [
+      "Talk to Pastor Fazool"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "the_art_of_deception": {
+    "id": "the_art_of_deception",
+    "name": "The Art Of Deception",
+    "questGiver": "Hank Thornbuckle",
+    "questLocation": "Goldenfield, Edge farm",
+    "description": "Search the Goldenfield bank and Zugg's house for the paintings.",
+    "goals": [
+      "Return to Hank"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "prevQuests": [
+      "farmyard_mayhem"
+    ]
+  },
+  "the_betrayers_blade": {
+    "id": "the_betrayers_blade",
+    "name": "The Betrayers Blade",
+    "questGiver": "Shawna Steelheart",
+    "questLocation": "Steppe, Adventures outpost",
+    "description": "Search the battlefield, west down the road of the Great Steppe Cemetery and look for any clues.",
+    "goals": [
+      "Find some clues on the battlefield",
+      "Return the Broken Bayonet to Zelina Ironweave"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "the_big_reveal": {
+    "id": "the_big_reveal",
+    "name": "The Big Reveal",
+    "questGiver": "Grommuk Ironhand",
+    "questLocation": "Westwind Woods, Sawmill centre",
+    "description": "Find Alex at the Westwind Quarry to the south.",
+    "goals": [
+      "Return Rumbling Green pot to Alexander Stones"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "beneath_the_surface"
+    ],
+    "prevQuests": [
+      "strange_green_pots"
+    ]
+  },
+  "the_blades_dilemma": {
+    "id": "the_blades_dilemma",
+    "name": "The Blades Dilemma",
+    "questGiver": "Daxton Vance",
+    "questLocation": "Steppe, Western fort",
+    "description": "Search for the Westend Village northwest and look for the cursed sword. Follow to the road north to the crossroads, then head west to the village.",
+    "goals": [
+      "Make a Magic Sword",
+      "Return to Daxton Vance"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "the_case_against_triton": {
+    "id": "the_case_against_triton",
+    "name": "The Case Against Triton",
+    "questGiver": "Brawny Barrelbuckle",
+    "questLocation": "Windstone Village, Street gym",
+    "description": "Find Roderick 'DarkSpike' Thinklatch in Windstone Village.",
+    "goals": [
+      "Talk to Roderick \"DarkSpike\" Thinklatch"
+    ],
+    "locationCode": "WDVI",
+    "region": "Windstone Village",
+    "nextQuests": [
+      "mounting_evidence"
+    ]
+  },
+  "the_deserts_secret": {
+    "id": "the_deserts_secret",
+    "name": "The Deserts Secret",
+    "questGiver": "HPPY-01",
+    "questLocation": "Steppe, Junkyard slums",
+    "description": "Collect data from one of the three anomalies along the northern coast. They have been seen south of Fisher's Camp, to all the way east past the Hillside Well.",
+    "goals": [
+      "Talk to HPPY",
+      "Study item from HPPY"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "the_draft_dodgers_dilemma": {
+    "id": "the_draft_dodgers_dilemma",
+    "name": "The Draft Dodgers Dilemma",
+    "questGiver": "Lenny",
+    "questLocation": "Steppe, Central Fort",
+    "description": "Help Lenny avoid the draft by retrieving the smut film from his lost camera.",
+    "goals": [
+      "Find the camera",
+      "First part of the code",
+      "Second part of the code",
+      "Open the safe and take the film",
+      "Take the film to Lenny"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "the_elusive_cheese": {
+    "id": "the_elusive_cheese",
+    "name": "The Elusive Cheese",
+    "questGiver": "Seldon Moor",
+    "questLocation": "Riverrise, City Pier 2",
+    "description": "Find the post office in Riverrise.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "the_final_revelation": {
+    "id": "the_final_revelation",
+    "name": "The Final Revelation",
+    "questGiver": "Pastor Fazool",
+    "questLocation": "Reverie Hollow, Church",
+    "description": "Find the phylactery on Prison Island. Use it to summon the boss. Defeat the boss, then return to Pastor Fazool.",
+    "goals": [
+      "[Optional] Use phylactery",
+      "Talk to Pastor Fazool"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "the_final_verdict": {
+    "id": "the_final_verdict",
+    "name": "The Final Verdict",
+    "questGiver": "Baxton \"Skip\" Malroth",
+    "questLocation": "Windstone Village, Guard's place: west",
+    "description": "Return to Triton on the north side of the lake.",
+    "goals": [
+      "Bring Brawny's Summons to Triton"
+    ],
+    "locationCode": "WDVI",
+    "region": "Windstone Village",
+    "prevQuests": [
+      "questionable_evidence"
+    ]
+  },
+  "the_fishermans_bash": {
+    "id": "the_fishermans_bash",
+    "name": "The Fishermans Bash",
+    "questGiver": "Glubgrath",
+    "questLocation": "Skylight Grasslands, Gemini Lakes",
+    "description": "Go to Windstone Village to the northwest.",
+    "goals": [
+      "Talk to Thorin Toastbeard"
+    ],
+    "locationCode": "SKGR",
+    "region": "Skylight Grasslands",
+    "nextQuests": [
+      "catch_of_the_day"
+    ]
+  },
+  "the_great_pretender": {
+    "id": "the_great_pretender",
+    "name": "The Great Pretender",
+    "questGiver": "Slick Shady",
+    "questLocation": "Steppe, Coal Village",
+    "description": "Hunt for the wandering Lizard Draco and kill it, making Slick Shady look like a hero.",
+    "goals": [
+      "Return to Slick Shady"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "the_guards_dilemma": {
+    "id": "the_guards_dilemma",
+    "name": "The Guards Dilemma",
+    "questGiver": "Themis",
+    "questLocation": "Windreach Woods, Fort",
+    "description": "Deliver the package to Rusty, northwest to the train station above the fort.",
+    "goals": [
+      "Talk to Rusty Bowen"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "natures_redemption"
+    ],
+    "prevQuests": [
+      "package_pilfered"
+    ]
+  },
+  "the_heart_of_the_forest": {
+    "id": "the_heart_of_the_forest",
+    "name": "The Heart Of The Forest",
+    "questGiver": "Grommuk Ironhand",
+    "questLocation": "Westwind Woods, Sawmill centre",
+    "description": "Collect the chainsaw, chain and gasoline around camp.",
+    "goals": [
+      "Return to Eamon Hardich"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods"
+  },
+  "the_hunt_for_green_puff": {
+    "id": "the_hunt_for_green_puff",
+    "name": "The Hunt For Green Puff",
+    "questGiver": "Themis",
+    "questLocation": "Windreach Woods, Fort",
+    "description": "Search the fort for the jugs and papers.",
+    "goals": [
+      "Return to Mary Jane",
+      "Find book of Mary Jane's"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "package_pilfered"
+    ]
+  },
+  "the_key_to_ratchets_repair": {
+    "id": "the_key_to_ratchets_repair",
+    "name": "The Key To Ratchets Repair",
+    "questGiver": "Doc Greene",
+    "questLocation": "Prison Island",
+    "description": "Defeat the Werewolf Alpha to find the key to release the prisoners and return to Ratchet in Goldenfield.",
+    "goals": [
+      "Talk to Ratchet"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "the_laid_lovers_locket": {
+    "id": "the_laid_lovers_locket",
+    "name": "The Laid Lovers Locket",
+    "questGiver": "Maxwell Sterling",
+    "questLocation": "Dusktide Forest, near Tent",
+    "description": "Search dead bodies around the forests for some jewelry.",
+    "locationCode": "DKTF",
+    "region": "Dusktide Forest"
+  },
+  "the_last_order": {
+    "id": "the_last_order",
+    "name": "The Last Order",
+    "questGiver": "Morick Voss",
+    "questLocation": "Westwind Woods, Valley of sins infestation",
+    "description": "Search the Valley of Sins for jars and take them to Trevor Barlow back at the fort.",
+    "goals": [
+      "Talk to Trevor"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "behind_enemy_lines"
+    ],
+    "prevQuests": [
+      "corruption_clean-up"
+    ]
+  },
+  "the_light_of_dagaron": {
+    "id": "the_light_of_dagaron",
+    "name": "The Light Of Dagaron",
+    "questGiver": "Pastor Fazool",
+    "questLocation": "Reverie Hollow, Church",
+    "description": "Buy the blade from Ashley O’Connell on Prison Island to uncover the ritual. Wield it against seven statues in a single run fall once, and the balance is lost. Return the blooded blade to Pastor Fazool.",
+    "goals": [
+      "Talk to Pastor Fazool",
+      "Buy the Blade of the Blood Oath",
+      "Forgotten item: Blade of the Blood Oath"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "the_little_terror": {
+    "id": "the_little_terror",
+    "name": "The Little Terror",
+    "questGiver": "Lil Timmy",
+    "questLocation": "Goldenfield, Edge farm",
+    "description": "Help Hank and Marigold to keep 'Lil Timmy's ass out of trouble.",
+    "goals": [
+      "Return to Lil Timmy",
+      "Talk to Marigold Thornbuckle",
+      "Talk to Hank Thornbuckle"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "breaking_the_chains"
+    ],
+    "prevQuests": [
+      "the_real_culprit"
+    ]
+  },
+  "the_matricidal_theory": {
+    "id": "the_matricidal_theory",
+    "name": "The Matricidal Theory",
+    "questGiver": "Zarnok",
+    "questLocation": "Riverrise, City Center",
+    "description": "Search the city for a rat.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "the_meat_of_the_matter": {
+    "id": "the_meat_of_the_matter",
+    "name": "The Meat Of The Matter",
+    "questGiver": "\"Zeek\" Solomon",
+    "questLocation": "Riverrise, Butchery district",
+    "description": "Gather Rawstead Carcass and Grilled Carcass. Some say they're best over a fire.",
+    "goals": [
+      "Talk to Erwin \"Bacon King\" Braux"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "the_melody_of_misfortune": {
+    "id": "the_melody_of_misfortune",
+    "name": "The Melody Of Misfortune",
+    "questGiver": "Bart Blaine",
+    "questLocation": "Riverrise, Musical Instrument Shop",
+    "description": "Find Felix and take the horn to him.",
+    "goals": [
+      "Deliver Cursed Horn to Felix"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "the_painted_betrayal": {
+    "id": "the_painted_betrayal",
+    "name": "The Painted Betrayal",
+    "questGiver": "Pastor Fazool",
+    "questLocation": "Reverie Hollow, Church",
+    "description": "Check the paintings in the barn.",
+    "goals": [
+      "Return to Louise Oldgarden",
+      "Collect Quaddari Portal Tech"
+    ],
+    "locationCode": "RVHL",
+    "region": "Reverie Hollow",
+    "nextQuests": [
+      "decrypting_betrayal"
+    ]
+  },
+  "the_pranksters_peace": {
+    "id": "the_pranksters_peace",
+    "name": "The Pranksters Peace",
+    "questGiver": "Buck",
+    "questLocation": "Goldenfield, Violet Weed Field",
+    "description": "Search abandoned houses outside of town to the east for a clock. Combine it with the package and deliver to Lily.",
+    "goals": [
+      "Talk to Lily Baxter",
+      "Pack the box with the watch"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "its_just_a_prank_bro"
+    ],
+    "prevQuests": [
+      "fowl_play"
+    ]
+  },
+  "the_real_culprit": {
+    "id": "the_real_culprit",
+    "name": "The Real Culprit",
+    "questGiver": "Claudine Baxter",
+    "questLocation": "Goldenfield, South farm",
+    "description": "Find 'Lil Timmy at his farm in eastern Goldenfield.",
+    "goals": [
+      "Talk to 'Lil Timmy"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "the_little_terror"
+    ],
+    "prevQuests": [
+      "herbal_remedy"
+    ]
+  },
+  "the_role_of_a_lifetime": {
+    "id": "the_role_of_a_lifetime",
+    "name": "The Role Of A Lifetime",
+    "questGiver": "Slick Shady",
+    "questLocation": "Steppe, Coal Village",
+    "description": "Help Slick Shady by killing small Archeosaurs around different camps while he finds the artifacts location.",
+    "goals": [
+      "Return to Slick Shady"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "the_sirens_temptation": {
+    "id": "the_sirens_temptation",
+    "name": "The Sirens Temptation",
+    "questGiver": "Seaonna",
+    "questLocation": "Windreach Woods, Mermaid Lake",
+    "description": "Kill leaf monsters around the forest and collect Verdant Leaves.",
+    "goals": [
+      "Talk to Seaonna"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods"
+  },
+  "the_sweet_escape": {
+    "id": "the_sweet_escape",
+    "name": "The Sweet Escape",
+    "questGiver": "Ivie Clarkson",
+    "questLocation": "Goldenfield, Goldenfield, near the Bureau",
+    "description": "Kill gnats around Goldenfield for their larvae.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "the_unlikely_courier": {
+    "id": "the_unlikely_courier",
+    "name": "The Unlikely Courier",
+    "questGiver": "Chance, \"Avatar of Odds\"",
+    "questLocation": "Prison Island",
+    "description": "Use the Ancient Effigy and defeat enemies on the island in a weakened state. Then pay a visit to Miguel \"El Caballo\" Rodriguez.",
+    "goals": [
+      "Talk to Miguel Rodriguez in Riverrise",
+      "Find and use the Ancient Effigy"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "thirst_for_understanding": {
+    "id": "thirst_for_understanding",
+    "name": "Thirst For Understanding",
+    "questGiver": "Furr",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Collect poison from Mantha explosive remains to assist Furr with his research.",
+    "goals": [
+      "Return to Furr"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "thistlebrooks_terrifying_task": {
+    "id": "thistlebrooks_terrifying_task",
+    "name": "Thistlebrooks Terrifying Task",
+    "questGiver": "Thistlebrook",
+    "questLocation": "Riverrise, Bench behind the alchemy",
+    "description": "Complete quests for Pax and Ophelia.",
+    "goals": [
+      "Talk to Pax Voss",
+      "Talk to Ophelia Voss",
+      "Return to Thistlebrook"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "thread_the_needle_warm_the_soul": {
+    "id": "thread_the_needle_warm_the_soul",
+    "name": "Thread The Needle Warm The Soul",
+    "questGiver": "Nia Sundance",
+    "questLocation": "Goldenfield, near Summer house",
+    "description": "Pick up the coffee from the cafe and take it to Maxwell in Dusktide Forest.",
+    "goals": [
+      "Bring to Maxwell"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "threading_the_dream": {
+    "id": "threading_the_dream",
+    "name": "Threading The Dream",
+    "questGiver": "Lila Algernon",
+    "questLocation": "Riverrise, Scene",
+    "description": "Go to the fields outside Riverrise and kill spiders.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "tides_of_vengeance": {
+    "id": "tides_of_vengeance",
+    "name": "Tides Of Vengeance",
+    "questGiver": "Mariel Venomtail",
+    "questLocation": "Windreach Woods, Mermaid Lake",
+    "description": "Search the Hunter Camp to the east for the pages.",
+    "goals": [
+      "Bring to Mariel Venomtail"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods",
+    "nextQuests": [
+      "heartbreak_waters"
+    ]
+  },
+  "to_the_moon_via_the_fields": {
+    "id": "to_the_moon_via_the_fields",
+    "name": "To The Moon Via The Fields",
+    "questGiver": "Zoltar Blipchain",
+    "questLocation": "Goldenfield, near Wheat tent",
+    "description": "Assist Zoltar in curbing the rat infestation in his wheat fields.",
+    "goals": [
+      "Diminish the mutated rat population"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "toxic_ambition": {
+    "id": "toxic_ambition",
+    "name": "Toxic Ambition",
+    "questGiver": "Soko Uno",
+    "questLocation": "Riverrise, Scene",
+    "description": "Go to the souther Riverrise bridge. Cross it and head directly east across the river into the woods.",
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "trading_papers": {
+    "id": "trading_papers",
+    "name": "Trading Papers",
+    "questGiver": "Skip Stones",
+    "questLocation": "Prisson Island",
+    "description": "Find the trade document just off the coast on a wrecked boat. Watch out for what lurks in the water and don’t forget, the mud may help you swim.",
+    "goals": [
+      "Collect Trade Permit Document",
+      "Bring Trade Permit Document to Skip Stones",
+      "Forgotten item: Trade Permit Document"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "trial_of_the_marked": {
+    "id": "trial_of_the_marked",
+    "name": "Trial Of The Marked",
+    "goals": [
+      "Survive on the Prison Island for 10 minutes.",
+      "Survive and escape the Prison Island.",
+      "Talk with Zara Thorne"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "prevQuests": [
+      "trial_of_unyielding_will"
+    ]
+  },
+  "trial_of_unyielding_will": {
+    "id": "trial_of_unyielding_will",
+    "name": "Trial Of Unyielding Will",
+    "questGiver": "Wulbyan Bloodroar",
+    "questLocation": "Goldenfield, Faidens camp top centre",
+    "description": "Eat the disgusting meat, and prove your strength by defeating enemies on the island while weakened.",
+    "goals": [
+      "Bring all the items to Wulbyan Bloodroar"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "trial_of_the_marked"
+    ]
+  },
+  "trial_of_worthiness": {
+    "id": "trial_of_worthiness",
+    "name": "Trial Of Worthiness",
+    "questGiver": "Zara Thorne",
+    "questLocation": "Goldenfield, Faidens camp top centre",
+    "description": "Journey to the Prison Island and defeat opponents of a certain class.",
+    "goals": [
+      "Talk to Wulbyan Bloodroar"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "wulbyans_challenge"
+    ],
+    "prevQuests": [
+      "a_yorner_trial"
+    ]
+  },
+  "turning_the_tide": {
+    "id": "turning_the_tide",
+    "name": "Turning The Tide",
+    "questGiver": "The Guardinator",
+    "questLocation": "Seppe, Great steppe stronghold",
+    "description": "Assist the Guardinator by eliminating golems in the area. Targets reported northwest near the Great Bones Village.",
+    "goals": [
+      "Return to Guardinator"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "unbottling_mercy": {
+    "id": "unbottling_mercy",
+    "name": "Unbottling Mercy",
+    "questGiver": "Rufus",
+    "questLocation": "Riverrise, Butchery district",
+    "description": "Head to the first field northwest and search for the bottle.",
+    "goals": [
+      "Collect Mysterious Bottle"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "unearthing_obsession": {
+    "id": "unearthing_obsession",
+    "name": "Unearthing Obsession",
+    "questGiver": "Alex \"Hooty\" Howizer",
+    "questLocation": "Steppe, Great steppe stronghold",
+    "description": "Find the artifact north between the Great Steppe Cemetery and the lake. If repairs are needed, head south of its location for artifact parts.",
+    "goals": [
+      "Find \"The Destroyer\"",
+      "Use an artifact to repair it",
+      "Repair \"The Destroyer\""
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "unearthing_the_truth": {
+    "id": "unearthing_the_truth",
+    "name": "Unearthing The Truth",
+    "questGiver": "Zor",
+    "questLocation": "Steppe, Fisher's camp",
+    "description": "Search south, past the anomaly for the fallen Lightbearer envoy near the road.",
+    "goals": [
+      "Find the corpse of the light-bearer with the message",
+      "Return to Zor"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "unlocking_the_troll_head_ritual": {
+    "id": "unlocking_the_troll_head_ritual",
+    "name": "Unlocking The Troll Head Ritual",
+    "questGiver": "Skrizzik",
+    "questLocation": "Prison Island",
+    "description": "Visit Doc Greene on the island for his notes. Then go to the Northern Wastelands and meet Furr for knowledge. Lastly, in the Westwind Woods, speak with Sirena Hexblade. Finally, go to Goldenfield and report to Zugg.",
+    "goals": [
+      "Talk to Furr",
+      "Talk to Sirena Hexblade",
+      "Talk to Doc Greene",
+      "Talk to Zugg Clankwhistle"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "unmasking_the_conspiracy": {
+    "id": "unmasking_the_conspiracy",
+    "name": "Unmasking The Conspiracy",
+    "questGiver": "Alexander Stones",
+    "questLocation": "Westwind Woods, Old Quarry overlooking platform",
+    "description": "Wander through the mines looking for weapons.",
+    "goals": [
+      "Talk to Alexander Stones"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods"
+  },
+  "unmasking_the_impostor": {
+    "id": "unmasking_the_impostor",
+    "name": "Unmasking The Impostor",
+    "questGiver": "Bob Thurkle",
+    "questLocation": "Riverrise, Scene",
+    "description": "Go to the pier on the north east side of town and find the mask.",
+    "goals": [
+      "Return Mobius Mask to Bob Thurkle"
+    ],
+    "locationCode": "RRCY",
+    "region": "Riverrise City"
+  },
+  "unsavory_evidence": {
+    "id": "unsavory_evidence",
+    "name": "Unsavory Evidence",
+    "questGiver": "Gusto Grubhunter",
+    "questLocation": "Windstone Village, Guard's place: south west",
+    "description": "Head south into the woods. The abandoned house is past the railroad tracks.",
+    "goals": [
+      "Bring to Quaridor Vex"
+    ],
+    "locationCode": "WDVI",
+    "region": "Windstone Village",
+    "prevQuests": [
+      "mounting_evidence"
+    ]
+  },
+  "unsettling_return": {
+    "id": "unsettling_return",
+    "name": "Unsettling Return",
+    "questGiver": "Gareth Rucker",
+    "questLocation": "Steppe, Adventures outpost",
+    "description": "Assist Gareth with enchanting the mysterious artifact at the Quarran Altar Obelisk. Head north to the Greatsteppe Cemetery. After enchanting the artifact, take it to Barnaby for inspection.",
+    "goals": [
+      "Enchant a mysterious artefact",
+      "Show the artifact to Barnaby Thorn",
+      "Bring artifact to Colt"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "unveiling_dark_secrets": {
+    "id": "unveiling_dark_secrets",
+    "name": "Unveiling Dark Secrets",
+    "questGiver": "Alexander Stones",
+    "questLocation": "Westwind Woods, Old Quarry overlooking platform",
+    "description": "Search for an abandoned house south of Varkus.",
+    "goals": [
+      "Discover the dead body",
+      "Return to Alexander Stones"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "echoes_of_paranoia"
+    ]
+  },
+  "unveiling_the_bound_requiem": {
+    "id": "unveiling_the_bound_requiem",
+    "name": "Unveiling The Bound Requiem",
+    "questGiver": "Kings Head",
+    "questLocation": "Prison Island",
+    "description": "Collect Vertebrae of Obedience from the Scrags and Pallid Tongues from the Ghouls on Prison Island and take them to Hilda Deeproot in the Westwind Woods.",
+    "goals": [
+      "Bring Item to Hilda",
+      "Bring all the items to Hilda Deeproot"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island",
+    "nextQuests": [
+      "echoes_beyond"
+    ]
+  },
+  "unveiling_the_hidden_truth": {
+    "id": "unveiling_the_hidden_truth",
+    "name": "Unveiling The Hidden Truth",
+    "questGiver": "Jennifer Davyna",
+    "questLocation": "Steppe, Great steppe stronghold",
+    "description": "Search for an abandoned house northwest by the Great Bones Village that contains evidence of a conspiracy.",
+    "goals": [
+      "Find a way to unlock the door in the house.",
+      "Take the secret item from the house",
+      "Return to Jennifer Davyna"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "valuable_research": {
+    "id": "valuable_research",
+    "name": "Valuable Research",
+    "questGiver": "Rancor K'Zar",
+    "questLocation": "Steppe, Northsteppe fort",
+    "description": "Help collect valuable items north of the Northeast Fort to the southeast.",
+    "goals": [
+      "Bring the gems to Queenie"
+    ],
+    "locationCode": "STEP",
+    "region": "Steppes"
+  },
+  "vanitys_elixir": {
+    "id": "vanitys_elixir",
+    "name": "Vanitys Elixir",
+    "questGiver": "Zorbul Z'nar",
+    "questLocation": "Goldenfield, Distant Farm",
+    "description": "Search the South Farm in Goldenfield in the South East corner.",
+    "goals": [
+      "Return to Zorbul"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "nextQuests": [
+      "beauty_in_the_mud"
+    ]
+  },
+  "vase_of_the_cracked-tastrophe": {
+    "id": "vase_of_the_cracked-tastrophe",
+    "name": "Vase Of The Cracked-tastrophe",
+    "questGiver": "Griz Turner",
+    "questLocation": "Goldenfield, near Artifact shop",
+    "description": "Gather ceramics and return to Griz.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "vermin_extermination": {
+    "id": "vermin_extermination",
+    "name": "Vermin Extermination",
+    "questGiver": "Hank Granger",
+    "questLocation": "Goldenfield, near Tractor",
+    "description": "Find and kill mutated rats around the fields of Goldenfield.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "war_bear": {
+    "id": "war_bear",
+    "name": "War Bear",
+    "goals": [
+      "Forgotten item: Page 2"
+    ],
+    "locationCode": "PRIS",
+    "region": "Prison Island"
+  },
+  "weaponsmithing_lesson": {
+    "id": "weaponsmithing_lesson",
+    "name": "Weaponsmithing Lesson",
+    "questGiver": "Ratchet",
+    "questLocation": "Goldenfield, near the Workshop",
+    "description": "Help Ratchet craft a Assault Launcher.",
+    "goals": [
+      "Assault Launcher"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "wet_paper": {
+    "id": "wet_paper",
+    "name": "Wet Paper",
+    "questGiver": "Balthazar \"Baz\" Grimble",
+    "questLocation": "Windreach Woods, Road house",
+    "description": "Search the shoreline north of the roadhouse for unpaid bar tabs.",
+    "goals": [
+      "Give Pieces of Evidence to Balthazar"
+    ],
+    "locationCode": "WRWD",
+    "region": "Windreach Woods"
+  },
+  "whispers_in_the_dark": {
+    "id": "whispers_in_the_dark",
+    "name": "Whispers In The Dark",
+    "questGiver": "Varkus Drov",
+    "questLocation": "Westwinds Woods ,Old mine near sawmill",
+    "description": "Talk to Alexander in the Westwind Quarry to the south.",
+    "goals": [
+      "Talk to Alexander Stones"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods",
+    "nextQuests": [
+      "something_suspicious"
+    ],
+    "prevQuests": [
+      "desperate_depths"
+    ]
+  },
+  "whispers_in_the_woods": {
+    "id": "whispers_in_the_woods",
+    "name": "Whispers In The Woods",
+    "questGiver": "Dorik Oakenshield",
+    "questLocation": "Westwind Woods, Old Quarry bottom",
+    "description": "Search the old house to the north east of the quarry.",
+    "goals": [
+      "Talk to Alexander Stones"
+    ],
+    "locationCode": "WSWD",
+    "region": "Westwind Woods"
+  },
+  "wood_you_believe_it": {
+    "id": "wood_you_believe_it",
+    "name": "Wood You Believe It",
+    "questGiver": "Zogar",
+    "questLocation": "Goldenfield, Logging spot",
+    "description": "Grab some Calm Aloe from the alchemy area behind the welfare kitchen. An energy drink named ‘Sildenafil’ from a little crossroads just south of here. You’ll see the yellow lights. Lastly a psycho mushroom from the yoga house.",
+    "goals": [
+      "Return to Jahri"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "wooden_deer_hunt": {
+    "id": "wooden_deer_hunt",
+    "name": "Wooden Deer Hunt",
+    "questGiver": "Ludwig Schatten",
+    "questLocation": "Tempest Timberland, near the Hunter camp",
+    "description": "Embark on a perilous hunt for a Wooden Deer in Windreach Woods for Ludwig's research.",
+    "locationCode": "WSWD",
+    "region": "Westwind Woods"
+  },
+  "wulbyans_challenge": {
+    "id": "wulbyans_challenge",
+    "name": "Wulbyans Challenge",
+    "questGiver": "Wulbyan Bloodroar",
+    "questLocation": "Goldenfield, Faidens camp top centre",
+    "description": "Open the legendary chest on the southwest corner of Prison Island and retrieve Raiders Totems to give to Wulbyan.",
+    "goals": [
+      "Bring all the items to Wulbyan Bloodroar"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town",
+    "prevQuests": [
+      "trial_of_worthiness"
+    ]
+  },
+  "yogas_routine_problem": {
+    "id": "yogas_routine_problem",
+    "name": "Yogas Routine Problem",
+    "questGiver": "Guru David",
+    "questLocation": "Goldenfield, Yoga Lake",
+    "description": "Search farms around Goldenfield or butcher birds.",
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  },
+  "young_woodraptor_hunt": {
+    "id": "young_woodraptor_hunt",
+    "name": "Young Woodraptor Hunt",
+    "questGiver": "Ludwig Schatten",
+    "questLocation": "Tempest Timberland, near the Hunter camp",
+    "description": "Ludwig needs your help to hunt a Young Woodraptor in Westwind Woods for his research.",
+    "locationCode": "WRWD",
+    "region": "Windreach Woods"
+  },
+  "zero_to_hero_ish": {
+    "id": "zero_to_hero_ish",
+    "name": "Zero To Hero Ish",
+    "questGiver": "Flint Thistlewick",
+    "questLocation": "Steppe, Great steppe stronghold",
+    "description": "txt",
+    "goals": [
+      "need?"
+    ],
+    "locationCode": "GLFD",
+    "region": "Goldenfield Town"
+  }
+}

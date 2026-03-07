@@ -279,9 +279,9 @@ function renderChains() {
         const chainTitle = roots.length > 0 ? roots[0].name : chain[0].name;
 
         // Source badge
-        const sourceBadge = group.source === 'api' ? ' <span class="chain-source-badge chain-source-api">API</span>'
-            : group.source === 'binary' ? ' <span class="chain-source-badge chain-source-binary">Binary</span>'
-            : '';
+        const sourceBadge = group.source === 'api' ? ' <span class="chain-source-badge chain-source-api">API Only</span>'
+            : group.source === 'binary' ? ' <span class="chain-source-badge chain-source-binary">Binary Only</span>'
+            : ' <span class="chain-source-badge chain-source-both">Verified</span>';
 
         // Chain header
         const header = document.createElement('div');

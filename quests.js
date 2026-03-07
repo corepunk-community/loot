@@ -3,9 +3,11 @@ let questRewards = {};
 let questChains = {};
 let apiQuests = {};  // slug -> API quest data
 let slugMap = {};    // binary slug -> API slug (for fuzzy matches)
+let questMeta = {};  // quest_id -> binary metadata
 let currentQuest = null;
 let globalSearchActive = false;
 let currentRewardFilter = "all";
+let chainFilterActive = false;
 
 // DOM elements
 const tablesList = document.getElementById('tables-list');
@@ -60,6 +62,34 @@ function getApiQuest(questName) {
     return apiQuests[slug] || apiQuests[slugMap[slug]] || null;
 }
 
+// Get binary metadata for a quest name
+function getQuestMeta(questName) {
+    const id = questName.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '_').replace(/-/g, '_').trim();
+    return questMeta[id] || null;
+}
+
+// Get quest level (API first, no binary source for levels)
+function getQuestLevel(questName) {
+    const api = getApiQuest(questName);
+    return api?.level || null;
+}
+
+// Get quest region from binary metadata
+function getQuestRegion(questName) {
+    const meta = getQuestMeta(questName);
+    return meta?.region || null;
+}
+
+// Check if a quest is part of a chain
+function isInChain(questName) {
+    if (questChains[questName]) return true;
+    const meta = getQuestMeta(questName);
+    if (meta && (meta.nextQuests || meta.prevQuests)) return true;
+    const api = getApiQuest(questName);
+    if (api && api.prerequisiteQuests && api.prerequisiteQuests.length > 0) return true;
+    return false;
+}
+
 // Fetch quest rewards, chain data, and API quest data
 async function fetchQuestRewards() {
     try {
@@ -79,8 +109,10 @@ async function fetchQuestRewards() {
 
         const fetches = [fetch(rewardsFile)];
         if (apiQuestsFile) fetches.push(fetch(apiQuestsFile));
+        const metaFile = latestVersion.quest_metadata_file;
+        if (metaFile) fetches.push(fetch(metaFile));
 
-        const [rewardsResponse, apiResponse] = await Promise.all(fetches);
+        const [rewardsResponse, apiResponse, metaResponse] = await Promise.all(fetches);
 
         if (!rewardsResponse.ok) {
             throw new Error(`HTTP error! Status: ${rewardsResponse.status}`);
@@ -94,10 +126,14 @@ async function fetchQuestRewards() {
         // Build API quest lookup by slug
         if (apiResponse && apiResponse.ok) {
             const apiData = await apiResponse.json();
-            // Handle both old format (array) and new format ({ quests, slugMap })
             const questList = Array.isArray(apiData) ? apiData : apiData.quests || [];
             questList.forEach(q => { apiQuests[q.slug] = q; });
             if (apiData.slugMap) slugMap = apiData.slugMap;
+        }
+
+        // Load binary quest metadata
+        if (metaResponse && metaResponse.ok) {
+            questMeta = await metaResponse.json();
         }
 
         populateTablesList();
@@ -114,9 +150,11 @@ async function fetchQuestRewards() {
     }
 }
 
-// Apply filters (reward type + search)
+// Apply filters (reward type + search + level + chain)
 function applyFilters() {
     const searchTerm = tableSearchInput.value.trim().toLowerCase();
+    const minLvl = parseInt(document.getElementById('level-min')?.value) || 0;
+    const maxLvl = parseInt(document.getElementById('level-max')?.value) || 999;
     const tableItems = document.querySelectorAll('#tables-list li');
 
     let visibleCount = 0;
@@ -126,7 +164,14 @@ function applyFilters() {
         const matchesFilter = questMatchesFilter(questName, currentRewardFilter);
         const matchesSearch = !searchTerm || questName.toLowerCase().includes(searchTerm);
 
-        if (matchesFilter && matchesSearch) {
+        // Level filter
+        const level = getQuestLevel(questName);
+        const matchesLevel = !level || (level >= minLvl && level <= maxLvl);
+
+        // Chain filter
+        const matchesChain = !chainFilterActive || isInChain(questName);
+
+        if (matchesFilter && matchesSearch && matchesLevel && matchesChain) {
             item.classList.remove('hidden-table');
             visibleCount++;
         } else {
@@ -172,12 +217,22 @@ function populateTablesList() {
 
         li.appendChild(document.createTextNode(questName));
 
+        // Prison Island badge
+        const region = getQuestRegion(questName);
+        if (region === 'Prison Island') {
+            const badge = document.createElement('span');
+            badge.className = 'region-badge region-badge-prison';
+            badge.textContent = 'PI';
+            badge.title = 'Prison Island';
+            li.appendChild(badge);
+        }
+
         // Chain indicator
-        if (questChains[questName]) {
+        if (isInChain(questName)) {
             const chainIcon = document.createElement('span');
             chainIcon.className = 'chain-icon';
             chainIcon.title = 'Part of a quest chain';
-            chainIcon.textContent = '\u26D3';
+            chainIcon.textContent = '\u2197';
             li.appendChild(chainIcon);
         }
 
@@ -288,46 +343,69 @@ function navigateToQuest(questName) {
 
 // Build a clickable NPC map link
 function npcMapLink(slug, name) {
-    return `<a href="https://corepunk.help/tools/map?npc=${slug}" target="_blank" rel="noopener" class="npc-map-link" title="View on map">${name}</a>`;
+    return `<a href="https://corepunk.help/npcs/${slug}" target="_blank" rel="noopener" class="npc-map-link" title="View on corepunk.help">${name}</a>`;
 }
 
-// Build quest detail HTML from API data
+// Build quest detail HTML from binary metadata (primary) + API (fallback)
 function buildQuestDetailHTML(questName) {
     const api = getApiQuest(questName);
+    const meta = getQuestMeta(questName);
 
-    // Show unverified notice for quests not on corepunk.help
-    if (!api) {
-        return '<div class="quest-unverified-notice">This quest was found in game files but is not listed on corepunk.help. It may not be accessible in-game.</div>';
+    if (!api && !meta) {
+        return '<div class="quest-unverified-notice">No metadata found for this quest.</div>';
     }
 
     let html = '<div class="quest-detail-info">';
 
-    // Level and location row
-    const meta = [];
-    if (api.level) meta.push(`<span class="quest-detail-level">Lv. ${api.level}</span>`);
-    if (api.location) meta.push(`<span class="quest-detail-location">${api.location}</span>`);
-    if (meta.length) html += `<div class="quest-detail-meta">${meta.join('')}</div>`;
+    // Level and location — API for level, binary for location (primary)
+    const infoParts = [];
+    if (api?.level) infoParts.push(`<span class="quest-detail-level">Lv. ${api.level}</span>`);
+    const location = meta?.questLocation || api?.location || meta?.region;
+    if (location) infoParts.push(`<span class="quest-detail-location">${location}</span>`);
+    const region = meta?.region;
+    if (region === 'Prison Island') infoParts.push(`<span class="region-badge region-badge-prison">Prison Island</span>`);
+    if (infoParts.length) html += `<div class="quest-detail-meta">${infoParts.join('')}</div>`;
 
-    // Quest giver / finisher
-    const giverSlug = api.questGiver?.slug;
-    const giverName = api.questGiver?.name;
-    const finisherSlug = api.questFinisher?.slug;
-    const finisherName = api.questFinisher?.name;
-    if (giverName || finisherName) {
+    // Quest giver / finisher — binary for giver name, API for links
+    const binaryGiver = meta?.questGiver;
+    const apiGiverSlug = api?.questGiver?.slug;
+    const apiGiverName = api?.questGiver?.name;
+    const apiFinisherSlug = api?.questFinisher?.slug;
+    const apiFinisherName = api?.questFinisher?.name;
+
+    const giverName = binaryGiver || apiGiverName;
+    if (giverName || apiFinisherName) {
         html += '<div class="quest-detail-npcs">';
-        if (giverName) html += `<span class="quest-detail-npc"><span class="quest-detail-label">Giver:</span> ${npcMapLink(giverSlug, giverName)}</span>`;
-        if (finisherName && finisherSlug !== giverSlug) html += `<span class="quest-detail-npc"><span class="quest-detail-label">Finisher:</span> ${npcMapLink(finisherSlug, finisherName)}</span>`;
+        if (giverName) {
+            if (apiGiverSlug) {
+                html += `<span class="quest-detail-npc"><span class="quest-detail-label">Giver:</span> ${npcMapLink(apiGiverSlug, giverName)}</span>`;
+            } else {
+                html += `<span class="quest-detail-npc"><span class="quest-detail-label">Giver:</span> ${giverName}</span>`;
+            }
+        }
+        if (apiFinisherName && apiFinisherSlug !== apiGiverSlug) {
+            html += `<span class="quest-detail-npc"><span class="quest-detail-label">Finisher:</span> ${npcMapLink(apiFinisherSlug, apiFinisherName)}</span>`;
+        }
         html += '</div>';
     }
 
-    // Goals
-    if (api.goals && api.goals.length > 0) {
+    // Goals — API goals have richer data, fall back to binary
+    if (api?.goals && api.goals.length > 0) {
         html += '<div class="quest-detail-goals"><span class="quest-detail-label">Goals:</span><ul>';
         api.goals.forEach(g => {
             const qty = g.quantity > 1 ? ` (${g.quantity})` : '';
             html += `<li>${g.description}${qty}</li>`;
         });
         html += '</ul></div>';
+    } else if (meta?.goals && meta.goals.length > 0) {
+        html += '<div class="quest-detail-goals"><span class="quest-detail-label">Goals:</span><ul>';
+        meta.goals.forEach(g => { html += `<li>${g}</li>`; });
+        html += '</ul></div>';
+    }
+
+    // Unverified notice
+    if (!api) {
+        html += '<div class="quest-unverified-notice">Not listed on corepunk.help — data from game files only.</div>';
     }
 
     html += '</div>';
@@ -540,6 +618,22 @@ function setupCategoryFilter() {
     });
 
     document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+
+    // Level filter
+    const levelMin = document.getElementById('level-min');
+    const levelMax = document.getElementById('level-max');
+    if (levelMin) levelMin.addEventListener('input', applyFilters);
+    if (levelMax) levelMax.addEventListener('input', applyFilters);
+
+    // Chain filter
+    const chainBtn = document.getElementById('chain-filter-btn');
+    if (chainBtn) {
+        chainBtn.addEventListener('click', () => {
+            chainFilterActive = !chainFilterActive;
+            chainBtn.classList.toggle('active', chainFilterActive);
+            applyFilters();
+        });
+    }
 }
 
 // Setup search functionality
