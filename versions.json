@@ -3,4 +3,5 @@
   { "version": "0.93", "file": "loot_tables_v0.93.json" },
   { "version": "0.95", "file": "loot_tables_v0.95.json" },
   { "version": "0.96", "file": "loot_tables_v0.96.json" }
+  { "version": "0.98", "file": "loot_tables_v0.98.json" }
 ]
