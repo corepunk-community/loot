@@ -1,12 +1,4 @@
 {
-  "Drafts": {
-    "id": "Drafts",
-    "name": "Drafts"
-  },
-  "VoiceRequests": {
-    "id": "VoiceRequests",
-    "name": "Voicerequests"
-  },
   "a_bitter_brew": {
     "id": "a_bitter_brew",
     "name": "A Bitter Brew",
@@ -18,7 +10,8 @@
       "Return to Furr"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 14
   },
   "a_blooming_melon-drama": {
     "id": "a_blooming_melon-drama",
@@ -27,7 +20,8 @@
     "questLocation": "Watermelon field",
     "description": "Find Kicheki's guitar around Jahri and search bushes around Goldenfield for a red rose.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 11
   },
   "a_bound_requiem": {
     "id": "a_bound_requiem",
@@ -37,7 +31,8 @@
       "Forgotten item: The Bound Requiem"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 14
   },
   "a_brothers_shadow": {
     "id": "a_brothers_shadow",
@@ -49,7 +44,8 @@
       "Find any traces of Gideon's brother"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 6
   },
   "a_brothers_trail": {
     "id": "a_brothers_trail",
@@ -61,7 +57,8 @@
       "Return the note eaten by hyenas"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 6
   },
   "a_fateful_bet": {
     "id": "a_fateful_bet",
@@ -75,6 +72,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 15,
     "nextQuests": [
       "diamond_eyes"
     ]
@@ -90,6 +88,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 9,
     "prevQuests": [
       "lawsuit_of_the_lake"
     ]
@@ -101,7 +100,8 @@
     "questLocation": "Riverrise, First City Enter after the bridge",
     "description": "Gather these rare materials from veins, bushes and trees around the area!",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 14
   },
   "a_head_for_business": {
     "id": "a_head_for_business",
@@ -111,7 +111,8 @@
       "Forgotten item: Troll Head"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 10
   },
   "a_masked_favor": {
     "id": "a_masked_favor",
@@ -125,7 +126,8 @@
       "Find the lost mask in the treasures on Prison Island"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 6
   },
   "a_nutty_situation": {
     "id": "a_nutty_situation",
@@ -134,7 +136,8 @@
     "questLocation": "Riverrise, City Center",
     "description": "Use your cooking skill to bake some chokwalatte.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 8
   },
   "a_pacifists_dilemma": {
     "id": "a_pacifists_dilemma",
@@ -146,7 +149,8 @@
       "Talk to Madame Mirage"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 25
   },
   "a_piece_of_zen": {
     "id": "a_piece_of_zen",
@@ -155,7 +159,8 @@
     "questLocation": "Goldenfield, Yoga House",
     "description": "Search the house south of Nia's shop. Then find an abandoned house southwest of Dr. Bloom in Goldenfield.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 10
   },
   "a_prank_too_far": {
     "id": "a_prank_too_far",
@@ -168,6 +173,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 7,
     "prevQuests": [
       "phantom_fragment_recovery"
     ]
@@ -183,6 +189,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 10,
     "prevQuests": [
       "guarding_fortunes"
     ]
@@ -198,7 +205,8 @@
       "Give the poison to Gareth"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 34
   },
   "a_second_chance": {
     "id": "a_second_chance",
@@ -210,7 +218,8 @@
       "Talk to Furr"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 17
   },
   "a_sharp_donation": {
     "id": "a_sharp_donation",
@@ -219,7 +228,8 @@
     "questLocation": "Riverrise, City Center",
     "description": "Search the bar for the knives.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 7
   },
   "a_skullful_of_solace": {
     "id": "a_skullful_of_solace",
@@ -232,7 +242,8 @@
       "Return to SLPY-05"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 16
   },
   "a_special_meal_for_timmy": {
     "id": "a_special_meal_for_timmy",
@@ -246,7 +257,8 @@
       "Collect Marigold's Chore List"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 6
   },
   "a_taste_of_the_unusual": {
     "id": "a_taste_of_the_unusual",
@@ -258,7 +270,8 @@
       "Deliver to Rufus"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 14
   },
   "a_taste_to_die_for": {
     "id": "a_taste_to_die_for",
@@ -267,7 +280,8 @@
     "questLocation": "Riverrise, City Center",
     "description": "Venture into the Ripplecrop Fields and search abandoned houses for pages of the cookbook.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 18
   },
   "a_toast_to_enlightenment": {
     "id": "a_toast_to_enlightenment",
@@ -279,7 +293,8 @@
       "Collect the bottle of Lucas Lager out in the Welfare kitchen"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 9
   },
   "a_yorner_trial": {
     "id": "a_yorner_trial",
@@ -289,6 +304,7 @@
     ],
     "locationCode": "PRIS",
     "region": "Prison Island",
+    "entityCount": 6,
     "nextQuests": [
       "trial_of_worthiness"
     ]
@@ -303,7 +319,8 @@
       "Deliver HPPY-01's research data to Dr. Queenie"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "agricultural_bots_refuel": {
     "id": "agricultural_bots_refuel",
@@ -315,7 +332,8 @@
       "Repair the charging station"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 11
   },
   "aircraft_accident_searching": {
     "id": "aircraft_accident_searching",
@@ -329,7 +347,8 @@
       "Inspect the aircraft"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 13
   },
   "alchemist_lesson": {
     "id": "alchemist_lesson",
@@ -338,7 +357,8 @@
     "questLocation": "Goldenfield, near the Bureau",
     "description": "Percy needs help making Counterfeit Painkillers.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 8
   },
   "alcohol_delivery": {
     "id": "alcohol_delivery",
@@ -350,7 +370,8 @@
       "Deliver Elanien Whiskey to Paddy"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 9
   },
   "allergic_to_duty": {
     "id": "allergic_to_duty",
@@ -362,7 +383,8 @@
       "Return to Mabel Thorn"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 12
   },
   "allergy-free_flora": {
     "id": "allergy-free_flora",
@@ -375,7 +397,8 @@
       "Return to SNZY-04"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 18
   },
   "amplify_the_catch": {
     "id": "amplify_the_catch",
@@ -389,6 +412,7 @@
     ],
     "locationCode": "WDVI",
     "region": "Windstone Village",
+    "entityCount": 8,
     "nextQuests": [
       "fish_prophets_decree"
     ]
@@ -403,7 +427,8 @@
       "Return to Triton"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 11
   },
   "ancient_artifacts": {
     "id": "ancient_artifacts",
@@ -412,7 +437,8 @@
     "questLocation": "Riverrise, City Center",
     "description": "Look closely around the area for these objects.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 16
   },
   "artifact_of_fury": {
     "id": "artifact_of_fury",
@@ -424,7 +450,8 @@
       "Talk to Slick Shady"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 4
   },
   "artifact_vendor_order": {
     "id": "artifact_vendor_order",
@@ -436,7 +463,8 @@
       "Collect a Uncommon Mana Amulet"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 16
   },
   "back_to_bigg_mama": {
     "id": "back_to_bigg_mama",
@@ -448,7 +476,8 @@
       "Talk to Martha"
     ],
     "locationCode": "WSWD",
-    "region": "Westwind Woods"
+    "region": "Westwind Woods",
+    "entityCount": 5
   },
   "bank_withdrawal_connection": {
     "id": "bank_withdrawal_connection",
@@ -460,7 +489,8 @@
       "Talk to Oswald"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 6
   },
   "beacon_of_confidence": {
     "id": "beacon_of_confidence",
@@ -472,7 +502,8 @@
       "Find and talk to Roddy"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 12
   },
   "beacon_of_hope": {
     "id": "beacon_of_hope",
@@ -484,7 +515,8 @@
       "Talk to Kira"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 18
   },
   "bearing_light": {
     "id": "bearing_light",
@@ -512,7 +544,8 @@
       "Return to Barnaby Thorn"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 10
   },
   "beauty_in_the_mud": {
     "id": "beauty_in_the_mud",
@@ -525,6 +558,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 10,
     "prevQuests": [
       "vanitys_elixir"
     ]
@@ -536,7 +570,8 @@
     "questLocation": "Goldenfield, Walfare Kitchen",
     "description": "Hunt birds around Goldenfield for an animal carcass.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 8
   },
   "behind_enemy_lines": {
     "id": "behind_enemy_lines",
@@ -549,6 +584,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 9,
     "nextQuests": [
       "darkwood_dilemma"
     ],
@@ -567,6 +603,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 11,
     "nextQuests": [
       "desperate_depths"
     ],
@@ -584,7 +621,8 @@
       "Find Blitz's contract and bring it to Blitz"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 12
   },
   "bones_exhumation_reburial": {
     "id": "bones_exhumation_reburial",
@@ -593,7 +631,8 @@
     "questLocation": "Goldenfield, near Cemetery",
     "description": "Retrieve bones from around Goldenfield for Mortimer Gloomsworth to bury in the cemetery.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 23
   },
   "bread_making_lesson": {
     "id": "bread_making_lesson",
@@ -605,7 +644,8 @@
       "Bring Wheat Flour to \"Big Mamma\""
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 34
   },
   "breaking_the_chains": {
     "id": "breaking_the_chains",
@@ -621,6 +661,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 18,
     "prevQuests": [
       "the_little_terror"
     ]
@@ -639,6 +680,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 14,
     "nextQuests": [
       "portal_purge_parade"
     ]
@@ -654,7 +696,8 @@
       "Return to Tor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 18
   },
   "built_to_extract": {
     "id": "built_to_extract",
@@ -672,7 +715,8 @@
       "Bring fragments to Dwarfaton Ironchek"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 26
   },
   "burnt_pages": {
     "id": "burnt_pages",
@@ -681,8 +725,10 @@
       "Slay the beast",
       "Forgotten item: Burnt Papers"
     ],
+    "selfInitiated": true,
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 8
   },
   "butchery_lesson": {
     "id": "butchery_lesson",
@@ -691,7 +737,8 @@
     "questLocation": "Goldenfield, near Pig farm",
     "description": "Head to the Skylight Grasslands and Sunweave Glade to find boarmammoths.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 9
   },
   "bytes_calling_card_investigation": {
     "id": "bytes_calling_card_investigation",
@@ -700,7 +747,8 @@
     "questLocation": "Riverrise, River view",
     "description": "Search the bar for the hidden cards.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 8
   },
   "call_to_arms": {
     "id": "call_to_arms",
@@ -716,7 +764,8 @@
       "Return to Biff"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 19
   },
   "campfire_crafting_lesson": {
     "id": "campfire_crafting_lesson",
@@ -725,7 +774,8 @@
     "questLocation": "Dusktide Forest, near Wheat tent",
     "description": "Check the pile of wood near the tent.",
     "locationCode": "DKTF",
-    "region": "Dusktide Forest"
+    "region": "Dusktide Forest",
+    "entityCount": 11
   },
   "catch_of_the_day": {
     "id": "catch_of_the_day",
@@ -738,6 +788,7 @@
     ],
     "locationCode": "WDVI",
     "region": "Windstone Village",
+    "entityCount": 11,
     "prevQuests": [
       "the_fishermans_bash"
     ]
@@ -752,11 +803,13 @@
       "Collect Cause of Death"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 17
   },
   "cbt_cosmic_coordinates": {
     "id": "cbt_cosmic_coordinates",
     "name": "Cbt Cosmic Coordinates",
+    "questType": "system",
     "questGiver": "Dr. Orion Bloom",
     "questLocation": "Goldenfield, Tent near the road",
     "description": "Search around the lake to the north west by Windstone Village.",
@@ -764,7 +817,8 @@
       "Deliver Dr. Bloom's Coordinates"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 25
   },
   "check_yourself_before_you_drek_yourself": {
     "id": "check_yourself_before_you_drek_yourself",
@@ -773,7 +827,8 @@
     "questLocation": "Goldenfield, Construction Craft bench",
     "description": "Search the nearby forests for boars and leaf monsters. Collect the iron rivets from nearby Ratchet.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 22
   },
   "chuckling_intervention": {
     "id": "chuckling_intervention",
@@ -785,7 +840,8 @@
       "Return Chuckleberry Leaves to Zazz Blorb"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 12
   },
   "cigar_tales_with_grizzly_obrien": {
     "id": "cigar_tales_with_grizzly_obrien",
@@ -794,7 +850,8 @@
     "questLocation": "Riverrise, Left side of the BAR yard",
     "description": "Find scrags in the Abandoned Village to the south, as well as the Railway Depot and Swamps to the east.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 14
   },
   "clean_up_on_bong_island": {
     "id": "clean_up_on_bong_island",
@@ -803,7 +860,8 @@
     "questLocation": "Riverrise, Left side of the BAR yard",
     "description": "Follow the road north out of town and look for the old house.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 9
   },
   "cleansing_the_ride": {
     "id": "cleansing_the_ride",
@@ -815,7 +873,8 @@
       "Bring item to Dwarfaton Ironcheek"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 9
   },
   "collect_bottles": {
     "id": "collect_bottles",
@@ -824,7 +883,8 @@
     "questLocation": "Goldenfield, near Artifact Shop",
     "description": "Help Griz Ironfoot retrieve crucial artifact fragments from the Toxic Waste area in Dusktide Forest.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 12
   },
   "confiscated_confections": {
     "id": "confiscated_confections",
@@ -837,6 +897,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 13,
     "nextQuests": [
       "mystery_of_mary_jane"
     ]
@@ -851,7 +912,8 @@
       "Craft an Immuno-Stimulating Implant"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 15
   },
   "copper_snack": {
     "id": "copper_snack",
@@ -864,7 +926,8 @@
       "Bring delicious liquid to Maverick \"Mav\" Gritt"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 21
   },
   "corruption_clean-up": {
     "id": "corruption_clean-up",
@@ -877,6 +940,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 15,
     "nextQuests": [
       "the_last_order"
     ],
@@ -891,7 +955,8 @@
     "questLocation": "Goldenfield, near Workshop",
     "description": "Collect 5 Meteoric Metal and 1 Titanium Nugget for D'Rek's project.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 11
   },
   "crafting_concerns": {
     "id": "crafting_concerns",
@@ -904,7 +969,8 @@
       "Return the weapon to Silas"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 12
   },
   "crafting_lessons": {
     "id": "crafting_lessons",
@@ -920,7 +986,8 @@
       "Help Nia Sundance"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 39
   },
   "culinary_diplomacy": {
     "id": "culinary_diplomacy",
@@ -933,6 +1000,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 10,
     "nextQuests": [
       "lawsuit_of_the_lake"
     ],
@@ -953,6 +1021,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 8,
     "nextQuests": [
       "hidden_menace"
     ],
@@ -967,7 +1036,8 @@
       "Finde Dead Morti"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 4
   },
   "death_raven": {
     "id": "death_raven",
@@ -975,8 +1045,10 @@
     "goals": [
       "Forgotten item: Page 4"
     ],
+    "selfInitiated": true,
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 13
   },
   "decrypting_betrayal": {
     "id": "decrypting_betrayal",
@@ -989,6 +1061,7 @@
     ],
     "locationCode": "RVHL",
     "region": "Reverie Hollow",
+    "entityCount": 20,
     "nextQuests": [
       "obscured_intentions"
     ],
@@ -1012,7 +1085,8 @@
       "Return to Roddy"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 15
   },
   "dendroid_guard_hunt": {
     "id": "dendroid_guard_hunt",
@@ -1021,7 +1095,8 @@
     "questLocation": "Tempest Timberland, near the Hunter camp",
     "description": "Ludwig tasks you with a dangerous hunt for a Dendroid Guard in the Tempest Timberland.",
     "locationCode": "WRWD",
-    "region": "Windreach Woods"
+    "region": "Windreach Woods",
+    "entityCount": 18
   },
   "desert_data_dilemma": {
     "id": "desert_data_dilemma",
@@ -1033,7 +1108,8 @@
       "Return to HPPY-01"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 11
   },
   "desert_decryption": {
     "id": "desert_decryption",
@@ -1045,7 +1121,8 @@
       "Bring to Mort Decay"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 8
   },
   "desert_denial": {
     "id": "desert_denial",
@@ -1058,7 +1135,8 @@
       "Return to Mabel Thorn"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 9
   },
   "desert_diplomacy": {
     "id": "desert_diplomacy",
@@ -1070,7 +1148,8 @@
       "Talk to Zor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 4
   },
   "deserted_hopes": {
     "id": "deserted_hopes",
@@ -1082,7 +1161,8 @@
       "Talk to Mary Jane Greenpuff"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 4
   },
   "desperate_depths": {
     "id": "desperate_depths",
@@ -1095,6 +1175,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 9,
     "nextQuests": [
       "whispers_in_the_dark"
     ],
@@ -1112,7 +1193,8 @@
       "Return to Marigold Thornbuckle"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 9
   },
   "diamond_eyes": {
     "id": "diamond_eyes",
@@ -1127,6 +1209,7 @@
     ],
     "locationCode": "WDVI",
     "region": "Windstone Village",
+    "entityCount": 16,
     "prevQuests": [
       "a_fateful_bet"
     ]
@@ -1145,7 +1228,8 @@
       "Take the secret item from the house"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 26
   },
   "digging_deeper": {
     "id": "digging_deeper",
@@ -1159,6 +1243,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 5,
     "nextQuests": [
       "mystery_of_the_masks"
     ]
@@ -1174,6 +1259,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 6,
     "nextQuests": [
       "lost_signal"
     ]
@@ -1190,19 +1276,24 @@
       "Return to Terrace Tenstone"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "dungeon_extraction_dam": {
     "id": "dungeon_extraction_dam",
     "name": "Dungeon Extraction Dam",
+    "questType": "system",
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 6
   },
   "dungeon_extraction_king_head_door": {
     "id": "dungeon_extraction_king_head_door",
     "name": "Dungeon Extraction King Head Door",
+    "questType": "system",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 2
   },
   "easy_rider": {
     "id": "easy_rider",
@@ -1214,7 +1305,8 @@
       "Speak with R and G"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 10
   },
   "echoes_beyond": {
     "id": "echoes_beyond",
@@ -1227,6 +1319,7 @@
     ],
     "locationCode": "PRIS",
     "region": "Prison Island",
+    "entityCount": 6,
     "prevQuests": [
       "unveiling_the_bound_requiem"
     ]
@@ -1242,7 +1335,8 @@
       "Talk to Shawna"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 7
   },
   "echoes_in_the_sand": {
     "id": "echoes_in_the_sand",
@@ -1255,7 +1349,8 @@
       "Return to DOPY"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 10
   },
   "echoes_of_atonement": {
     "id": "echoes_of_atonement",
@@ -1269,7 +1364,8 @@
       "Return to Kira"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 12
   },
   "echoes_of_paranoia": {
     "id": "echoes_of_paranoia",
@@ -1282,6 +1378,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 23,
     "prevQuests": [
       "unveiling_dark_secrets"
     ]
@@ -1296,7 +1393,8 @@
       "Talk to Kings Head"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 7
   },
   "echoes_of_the_feral_artifact": {
     "id": "echoes_of_the_feral_artifact",
@@ -1308,7 +1406,8 @@
       "Talk to Gideon Stroud"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 4
   },
   "eggcellent_solution": {
     "id": "eggcellent_solution",
@@ -1317,7 +1416,8 @@
     "questLocation": "Goldenfield, Forest Camp",
     "description": "Eggs can be found on birds while corn flour is simple enough to grind.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 9
   },
   "eggcellent_substitution": {
     "id": "eggcellent_substitution",
@@ -1331,6 +1431,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 12,
     "nextQuests": [
       "seasoned_delicacy"
     ]
@@ -1342,7 +1443,8 @@
     "questLocation": "Goldenfield, Southern House",
     "description": "Search barrels, crates or satchels on the side of the road full of eggplants.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 9
   },
   "eight_legged_freaks": {
     "id": "eight_legged_freaks",
@@ -1354,7 +1456,8 @@
       "Collect Time of Death"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 15
   },
   "emerald_flame": {
     "id": "emerald_flame",
@@ -1363,8 +1466,10 @@
       "Burn the papers in the green flame",
       "All of the Blackened Pages required"
     ],
+    "selfInitiated": true,
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 12
   },
   "energized_spirits": {
     "id": "energized_spirits",
@@ -1377,13 +1482,15 @@
       "Talk to Tor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 21
   },
   "enter_to_riverrise_city_zone": {
     "id": "enter_to_riverrise_city_zone",
     "name": "Enter To Riverrise City Zone",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 3
   },
   "escape_pod": {
     "id": "escape_pod",
@@ -1393,7 +1500,8 @@
       "Insert Access Code"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 4
   },
   "essence_of_the_wild": {
     "id": "essence_of_the_wild",
@@ -1407,7 +1515,8 @@
       "Forgotten item: Essence Extractor"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 10
   },
   "evidence_in_the_shadows": {
     "id": "evidence_in_the_shadows",
@@ -1421,7 +1530,8 @@
       "Return to Tor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "exit_stage_left": {
     "id": "exit_stage_left",
@@ -1434,7 +1544,8 @@
       "Cover the paper with poison"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 16
   },
   "exotic_attire_acquisition": {
     "id": "exotic_attire_acquisition",
@@ -1443,7 +1554,8 @@
     "questLocation": "Riverrise, City Center",
     "description": "Search the tents behind the bar for these items.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 20
   },
   "explosive_revenge": {
     "id": "explosive_revenge",
@@ -1455,13 +1567,16 @@
       "Talk to Rusty McDrinkit"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 11
   },
   "extraction_players_mine_gate": {
     "id": "extraction_players_mine_gate",
     "name": "Extraction Players Mine Gate",
+    "questType": "system",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 2
   },
   "eye_see_you": {
     "id": "eye_see_you",
@@ -1470,7 +1585,8 @@
     "questLocation": "Goldenfield, Barn",
     "description": "Hunt Boarmammoths in the woods around Goldenfield and collect their snouts after butchering the beasts.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 14
   },
   "family_recipe_ingredients": {
     "id": "family_recipe_ingredients",
@@ -1479,7 +1595,8 @@
     "questLocation": "Goldenfield, near Forest Camp",
     "description": "Help Berg Stonefoot relive his grandma's famous Roasted Poultry Leg. Bring him Salt, and 2 Poultry Legs.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 9
   },
   "farmer_robot_fueling": {
     "id": "farmer_robot_fueling",
@@ -1491,7 +1608,8 @@
       "Collect Mana Vial"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 8
   },
   "farmyard_mayhem": {
     "id": "farmyard_mayhem",
@@ -1505,6 +1623,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 15,
     "nextQuests": [
       "the_art_of_deception"
     ]
@@ -1520,6 +1639,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 6,
     "nextQuests": [
       "fowl_play"
     ],
@@ -1534,7 +1654,8 @@
     "questLocation": "Goldenfield, near Chicken farm",
     "description": "Retrieve ten bundles of corn from the fields in Goldenfield town for Granny Hilde.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 10
   },
   "feeding_frenzy": {
     "id": "feeding_frenzy",
@@ -1543,13 +1664,15 @@
     "questLocation": "Riverrise, City Center",
     "description": "Head to the swamps north of the marshes.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 8
   },
   "felony_ferry_service": {
     "id": "felony_ferry_service",
     "name": "Felony Ferry Service",
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 3
   },
   "fish_prophets_decree": {
     "id": "fish_prophets_decree",
@@ -1562,6 +1685,7 @@
     ],
     "locationCode": "WDVI",
     "region": "Windstone Village",
+    "entityCount": 12,
     "prevQuests": [
       "amplify_the_catch"
     ]
@@ -1577,7 +1701,8 @@
       "Turn on water supply"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 19
   },
   "flowers_for_friendship": {
     "id": "flowers_for_friendship",
@@ -1589,7 +1714,8 @@
       "Return the Flowers"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "focus_fuel_issue": {
     "id": "focus_fuel_issue",
@@ -1598,7 +1724,8 @@
     "questLocation": "Goldenfield, near Summer house",
     "description": "Help Nia enhance her productivity by collecting Transparent Leaves for her special joint recipe.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 11
   },
   "forbidden_knowledge": {
     "id": "forbidden_knowledge",
@@ -1610,7 +1737,8 @@
       "Talk to Pastor Fazool"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 4
   },
   "fowl_play": {
     "id": "fowl_play",
@@ -1624,6 +1752,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 7,
     "nextQuests": [
       "the_pranksters_peace"
     ],
@@ -1642,7 +1771,8 @@
       "Pick up the ancient artifact"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 7
   },
   "fragments_of_the_forgotten": {
     "id": "fragments_of_the_forgotten",
@@ -1657,6 +1787,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 10,
     "nextQuests": [
       "pages_to_protect_end"
     ]
@@ -1671,7 +1802,8 @@
       "Return to Seaonna"
     ],
     "locationCode": "WRWD",
-    "region": "Windreach Woods"
+    "region": "Windreach Woods",
+    "entityCount": 9
   },
   "funds_of_faith": {
     "id": "funds_of_faith",
@@ -1685,6 +1817,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 12,
     "prevQuests": [
       "fungal_devotion"
     ]
@@ -1700,6 +1833,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 8,
     "nextQuests": [
       "funds_of_faith"
     ],
@@ -1718,6 +1852,7 @@
     ],
     "locationCode": "RVHL",
     "region": "Reverie Hollow",
+    "entityCount": 12,
     "prevQuests": [
       "obscured_intentions"
     ]
@@ -1729,7 +1864,8 @@
     "questLocation": "Riverrise, Left side of the BAR yard",
     "description": "Head to the Creeping Marsh and kill 10 ribbits.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 11
   },
   "furnishing_the_future": {
     "id": "furnishing_the_future",
@@ -1742,7 +1878,8 @@
       "Return pieces of furniture to HPPY"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "gathering_the_fragmented": {
     "id": "gathering_the_fragmented",
@@ -1759,6 +1896,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 37,
     "nextQuests": [
       "guarding_green"
     ]
@@ -1775,7 +1913,8 @@
       "Talk to Ratchet"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 25
   },
   "getting_the_account": {
     "id": "getting_the_account",
@@ -1784,7 +1923,8 @@
     "questLocation": "Goldenfield, Bank",
     "description": "Head south to Guru David's and find the masks laying around. Keep your eyes peeled.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 11
   },
   "glimmer_of_innovation": {
     "id": "glimmer_of_innovation",
@@ -1797,6 +1937,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 9,
     "nextQuests": [
       "nuts_for_the_stew"
     ]
@@ -1812,7 +1953,8 @@
       "Give Cigarette Folder to Draven"
     ],
     "locationCode": "WRWD",
-    "region": "Windreach Woods"
+    "region": "Windreach Woods",
+    "entityCount": 9
   },
   "gnat_a_problem": {
     "id": "gnat_a_problem",
@@ -1825,7 +1967,8 @@
       "Bring the tracking devices to the student"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 18
   },
   "grimbletons_great_recipe_hunt": {
     "id": "grimbletons_great_recipe_hunt",
@@ -1834,7 +1977,8 @@
     "questLocation": "Riverrise, Alchemy",
     "description": "Find Triton near the Lake house in Windreach Woods!",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 7
   },
   "guarding_fortunes": {
     "id": "guarding_fortunes",
@@ -1847,6 +1991,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 15,
     "nextQuests": [
       "a_question_of_honor"
     ],
@@ -1865,6 +2010,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 5,
     "nextQuests": [
       "guarding_fortunes"
     ],
@@ -1883,7 +2029,8 @@
       "Return the gun to Finn"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 12
   },
   "guilt_and_gears": {
     "id": "guilt_and_gears",
@@ -1892,7 +2039,8 @@
     "questLocation": "Steppe, Great steppe stronghold",
     "description": "Help Flint Thistlewick repair his steam-powered armor by collecting small gears from Small Golems.",
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "hangover_helper": {
     "id": "hangover_helper",
@@ -1904,7 +2052,8 @@
       "Return sugar and vodka to Queenie"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 11
   },
   "harvesting_the_fallen": {
     "id": "harvesting_the_fallen",
@@ -1916,7 +2065,8 @@
       "Return to Xelcor Zinn"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 7
   },
   "heartbeat_of_the_party": {
     "id": "heartbeat_of_the_party",
@@ -1925,7 +2075,8 @@
     "questLocation": "Riverrise, Left side of the BAR yard",
     "description": "Find turtles around the waters of Riverrise.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 11
   },
   "heartbreak_waters": {
     "id": "heartbreak_waters",
@@ -1938,6 +2089,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 11,
     "prevQuests": [
       "tides_of_vengeance"
     ]
@@ -1949,7 +2101,8 @@
     "questLocation": "Goldenfield, near the Fuel station",
     "description": "Log Faint Timberheart Reserves around Goldenfield and surrounding forests.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 14
   },
   "herb_your_enthusiasm": {
     "id": "herb_your_enthusiasm",
@@ -1958,7 +2111,8 @@
     "questLocation": "Goldenfield, west of Fuel station",
     "description": "Kill wolves in Dusktide Forest to collect their bones",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 17
   },
   "herbal_aid": {
     "id": "herbal_aid",
@@ -1971,7 +2125,8 @@
       "Delivery to Lyra Vex"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 12
   },
   "herbal_remedy": {
     "id": "herbal_remedy",
@@ -1984,6 +2139,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 9,
     "nextQuests": [
       "the_real_culprit"
     ],
@@ -1998,7 +2154,8 @@
     "questLocation": "Goldenfield, near Summer house",
     "description": "Help Nia make a Natural Oil face mask from Hazelnuts.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 8
   },
   "hidden_menace": {
     "id": "hidden_menace",
@@ -2012,6 +2169,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 16,
     "prevQuests": [
       "darkwood_dilemma"
     ]
@@ -2022,8 +2180,10 @@
     "goals": [
       "Forgotten item: Page 3"
     ],
+    "selfInitiated": true,
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 12
   },
   "hungry_master": {
     "id": "hungry_master",
@@ -2032,7 +2192,8 @@
     "questLocation": "Goldenfield, Faidens camp top centre",
     "description": "Use your cooking tradeskill to cook up some ribs for Relkyn.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 7
   },
   "hunt_leaf_creatures": {
     "id": "hunt_leaf_creatures",
@@ -2041,7 +2202,8 @@
     "questLocation": "Goldenfield, near Pig farm",
     "description": "Head to the Skylight Grasslands to defeat Leaf Creatures.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 18
   },
   "imp_brain_hunt": {
     "id": "imp_brain_hunt",
@@ -2057,7 +2219,8 @@
       "Collect Imp Witch's Brain"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 37
   },
   "in_the_belly_of_the_beasts": {
     "id": "in_the_belly_of_the_beasts",
@@ -2069,7 +2232,8 @@
       "Bring items to Miguel Rodriguez"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 24
   },
   "infiltrating_ironhand": {
     "id": "infiltrating_ironhand",
@@ -2081,7 +2245,8 @@
       "Talk to Grommuk Ironhand"
     ],
     "locationCode": "WSWD",
-    "region": "Westwind Woods"
+    "region": "Westwind Woods",
+    "entityCount": 4
   },
   "its_just_a_prank_bro": {
     "id": "its_just_a_prank_bro",
@@ -2094,6 +2259,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 4,
     "nextQuests": [
       "herbal_remedy"
     ],
@@ -2105,7 +2271,8 @@
     "id": "jailhouse_rocket",
     "name": "Jailhouse Rocket",
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 4
   },
   "juice_for_the_journey": {
     "id": "juice_for_the_journey",
@@ -2117,7 +2284,8 @@
       "Return to Blitz"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 9
   },
   "juricksic_quest": {
     "id": "juricksic_quest",
@@ -2130,6 +2298,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 13,
     "prevQuests": [
       "pass_the_butter"
     ]
@@ -2150,6 +2319,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 16,
     "nextQuests": [
       "pass_the_butter"
     ]
@@ -2161,7 +2331,8 @@
     "questLocation": "Goldenfield, near",
     "description": "Go to the surrounding forests of Goldenfield and eliminate boarmammoths.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 15
   },
   "killing_dreads": {
     "id": "killing_dreads",
@@ -2170,7 +2341,8 @@
     "questLocation": "Goldenfield, near Tractor",
     "description": "Head to the Windreach Woods or Tempest Timberlands and kill Dendroids.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 15
   },
   "law_and_order_protocols": {
     "id": "law_and_order_protocols",
@@ -2179,7 +2351,8 @@
     "questLocation": "Riverrise, City Center",
     "description": "Look for the packages around Riverrise.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 11
   },
   "lawsuit_of_the_lake": {
     "id": "lawsuit_of_the_lake",
@@ -2198,6 +2371,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 30,
     "nextQuests": [
       "a_fishy_summons"
     ],
@@ -2216,7 +2390,8 @@
       "Forgotten item: Lighter"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 8
   },
   "lights_camera_action": {
     "id": "lights_camera_action",
@@ -2228,7 +2403,8 @@
       "Return to Lenny"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 10
   },
   "logging_lesson": {
     "id": "logging_lesson",
@@ -2240,7 +2416,8 @@
       "Jewellery Wood"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 7
   },
   "loose_ends": {
     "id": "loose_ends",
@@ -2252,7 +2429,8 @@
       "Talk to Tor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 30
   },
   "lost_and_found": {
     "id": "lost_and_found",
@@ -2264,7 +2442,8 @@
       "Talk to Zor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 10
   },
   "lost_crew_search": {
     "id": "lost_crew_search",
@@ -2276,7 +2455,8 @@
       "Find other astronauts"
     ],
     "locationCode": "WRWD",
-    "region": "Windreach Woods"
+    "region": "Windreach Woods",
+    "entityCount": 16
   },
   "lost_mind_recovery": {
     "id": "lost_mind_recovery",
@@ -2285,7 +2465,8 @@
     "questLocation": "Goldenfield, west of Fuel station",
     "description": "Help Jahri bounce back with a shot of adrenaline.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 5
   },
   "lost_page_of_power": {
     "id": "lost_page_of_power",
@@ -2298,6 +2479,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 8,
     "prevQuests": [
       "pages_to_protect"
     ]
@@ -2313,6 +2495,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 12,
     "nextQuests": [
       "corruption_clean-up"
     ],
@@ -2330,7 +2513,8 @@
       "Stash Raspberry in bubbler"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 9
   },
   "love_potion_no_9": {
     "id": "love_potion_no_9",
@@ -2339,7 +2523,8 @@
     "questLocation": "Riverrise, Minibar in the upper part",
     "description": "Head south to the Bog Slums. You'll find it just eas tof the Starbark Groves.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 10
   },
   "lucky_love": {
     "id": "lucky_love",
@@ -2348,7 +2533,8 @@
     "questLocation": "Rivverrise, City Enter 1 after the bridge",
     "description": "Go east from Riverrise, past the swamp to the forest.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 7
   },
   "magnetic_intentions": {
     "id": "magnetic_intentions",
@@ -2361,7 +2547,8 @@
       "Return to GRMP-07"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 12
   },
   "main_next_lessons": {
     "id": "main_next_lessons",
@@ -2385,7 +2572,8 @@
       "Help Ratchet"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 43
   },
   "mana_market_resupply": {
     "id": "mana_market_resupply",
@@ -2394,7 +2582,8 @@
     "questLocation": "Riverrise, Mana market",
     "description": "Use your tradeskills to craft mana flasks.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 8
   },
   "mana_tech_power": {
     "id": "mana_tech_power",
@@ -2403,7 +2592,8 @@
     "questLocation": "Goldenfield, near Workshop",
     "description": "Head east to the edge of Goldenfield to find the ruins.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 11
   },
   "memory_restoration": {
     "id": "memory_restoration",
@@ -2416,7 +2606,8 @@
       "Forgotten item: Repair Memory Core"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 6
   },
   "mine_over_matter": {
     "id": "mine_over_matter",
@@ -2429,7 +2620,8 @@
       "Return to Greta Grubb"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 29
   },
   "mining_lesson": {
     "id": "mining_lesson",
@@ -2441,7 +2633,8 @@
       "Powder Filler"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 8
   },
   "mission_first_step": {
     "id": "mission_first_step",
@@ -2457,7 +2650,8 @@
       "Return to Martha"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 36
   },
   "monochrome_gardening_goldenfield": {
     "id": "monochrome_gardening_goldenfield",
@@ -2466,7 +2660,8 @@
     "questLocation": "Goldenfield, west of the Welfare kitchen",
     "description": "Pull out the Violet weed species. Red species must remain untouched. It's important not to mix them up.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 11
   },
   "mounting_evidence": {
     "id": "mounting_evidence",
@@ -2480,6 +2675,7 @@
     ],
     "locationCode": "WDVI",
     "region": "Windstone Village",
+    "entityCount": 8,
     "nextQuests": [
       "unsavory_evidence"
     ],
@@ -2498,6 +2694,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 7,
     "prevQuests": [
       "confiscated_confections"
     ]
@@ -2513,6 +2710,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 12,
     "prevQuests": [
       "digging_deeper"
     ]
@@ -2527,7 +2725,8 @@
       "Bring Dark Horse rune to Mortimer"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 14
   },
   "natures_redemption": {
     "id": "natures_redemption",
@@ -2540,6 +2739,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 5,
     "prevQuests": [
       "the_guards_dilemma"
     ]
@@ -2554,7 +2754,8 @@
       "Deliver letters to the Tazara"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 9
   },
   "neon_mushrooms_gethering": {
     "id": "neon_mushrooms_gethering",
@@ -2567,11 +2768,13 @@
       "Talk to Hilda Deeproot"
     ],
     "locationCode": "WSWD",
-    "region": "Westwind Woods"
+    "region": "Westwind Woods",
+    "entityCount": 10
   },
   "new_quest_mount_01": {
     "id": "new_quest_mount_01",
     "name": "New Quest Mount 01",
+    "questType": "system",
     "goals": [
       "Talk with Martin",
       "Find HoverBoard",
@@ -2579,17 +2782,22 @@
       "Talk to Martin McMichael"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 8
   },
   "new_quest_mount_02": {
     "id": "new_quest_mount_02",
     "name": "New Quest Mount 02",
+    "questType": "system",
+    "selfInitiated": true,
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 2
   },
   "new_quest_universal_ability": {
     "id": "new_quest_universal_ability",
     "name": "New Quest Universal Ability",
+    "questType": "system",
     "goals": [
       "Talk to Zara Thorne",
       "Follow Zara's instructions",
@@ -2599,7 +2807,8 @@
       "Use Electro item"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 8
   },
   "newcomer_paperwork_goldenfield": {
     "id": "newcomer_paperwork_goldenfield",
@@ -2613,7 +2822,8 @@
       "Find newcomer form"
     ],
     "locationCode": "DKTF",
-    "region": "Dusktide Forest"
+    "region": "Dusktide Forest",
+    "entityCount": 24
   },
   "no_witnesses_to_glory": {
     "id": "no_witnesses_to_glory",
@@ -2627,6 +2837,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 7,
     "nextQuests": [
       "fungal_devotion"
     ]
@@ -2643,6 +2854,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 16,
     "nextQuests": [
       "strange_green_pots"
     ],
@@ -2662,6 +2874,7 @@
     ],
     "locationCode": "RVHL",
     "region": "Reverie Hollow",
+    "entityCount": 8,
     "nextQuests": [
       "fungal_phobia"
     ],
@@ -2683,13 +2896,16 @@
       "Kill Yaga"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 12
   },
   "offerings_of_the_forgotten": {
     "id": "offerings_of_the_forgotten",
     "name": "Offerings Of The Forgotten",
+    "selfInitiated": true,
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 7
   },
   "oil_be_back": {
     "id": "oil_be_back",
@@ -2698,7 +2914,8 @@
     "questLocation": "Goldenfield, Fields of Goldenfield",
     "description": "Search crates, chests and barrels around Goldenfield for the spare machine parts.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 11
   },
   "package_pilfered": {
     "id": "package_pilfered",
@@ -2711,6 +2928,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 20,
     "nextQuests": [
       "the_guards_dilemma"
     ],
@@ -2731,6 +2949,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 10,
     "nextQuests": [
       "pages_to_protect_end",
       "lost_page_of_power"
@@ -2748,6 +2967,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 19,
     "nextQuests": [
       "juricksic_quest"
     ],
@@ -2768,7 +2988,8 @@
       "Collect syringe"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 16
   },
   "phantom_fragment_recovery": {
     "id": "phantom_fragment_recovery",
@@ -2782,6 +3003,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 5,
     "nextQuests": [
       "a_prank_too_far"
     ]
@@ -2793,7 +3015,8 @@
     "questLocation": "Goldenfield, near Pig farm",
     "description": "Kill boarmammoth in the Skylight Grasslands.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 20
   },
   "plague_frogs": {
     "id": "plague_frogs",
@@ -2801,8 +3024,10 @@
     "goals": [
       "Forgotten item: Page 1"
     ],
+    "selfInitiated": true,
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 13
   },
   "portal_perils": {
     "id": "portal_perils",
@@ -2816,6 +3041,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 16,
     "nextQuests": [
       "portal_restorations"
     ]
@@ -2831,6 +3057,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 21,
     "prevQuests": [
       "bridging_realms_with_friends"
     ]
@@ -2846,6 +3073,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 9,
     "nextQuests": [
       "spore-tal_power"
     ],
@@ -2860,7 +3088,8 @@
     "questLocation": "Westwind Woods, near the Old mine",
     "description": "Embark on a daring adventure to unearth Rubies and Diamonds hidden deep within the Westwind Woods.",
     "locationCode": "WSWD",
-    "region": "Westwind Woods"
+    "region": "Westwind Woods",
+    "entityCount": 15
   },
   "price_of_punishment": {
     "id": "price_of_punishment",
@@ -2869,7 +3098,8 @@
     "questLocation": "Riverrise, City Center",
     "description": "Search for boars in the woods west of Riverrise, past the fields.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 13
   },
   "proof_of_purification": {
     "id": "proof_of_purification",
@@ -2881,7 +3111,8 @@
       "Talk to Ludwig Stoncap"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "proving_loyalties": {
     "id": "proving_loyalties",
@@ -2893,7 +3124,8 @@
       "Return to Zor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 12
   },
   "proving_the_steel": {
     "id": "proving_the_steel",
@@ -2902,7 +3134,8 @@
     "questLocation": "Steppe, Great Bones",
     "description": "Gather Lightbearer Badges east outside Great Bones Village, between the roads.",
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 8
   },
   "proving_your_worth": {
     "id": "proving_your_worth",
@@ -2914,7 +3147,8 @@
       "Find Martha \"Big Mamma\" Potterson"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 10
   },
   "puzzles_of_the_afterlife": {
     "id": "puzzles_of_the_afterlife",
@@ -2930,7 +3164,8 @@
       "Deliver the Gull Saddle to Captain Barnaby"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 15
   },
   "quelling_the_rage": {
     "id": "quelling_the_rage",
@@ -2939,7 +3174,8 @@
       "Talk to Zor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 6
   },
   "questionable_evidence": {
     "id": "questionable_evidence",
@@ -2953,6 +3189,7 @@
     ],
     "locationCode": "WDVI",
     "region": "Windstone Village",
+    "entityCount": 14,
     "nextQuests": [
       "the_final_verdict"
     ]
@@ -2967,7 +3204,8 @@
       "Venom from Fungus"
     ],
     "locationCode": "WSWD",
-    "region": "Westwind Woods"
+    "region": "Westwind Woods",
+    "entityCount": 13
   },
   "rat-ical_blockchain_solutions": {
     "id": "rat-ical_blockchain_solutions",
@@ -2976,7 +3214,8 @@
     "questLocation": "Goldenfield, near Wheat tent",
     "description": "Pick-up mouse traps from the field, then find some of the rat corpses.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 13
   },
   "rehearsed_sabotage": {
     "id": "rehearsed_sabotage",
@@ -2985,7 +3224,8 @@
     "questLocation": "Riverrise, Scene",
     "description": "Search the Creeping Marsh to the north, just above the top of the river.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 29
   },
   "reluctant_reinforcement": {
     "id": "reluctant_reinforcement",
@@ -3004,7 +3244,8 @@
       "Find Griselda's stash"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 18
   },
   "resurrection_research": {
     "id": "resurrection_research",
@@ -3017,7 +3258,8 @@
       "Collect remains from Mutated Aberrations"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 19
   },
   "revenge_of_the_rabbit": {
     "id": "revenge_of_the_rabbit",
@@ -3033,6 +3275,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 22,
     "nextQuests": [
       "feathers_and_fury"
     ]
@@ -3047,7 +3290,8 @@
       "Return Charge Particles to Zeke Thompson"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 10
   },
   "robot_details_gathering": {
     "id": "robot_details_gathering",
@@ -3056,7 +3300,8 @@
     "questLocation": "Goldenfield, Fields of Goldenfield",
     "description": "Find gnats in the fields of Goldenfield.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 19
   },
   "rock_and_keg_roll": {
     "id": "rock_and_keg_roll",
@@ -3065,7 +3310,8 @@
     "questLocation": "Riverrise, Scene",
     "description": "Search the bar for the kegs.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 11
   },
   "rusty_relics_for_rituals": {
     "id": "rusty_relics_for_rituals",
@@ -3083,6 +3329,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 29,
     "nextQuests": [
       "scarecrow_showdown"
     ],
@@ -3103,7 +3350,8 @@
       "Bring piece of artifact to Zor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 18
   },
   "scarecrow_showdown": {
     "id": "scarecrow_showdown",
@@ -3117,6 +3365,7 @@
     ],
     "locationCode": "PRIS",
     "region": "Prison Island",
+    "entityCount": 11,
     "prevQuests": [
       "rusty_relics_for_rituals"
     ]
@@ -3128,7 +3377,8 @@
     "questLocation": "Riverrise, Market in old town",
     "description": "Search Riverrise for all the Trading Cards.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 8
   },
   "seasoned_delicacy": {
     "id": "seasoned_delicacy",
@@ -3141,6 +3391,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 5,
     "nextQuests": [
       "culinary_diplomacy"
     ],
@@ -3155,7 +3406,8 @@
     "questLocation": "Riverrise, Hidden Chest",
     "description": "Assist Silas Whitlock in dealing with the Fungus that keeps digging up his buried chest.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 7
   },
   "secrets_of_the_bound_requiem": {
     "id": "secrets_of_the_bound_requiem",
@@ -3167,7 +3419,8 @@
       "Talk to Kings Head"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 6
   },
   "secrets_of_the_invaders": {
     "id": "secrets_of_the_invaders",
@@ -3179,7 +3432,8 @@
       "Return to Furr"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 17
   },
   "secrets_unearthed": {
     "id": "secrets_unearthed",
@@ -3193,7 +3447,8 @@
       "Use the Spellbreaker Amulet to see caches"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "secure_the_assets": {
     "id": "secure_the_assets",
@@ -3205,7 +3460,8 @@
       "Give the items to Glubgrath"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 12
   },
   "security_measures": {
     "id": "security_measures",
@@ -3214,7 +3470,8 @@
     "questLocation": "Goldenfield, Bank",
     "description": "Use the blueprint to craft a Plazma Gun.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 13
   },
   "sending_the_alert": {
     "id": "sending_the_alert",
@@ -3227,7 +3484,8 @@
       "Return to Colt McGrady"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 19
   },
   "sensing_the_sands": {
     "id": "sensing_the_sands",
@@ -3239,7 +3497,8 @@
       "Return to Xelcor Zinn"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 17
   },
   "shadows_beneath_the_sands": {
     "id": "shadows_beneath_the_sands",
@@ -3251,7 +3510,8 @@
       "Return to Tor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 18
   },
   "sharpening_resolve": {
     "id": "sharpening_resolve",
@@ -3264,7 +3524,8 @@
       "Bring weapon to Brother Thaddeus"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 19
   },
   "shattered_memory": {
     "id": "shattered_memory",
@@ -3279,7 +3540,8 @@
       "Forgotten item: Memory Core"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 20
   },
   "shell_we_eat": {
     "id": "shell_we_eat",
@@ -3288,7 +3550,8 @@
     "questLocation": "Goldenfield, Barn",
     "description": "Search for turtles around bodies of water.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 14
   },
   "signal_in_the_sands": {
     "id": "signal_in_the_sands",
@@ -3302,7 +3565,8 @@
       "Report to Colt McGrady that all towers are operational"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 20
   },
   "silencing_the_rumors": {
     "id": "silencing_the_rumors",
@@ -3314,7 +3578,8 @@
       "Return to Tor Drostin"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "slippery_passage": {
     "id": "slippery_passage",
@@ -3323,7 +3588,8 @@
     "questLocation": "Riverrise, Scene",
     "description": "Go south of the Ripplecrop Fields to the Train Station. Kill scrags to find a key and save the hostages.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 29
   },
   "something_suspicious": {
     "id": "something_suspicious",
@@ -3336,6 +3602,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 8,
     "prevQuests": [
       "whispers_in_the_dark"
     ]
@@ -3350,7 +3617,8 @@
       "Bring bottles to Mort Decay"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 9
   },
   "spiritual_cleansing_rocks_and_a_hard_place": {
     "id": "spiritual_cleansing_rocks_and_a_hard_place",
@@ -3359,7 +3627,8 @@
     "questLocation": "Goldenfield, Yoga Lake",
     "description": "Search for Leaf Monster camps in the Skylight Grasslands.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 14
   },
   "spiritual_cleansing_the_fragrant_gel": {
     "id": "spiritual_cleansing_the_fragrant_gel",
@@ -3368,7 +3637,8 @@
     "questLocation": "Goldenfield, Yoga Lake",
     "description": "Find gnats lurking in the fields and collect their wings.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 13
   },
   "spiritual_cleansing_the_ruby_of_vitality": {
     "id": "spiritual_cleansing_the_ruby_of_vitality",
@@ -3377,7 +3647,8 @@
     "questLocation": "Goldenfield, Yoga Lake",
     "description": "Search the clearings southwest for the Purple Poppy and Yellow Crystal.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 12
   },
   "spore-tal_power": {
     "id": "spore-tal_power",
@@ -3390,6 +3661,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 9,
     "prevQuests": [
       "portal_restorations"
     ]
@@ -3407,7 +3679,8 @@
       "Talk to Tor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 16
   },
   "star-powered_shot": {
     "id": "star-powered_shot",
@@ -3416,7 +3689,8 @@
     "questLocation": "Goldenfield, Miner's crafting bench",
     "description": "Look for an old tent among rocks and trees about halfway between Greta’s and the Faidens Camp.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 11
   },
   "stitched_in_silence": {
     "id": "stitched_in_silence",
@@ -3430,7 +3704,8 @@
       "Forgotten item: Taddy Bear"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 13
   },
   "strange_green_pots": {
     "id": "strange_green_pots",
@@ -3444,6 +3719,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 17,
     "nextQuests": [
       "the_big_reveal"
     ],
@@ -3461,7 +3737,8 @@
       "Deliver Felix's Receipt to Bart"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 7
   },
   "substances_of_suspicion": {
     "id": "substances_of_suspicion",
@@ -3474,7 +3751,8 @@
       "asdasd"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 14
   },
   "sunburned_escape": {
     "id": "sunburned_escape",
@@ -3487,7 +3765,8 @@
       "Mix ointment and extract"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 12
   },
   "supply_and_command": {
     "id": "supply_and_command",
@@ -3496,13 +3775,16 @@
     "questLocation": "Goldenfield, Weaponsmithing craft bench",
     "description": "Search veins outside Goldenfield for all the resources needed.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 14
   },
   "test_craft_trigger": {
     "id": "test_craft_trigger",
     "name": "Test Craft Trigger",
+    "questType": "system",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 7
   },
   "testament_of_strength": {
     "id": "testament_of_strength",
@@ -3514,7 +3796,8 @@
       "Talk to Pastor Fazool"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 23
   },
   "the_art_of_deception": {
     "id": "the_art_of_deception",
@@ -3527,6 +3810,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 15,
     "prevQuests": [
       "farmyard_mayhem"
     ]
@@ -3542,7 +3826,8 @@
       "Return the Broken Bayonet to Zelina Ironweave"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 10
   },
   "the_big_reveal": {
     "id": "the_big_reveal",
@@ -3555,6 +3840,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 5,
     "nextQuests": [
       "beneath_the_surface"
     ],
@@ -3573,7 +3859,8 @@
       "Return to Daxton Vance"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 17
   },
   "the_case_against_triton": {
     "id": "the_case_against_triton",
@@ -3586,6 +3873,7 @@
     ],
     "locationCode": "WDVI",
     "region": "Windstone Village",
+    "entityCount": 4,
     "nextQuests": [
       "mounting_evidence"
     ]
@@ -3601,7 +3889,8 @@
       "Study item from HPPY"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "the_draft_dodgers_dilemma": {
     "id": "the_draft_dodgers_dilemma",
@@ -3617,7 +3906,8 @@
       "Take the film to Lenny"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 18
   },
   "the_elusive_cheese": {
     "id": "the_elusive_cheese",
@@ -3626,7 +3916,8 @@
     "questLocation": "Riverrise, City Pier 2",
     "description": "Find the post office in Riverrise.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 9
   },
   "the_final_revelation": {
     "id": "the_final_revelation",
@@ -3639,7 +3930,8 @@
       "Talk to Pastor Fazool"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 8
   },
   "the_final_verdict": {
     "id": "the_final_verdict",
@@ -3652,6 +3944,7 @@
     ],
     "locationCode": "WDVI",
     "region": "Windstone Village",
+    "entityCount": 16,
     "prevQuests": [
       "questionable_evidence"
     ]
@@ -3667,6 +3960,7 @@
     ],
     "locationCode": "SKGR",
     "region": "Skylight Grasslands",
+    "entityCount": 4,
     "nextQuests": [
       "catch_of_the_day"
     ]
@@ -3681,7 +3975,8 @@
       "Return to Slick Shady"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 17
   },
   "the_guards_dilemma": {
     "id": "the_guards_dilemma",
@@ -3694,6 +3989,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 5,
     "nextQuests": [
       "natures_redemption"
     ],
@@ -3711,7 +4007,8 @@
       "Return to Eamon Hardich"
     ],
     "locationCode": "WSWD",
-    "region": "Westwind Woods"
+    "region": "Westwind Woods",
+    "entityCount": 12
   },
   "the_hunt_for_green_puff": {
     "id": "the_hunt_for_green_puff",
@@ -3725,6 +4022,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 11,
     "nextQuests": [
       "package_pilfered"
     ]
@@ -3739,7 +4037,8 @@
       "Talk to Ratchet"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 28
   },
   "the_laid_lovers_locket": {
     "id": "the_laid_lovers_locket",
@@ -3748,7 +4047,8 @@
     "questLocation": "Dusktide Forest, near Tent",
     "description": "Search dead bodies around the forests for some jewelry.",
     "locationCode": "DKTF",
-    "region": "Dusktide Forest"
+    "region": "Dusktide Forest",
+    "entityCount": 11
   },
   "the_last_order": {
     "id": "the_last_order",
@@ -3761,6 +4061,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 13,
     "nextQuests": [
       "behind_enemy_lines"
     ],
@@ -3780,7 +4081,8 @@
       "Forgotten item: Blade of the Blood Oath"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 14
   },
   "the_little_terror": {
     "id": "the_little_terror",
@@ -3795,6 +4097,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 12,
     "nextQuests": [
       "breaking_the_chains"
     ],
@@ -3809,7 +4112,8 @@
     "questLocation": "Riverrise, City Center",
     "description": "Search the city for a rat.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 6
   },
   "the_meat_of_the_matter": {
     "id": "the_meat_of_the_matter",
@@ -3821,7 +4125,8 @@
       "Talk to Erwin \"Bacon King\" Braux"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 11
   },
   "the_melody_of_misfortune": {
     "id": "the_melody_of_misfortune",
@@ -3833,7 +4138,8 @@
       "Deliver Cursed Horn to Felix"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 8
   },
   "the_painted_betrayal": {
     "id": "the_painted_betrayal",
@@ -3847,6 +4153,7 @@
     ],
     "locationCode": "RVHL",
     "region": "Reverie Hollow",
+    "entityCount": 15,
     "nextQuests": [
       "decrypting_betrayal"
     ]
@@ -3863,6 +4170,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 13,
     "nextQuests": [
       "its_just_a_prank_bro"
     ],
@@ -3881,6 +4189,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 4,
     "nextQuests": [
       "the_little_terror"
     ],
@@ -3898,7 +4207,8 @@
       "Return to Slick Shady"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "the_sirens_temptation": {
     "id": "the_sirens_temptation",
@@ -3910,7 +4220,8 @@
       "Talk to Seaonna"
     ],
     "locationCode": "WRWD",
-    "region": "Windreach Woods"
+    "region": "Windreach Woods",
+    "entityCount": 15
   },
   "the_sweet_escape": {
     "id": "the_sweet_escape",
@@ -3919,7 +4230,8 @@
     "questLocation": "Goldenfield, Goldenfield, near the Bureau",
     "description": "Kill gnats around Goldenfield for their larvae.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 12
   },
   "the_unlikely_courier": {
     "id": "the_unlikely_courier",
@@ -3932,7 +4244,8 @@
       "Find and use the Ancient Effigy"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 11
   },
   "thirst_for_understanding": {
     "id": "thirst_for_understanding",
@@ -3944,7 +4257,8 @@
       "Return to Furr"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 16
   },
   "thistlebrooks_terrifying_task": {
     "id": "thistlebrooks_terrifying_task",
@@ -3958,7 +4272,8 @@
       "Return to Thistlebrook"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 15
   },
   "thread_the_needle_warm_the_soul": {
     "id": "thread_the_needle_warm_the_soul",
@@ -3970,7 +4285,8 @@
       "Bring to Maxwell"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 9
   },
   "threading_the_dream": {
     "id": "threading_the_dream",
@@ -3979,7 +4295,8 @@
     "questLocation": "Riverrise, Scene",
     "description": "Go to the fields outside Riverrise and kill spiders.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 25
   },
   "tides_of_vengeance": {
     "id": "tides_of_vengeance",
@@ -3992,6 +4309,7 @@
     ],
     "locationCode": "WRWD",
     "region": "Windreach Woods",
+    "entityCount": 10,
     "nextQuests": [
       "heartbreak_waters"
     ]
@@ -4006,7 +4324,8 @@
       "Diminish the mutated rat population"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 23
   },
   "toxic_ambition": {
     "id": "toxic_ambition",
@@ -4015,7 +4334,8 @@
     "questLocation": "Riverrise, Scene",
     "description": "Go to the souther Riverrise bridge. Cross it and head directly east across the river into the woods.",
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 8
   },
   "trading_papers": {
     "id": "trading_papers",
@@ -4029,7 +4349,8 @@
       "Forgotten item: Trade Permit Document"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 7
   },
   "trial_of_the_marked": {
     "id": "trial_of_the_marked",
@@ -4041,6 +4362,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 8,
     "prevQuests": [
       "trial_of_unyielding_will"
     ],
@@ -4057,6 +4379,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 13,
     "nextQuests": [
       "trial_of_the_marked"
     ],
@@ -4073,6 +4396,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 15,
     "nextQuests": [
       "wulbyans_challenge"
     ],
@@ -4091,7 +4415,8 @@
       "Return to Guardinator"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 15
   },
   "unbottling_mercy": {
     "id": "unbottling_mercy",
@@ -4103,7 +4428,8 @@
       "Collect Mysterious Bottle"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 9
   },
   "unearthing_obsession": {
     "id": "unearthing_obsession",
@@ -4117,7 +4443,8 @@
       "Repair \"The Destroyer\""
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 23
   },
   "unearthing_the_truth": {
     "id": "unearthing_the_truth",
@@ -4130,7 +4457,8 @@
       "Return to Zor"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 11
   },
   "unlocking_the_troll_head_ritual": {
     "id": "unlocking_the_troll_head_ritual",
@@ -4145,7 +4473,8 @@
       "Talk to Zugg Clankwhistle"
     ],
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 9
   },
   "unmasking_the_conspiracy": {
     "id": "unmasking_the_conspiracy",
@@ -4157,7 +4486,8 @@
       "Talk to Alexander Stones"
     ],
     "locationCode": "WSWD",
-    "region": "Westwind Woods"
+    "region": "Westwind Woods",
+    "entityCount": 8
   },
   "unmasking_the_impostor": {
     "id": "unmasking_the_impostor",
@@ -4169,7 +4499,8 @@
       "Return Mobius Mask to Bob Thurkle"
     ],
     "locationCode": "RRCY",
-    "region": "Riverrise City"
+    "region": "Riverrise City",
+    "entityCount": 9
   },
   "unsavory_evidence": {
     "id": "unsavory_evidence",
@@ -4182,6 +4513,7 @@
     ],
     "locationCode": "WDVI",
     "region": "Windstone Village",
+    "entityCount": 14,
     "prevQuests": [
       "mounting_evidence"
     ]
@@ -4198,7 +4530,8 @@
       "Bring artifact to Colt"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 11
   },
   "unveiling_dark_secrets": {
     "id": "unveiling_dark_secrets",
@@ -4212,6 +4545,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 7,
     "nextQuests": [
       "echoes_of_paranoia"
     ]
@@ -4228,6 +4562,7 @@
     ],
     "locationCode": "PRIS",
     "region": "Prison Island",
+    "entityCount": 9,
     "nextQuests": [
       "echoes_beyond"
     ]
@@ -4244,7 +4579,8 @@
       "Return to Jennifer Davyna"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 13
   },
   "valuable_research": {
     "id": "valuable_research",
@@ -4256,7 +4592,8 @@
       "Bring the gems to Queenie"
     ],
     "locationCode": "STEP",
-    "region": "Steppes"
+    "region": "Steppes",
+    "entityCount": 16
   },
   "vanitys_elixir": {
     "id": "vanitys_elixir",
@@ -4269,6 +4606,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 6,
     "nextQuests": [
       "beauty_in_the_mud"
     ]
@@ -4280,7 +4618,8 @@
     "questLocation": "Goldenfield, near Artifact shop",
     "description": "Gather ceramics and return to Griz.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 7
   },
   "vermin_extermination": {
     "id": "vermin_extermination",
@@ -4289,7 +4628,8 @@
     "questLocation": "Goldenfield, near Tractor",
     "description": "Find and kill mutated rats around the fields of Goldenfield.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 16
   },
   "war_bear": {
     "id": "war_bear",
@@ -4297,8 +4637,10 @@
     "goals": [
       "Forgotten item: Page 2"
     ],
+    "selfInitiated": true,
     "locationCode": "PRIS",
-    "region": "Prison Island"
+    "region": "Prison Island",
+    "entityCount": 12
   },
   "weaponsmithing_lesson": {
     "id": "weaponsmithing_lesson",
@@ -4310,7 +4652,8 @@
       "Assault Launcher"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 27
   },
   "wet_paper": {
     "id": "wet_paper",
@@ -4322,7 +4665,8 @@
       "Give Pieces of Evidence to Balthazar"
     ],
     "locationCode": "WRWD",
-    "region": "Windreach Woods"
+    "region": "Windreach Woods",
+    "entityCount": 8
   },
   "whispers_in_the_dark": {
     "id": "whispers_in_the_dark",
@@ -4335,6 +4679,7 @@
     ],
     "locationCode": "WSWD",
     "region": "Westwind Woods",
+    "entityCount": 4,
     "nextQuests": [
       "something_suspicious"
     ],
@@ -4352,7 +4697,8 @@
       "Talk to Alexander Stones"
     ],
     "locationCode": "WSWD",
-    "region": "Westwind Woods"
+    "region": "Westwind Woods",
+    "entityCount": 15
   },
   "wood_you_believe_it": {
     "id": "wood_you_believe_it",
@@ -4364,7 +4710,8 @@
       "Return to Jahri"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 15
   },
   "wooden_deer_hunt": {
     "id": "wooden_deer_hunt",
@@ -4373,7 +4720,8 @@
     "questLocation": "Tempest Timberland, near the Hunter camp",
     "description": "Embark on a perilous hunt for a Wooden Deer in Windreach Woods for Ludwig's research.",
     "locationCode": "WSWD",
-    "region": "Westwind Woods"
+    "region": "Westwind Woods",
+    "entityCount": 18
   },
   "wulbyans_challenge": {
     "id": "wulbyans_challenge",
@@ -4386,6 +4734,7 @@
     ],
     "locationCode": "GLFD",
     "region": "Goldenfield Town",
+    "entityCount": 8,
     "prevQuests": [
       "trial_of_worthiness"
     ],
@@ -4398,7 +4747,8 @@
     "questLocation": "Goldenfield, Yoga Lake",
     "description": "Search farms around Goldenfield or butcher birds.",
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 7
   },
   "young_woodraptor_hunt": {
     "id": "young_woodraptor_hunt",
@@ -4407,7 +4757,8 @@
     "questLocation": "Tempest Timberland, near the Hunter camp",
     "description": "Ludwig needs your help to hunt a Young Woodraptor in Westwind Woods for his research.",
     "locationCode": "WRWD",
-    "region": "Windreach Woods"
+    "region": "Windreach Woods",
+    "entityCount": 18
   },
   "zero_to_hero_ish": {
     "id": "zero_to_hero_ish",
@@ -4419,6 +4770,7 @@
       "need?"
     ],
     "locationCode": "GLFD",
-    "region": "Goldenfield Town"
+    "region": "Goldenfield Town",
+    "entityCount": 5
   }
 }

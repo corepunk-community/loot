@@ -1004,6 +1004,14 @@ footer {
     background-color: #7c3aed;
     color: white;
 }
+.region-badge-system {
+    background-color: #6b7280;
+    color: white;
+}
+.region-badge-self {
+    background-color: #0ea5e9;
+    color: white;
+}
 
 /* Unverified quest notice (in detail panel) */
 .quest-unverified-notice {
@@ -1339,6 +1347,9 @@ footer {
 .chain-quest-link:hover {
     text-decoration: underline;
 }
+.chain-quest-link-dim {
+    color: #777;
+}
 
 .chain-node-meta {
     font-size: 11px;
@@ -1413,4 +1424,174 @@ footer {
     .chain-node {
         max-width: 100%;
     }
-} 
+}
+
+/* Quest detail modal */
+.quest-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 60px;
+    overflow-y: auto;
+}
+.quest-modal-overlay.visible {
+    display: flex;
+}
+.quest-modal {
+    background: #1e1e2e;
+    border: 1px solid #3a3a5a;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 640px;
+    max-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+.quest-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #3a3a5a;
+    flex-shrink: 0;
+}
+.quest-modal-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #e0e0e0;
+    margin: 0;
+}
+.quest-modal-close {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.6em;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+}
+.quest-modal-close:hover {
+    color: #e0e0e0;
+}
+.quest-modal-body {
+    padding: 16px 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+.quest-modal-body .quest-detail-info {
+    margin-bottom: 12px;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #ccc;
+}
+.quest-modal-body .quest-detail-label {
+    color: #999;
+}
+.quest-modal-body .quest-detail-level {
+    background-color: #3a3a5a;
+    color: #e0e0e0;
+}
+.quest-modal-body .quest-detail-location {
+    color: #aaa;
+}
+.quest-modal-body .quest-unverified-notice {
+    background-color: #2a2a3a;
+    border-color: #4a4a5a;
+    border-left-color: #f39c12;
+    color: #ccc;
+}
+.quest-modal-body .quest-detail-npc,
+.quest-modal-body .quest-detail-goals li {
+    color: #ccc;
+}
+.quest-modal-body .npc-map-link {
+    color: #3498db;
+}
+.quest-modal-body .quest-chain-info {
+    margin-bottom: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #2a2a3a;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 0;
+    padding: 8px 0 0 0;
+}
+.quest-modal-body .chain-label {
+    color: #999;
+}
+.quest-modal-body .chain-prereqs .chain-label { color: #d4a017; }
+.quest-modal-body .chain-followups .chain-label { color: #4ade80; }
+.quest-modal-body .chain-link {
+    background-color: #2a2a3a;
+    border-color: #3a3a5a;
+    color: #3498db;
+}
+.quest-modal-body .chain-link:hover {
+    background-color: #3a3a5a;
+}
+.modal-rewards {
+    padding-top: 8px;
+    border-top: 1px solid #2a2a3a;
+}
+.modal-rewards-summary {
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.modal-rewards-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.modal-rewards-list li {
+    padding: 4px 8px;
+    font-size: 0.9em;
+    border-bottom: 1px solid #2a2a3a;
+    color: #ccc;
+    border-left: 3px solid transparent;
+}
+.modal-rewards-list .item-type-artifact   { border-left-color: #9b59b6; }
+.modal-rewards-list .item-type-recipe     { border-left-color: #3498db; }
+.modal-rewards-list .item-type-consumable { border-left-color: #2ecc71; }
+.modal-rewards-list .item-type-chip       { border-left-color: #e67e22; }
+.modal-rewards-list .item-type-synthesis  { border-left-color: #f1c40f; }
+.modal-rewards-list .item-type-currency   { border-left-color: #e74c3c; }
+.modal-rewards-list .item-type-weapon     { border-left-color: #e84393; }
+.modal-rewards-list .item-type-other      { border-left-color: #95a5a6; }
+.modal-rewards-list li:last-child {
+    border-bottom: none;
+}
+.modal-quest-link {
+    cursor: pointer;
+}
+.quest-modal-ext-link {
+    margin-top: 8px;
+    font-size: 0.85em;
+}
+.quest-modal-ext-link a {
+    color: #3498db;
+}
+
+@media (max-width: 600px) {
+    .quest-modal {
+        width: 98%;
+        max-height: calc(100vh - 40px);
+    }
+    .quest-modal-overlay {
+        padding-top: 20px;
+    }
+}

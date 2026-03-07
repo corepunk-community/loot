@@ -155,6 +155,9 @@ async function fetchQuestRewards() {
             if (notesRes.ok) questNotes = await notesRes.json();
         } catch (e) { /* notes are optional */ }
 
+        // Initialize quest modal (used for chain links to quests without rewards)
+        QuestModal.init({ questRewards, apiQuests, slugMap, questMeta, questNotes });
+
         populateTablesList();
 
         // Check if navigated here from chains page or analysis page
@@ -180,6 +183,7 @@ function applyFilters() {
 
     tableItems.forEach(item => {
         const questName = item.dataset.table;
+        if (!questName) return; // skip non-quest items (e.g. no-results message)
         const matchesFilter = questMatchesFilter(questName, currentRewardFilter);
         const matchesSearch = !searchTerm || questName.toLowerCase().includes(searchTerm);
 
@@ -256,6 +260,24 @@ function populateTablesList() {
             chainIcon.title = 'Part of a quest chain';
             chainIcon.textContent = '\u2197';
             li.appendChild(chainIcon);
+        }
+
+        // System/test quest badge
+        if (meta?.questType === 'system') {
+            const sysTag = document.createElement('span');
+            sysTag.className = 'region-badge region-badge-system';
+            sysTag.textContent = 'SYS';
+            sysTag.title = 'System/test quest';
+            li.appendChild(sysTag);
+        }
+
+        // Self-initiated quest indicator
+        if (meta?.selfInitiated) {
+            const selfTag = document.createElement('span');
+            selfTag.className = 'region-badge region-badge-self';
+            selfTag.textContent = '\u2605';
+            selfTag.title = 'Self-initiated (triggered from object/item)';
+            li.appendChild(selfTag);
         }
 
         // Unverified tag for quests not on corepunk.help
@@ -417,7 +439,7 @@ function buildChainHTML(questName) {
 
 // Navigate to a quest via chain link
 function navigateToQuest(questName) {
-    // If quest exists in rewards, select it
+    // If quest exists in rewards, select it in the sidebar
     if (questRewards[questName]) {
         document.querySelectorAll('#tables-list li').forEach(item => {
             item.classList.remove('active');
@@ -427,6 +449,9 @@ function navigateToQuest(questName) {
             }
         });
         displayQuestItems(questName);
+    } else {
+        // Quest has no rewards — show detail in modal
+        QuestModal.show(questName);
     }
 }
 
@@ -454,6 +479,12 @@ function buildQuestDetailHTML(questName) {
     if (isPIRelated(questName)) {
         const piLabel = meta?.region === 'Prison Island' ? 'Prison Island' : 'Prison Island related';
         infoParts.push(`<span class="region-badge region-badge-prison">${piLabel}</span>`);
+    }
+    if (meta?.questType === 'system') {
+        infoParts.push(`<span class="region-badge region-badge-system" title="System/test quest — may not be a normal player quest">SYS</span>`);
+    }
+    if (meta?.selfInitiated) {
+        infoParts.push(`<span class="region-badge region-badge-self" title="Self-initiated quest — triggered from object/item, no NPC giver">Self-initiated</span>`);
     }
     if (infoParts.length) html += `<div class="quest-detail-meta">${infoParts.join('')}</div>`;
 

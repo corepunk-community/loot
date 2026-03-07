@@ -2,6 +2,7 @@ let questMeta = {};
 let questRewards = {};
 let apiQuests = {};
 let slugMap = {};
+let questNotes = {};
 let allChainGroups = []; // Unified chain groups for rendering
 
 function toSlug(name) {
@@ -47,6 +48,15 @@ async function fetchData() {
                 questMeta = await metaRes.json();
             }
         }
+
+        // Load quest notes
+        try {
+            const notesRes = await fetch('quest_notes.json');
+            if (notesRes.ok) questNotes = await notesRes.json();
+        } catch (e) { /* optional */ }
+
+        // Initialize quest modal
+        QuestModal.init({ questRewards, apiQuests, slugMap, questMeta, questNotes });
 
         allChainGroups = buildUnifiedChains();
         renderSummary();
@@ -407,19 +417,16 @@ function renderChains() {
                     title.appendChild(lvl);
                 }
 
-                if (hasRewards) {
-                    const link = document.createElement('a');
-                    link.href = 'quests.html';
-                    link.textContent = q.name;
-                    link.className = 'chain-quest-link';
-                    link.addEventListener('click', () => {
-                        sessionStorage.setItem('selectedQuest', q.name);
-                    });
-                    title.appendChild(link);
-                } else {
-                    title.appendChild(document.createTextNode(q.name));
-                    title.classList.add('chain-node-dim');
-                }
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = q.name;
+                link.className = 'chain-quest-link';
+                if (!hasRewards) link.classList.add('chain-quest-link-dim');
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    QuestModal.show(q.name);
+                });
+                title.appendChild(link);
                 node.appendChild(title);
 
                 if (api && api.location) {

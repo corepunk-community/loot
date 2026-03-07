@@ -2,6 +2,7 @@ let questRewards = {};
 let apiQuests = {};
 let slugMap = {};
 let questMeta = {};
+let questNotes = {};
 let viewMode = 'region';
 
 function toSlug(name) {
@@ -47,6 +48,15 @@ async function init() {
             if (apiData.slugMap) slugMap = apiData.slugMap;
         }
         if (metaRes && metaRes.ok) questMeta = await metaRes.json();
+
+        // Load quest notes
+        try {
+            const notesRes = await fetch('quest_notes.json');
+            if (notesRes.ok) questNotes = await notesRes.json();
+        } catch (e) { /* optional */ }
+
+        // Initialize quest modal
+        QuestModal.init({ questRewards, apiQuests, slugMap, questMeta, questNotes });
 
         render();
     } catch (error) {
@@ -94,11 +104,10 @@ function buildQuestTable(quests, options) {
         const link = document.createElement('a');
         link.className = 'analysis-quest-link';
         link.textContent = questName;
-        link.href = 'quests.html';
+        link.href = '#';
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            sessionStorage.setItem('selectedQuest', questName);
-            window.location.href = 'quests.html';
+            QuestModal.show(questName);
         });
         tdName.appendChild(link);
 
@@ -117,6 +126,22 @@ function buildQuestTable(quests, options) {
             badge.textContent = 'PI';
             badge.title = meta?.region === 'Prison Island' ? 'Prison Island' : 'Prison Island related';
             tdName.appendChild(badge);
+        }
+
+        // System/self-initiated badges
+        if (meta?.questType === 'system') {
+            const sysTag = document.createElement('span');
+            sysTag.className = 'region-badge region-badge-system';
+            sysTag.textContent = 'SYS';
+            sysTag.title = 'System/test quest';
+            tdName.appendChild(sysTag);
+        }
+        if (meta?.selfInitiated) {
+            const selfTag = document.createElement('span');
+            selfTag.className = 'region-badge region-badge-self';
+            selfTag.textContent = '\u2605';
+            selfTag.title = 'Self-initiated (triggered from object/item)';
+            tdName.appendChild(selfTag);
         }
 
         tr.appendChild(tdName);

@@ -70,6 +70,9 @@ async function init() {
             if (notesRes.ok) questNotes = await notesRes.json();
         } catch (e) { /* notes are optional */ }
 
+        // Initialize quest modal
+        QuestModal.init({ questRewards, apiQuests, slugMap, questMeta, questNotes });
+
         renderStats();
         renderQuestLists();
     } catch (error) {
@@ -304,11 +307,10 @@ function buildQuestTable(results) {
         const link = document.createElement('a');
         link.className = 'analysis-quest-link';
         link.textContent = quest;
-        link.href = 'quests.html';
+        link.href = '#';
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            sessionStorage.setItem('selectedQuest', quest);
-            window.location.href = 'quests.html';
+            QuestModal.show(quest);
         });
         tdName.appendChild(link);
         if (isPIRelated(quest)) {
@@ -374,7 +376,7 @@ function renderUnverifiedSection(container, unverified, tocLink) {
 
     const note = document.createElement('p');
     note.className = 'analysis-section-note';
-    note.textContent = 'These quests exist in game files but are not on corepunk.help. They may be upcoming content, Prison Island (unreleased zone), or use different names on the API.';
+    note.textContent = 'These quests exist in game files but are not on corepunk.help. They may be upcoming content, inactive Prison Island events, or use different names on the API.';
     body.appendChild(note);
 
     const table = document.createElement('table');
@@ -393,11 +395,10 @@ function renderUnverifiedSection(container, unverified, tocLink) {
         const link = document.createElement('a');
         link.className = 'analysis-quest-link';
         link.textContent = quest;
-        link.href = 'quests.html';
+        link.href = '#';
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            sessionStorage.setItem('selectedQuest', quest);
-            window.location.href = 'quests.html';
+            QuestModal.show(quest);
         });
         tdName.appendChild(link);
         if (isPIRelated(quest)) {

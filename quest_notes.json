@@ -1,7 +1,11 @@
 {
+  "Cbt Cosmic Coordinates": {
+    "piRelated": false,
+    "note": "Closed beta test quest. Rewards CBT-exclusive cosmetics (Doomsday skins). No longer available."
+  },
   "A Head For Business": {
     "piRelated": true,
-    "note": "Prison Island quest. No giver or location data in game files."
+    "note": "PI quest. Bring decapitated Troll Head to Skrizzik on Prison Island. Self-initiated from item pickup. Links to mount ritual chain (Skrizzik → Unlocking The Troll Head Ritual → Scarecrow Showdown)."
   },
   "Built To Extract": {
     "piRelated": true,
@@ -9,7 +13,7 @@
   },
   "Burnt Pages": {
     "piRelated": true,
-    "note": "Prison Island quest. No giver or location data in game files."
+    "note": "PI dungeon challenge. Reward: Horsedungeon Goblindruid (dungeon entry). Part of the Pages set — collect Pages 1-4 from challenges, burn in Emerald Flame."
   },
   "Cleansing The Ride": {
     "piRelated": true,
@@ -17,7 +21,7 @@
   },
   "Death Raven": {
     "piRelated": true,
-    "note": "Prison Island quest. No giver or location data in game files."
+    "note": "PI dungeon challenge (Page 4). Self-initiated — loot island treasure while cursed. No NPC giver. Part of the Pages set."
   },
   "Echoes Beyond": {
     "piRelated": true,
@@ -29,7 +33,7 @@
   },
   "Emerald Flame": {
     "piRelated": true,
-    "note": "Prison Island quest. No giver or location data in game files."
+    "note": "PI dungeon challenge — final step. Burn all collected Blackened Pages in the green flame. Self-initiated, no NPC giver. Part of the Pages set."
   },
   "Essence Of The Wild": {
     "piRelated": true,
@@ -41,7 +45,7 @@
   },
   "Hunger Wolf": {
     "piRelated": true,
-    "note": "Prison Island quest. No giver or location data in game files."
+    "note": "PI dungeon challenge (Page 3). Kill monsters while starving in the dungeon. Self-initiated, no NPC giver. Part of the Pages set."
   },
   "In The Belly Of The Beasts": {
     "piRelated": true,
@@ -61,7 +65,7 @@
   },
   "Plague Frogs": {
     "piRelated": true,
-    "note": "Prison Island quest. No giver or location data in game files."
+    "note": "PI dungeon challenge (Page 1). Kill plague-marked monsters. Self-initiated, no NPC giver. Part of the Pages set."
   },
   "Puzzles Of The Afterlife": {
     "piRelated": true,
@@ -85,7 +89,7 @@
   },
   "Stitched In Silence": {
     "piRelated": true,
-    "note": "Prison Island quest. No giver or location data in game files."
+    "note": "PI quest. Find items for Captain Rob — collect Ring and Pearl of the Sea. Self-initiated from a Teddy Bear object."
   },
   "Testament Of Strength": {
     "piRelated": true,
@@ -133,7 +137,7 @@
   },
   "War Bear": {
     "piRelated": true,
-    "note": "Prison Island quest. No giver or location data in game files."
+    "note": "PI dungeon challenge (Page 2). Kill weakened monsters while debuffed. Self-initiated, no NPC giver. Part of the Pages set."
   },
   "Wulbyans Challenge": {
     "piRelated": true,
