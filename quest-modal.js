@@ -129,7 +129,7 @@ const QuestModal = (() => {
         // Notes
         const note = data.questNotes[questName]?.note;
         if (note) {
-            html += `<div class="quest-modal-note"><span class="quest-detail-label">Notes:</span> ${note}</div>`;
+            html += `<div class="quest-detail-notes"><span class="quest-detail-label">Notes:</span> <span class="quest-detail-note-text">${note}</span></div>`;
         }
 
         // Unverified notice / external link
@@ -229,6 +229,7 @@ const QuestModal = (() => {
 
         return `
             <div class="modal-rewards">
+                <div class="modal-rewards-header"><span class="quest-detail-label">Rewards:</span> <span class="modal-rewards-count">${items.length} items</span></div>
                 <div class="modal-rewards-summary">${summary}</div>
                 <ul class="modal-rewards-list">${itemsHTML}</ul>
             </div>

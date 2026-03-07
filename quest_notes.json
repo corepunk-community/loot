@@ -5,7 +5,7 @@
   },
   "A Head For Business": {
     "piRelated": true,
-    "note": "PI quest. Bring decapitated Troll Head to Skrizzik on Prison Island. Self-initiated from item pickup. Links to mount ritual chain (Skrizzik → Unlocking The Troll Head Ritual → Scarecrow Showdown)."
+    "note": "PI quest. Bring decapitated Troll Head to Skrizzik on Prison Island. Self-initiated from item pickup. Links to mount ritual chain (Skrizzik \u2192 Unlocking The Troll Head Ritual \u2192 Scarecrow Showdown)."
   },
   "Built To Extract": {
     "piRelated": true,
@@ -13,7 +13,7 @@
   },
   "Burnt Pages": {
     "piRelated": true,
-    "note": "PI dungeon challenge. Reward: Horsedungeon Goblindruid (dungeon entry). Part of the Pages set — collect Pages 1-4 from challenges, burn in Emerald Flame."
+    "note": "PI dungeon challenge. Part of the Pages set \u2014 collect Pages 1-4 from challenges, burn in Emerald Flame. Likely no longer available."
   },
   "Cleansing The Ride": {
     "piRelated": true,
@@ -21,7 +21,7 @@
   },
   "Death Raven": {
     "piRelated": true,
-    "note": "PI dungeon challenge (Page 4). Self-initiated — loot island treasure while cursed. No NPC giver. Part of the Pages set."
+    "note": "PI dungeon challenge (Page 4). Self-initiated \u2014 loot island treasure while cursed. No NPC giver. Part of the Pages set."
   },
   "Echoes Beyond": {
     "piRelated": true,
@@ -33,7 +33,7 @@
   },
   "Emerald Flame": {
     "piRelated": true,
-    "note": "PI dungeon challenge — final step. Burn all collected Blackened Pages in the green flame. Self-initiated, no NPC giver. Part of the Pages set."
+    "note": "PI dungeon challenge \u2014 final step. Burn all collected Blackened Pages in the green flame. Self-initiated, no NPC giver. Part of the Pages set."
   },
   "Essence Of The Wild": {
     "piRelated": true,
@@ -41,7 +41,7 @@
   },
   "Guarding Green": {
     "piRelated": false,
-    "note": "Windreach Woods quest given by Mary Jane Greenpuff. Part of a chain (after Gathering The Fragmented, before Guarding Fortunes). High reward count (17 items). Not on corepunk.help — likely upcoming content."
+    "note": "Windreach Woods quest given by Mary Jane Greenpuff. Part of a chain (after Gathering The Fragmented, before Guarding Fortunes). High reward count (17 items). Not on corepunk.help."
   },
   "Hunger Wolf": {
     "piRelated": true,
@@ -57,11 +57,11 @@
   },
   "Loose Ends": {
     "piRelated": false,
-    "note": "Steppes quest given by Tor Drostin at Central Fort. Standalone (no chain). Rewards 11 items including weapon recipes. Not on corepunk.help — likely upcoming content."
+    "note": "Steppes quest given by Tor Drostin at Central Fort. Standalone (no chain). Rewards 11 items including weapon recipes. Not on corepunk.help."
   },
   "Memory Restoration": {
-    "piRelated": false,
-    "note": "Goldenfield quest given by Ratchet near the Workshop. Goals: repair a Memory Core for Doc Greene. Rewards a dungeon entry item (Horsedungeon Werewolfalpha). Not on corepunk.help — likely upcoming content."
+    "piRelated": true,
+    "note": "Goldenfield quest given by Ratchet. Goals: repair a Memory Core and return it to Doc Greene on Prison Island. Part of the Memory Core quest line with Shattered Memory. Likely no longer available."
   },
   "Plague Frogs": {
     "piRelated": true,
@@ -84,12 +84,12 @@
     "note": "Prison Island quest given by Kings Head."
   },
   "Shattered Memory": {
-    "piRelated": false,
-    "note": "Goldenfield quest given by Mortimer Gloomsworth near Cemetery. Goals: find Memory Core using ancient consoles. Rewards 10 items including T3 artifacts. Not on corepunk.help — likely upcoming content."
+    "piRelated": true,
+    "note": "Goldenfield quest given by Mortimer Gloomsworth. Goals: find Memory Core on Prison Island using ancient consoles, return to Doc Greene. Part of the Memory Core quest line with Memory Restoration. Likely no longer available."
   },
   "Stitched In Silence": {
     "piRelated": true,
-    "note": "PI quest. Find items for Captain Rob — collect Ring and Pearl of the Sea. Self-initiated from a Teddy Bear object."
+    "note": "PI quest. Find items for Captain Rob \u2014 collect Ring and Pearl of the Sea. Self-initiated from a Teddy Bear object."
   },
   "Testament Of Strength": {
     "piRelated": true,

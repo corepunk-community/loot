@@ -14,7 +14,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -1345,7 +1345,7 @@ footer {
 
 .chain-grid-cell {
     padding: 4px 6px;
-    min-width: 180px;
+    min-width: 160px;
 }
 
 .chain-grid-connector-label {
@@ -1358,7 +1358,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 180px;
+    min-width: 160px;
 }
 
 .chain-grid-arrow {
@@ -1371,8 +1371,8 @@ footer {
     border: 1px solid #d1d5da;
     border-left: 4px solid #3498db;
     border-radius: 6px;
-    padding: 10px 14px;
-    min-width: 170px;
+    padding: 8px 12px;
+    min-width: 150px;
 }
 
 .chain-node-title {
@@ -1477,7 +1477,7 @@ footer {
     }
 
     .chain-grid-cell {
-        min-width: 150px;
+        min-width: 140px;
     }
 }
 
@@ -1557,28 +1557,15 @@ footer {
 .quest-modal-body .quest-detail-location {
     color: #aaa;
 }
-.quest-modal-note {
-    background-color: #fff8e1;
-    border: 1px solid #ffe082;
-    border-left: 4px solid #3498db;
-    border-radius: 4px;
-    padding: 8px 12px;
-    margin-bottom: 12px;
-    font-size: 13px;
+.quest-detail-notes {
+    margin-top: 6px;
+}
+.quest-detail-note-text {
     color: #555;
-    line-height: 1.5;
+    font-style: italic;
 }
-.quest-modal-note .quest-detail-label {
-    color: #2c3e50;
-}
-.quest-modal-body .quest-modal-note {
-    background-color: #2a2a3a;
-    border-color: #4a4a5a;
-    border-left-color: #3498db;
-    color: #ccc;
-}
-.quest-modal-body .quest-modal-note .quest-detail-label {
-    color: #e0e0e0;
+.quest-modal-body .quest-detail-note-text {
+    color: #aaa;
 }
 .quest-modal-body .quest-unverified-notice {
     background-color: #2a2a3a;
@@ -1620,6 +1607,14 @@ footer {
 .modal-rewards {
     padding-top: 8px;
     border-top: 1px solid #2a2a3a;
+}
+.modal-rewards-header {
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+.modal-rewards-count {
+    color: #888;
+    font-size: 12px;
 }
 .modal-rewards-summary {
     margin-bottom: 10px;

@@ -444,53 +444,89 @@ function renderForkedChain(chain, byDepth, maxDepth, edges, depthMap, nameToNode
     const container = document.createElement('div');
     container.className = 'chain-graph';
 
-    // Assign each quest a column. Walk depth-first from roots, spreading forks into columns.
-    const colMap = {}; // quest name -> column index
-    let nextCol = 0;
-
-    // Sort roots for deterministic ordering
-    const roots = (byDepth[0] || []).slice().sort((a, b) => {
-        const ac = (edges[a.name] || []).length;
-        const bc = (edges[b.name] || []).length;
-        return bc - ac; // wider forks first
-    });
-
-    function assignColumns(name, preferredCol) {
-        if (colMap[name] !== undefined) return;
-        colMap[name] = preferredCol;
-        if (preferredCol >= nextCol) nextCol = preferredCol + 1;
-
+    // Compute descendant weight for fork ordering (more weight = more forking below)
+    const weightCache = {};
+    function weight(name) {
+        if (weightCache[name] !== undefined) return weightCache[name];
+        weightCache[name] = 0; // prevent cycles
         const children = (edges[name] || []).filter(n => nameToNode[n]);
-        if (children.length === 0) return;
+        let w = children.length;
+        children.forEach(c => { w += weight(c); });
+        weightCache[name] = w;
+        return w;
+    }
 
-        if (children.length === 1) {
-            // Single child inherits parent's column
-            assignColumns(children[0], preferredCol);
-        } else {
-            // Fork: spread children across columns
-            // Center them around parent's column
-            const startCol = nextCol;
-            children.forEach((child, i) => {
-                assignColumns(child, startCol + i);
-            });
+    // Column assignment with reuse: track occupied cells per (depth, col)
+    const colMap = {};
+    const usedCols = {}; // depth -> Set of col indices
+
+    function useCol(d, col) {
+        if (!usedCols[d]) usedCols[d] = new Set();
+        usedCols[d].add(col);
+    }
+
+    function findFreeCol(startCol, fromD, toD) {
+        let col = startCol;
+        while (true) {
+            let free = true;
+            for (let d = fromD; d <= toD; d++) {
+                if (usedCols[d] && usedCols[d].has(col)) { free = false; break; }
+            }
+            if (free) return col;
+            col++;
         }
     }
 
+    function assignCol(name, col) {
+        if (colMap[name] !== undefined) return;
+        const d = depthMap[name];
+        colMap[name] = col;
+        useCol(d, col);
+
+        const children = (edges[name] || []).filter(n => nameToNode[n] && colMap[n] === undefined);
+        if (children.length === 0) return;
+
+        // Sort ascending by weight: lightest (most linear) inherits parent column (left)
+        // Heaviest (most forking) goes rightward
+        children.sort((a, b) => weight(a) - weight(b));
+
+        // First child (most linear) inherits parent column
+        const c0d = depthMap[children[0]];
+        for (let dd = d + 1; dd < c0d; dd++) useCol(dd, col);
+        assignCol(children[0], col);
+
+        // Other children get new columns nearby, reusing freed space
+        for (let i = 1; i < children.length; i++) {
+            const cd = depthMap[children[i]];
+            const nc = findFreeCol(col + 1, d + 1, cd);
+            for (let dd = d + 1; dd <= cd; dd++) useCol(dd, nc);
+            assignCol(children[i], nc);
+        }
+    }
+
+    // Sort roots: lightest first (most linear path on left)
+    const roots = (byDepth[0] || []).slice();
+    roots.sort((a, b) => weight(a.name) - weight(b.name));
     roots.forEach(q => {
-        assignColumns(q.name, nextCol);
+        const col = findFreeCol(0, depthMap[q.name], depthMap[q.name]);
+        assignCol(q.name, col);
     });
 
-    // Assign any unvisited quests
+    // Assign any unvisited quests (cycles, disconnected)
     chain.forEach(q => {
         if (colMap[q.name] === undefined) {
-            colMap[q.name] = nextCol++;
+            assignCol(q.name, findFreeCol(0, depthMap[q.name], depthMap[q.name]));
         }
     });
 
-    const totalCols = nextCol;
+    // Compact: remap to contiguous column indices (removes gaps)
+    const usedColNums = [...new Set(Object.values(colMap))].sort((a, b) => a - b);
+    const remap = {};
+    usedColNums.forEach((c, i) => { remap[c] = i; });
+    Object.keys(colMap).forEach(name => { colMap[name] = remap[colMap[name]]; });
+    const totalCols = usedColNums.length;
 
     // Build the grid: rows (depths) × columns
-    // Each cell is either a quest node or empty
     const grid = [];
     for (let d = 0; d <= maxDepth; d++) {
         const row = new Array(totalCols).fill(null);
@@ -506,24 +542,19 @@ function renderForkedChain(chain, byDepth, maxDepth, edges, depthMap, nameToNode
     graphEl.style.gridTemplateColumns = `60px repeat(${totalCols}, 1fr)`;
 
     for (let d = 0; d <= maxDepth; d++) {
-        // Step label
         const label = document.createElement('div');
         label.className = 'chain-grid-label';
         label.textContent = d === 0 ? 'Start' : `Step ${d}`;
         graphEl.appendChild(label);
 
-        // Quest cells
         for (let c = 0; c < totalCols; c++) {
             const cell = document.createElement('div');
             cell.className = 'chain-grid-cell';
             const q = grid[d][c];
-            if (q) {
-                cell.appendChild(createQuestNode(q));
-            }
+            if (q) cell.appendChild(createQuestNode(q));
             graphEl.appendChild(cell);
         }
 
-        // Spacer row between depths (SVG lines handle visual connections)
         if (d < maxDepth) {
             const spacer = document.createElement('div');
             spacer.className = 'chain-grid-connector-label';
@@ -538,11 +569,8 @@ function renderForkedChain(chain, byDepth, maxDepth, edges, depthMap, nameToNode
     }
 
     container.appendChild(graphEl);
-
-    // Store edge data for redraw on expand
     container._edgeData = { grid, edges, colMap, nameToNode, maxDepth, totalCols };
 
-    // Add SVG overlay for edge lines
     requestAnimationFrame(() => {
         drawEdgeLines(container, grid, edges, colMap, nameToNode, maxDepth, totalCols);
     });
