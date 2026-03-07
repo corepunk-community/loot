@@ -1,4 +1,4 @@
-let binaryChainGroups = [];
+let questMeta = {};
 let questRewards = {};
 let apiQuests = {};
 let slugMap = {};
@@ -21,14 +21,7 @@ function getDisplayName(slug) {
 
 async function fetchData() {
     try {
-        const [chainsRes, versionsRes] = await Promise.all([
-            fetch('quest_chain_groups.json'),
-            fetch('versions.json')
-        ]);
-
-        if (chainsRes.ok) {
-            binaryChainGroups = await chainsRes.json();
-        }
+        const versionsRes = await fetch('versions.json');
 
         // Load latest data from version manifest
         if (versionsRes.ok) {
@@ -38,8 +31,9 @@ async function fetchData() {
             const rewardsFile = latestVersion.quest_rewards_file || 'quest_rewards.json';
             const fetches = [fetch(rewardsFile)];
             if (latestVersion.api_quests_file) fetches.push(fetch(latestVersion.api_quests_file));
+            if (latestVersion.quest_metadata_file) fetches.push(fetch(latestVersion.quest_metadata_file));
 
-            const [rewardsRes, apiRes] = await Promise.all(fetches);
+            const [rewardsRes, apiRes, metaRes] = await Promise.all(fetches);
             if (rewardsRes.ok) {
                 questRewards = await rewardsRes.json();
             }
@@ -48,6 +42,9 @@ async function fetchData() {
                 const questList = Array.isArray(apiData) ? apiData : apiData.quests || [];
                 questList.forEach(q => { apiQuests[q.slug] = q; });
                 if (apiData.slugMap) slugMap = apiData.slugMap;
+            }
+            if (metaRes && metaRes.ok) {
+                questMeta = await metaRes.json();
             }
         }
 
@@ -61,8 +58,78 @@ async function fetchData() {
     }
 }
 
+// Convert a quest ID (e.g. "a_bitter_brew") to a display name
+function formatQuestId(id) {
+    return id.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+// Build binary chain groups from questMeta nextQuests/prevQuests
+function buildBinaryChainGroups() {
+    // Build adjacency graph from metadata entries with nextQuests or prevQuests
+    const graph = {}; // id -> Set of connected ids
+    Object.values(questMeta).forEach(entry => {
+        const id = entry.id;
+        const hasNext = entry.nextQuests && entry.nextQuests.length > 0;
+        const hasPrev = entry.prevQuests && entry.prevQuests.length > 0;
+        if (!hasNext && !hasPrev) return;
+
+        if (!graph[id]) graph[id] = new Set();
+
+        (entry.nextQuests || []).forEach(nid => {
+            if (!graph[nid]) graph[nid] = new Set();
+            graph[id].add(nid);
+            graph[nid].add(id);
+        });
+        (entry.prevQuests || []).forEach(pid => {
+            if (!graph[pid]) graph[pid] = new Set();
+            graph[id].add(pid);
+            graph[pid].add(id);
+        });
+    });
+
+    // Find connected components via BFS
+    const visited = new Set();
+    const components = [];
+
+    Object.keys(graph).forEach(id => {
+        if (visited.has(id)) return;
+        const component = [];
+        const queue = [id];
+        while (queue.length > 0) {
+            const current = queue.shift();
+            if (visited.has(current)) continue;
+            visited.add(current);
+            component.push(current);
+            graph[current].forEach(neighbor => {
+                if (!visited.has(neighbor)) queue.push(neighbor);
+            });
+        }
+        if (component.length > 1) {
+            components.push(component);
+        }
+    });
+
+    // Convert each component to chain format: [{name, slug, requires: [names], unlocks: [names]}, ...]
+    return components.map(component => {
+        return component.map(id => {
+            const entry = questMeta[id];
+            const name = entry ? entry.name : formatQuestId(id);
+            const nextIds = entry ? (entry.nextQuests || []) : [];
+            const prevIds = entry ? (entry.prevQuests || []) : [];
+            return {
+                name: name,
+                slug: toSlug(name),
+                requires: prevIds.map(pid => questMeta[pid] ? questMeta[pid].name : formatQuestId(pid)),
+                unlocks: nextIds.map(nid => questMeta[nid] ? questMeta[nid].name : formatQuestId(nid))
+            };
+        });
+    });
+}
+
 // Build unified chain groups from both binary and API data
 function buildUnifiedChains() {
+    const binaryChainGroups = buildBinaryChainGroups();
+
     // Build a graph from API prerequisiteQuests
     const apiGraph = {}; // slug -> { requires: [slugs], unlocks: [slugs] }
     Object.values(apiQuests).forEach(q => {

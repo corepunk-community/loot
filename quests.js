@@ -1,6 +1,5 @@
 // Global variables
 let questRewards = {};
-let questChains = {};
 let apiQuests = {};  // slug -> API quest data
 let slugMap = {};    // binary slug -> API slug (for fuzzy matches)
 let questMeta = {};  // quest_id -> binary metadata
@@ -82,7 +81,6 @@ function getQuestRegion(questName) {
 
 // Check if a quest is part of a chain
 function isInChain(questName) {
-    if (questChains[questName]) return true;
     const meta = getQuestMeta(questName);
     if (meta && (meta.nextQuests || meta.prevQuests)) return true;
     const api = getApiQuest(questName);
@@ -94,10 +92,7 @@ function isInChain(questName) {
 async function fetchQuestRewards() {
     try {
         // Load version manifest to find latest files
-        const [versionsResponse, chainsResponse] = await Promise.all([
-            fetch('versions.json'),
-            fetch('quest_chains.json')
-        ]);
+        const versionsResponse = await fetch('versions.json');
 
         if (!versionsResponse.ok) {
             throw new Error('Failed to load versions manifest');
@@ -118,10 +113,6 @@ async function fetchQuestRewards() {
             throw new Error(`HTTP error! Status: ${rewardsResponse.status}`);
         }
         questRewards = await rewardsResponse.json();
-
-        if (chainsResponse.ok) {
-            questChains = await chainsResponse.json();
-        }
 
         // Build API quest lookup by slug
         if (apiResponse && apiResponse.ok) {
@@ -295,27 +286,93 @@ function buildRewardSummary(items) {
     return parts.join('');
 }
 
+// Convert a quest_id (e.g. "a_bitter_brew") to a display name
+function formatQuestId(id) {
+    const meta = questMeta[id];
+    if (meta) return meta.name;
+    return id.replace(/_/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+// Convert an API slug (e.g. "a-bitter-brew") to a display name
+function formatApiSlug(slug) {
+    const apiQ = apiQuests[slug];
+    if (apiQ && apiQ.name) return apiQ.name;
+    return slug.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
 // Build quest chain HTML for a quest
 function buildChainHTML(questName) {
-    const chainData = questChains[questName];
-    if (!chainData) return '';
+    const meta = getQuestMeta(questName);
+    const api = getApiQuest(questName);
+
+    const prerequisites = [];
+    const followups = [];
+    const seenPrereqLower = new Set();
+    const seenFollowupLower = new Set();
+
+    // Prerequisites from binary metadata (prevQuests are quest IDs)
+    if (meta && meta.prevQuests) {
+        meta.prevQuests.forEach(id => {
+            const name = formatQuestId(id);
+            if (!seenPrereqLower.has(name.toLowerCase())) {
+                seenPrereqLower.add(name.toLowerCase());
+                prerequisites.push(name);
+            }
+        });
+    }
+
+    // Prerequisites from API (prerequisiteQuests are slugs)
+    if (api && api.prerequisiteQuests) {
+        api.prerequisiteQuests.forEach(slug => {
+            const name = formatApiSlug(slug);
+            if (!seenPrereqLower.has(name.toLowerCase())) {
+                seenPrereqLower.add(name.toLowerCase());
+                prerequisites.push(name);
+            }
+        });
+    }
+
+    // Followups from binary metadata (nextQuests are quest IDs)
+    if (meta && meta.nextQuests) {
+        meta.nextQuests.forEach(id => {
+            const name = formatQuestId(id);
+            if (!seenFollowupLower.has(name.toLowerCase())) {
+                seenFollowupLower.add(name.toLowerCase());
+                followups.push(name);
+            }
+        });
+    }
+
+    // Followups from API: find quests that list this quest as a prerequisite
+    const thisSlug = toSlug(questName);
+    Object.values(apiQuests).forEach(q => {
+        if (q.prerequisiteQuests && q.prerequisiteQuests.includes(thisSlug)) {
+            const name = q.name || formatApiSlug(q.slug);
+            if (!seenFollowupLower.has(name.toLowerCase())) {
+                seenFollowupLower.add(name.toLowerCase());
+                followups.push(name);
+            }
+        }
+    });
+
+    if (prerequisites.length === 0 && followups.length === 0) return '';
 
     let html = '<div class="quest-chain-info">';
 
-    if (chainData.prerequisites && chainData.prerequisites.length > 0) {
+    if (prerequisites.length > 0) {
         html += '<div class="chain-section chain-prereqs">';
         html += '<span class="chain-label">Requires:</span>';
-        chainData.prerequisites.forEach(prereq => {
+        prerequisites.forEach(prereq => {
             const hasRewards = questRewards.hasOwnProperty(prereq);
             html += `<a class="chain-link chain-prereq-link${hasRewards ? '' : ' chain-link-dim'}" data-quest="${prereq}">${prereq}</a>`;
         });
         html += '</div>';
     }
 
-    if (chainData.followups && chainData.followups.length > 0) {
+    if (followups.length > 0) {
         html += '<div class="chain-section chain-followups">';
         html += '<span class="chain-label">Unlocks:</span>';
-        chainData.followups.forEach(followup => {
+        followups.forEach(followup => {
             const hasRewards = questRewards.hasOwnProperty(followup);
             html += `<a class="chain-link chain-followup-link${hasRewards ? '' : ' chain-link-dim'}" data-quest="${followup}">${followup}</a>`;
         });
