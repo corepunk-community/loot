@@ -3085,7 +3085,8 @@
     "region": "Goldenfield Town",
     "nextQuests": [
       "scarecrow_showdown"
-    ]
+    ],
+    "piRelated": true
   },
   "salvation_from_madness": {
     "id": "salvation_from_madness",
@@ -4042,7 +4043,8 @@
     "region": "Goldenfield Town",
     "prevQuests": [
       "trial_of_unyielding_will"
-    ]
+    ],
+    "piRelated": true
   },
   "trial_of_unyielding_will": {
     "id": "trial_of_unyielding_will",
@@ -4057,7 +4059,8 @@
     "region": "Goldenfield Town",
     "nextQuests": [
       "trial_of_the_marked"
-    ]
+    ],
+    "piRelated": true
   },
   "trial_of_worthiness": {
     "id": "trial_of_worthiness",
@@ -4075,7 +4078,8 @@
     ],
     "prevQuests": [
       "a_yorner_trial"
-    ]
+    ],
+    "piRelated": true
   },
   "turning_the_tide": {
     "id": "turning_the_tide",
@@ -4384,7 +4388,8 @@
     "region": "Goldenfield Town",
     "prevQuests": [
       "trial_of_worthiness"
-    ]
+    ],
+    "piRelated": true
   },
   "yogas_routine_problem": {
     "id": "yogas_routine_problem",

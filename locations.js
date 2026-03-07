@@ -110,12 +110,12 @@ function buildQuestTable(quests, options) {
             tdName.appendChild(tag);
         }
 
-        // Prison Island badge
-        if (meta?.region === 'Prison Island') {
+        // Prison Island / PI-adjacent badge
+        if (meta?.region === 'Prison Island' || meta?.piRelated) {
             const badge = document.createElement('span');
             badge.className = 'region-badge region-badge-prison';
             badge.textContent = 'PI';
-            badge.title = 'Prison Island';
+            badge.title = meta?.region === 'Prison Island' ? 'Prison Island' : 'Prison Island related';
             tdName.appendChild(badge);
         }
 

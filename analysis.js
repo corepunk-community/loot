@@ -2,6 +2,7 @@ let questRewards = {};
 let apiQuests = {};
 let slugMap = {};
 let questMeta = {};
+let questNotes = {};
 
 function toSlug(name) {
     return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
@@ -15,6 +16,14 @@ function getApiQuest(questName) {
 function getQuestMeta(questName) {
     const id = questName.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '_').replace(/-/g, '_').trim();
     return questMeta[id] || null;
+}
+
+function isPIRelated(questName) {
+    const meta = getQuestMeta(questName);
+    if (meta?.region === 'Prison Island') return true;
+    if (meta?.piRelated) return true;
+    if (questNotes[questName]?.piRelated) return true;
+    return false;
 }
 
 function getItemType(itemName) {
@@ -55,6 +64,11 @@ async function init() {
         if (metaRes && metaRes.ok) {
             questMeta = await metaRes.json();
         }
+
+        try {
+            const notesRes = await fetch('quest_notes.json');
+            if (notesRes.ok) questNotes = await notesRes.json();
+        } catch (e) { /* notes are optional */ }
 
         renderStats();
         renderQuestLists();
@@ -297,11 +311,11 @@ function buildQuestTable(results) {
             window.location.href = 'quests.html';
         });
         tdName.appendChild(link);
-        if (meta?.region === 'Prison Island') {
+        if (isPIRelated(quest)) {
             const badge = document.createElement('span');
             badge.className = 'region-badge region-badge-prison';
             badge.textContent = 'PI';
-            badge.title = 'Prison Island';
+            badge.title = meta?.region === 'Prison Island' ? 'Prison Island' : 'Prison Island related';
             tdName.appendChild(badge);
         }
         if (!api) {
@@ -366,7 +380,7 @@ function renderUnverifiedSection(container, unverified, tocLink) {
     const table = document.createElement('table');
     table.className = 'analysis-table';
     const thead = document.createElement('thead');
-    thead.innerHTML = '<tr><th>Quest</th><th>Region</th><th>Location</th><th>Giver</th><th>Binary Slug</th><th>Items</th></tr>';
+    thead.innerHTML = '<tr><th>Quest</th><th>Region</th><th>Location</th><th>Giver</th><th>Note</th><th>Items</th></tr>';
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
@@ -386,11 +400,11 @@ function renderUnverifiedSection(container, unverified, tocLink) {
             window.location.href = 'quests.html';
         });
         tdName.appendChild(link);
-        if (meta?.region === 'Prison Island') {
+        if (isPIRelated(quest)) {
             const badge = document.createElement('span');
             badge.className = 'region-badge region-badge-prison';
             badge.textContent = 'PI';
-            badge.title = 'Prison Island';
+            badge.title = meta?.region === 'Prison Island' ? 'Prison Island' : 'Prison Island related';
             tdName.appendChild(badge);
         }
         tr.appendChild(tdName);
@@ -410,11 +424,11 @@ function renderUnverifiedSection(container, unverified, tocLink) {
         tdGiver.textContent = meta?.questGiver || '';
         tr.appendChild(tdGiver);
 
-        // Binary slug
-        const tdSlug = document.createElement('td');
-        tdSlug.className = 'analysis-table-slug';
-        tdSlug.textContent = toSlug(quest);
-        tr.appendChild(tdSlug);
+        // Note
+        const tdNote = document.createElement('td');
+        tdNote.className = 'analysis-table-note';
+        tdNote.textContent = questNotes[quest]?.note || '';
+        tr.appendChild(tdNote);
 
         // Items count
         const tdItems = document.createElement('td');

@@ -9,6 +9,7 @@ let currentRewardFilter = "all";
 let chainFilterActive = false;
 let showPIActive = false;
 let apiPrereqTargets = new Set(); // slugs that are prerequisites of other quests
+let questNotes = {}; // quest name -> { piRelated, note }
 
 // DOM elements
 const tablesList = document.getElementById('tables-list');
@@ -81,6 +82,15 @@ function getQuestRegion(questName) {
     return meta?.region || null;
 }
 
+// Check if a quest is PI or PI-related
+function isPIRelated(questName) {
+    const meta = getQuestMeta(questName);
+    if (meta?.region === 'Prison Island') return true;
+    if (meta?.piRelated) return true;
+    if (questNotes[questName]?.piRelated) return true;
+    return false;
+}
+
 // Check if a quest is part of a chain
 function isInChain(questName) {
     const meta = getQuestMeta(questName);
@@ -139,6 +149,12 @@ async function fetchQuestRewards() {
             });
         });
 
+        // Load quest notes
+        try {
+            const notesRes = await fetch('quest_notes.json');
+            if (notesRes.ok) questNotes = await notesRes.json();
+        } catch (e) { /* notes are optional */ }
+
         populateTablesList();
 
         // Check if navigated here from chains page or analysis page
@@ -174,9 +190,8 @@ function applyFilters() {
         // Chain filter
         const matchesChain = !chainFilterActive || isInChain(questName);
 
-        // Prison Island filter: hide unverified PI quests unless toggled
-        const region = getQuestRegion(questName);
-        const isUnverifiedPI = region === 'Prison Island' && !getApiQuest(questName);
+        // Prison Island filter: hide unverified PI/PI-adjacent quests unless toggled
+        const isUnverifiedPI = isPIRelated(questName) && !getApiQuest(questName);
         const matchesPI = showPIActive || !isUnverifiedPI;
 
         if (matchesFilter && matchesSearch && matchesLevel && matchesChain && matchesPI) {
@@ -225,13 +240,12 @@ function populateTablesList() {
 
         li.appendChild(document.createTextNode(questName));
 
-        // Prison Island badge
-        const region = getQuestRegion(questName);
-        if (region === 'Prison Island') {
+        // Prison Island / PI-adjacent badge
+        if (isPIRelated(questName)) {
             const badge = document.createElement('span');
             badge.className = 'region-badge region-badge-prison';
             badge.textContent = 'PI';
-            badge.title = 'Prison Island';
+            badge.title = getQuestRegion(questName) === 'Prison Island' ? 'Prison Island' : 'Prison Island related';
             li.appendChild(badge);
         }
 
@@ -258,7 +272,7 @@ function populateTablesList() {
         }
 
         // Apply initial filters
-        const isUnverifiedPI = region === 'Prison Island' && !api;
+        const isUnverifiedPI = isPIRelated(questName) && !api;
         if ((currentRewardFilter !== 'all' && !questMatchesFilter(questName, currentRewardFilter))
             || (!showPIActive && isUnverifiedPI)) {
             li.classList.add('hidden-table');
@@ -437,8 +451,10 @@ function buildQuestDetailHTML(questName) {
     if (api?.level) infoParts.push(`<span class="quest-detail-level">Lv. ${api.level}</span>`);
     const location = meta?.questLocation || api?.location || meta?.region;
     if (location) infoParts.push(`<span class="quest-detail-location">${location}</span>`);
-    const region = meta?.region;
-    if (region === 'Prison Island') infoParts.push(`<span class="region-badge region-badge-prison">Prison Island</span>`);
+    if (isPIRelated(questName)) {
+        const piLabel = meta?.region === 'Prison Island' ? 'Prison Island' : 'Prison Island related';
+        infoParts.push(`<span class="region-badge region-badge-prison">${piLabel}</span>`);
+    }
     if (infoParts.length) html += `<div class="quest-detail-meta">${infoParts.join('')}</div>`;
 
     // Quest giver / finisher — binary for giver name, API for links
@@ -478,9 +494,11 @@ function buildQuestDetailHTML(questName) {
         html += '</ul></div>';
     }
 
-    // Unverified notice
+    // Unverified notice with note
     if (!api) {
-        html += '<div class="quest-unverified-notice">Not listed on corepunk.help — data from game files only.</div>';
+        const note = questNotes[questName]?.note;
+        const noticeText = note || 'Not listed on corepunk.help — data from game files only.';
+        html += `<div class="quest-unverified-notice">${noticeText}</div>`;
     }
 
     html += '</div>';

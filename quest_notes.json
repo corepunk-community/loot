@@ -1,0 +1,142 @@
+{
+  "A Head For Business": {
+    "piRelated": true,
+    "note": "Prison Island quest. No giver or location data in game files."
+  },
+  "Built To Extract": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Dwarfaton Ironchek in Windstone Village. Goals mention Prison Island."
+  },
+  "Burnt Pages": {
+    "piRelated": true,
+    "note": "Prison Island quest. No giver or location data in game files."
+  },
+  "Cleansing The Ride": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Dwarfaton Ironchek in Windstone Village."
+  },
+  "Death Raven": {
+    "piRelated": true,
+    "note": "Prison Island quest. No giver or location data in game files."
+  },
+  "Echoes Beyond": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Hilda Deeproot. Chains from Unveiling The Bound Requiem."
+  },
+  "Echoes Of The Bound Requiem": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Wandering Spirit in World of the Dead."
+  },
+  "Emerald Flame": {
+    "piRelated": true,
+    "note": "Prison Island quest. No giver or location data in game files."
+  },
+  "Essence Of The Wild": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Dwarfaton Ironchek in Windstone Village."
+  },
+  "Guarding Green": {
+    "piRelated": false,
+    "note": "Windreach Woods quest given by Mary Jane Greenpuff. Part of a chain (after Gathering The Fragmented, before Guarding Fortunes). High reward count (17 items). Not on corepunk.help — likely upcoming content."
+  },
+  "Hunger Wolf": {
+    "piRelated": true,
+    "note": "Prison Island quest. No giver or location data in game files."
+  },
+  "In The Belly Of The Beasts": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Miguel \"El Caballo\" Rodriguez at Riverrise mount shop."
+  },
+  "Lighting The Way": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Captain Rob."
+  },
+  "Loose Ends": {
+    "piRelated": false,
+    "note": "Steppes quest given by Tor Drostin at Central Fort. Standalone (no chain). Rewards 11 items including weapon recipes. Not on corepunk.help — likely upcoming content."
+  },
+  "Memory Restoration": {
+    "piRelated": false,
+    "note": "Goldenfield quest given by Ratchet near the Workshop. Goals: repair a Memory Core for Doc Greene. Rewards a dungeon entry item (Horsedungeon Werewolfalpha). Not on corepunk.help — likely upcoming content."
+  },
+  "Plague Frogs": {
+    "piRelated": true,
+    "note": "Prison Island quest. No giver or location data in game files."
+  },
+  "Puzzles Of The Afterlife": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Captain Barnaby Plank at Riverrise City Pier. Goals mention Prison Island."
+  },
+  "Rusty Relics For Rituals": {
+    "piRelated": true,
+    "note": "Goldenfield quest given by Zugg Clankwhistle, but chains to Scarecrow Showdown (Prison Island). PI-adjacent: quest giver is in Goldenfield but chain leads to PI content."
+  },
+  "Scarecrow Showdown": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Skrizzik. Chains from Rusty Relics For Rituals."
+  },
+  "Secrets Of The Bound Requiem": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Kings Head."
+  },
+  "Shattered Memory": {
+    "piRelated": false,
+    "note": "Goldenfield quest given by Mortimer Gloomsworth near Cemetery. Goals: find Memory Core using ancient consoles. Rewards 10 items including T3 artifacts. Not on corepunk.help — likely upcoming content."
+  },
+  "Stitched In Silence": {
+    "piRelated": true,
+    "note": "Prison Island quest. No giver or location data in game files."
+  },
+  "Testament Of Strength": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Pastor Fazool at Reverie Hollow Church."
+  },
+  "The Final Revelation": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Pastor Fazool at Reverie Hollow Church."
+  },
+  "The Key To Ratchets Repair": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Doc Greene."
+  },
+  "The Light Of Dagaron": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Pastor Fazool at Reverie Hollow Church."
+  },
+  "The Unlikely Courier": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Chance, \"Avatar of Odds\"."
+  },
+  "Trading Papers": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Skip Stones. Location has typo in game files: \"Prisson Island\"."
+  },
+  "Trial Of The Marked": {
+    "piRelated": true,
+    "note": "Goldenfield region but PI-adjacent. Goals: \"Survive on the Prison Island for 10 minutes\". Chains from Trial Of Unyielding Will. Finisher is Zara Thorne."
+  },
+  "Trial Of Unyielding Will": {
+    "piRelated": true,
+    "note": "Goldenfield quest given by Wulbyan Bloodroar at Faidens Camp. PI-adjacent: chains to Trial Of The Marked (which takes place on Prison Island)."
+  },
+  "Trial Of Worthiness": {
+    "piRelated": true,
+    "note": "Goldenfield quest given by Zara Thorne at Faidens Camp. PI-adjacent: chains from A Yorner Trial (PI) and to Wulbyans Challenge. Part of the Prison Island trial quest line."
+  },
+  "Unlocking The Troll Head Ritual": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Skrizzik."
+  },
+  "Unveiling The Bound Requiem": {
+    "piRelated": true,
+    "note": "Prison Island quest given by Kings Head. Chains to Echoes Beyond."
+  },
+  "War Bear": {
+    "piRelated": true,
+    "note": "Prison Island quest. No giver or location data in game files."
+  },
+  "Wulbyans Challenge": {
+    "piRelated": true,
+    "note": "Goldenfield quest given by Wulbyan Bloodroar at Faidens Camp. PI-adjacent: chains from Trial Of Worthiness, part of the Prison Island trial quest line."
+  }
+}
