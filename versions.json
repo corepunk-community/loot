@@ -29,5 +29,21 @@
     "api_quests_file": "api_quests_v0.98.1.json",
     "api_npcs_file": "api_npcs_v0.98.1.json",
     "quest_metadata_file": "quest_metadata_v0.98.1.json"
+  },
+  {
+    "version": "0.99",
+    "file": "loot_tables_v0.99.json",
+    "quest_rewards_file": "quest_rewards_v0.99.json",
+    "quest_metadata_file": "quest_metadata_v0.99.json",
+    "api_quests_file": "api_quests_v0.99.json",
+    "api_npcs_file": "api_npcs_v0.99.json"
+  },
+  {
+    "version": "0.100.0",
+    "file": "loot_tables_v0.100.0.json",
+    "quest_rewards_file": "quest_rewards_v0.100.0.json",
+    "quest_metadata_file": "quest_metadata_v0.100.0.json",
+    "api_quests_file": "api_quests_v0.100.0.json",
+    "api_npcs_file": "api_npcs_v0.100.0.json"
   }
 ]
