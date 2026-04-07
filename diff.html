@@ -16,8 +16,8 @@
                 <a href="chains.html">Quest Chains</a>
                 <a href="locations.html">Quest Locations</a>
                 <a href="analysis.html">Quest Analysis</a>
+                <a href="recipes.html">Recipes</a>
                 <a href="diff.html" class="active">Patch Diff</a>
-                <a href="files.html">File Changes</a>
             </nav>
         </header>
 
@@ -28,6 +28,9 @@
                     <select id="diff-data-type">
                         <option value="loot">Loot Tables</option>
                         <option value="quests">Quest Rewards</option>
+                        <option value="recipes">Recipes</option>
+                        <option value="entities">Entities (raw records)</option>
+                        <option value="files">Files (whole Content/ tree)</option>
                     </select>
                 </div>
                 <div class="version-selector">
@@ -46,6 +49,8 @@
                 <p>Loading data...</p>
             </div>
 
+            <div id="diff-mode-help" class="diff-mode-help"></div>
+
             <div id="diff-summary" class="diff-summary hidden">
                 <div class="summary-stat added">
                     <span class="stat-count" id="count-added">0</span> Added
@@ -63,7 +68,7 @@
 
             <div id="diff-filter-bar" class="diff-filter-bar hidden">
                 <div class="search-box">
-                    <input type="text" id="diff-search" placeholder="Search tables or items...">
+                    <input type="text" id="diff-search" placeholder="Search...">
                     <button id="clear-diff-search">&#x2715;</button>
                 </div>
                 <div class="diff-type-filters">
@@ -72,6 +77,7 @@
                     <button class="filter-btn" data-diff-filter="removed">Removed</button>
                     <button class="filter-btn" data-diff-filter="modified">Modified</button>
                 </div>
+                <div class="diff-type-filters" id="diff-bucket-filters"></div>
             </div>
 
             <div id="diff-results"></div>

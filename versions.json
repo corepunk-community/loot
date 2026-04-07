@@ -50,14 +50,15 @@
     "version": "0.102",
     "file": "loot_tables_v0.102.json",
     "quest_rewards_file": "quest_rewards_v0.102.json",
-    "quest_metadata_file": "quest_metadata_v0.102.json",
-    "file_manifest_file": "file_manifest_v0.102.json"
+    "quest_metadata_file": "quest_metadata_v0.102.json"
   },
   {
     "version": "0.103",
     "file": "loot_tables_v0.103.json",
     "quest_rewards_file": "quest_rewards_v0.103.json",
     "quest_metadata_file": "quest_metadata_v0.103.json",
-    "file_manifest_file": "file_manifest_v0.103.json"
+    "file_manifest_file": "file_manifest_v0.103.json",
+    "recipes_file": "recipes_v0.103.json",
+    "entity_index_file": "entity_index_v0.103.json"
   }
 ]

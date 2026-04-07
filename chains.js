@@ -30,9 +30,19 @@ async function fetchData() {
             const latestVersion = versions[versions.length - 1];
 
             const rewardsFile = latestVersion.quest_rewards_file || 'quest_rewards.json';
-            const fetches = [fetch(rewardsFile)];
-            if (latestVersion.api_quests_file) fetches.push(fetch(latestVersion.api_quests_file));
-            if (latestVersion.quest_metadata_file) fetches.push(fetch(latestVersion.quest_metadata_file));
+            // API data is version-independent in practice; fall back to the
+            // most recent version that has it so --skip-api on the newest run
+            // doesn't wipe out all enrichment.
+            const latestWithApi = [...versions].reverse().find(v => v.api_quests_file);
+            const apiQuestsFile = latestVersion.api_quests_file || latestWithApi?.api_quests_file;
+
+            // Use fixed slots so positional destructuring stays correct even when
+            // the API or metadata fetch is skipped for this version.
+            const fetches = [
+                fetch(rewardsFile),
+                apiQuestsFile ? fetch(apiQuestsFile) : Promise.resolve(null),
+                latestVersion.quest_metadata_file ? fetch(latestVersion.quest_metadata_file) : Promise.resolve(null),
+            ];
 
             const [rewardsRes, apiRes, metaRes] = await Promise.all(fetches);
             if (rewardsRes.ok) {

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk Recipes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Corepunk Recipes</h1>
+            <nav class="site-nav">
+                <a href="index.html">Loot Tables</a>
+                <a href="quests.html">Quest Rewards</a>
+                <a href="chains.html">Quest Chains</a>
+                <a href="locations.html">Quest Locations</a>
+                <a href="analysis.html">Quest Analysis</a>
+                <a href="recipes.html" class="active">Recipes</a>
+                <a href="diff.html">Patch Diff</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="recipes-intro">
+                <p>
+                    Corepunk has <strong>two separate</strong> crafting systems and they look the same at first glance.
+                    This page keeps them apart so you can find what you're looking for.
+                </p>
+                <ul>
+                    <li><strong>Crafting Recipes</strong> — the original profession system (Mining, Butchery, Food, etc.). Each recipe has a profession, ingredients, and a single product.</li>
+                    <li><strong>Synthesis Blueprints</strong> — the newer "synthesis" system that produces runes, weapons, consumables, and artifacts. Grouped by which item system they belong to.</li>
+                </ul>
+            </div>
+
+            <div class="recipe-tabs">
+                <button class="recipe-tab active" data-tab="crafting">Crafting Recipes <span class="tab-count" id="crafting-count">0</span></button>
+                <button class="recipe-tab" data-tab="synthesis">Synthesis Blueprints <span class="tab-count" id="synthesis-count">0</span></button>
+            </div>
+
+            <div class="version-selector recipes-version">
+                <label for="recipes-version">Version:</label>
+                <select id="recipes-version"></select>
+            </div>
+
+            <!-- Crafting Recipes -->
+            <div id="tab-crafting" class="recipe-tab-panel">
+                <div class="recipe-controls">
+                    <div class="search-box">
+                        <input type="text" id="crafting-search" placeholder="Search by name, item, or profession...">
+                        <button id="clear-crafting-search">&#x2715;</button>
+                    </div>
+                    <div class="diff-type-filters" id="profession-filters">
+                        <button class="filter-btn active" data-prof="all">All Professions</button>
+                    </div>
+                </div>
+                <div id="crafting-list" class="recipe-list"></div>
+            </div>
+
+            <!-- Synthesis Blueprints -->
+            <div id="tab-synthesis" class="recipe-tab-panel hidden">
+                <div class="recipe-controls">
+                    <div class="search-box">
+                        <input type="text" id="synthesis-search" placeholder="Search by name or item...">
+                        <button id="clear-synthesis-search">&#x2715;</button>
+                    </div>
+                    <div class="diff-type-filters" id="system-filters">
+                        <button class="filter-btn active" data-system="all">All Systems</button>
+                    </div>
+                </div>
+                <div id="synthesis-list" class="recipe-list"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Created with &#x2764;&#xFE0F;</p>
+        </footer>
+    </div>
+
+    <script src="recipes.js"></script>
+</body>
+</html>

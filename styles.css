@@ -551,6 +551,32 @@ footer {
     color: #735c00;
 }
 
+.diff-card-tag {
+    font-size: 11px;
+    background-color: #e1e4e8;
+    color: #555;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-right: 8px;
+}
+
+.diff-mode-help {
+    background-color: #f6f8fa;
+    border-left: 4px solid #4a90e2;
+    padding: 8px 14px;
+    margin: 8px 0 12px 0;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #555;
+}
+.diff-mode-help p { margin: 0; }
+.diff-mode-help code {
+    background: #eef1f4;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
 /* File-row layout used by files.html (path + secondary metadata) */
 .diff-item .file-path {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -588,6 +614,142 @@ footer {
     margin: 0 0 8px 0;
     font-size: 14px;
     color: #555;
+}
+
+/* === Recipes view === */
+
+.recipes-intro {
+    background-color: #f6f8fa;
+    border-left: 4px solid #4a90e2;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.recipes-intro p { margin: 0 0 8px 0; }
+.recipes-intro ul { margin: 4px 0 0 18px; padding: 0; }
+.recipes-intro li { margin-bottom: 4px; }
+
+.recipe-tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid #e1e4e8;
+    margin-bottom: 12px;
+}
+.recipe-tab {
+    background: transparent;
+    border: none;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+.recipe-tab:hover { color: #222; }
+.recipe-tab.active {
+    color: #4a90e2;
+    border-bottom-color: #4a90e2;
+}
+.recipe-tab .tab-count {
+    display: inline-block;
+    background-color: #e1e4e8;
+    color: #555;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+}
+.recipe-tab.active .tab-count {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.recipes-version { margin-bottom: 12px; }
+
+.recipe-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+.recipe-controls .search-box { flex: 1; min-width: 240px; }
+
+.recipe-section {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+}
+.recipe-section-heading {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    color: #333;
+    border-bottom: 1px solid #e1e4e8;
+    padding-bottom: 8px;
+}
+.recipe-section-body { display: block; }
+
+.recipe-card {
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    background-color: #fafbfc;
+}
+.recipe-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.recipe-card-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #222;
+}
+.recipe-card-tag {
+    font-size: 11px;
+    background-color: #e1e4e8;
+    color: #555;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+.recipe-card-body {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.recipe-col {
+    flex: 1;
+    min-width: 0;
+}
+.recipe-col-label {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+.recipe-item {
+    font-size: 13px;
+    padding: 2px 0;
+}
+.recipe-item-missing { color: #aaa; font-style: italic; }
+.recipe-arrow {
+    font-size: 20px;
+    color: #999;
+    flex: 0 0 auto;
+}
+.recipe-scroll-note {
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+    margin-top: 6px;
 }
 
 /* === Quest Rewards Analysis Panel === */
