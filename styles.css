@@ -546,6 +546,30 @@ footer {
     text-decoration: line-through;
 }
 
+.diff-item-modified {
+    background-color: #fff8e1;
+    color: #735c00;
+}
+
+/* File-row layout used by files.html (path + secondary metadata) */
+.diff-item .file-path {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    word-break: break-all;
+}
+
+.diff-item .file-meta {
+    font-size: 11px;
+    opacity: 0.8;
+    margin-top: 2px;
+    text-decoration: none;
+    font-style: italic;
+}
+
+.diff-item-removed .file-meta {
+    text-decoration: none;
+}
+
 /* Full table side-by-side view */
 .full-table-view {
     display: flex;

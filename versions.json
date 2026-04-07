@@ -45,5 +45,19 @@
     "quest_metadata_file": "quest_metadata_v0.100.0.json",
     "api_quests_file": "api_quests_v0.100.0.json",
     "api_npcs_file": "api_npcs_v0.100.0.json"
+  },
+  {
+    "version": "0.102",
+    "file": "loot_tables_v0.102.json",
+    "quest_rewards_file": "quest_rewards_v0.102.json",
+    "quest_metadata_file": "quest_metadata_v0.102.json",
+    "file_manifest_file": "file_manifest_v0.102.json"
+  },
+  {
+    "version": "0.103",
+    "file": "loot_tables_v0.103.json",
+    "quest_rewards_file": "quest_rewards_v0.103.json",
+    "quest_metadata_file": "quest_metadata_v0.103.json",
+    "file_manifest_file": "file_manifest_v0.103.json"
   }
 ]
