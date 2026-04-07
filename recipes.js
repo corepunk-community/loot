@@ -57,13 +57,19 @@ async function init() {
     }
 }
 
+// Predicate matching the same single-item filter we apply in renderSynthesis.
+// Used by both the tab counter and the system filter so they stay in sync.
+function isDisplayableSynth(r) {
+    return r.items && r.items.length > 1;
+}
+
 async function loadRecipes(file) {
     const res = await fetch(file);
     if (!res.ok) throw new Error(`Failed to load ${file}`);
     recipesData = await res.json();
 
     counts.crafting.textContent  = recipesData.crafting_recipes.length;
-    counts.synthesis.textContent = recipesData.synthesis.length;
+    counts.synthesis.textContent = recipesData.synthesis.filter(isDisplayableSynth).length;
 
     rebuildProfessionFilters();
     rebuildSystemFilters();
@@ -110,40 +116,91 @@ function wireUp() {
 //                           recipe-scroll item is "rec_<thing>"
 // ---------------------------------------------------------------------------
 
+// Convert a raw entity name like "wp_knuckle_warm_shaman_1h_steam_blitzers"
+// into a readable display string like "Steam Blitzers".
+//
+// Game item names follow predictable prefix patterns that pack class /
+// tier / hand info into the identifier. Strip those so the player only
+// sees the actual item name.
 function prettyItem(name) {
-    return name
-        .replace(/^con_/, '')
-        .replace(/^res_/, '')
-        .replace(/^lt_/, '')
-        .replace(/^lgt_/, '')
-        .replace(/_/g, ' ')
-        .replace(/\b\w/g, c => c.toUpperCase());
+    let s = name;
+    // Recipe scroll wrapper: rec_<core>_unlocked → <core>
+    s = s.replace(/^rec_/, '').replace(/_unlocked$/, '');
+    // Weapons: wp_<type>_<class>_<subclass>_<hands>_<name>
+    s = s.replace(/^wp_[a-z]+_[a-z]+_[a-z]+_[12]h_/, '');
+    // Artifacts: art_t<n>_<name>
+    s = s.replace(/^art_t\d_/, '');
+    // Active runes: active_rune_t<n>_<name>
+    s = s.replace(/^active_rune_t\d_/, '');
+    // Basic / advanced runes: (bas|adv)_rune_(t<n>_)?<name>
+    s = s.replace(/^(bas|adv)_rune_(t\d_)?/, '');
+    // Basic / advanced chips: (bas|adv)_cp_t<n>_<name>
+    s = s.replace(/^(bas|adv)_cp_t\d_/, '');
+    // Tiered consumables: con_t<n>_<name>
+    s = s.replace(/^con_t\d_/, '');
+    // Generic prefixes
+    s = s.replace(/^con_/, '')
+         .replace(/^res_/, '')
+         .replace(/^lt_/, '')
+         .replace(/^lgt_/, '');
+    return s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+// Identify the product item produced by a crafting recipe.
+//
+// Recipe entity names come in two flavors:
+//   Recipe_Iron_ingot                     → product "Iron_ingot"
+//   rec_wp_knuckle_..._steam_blitz_unlocked → product "wp_knuckle_..._steam_blitzers"
+//
+// Note the second case: the recipe-name "core" is sometimes a *prefix* of the
+// actual product name (e.g. "steam_blitz" vs "steam_blitzers"), so an exact
+// equality check isn't enough. We strip the known prefix/suffix to derive a
+// core, then match items by exact equality first, prefix-startsWith second,
+// and longest-common-prefix as a last resort.
+function recipeCore(name) {
+    let core = name;
+    if (/^[Rr]ecipe_/.test(core))   core = core.replace(/^[Rr]ecipe_/, '');
+    else if (core.startsWith('rec_')) core = core.substring(4);
+    core = core.replace(/_unlocked$/, '');
+    return core.toLowerCase();
+}
+
+function commonPrefixLen(a, b) {
+    let i = 0;
+    while (i < a.length && i < b.length && a[i] === b[i]) i++;
+    return i;
 }
 
 function classifyCraftingItems(recipe) {
-    // Try to find the product: usually the recipe name minus "Recipe_" prefix
-    // matches an item name (case-insensitive).
-    const productName = recipe.name.replace(/^[Rr]ecipe_/, '');
-    const lowerProduct = productName.toLowerCase();
+    const core = recipeCore(recipe.name);
+
+    // Pass 1: exact match
+    let productIndex = recipe.items.findIndex(it => it.toLowerCase() === core);
+    // Pass 2: item starts with core (handles steam_blitz → steam_blitzers)
+    if (productIndex < 0) {
+        productIndex = recipe.items.findIndex(it => it.toLowerCase().startsWith(core));
+    }
+    // Pass 3: longest common prefix, requiring at least half of `core` to match
+    if (productIndex < 0 && core.length > 0) {
+        let bestLen = Math.floor(core.length / 2);
+        recipe.items.forEach((it, i) => {
+            const len = commonPrefixLen(it.toLowerCase(), core);
+            if (len > bestLen) {
+                bestLen = len;
+                productIndex = i;
+            }
+        });
+    }
 
     let product = null;
     const ingredients = [];
-    for (const item of recipe.items) {
-        if (!product && item.toLowerCase() === lowerProduct) {
-            product = item;
+    recipe.items.forEach((it, i) => {
+        if (i === productIndex && product === null) {
+            product = it;
         } else {
-            ingredients.push(item);
+            ingredients.push(it);
         }
-    }
-    // If no exact match, fall back to "first item that the recipe name contains"
-    if (!product) {
-        for (let i = 0; i < ingredients.length; i++) {
-            if (lowerProduct.includes(ingredients[i].toLowerCase())) {
-                product = ingredients.splice(i, 1)[0];
-                break;
-            }
-        }
-    }
+    });
     return { product, ingredients };
 }
 
@@ -213,7 +270,7 @@ function rebuildProfessionFilters() {
 
 function rebuildSystemFilters() {
     const systems = new Set();
-    recipesData.synthesis.forEach(r => { if (r.system) systems.add(r.system); });
+    recipesData.synthesis.forEach(r => { if (r.system && isDisplayableSynth(r)) systems.add(r.system); });
     const ordered = [...systems].sort();
 
     systemFiltersEl.innerHTML = '';
@@ -358,6 +415,12 @@ function renderSynthesis() {
     synthesisListEl.innerHTML = '';
 
     const filtered = recipesData.synthesis.filter(r => {
+        // Skip "upgrade" synth recipes — these are item-upgrade-kit operations
+        // (rarity rolls, upgrades, overclock variants) that all have a single
+        // referenced item (the item being upgraded). They are noise on the
+        // recipes page but still tracked in the data file so the Patch Diff
+        // view can pick them up.
+        if (!r.items || r.items.length <= 1) return false;
         if (system !== 'all' && r.system !== system) return false;
         if (!search) return true;
         if (r.display_name && r.display_name.toLowerCase().includes(search)) return true;

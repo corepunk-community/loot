@@ -577,7 +577,7 @@ footer {
     font-size: 12px;
 }
 
-/* File-row layout used by files.html (path + secondary metadata) */
+/* File-row layout used by the Files mode of diff.html (path + secondary metadata) */
 .diff-item .file-path {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 12.5px;
