@@ -87,6 +87,79 @@ function formatDelta(delta) {
     return sign + formatBytes(Math.abs(delta));
 }
 
+// Items used to be plain strings ("Iron Ingot"); they are now objects.
+// Loot items: { name, qty_min, qty_max, chance, group, group_chance }
+// Quest rewards: { name, qty, head, flag }
+// These helpers normalize either shape into a stable comparison key (so the
+// diff considers qty/chance changes) and a display string the renderers can
+// use directly.
+function itemKey(item) {
+    if (typeof item === 'string') return item;
+    const parts = [item.name || ''];
+    if (item.qty_min != null) parts.push(`q${item.qty_min}-${item.qty_max}`);
+    if (item.qty != null && item.qty_min == null) parts.push(`q${item.qty}`);
+    if (item.chance != null) parts.push(`c${item.chance}`);
+    return parts.join('|');
+}
+
+function itemDisplayString(item) {
+    if (typeof item === 'string') return item;
+    let s = '';
+    if (item.qty_min != null) {
+        s += item.qty_min === item.qty_max
+            ? `${item.qty_min}× `
+            : `${item.qty_min}–${item.qty_max}× `;
+    } else if (item.qty != null && item.qty > 1) {
+        s += `${item.qty}× `;
+    }
+    s += item.name || '';
+    if (item.chance != null) {
+        const pct = item.chance * 100;
+        const fmt = pct >= 10 ? pct.toFixed(0) : pct >= 1 ? pct.toFixed(1) : pct.toFixed(2);
+        s += ` (${fmt}%)`;
+    }
+    return s;
+}
+
+// Diff two `{ tableName: items[] }` objects where items may be strings or
+// item-objects. Two items match iff their itemKey() matches, so a qty or
+// chance change shows up as a removed+added pair.
+function diffObjectOfItemEntries(oldData, newData, { skipPrefix } = {}) {
+    const allKeys = new Set([...Object.keys(oldData), ...Object.keys(newData)]);
+    const added = [], removed = [], modified = [];
+    let unchanged = 0;
+
+    for (const key of [...allKeys].sort()) {
+        if (skipPrefix && key.startsWith(skipPrefix)) continue;
+        const inOld = key in oldData;
+        const inNew = key in newData;
+        if (!inOld && inNew) {
+            added.push({ name: key, items: newData[key] || [] });
+        } else if (inOld && !inNew) {
+            removed.push({ name: key, items: oldData[key] || [] });
+        } else {
+            const oldItems = oldData[key] || [];
+            const newItems = newData[key] || [];
+            const oldKeys = new Map(oldItems.map(i => [itemKey(i), i]));
+            const newKeys = new Map(newItems.map(i => [itemKey(i), i]));
+            const addedItems = [];
+            const removedItems = [];
+            for (const [k, v] of newKeys) if (!oldKeys.has(k)) addedItems.push(v);
+            for (const [k, v] of oldKeys) if (!newKeys.has(k)) removedItems.push(v);
+            if (addedItems.length || removedItems.length) {
+                modified.push({
+                    name: key,
+                    addedItems, removedItems,
+                    oldItems, newItems,
+                });
+            } else {
+                unchanged++;
+            }
+        }
+    }
+    return { added, removed, modified, unchanged };
+}
+
 // Diff two flat objects with array values, like {table_name: [item, ...]}.
 // Used by loot and quests.
 function diffObjectOfArrays(oldData, newData, { skipPrefix } = {}) {
@@ -127,10 +200,12 @@ function renderItemListCard(entry, type) {
     const sign = type === 'added' ? '+' : '-';
     const card = createDiffCard(entry.name, type, `${sign}${entry.items.length} items`);
     const body = card.querySelector('.diff-card-body');
-    [...entry.items].sort().forEach(item => {
+    const sorted = [...entry.items].sort((a, b) =>
+        itemDisplayString(a).localeCompare(itemDisplayString(b)));
+    sorted.forEach(item => {
         const div = document.createElement('div');
         div.className = `diff-item diff-item-${type}`;
-        div.textContent = `${sign} ${item}`;
+        div.textContent = `${sign} ${itemDisplayString(item)}`;
         body.appendChild(div);
     });
     return card;
@@ -154,13 +229,13 @@ function renderModifiedItemListCard(entry) {
     entry.removedItems.forEach(item => {
         const div = document.createElement('div');
         div.className = 'diff-item diff-item-removed';
-        div.textContent = `- ${item}`;
+        div.textContent = `- ${itemDisplayString(item)}`;
         body.appendChild(div);
     });
     entry.addedItems.forEach(item => {
         const div = document.createElement('div');
         div.className = 'diff-item diff-item-added';
-        div.textContent = `+ ${item}`;
+        div.textContent = `+ ${itemDisplayString(item)}`;
         body.appendChild(div);
     });
     return card;
@@ -177,8 +252,8 @@ function toggleFullItemListView(body, entry, button) {
 
     const fullView = document.createElement('div');
     fullView.className = 'full-table-view';
-    const removedSet = new Set(entry.removedItems);
-    const addedSet   = new Set(entry.addedItems);
+    const removedKeys = new Set(entry.removedItems.map(itemKey));
+    const addedKeys   = new Set(entry.addedItems.map(itemKey));
 
     const oldCol = document.createElement('div');
     oldCol.className = 'full-table-col';
@@ -186,8 +261,8 @@ function toggleFullItemListView(body, entry, button) {
     entry.oldItems.forEach(item => {
         const div = document.createElement('div');
         div.className = 'diff-item';
-        if (removedSet.has(item)) div.classList.add('diff-item-removed');
-        div.textContent = item;
+        if (removedKeys.has(itemKey(item))) div.classList.add('diff-item-removed');
+        div.textContent = itemDisplayString(item);
         oldCol.appendChild(div);
     });
 
@@ -197,8 +272,8 @@ function toggleFullItemListView(body, entry, button) {
     entry.newItems.forEach(item => {
         const div = document.createElement('div');
         div.className = 'diff-item';
-        if (addedSet.has(item)) div.classList.add('diff-item-added');
-        div.textContent = item;
+        if (addedKeys.has(itemKey(item))) div.classList.add('diff-item-added');
+        div.textContent = itemDisplayString(item);
         newCol.appendChild(div);
     });
 
@@ -217,9 +292,33 @@ const ADAPTERS = {
     loot: {
         versionKey: 'file',
         searchPlaceholder: 'Search tables or items...',
-        helpHtml: '',
+        helpHtml: 'Compares loot tables by table → item. Items now carry quantity range and drop chance, so a "modified" entry surfaces both items added/removed AND items whose qty or chance changed.',
+        // Loot data is split into per-category chunks behind an index file.
+        // We follow the index, fetch every chunk, then return a flat
+        // { tableName: [item, ...] } object the rest of the diff machinery
+        // can work with. For old version files that still use the legacy
+        // flat format, we hand them through unchanged.
+        async load(file) {
+            const r = await fetch(file);
+            if (!r.ok) throw new Error(`Failed to load ${file}`);
+            const data = await r.json();
+            if (!data || !data.chunks || !data.tables) return data;
+
+            const tables = {};
+            const baseDir = '';
+            const chunkEntries = Object.entries(data.chunks);
+            const chunkJsons = await Promise.all(
+                chunkEntries.map(([_, meta]) =>
+                    fetch(baseDir + meta.file).then(r => {
+                        if (!r.ok) throw new Error(`Failed to load chunk ${meta.file}`);
+                        return r.json();
+                    }))
+            );
+            chunkJsons.forEach(json => Object.assign(tables, json));
+            return tables;
+        },
         compute(oldData, newData) {
-            return diffObjectOfArrays(oldData, newData, { skipPrefix: 'Camp Chest' });
+            return diffObjectOfItemEntries(oldData, newData, { skipPrefix: 'Camp Chest' });
         },
         renderItem(entry, type) {
             return type === 'modified' ? renderModifiedItemListCard(entry)
@@ -231,7 +330,7 @@ const ADAPTERS = {
             const items = type === 'modified'
                 ? [...entry.addedItems, ...entry.removedItems]
                 : entry.items;
-            return items.some(i => i.toLowerCase().includes(search));
+            return items.some(i => itemDisplayString(i).toLowerCase().includes(search));
         },
     },
 
@@ -239,8 +338,8 @@ const ADAPTERS = {
     quests: {
         versionKey: 'quest_rewards_file',
         searchPlaceholder: 'Search quests or items...',
-        helpHtml: '',
-        compute(oldData, newData) { return diffObjectOfArrays(oldData, newData); },
+        helpHtml: 'Diffs quest rewards. Items now include quantity, so a "modified" entry catches both items added/removed AND items whose qty changed.',
+        compute(oldData, newData) { return diffObjectOfItemEntries(oldData, newData); },
         renderItem(entry, type) {
             return type === 'modified' ? renderModifiedItemListCard(entry)
                                        : renderItemListCard(entry, type);
@@ -251,7 +350,7 @@ const ADAPTERS = {
             const items = type === 'modified'
                 ? [...entry.addedItems, ...entry.removedItems]
                 : entry.items;
-            return items.some(i => i.toLowerCase().includes(search));
+            return items.some(i => itemDisplayString(i).toLowerCase().includes(search));
         },
     },
 
@@ -259,28 +358,57 @@ const ADAPTERS = {
     recipes: {
         versionKey: 'recipes_file',
         searchPlaceholder: 'Search recipe names or items...',
-        helpHtml: 'Diffs both crafting recipes (Recipe_*) and synthesis blueprints (syn_*) by name. A recipe is "modified" if its referenced item list changed.',
+        helpHtml: 'Diffs both crafting recipes (Recipe_*) and synthesis blueprints (syn_*) by name. A recipe is "modified" when its ingredients, output, or any quantity changed.',
         compute(oldData, newData) {
-            // Flatten both halves into one keyed object: each recipe is keyed
-            // by "<kind>:<name>" with items being the resolved entity names.
+            // Flatten both halves into a keyed object. As of v0.103 each
+            // recipe carries a structured `ingredients` array and an
+            // `output` object; older version files only had a flat
+            // `items` array of strings. We normalize to a single
+            // "entries" array of `{ name, qty, role }` so the diff treats
+            // qty changes as real modifications.
+            const itemsOf = (r) => {
+                const out = [];
+                if (Array.isArray(r.ingredients)) {
+                    r.ingredients.forEach(i => out.push({
+                        name: typeof i === 'object' ? i.name : i,
+                        qty:  typeof i === 'object' ? i.qty  : null,
+                        role: 'ingredient',
+                    }));
+                }
+                if (r.output && r.output.name) {
+                    out.push({ name: r.output.name, qty: r.output.qty || null, role: 'output' });
+                }
+                if (Array.isArray(r.items) && out.length === 0) {
+                    r.items.forEach(i => out.push({ name: i, qty: null, role: 'unknown' }));
+                }
+                return out;
+            };
+
             const flatten = (d) => {
                 const out = {};
                 (d.crafting_recipes || []).forEach(r => {
                     out[`crafting:${r.name}`] = {
                         kind: 'crafting',
                         display: r.display_name || r.name,
-                        items: r.items || [],
+                        items: itemsOf(r),
                     };
                 });
                 (d.synthesis || []).forEach(r => {
                     out[`synthesis:${r.name}`] = {
                         kind: 'synthesis',
                         display: r.display_name || r.name,
-                        items: r.items || [],
+                        items: itemsOf(r),
                     };
                 });
                 return out;
             };
+
+            const recipeItemKey = it => {
+                const parts = [it.role || '', it.name || ''];
+                if (it.qty != null) parts.push(`q${it.qty}`);
+                return parts.join('|');
+            };
+
             const oldFlat = flatten(oldData);
             const newFlat = flatten(newData);
             const allKeys = new Set([...Object.keys(oldFlat), ...Object.keys(newFlat)]);
@@ -297,17 +425,20 @@ const ADAPTERS = {
                     const r = oldFlat[key];
                     removed.push({ name: r.display, kind: r.kind, items: r.items });
                 } else {
-                    const oldItems = new Set(oldFlat[key].items);
-                    const newItems = new Set(newFlat[key].items);
-                    const addedItems = [...newItems].filter(i => !oldItems.has(i)).sort();
-                    const removedItems = [...oldItems].filter(i => !newItems.has(i)).sort();
+                    const oldItems = oldFlat[key].items;
+                    const newItems = newFlat[key].items;
+                    const oldKeys = new Map(oldItems.map(i => [recipeItemKey(i), i]));
+                    const newKeys = new Map(newItems.map(i => [recipeItemKey(i), i]));
+                    const addedItems = [];
+                    const removedItems = [];
+                    for (const [k, v] of newKeys) if (!oldKeys.has(k)) addedItems.push(v);
+                    for (const [k, v] of oldKeys) if (!newKeys.has(k)) removedItems.push(v);
                     if (addedItems.length || removedItems.length) {
                         modified.push({
                             name: newFlat[key].display,
                             kind: newFlat[key].kind,
                             addedItems, removedItems,
-                            oldItems: [...oldFlat[key].items].sort(),
-                            newItems: [...newFlat[key].items].sort(),
+                            oldItems, newItems,
                         });
                     } else {
                         unchanged++;
@@ -337,7 +468,7 @@ const ADAPTERS = {
             const items = type === 'modified'
                 ? [...entry.addedItems, ...entry.removedItems]
                 : entry.items;
-            return items.some(i => i.toLowerCase().includes(search));
+            return items.some(i => itemDisplayString(i).toLowerCase().includes(search));
         },
     },
 
@@ -750,8 +881,10 @@ async function runDiff() {
     diffFilterBar.classList.add('hidden');
 
     try {
-        const [oldData, newData] = await Promise.all([fetchVersion(oldFile), fetchVersion(newFile)]);
-        diffResult = getAdapter().compute(oldData, newData);
+        const adapter = getAdapter();
+        const loader = typeof adapter.load === 'function' ? adapter.load : fetchVersion;
+        const [oldData, newData] = await Promise.all([loader(oldFile), loader(newFile)]);
+        diffResult = adapter.compute(oldData, newData);
         updateSummary();
         rebuildBucketFilters();
         renderDiff();

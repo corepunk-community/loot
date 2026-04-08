@@ -26,8 +26,22 @@ function isPIRelated(questName) {
     return false;
 }
 
-function getItemType(itemName) {
-    const lower = itemName.toLowerCase();
+// Quest reward items used to be plain strings; they are now objects of
+// shape { name, qty, head, flag } as of v0.103. These helpers normalize
+// either shape so the rest of the page doesn't have to care.
+function itemDisplayName(item) {
+    if (typeof item === 'string') return item;
+    return item?.name || '';
+}
+
+function formatItemEntry(item) {
+    if (typeof item === 'string') return item;
+    if (item.qty != null && item.qty > 1) return `${item.qty}× ${item.name}`;
+    return item.name || '';
+}
+
+function getItemType(item) {
+    const lower = itemDisplayName(item).toLowerCase();
     if (lower.startsWith('art t') || lower.startsWith('art_t')) return 'artifact';
     if (lower.startsWith('rec ') || lower.startsWith('rec_')) return 'recipe';
     if (lower.startsWith('con ') || lower.startsWith('con_')) return 'consumable';
@@ -94,16 +108,19 @@ async function init() {
 function renderStats() {
     const quests = Object.keys(questRewards);
     const allItems = Object.values(questRewards).flat();
-    const uniqueItems = [...new Set(allItems)];
+    const uniqueItems = [...new Set(allItems.map(itemDisplayName))];
     const avgItems = quests.length > 0 ? (allItems.length / quests.length).toFixed(1) : 0;
 
     document.getElementById('stat-total-quests').textContent = quests.length;
     document.getElementById('stat-unique-items').textContent = uniqueItems.length;
     document.getElementById('stat-avg-items').textContent = avgItems;
 
-    // Top rewards
+    // Top rewards (count quests that include each item, by display name)
     const itemCounts = {};
-    allItems.forEach(item => { itemCounts[item] = (itemCounts[item] || 0) + 1; });
+    allItems.forEach(item => {
+        const name = itemDisplayName(item);
+        itemCounts[name] = (itemCounts[name] || 0) + 1;
+    });
     const topItems = Object.entries(itemCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
 
     const topList = document.getElementById('top-rewards-list');
@@ -175,18 +192,18 @@ function renderQuestLists() {
         {
             id: 'upgrade-t2-epic',
             title: 'Item Upgrade T2 Epic',
-            predicate: item => item === 'Synthesis Item Upgrade T2 Epic'
+            predicate: item => itemDisplayName(item) === 'Synthesis Item Upgrade T2 Epic'
         },
         {
             id: 'upgrade-t3-epic',
             title: 'Item Upgrade T3 Epic',
-            predicate: item => item === 'Synthesis Item Upgrade T3 Epic'
+            predicate: item => itemDisplayName(item) === 'Synthesis Item Upgrade T3 Epic'
         },
         {
             id: 'weapons',
             title: 'Weapons or Weapon Recipes',
             predicate: item => {
-                const lower = item.toLowerCase();
+                const lower = itemDisplayName(item).toLowerCase();
                 return (lower.startsWith('wp ') || lower.startsWith('rec wp '));
             }
         },
@@ -194,14 +211,14 @@ function renderQuestLists() {
             id: 't3-artifacts',
             title: 'T3 Artifacts or Artifact Recipes',
             predicate: item => {
-                const lower = item.toLowerCase();
+                const lower = itemDisplayName(item).toLowerCase();
                 return (lower.startsWith('art t3 ') || lower.startsWith('rec art t3 '));
             }
         },
         {
             id: 'talent-fragmenters',
             title: 'Talent Fragmenters',
-            predicate: item => item === 'Talent Fragmenter'
+            predicate: item => itemDisplayName(item) === 'Talent Fragmenter'
         }
     ];
 
@@ -357,7 +374,7 @@ function buildQuestTable(results) {
         // Items (plain text, comma-separated)
         const tdItems = document.createElement('td');
         tdItems.className = 'analysis-table-items';
-        tdItems.textContent = items.join(', ');
+        tdItems.textContent = items.map(formatItemEntry).join(', ');
         tr.appendChild(tdItems);
 
         tbody.appendChild(tr);

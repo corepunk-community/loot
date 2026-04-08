@@ -33,9 +33,23 @@ const normalView = document.getElementById('normal-view');
 // Category filter elements
 const filterButtons = document.querySelectorAll('.filter-buttons .filter-btn');
 
+// Quest reward items used to be plain strings; they are now objects of
+// shape { name, qty, head, flag } as of v0.103. These helpers normalize
+// either shape so the rest of the page doesn't have to care.
+function itemDisplayName(item) {
+    if (typeof item === 'string') return item;
+    return item?.name || '';
+}
+
+function formatItemEntry(item) {
+    if (typeof item === 'string') return item;
+    if (item.qty != null && item.qty > 1) return `${item.qty}× ${item.name}`;
+    return item.name || '';
+}
+
 // Reward type classification
-function getItemType(itemName) {
-    const lower = itemName.toLowerCase();
+function getItemType(item) {
+    const lower = itemDisplayName(item).toLowerCase();
     if (lower.startsWith('art t') || lower.startsWith('art_t')) return 'artifact';
     if (lower.startsWith('rec ') || lower.startsWith('rec_')) return 'recipe';
     if (lower.startsWith('con ') || lower.startsWith('con_')) return 'consumable';
@@ -598,20 +612,20 @@ function filterItems(items, searchTerm, containerElement) {
         return;
     }
 
-    const sortedItems = [...items].sort();
+    const sortedItems = [...items].sort((a, b) =>
+        itemDisplayName(a).localeCompare(itemDisplayName(b)));
+    const term = (searchTerm || '').toLowerCase();
     let itemsFound = 0;
 
     sortedItems.forEach(item => {
-        if (searchTerm && !item.toLowerCase().includes(searchTerm.toLowerCase())) {
-            return;
-        }
+        const display = itemDisplayName(item);
+        if (term && !display.toLowerCase().includes(term)) return;
         itemsFound++;
         const li = document.createElement('li');
-        li.textContent = item;
+        li.textContent = formatItemEntry(item);
 
         // Add a subtle type indicator
-        const type = getItemType(item);
-        li.classList.add(`item-type-${type}`);
+        li.classList.add(`item-type-${getItemType(item)}`);
 
         containerElement.appendChild(li);
     });
@@ -636,7 +650,7 @@ function performGlobalSearch(searchTerm) {
 
     Object.entries(questRewards).forEach(([questName, items]) => {
         const matchingItems = items.filter(item =>
-            item.toLowerCase().includes(searchTerm)
+            itemDisplayName(item).toLowerCase().includes(searchTerm)
         );
         if (matchingItems.length > 0) {
             matchingQuests[questName] = matchingItems;
@@ -661,22 +675,26 @@ function performGlobalSearch(searchTerm) {
         const resultItemsList = document.createElement('ul');
         resultItemsList.className = 'result-items';
 
-        const sortedItems = [...matchingQuests[questName]].sort();
+        const sortedItems = [...matchingQuests[questName]].sort((a, b) =>
+            itemDisplayName(a).localeCompare(itemDisplayName(b)));
 
         sortedItems.forEach(item => {
             const li = document.createElement('li');
             li.className = 'result-item';
 
-            const lowerItem = item.toLowerCase();
+            const display = itemDisplayName(item);
+            const qtyPrefix = (typeof item === 'object' && item.qty != null && item.qty > 1)
+                ? `${item.qty}× ` : '';
+            const lowerItem = display.toLowerCase();
             const index = lowerItem.indexOf(searchTerm);
 
             if (index !== -1) {
-                const before = item.substring(0, index);
-                const match = item.substring(index, index + searchTerm.length);
-                const after = item.substring(index + searchTerm.length);
-                li.innerHTML = `${before}<strong>${match}</strong>${after}`;
+                const before = display.substring(0, index);
+                const match  = display.substring(index, index + searchTerm.length);
+                const after  = display.substring(index + searchTerm.length);
+                li.innerHTML = `${qtyPrefix}${before}<strong>${match}</strong>${after}`;
             } else {
-                li.textContent = item;
+                li.textContent = formatItemEntry(item);
             }
 
             resultItemsList.appendChild(li);

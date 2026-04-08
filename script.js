@@ -1,5 +1,9 @@
 // Global variables
-let lootTables = {};
+let lootTables = {};               // table name → items[] (lazy-populated)
+let lootIndex = null;              // { version, chunks, tables: { name → chunkKey } }
+let chunkBaseDir = "";             // url prefix for chunk files (set per version)
+const chunkCache = {};             // chunkKey → fetched chunk JSON
+const chunkPromises = {};          // chunkKey → in-flight fetch promise
 let currentTable = null;
 let secondTable = null;
 let compareMode = false;
@@ -51,32 +55,139 @@ const table2Items = document.getElementById('table2-items');
 // Category filter elements
 const filterButtons = document.querySelectorAll('.filter-btn');
 
-// Fetch loot tables data
+// Fetch loot tables index. The full data is split into per-category chunks
+// to keep page load fast; we only fetch a chunk when the user opens a table
+// in it (or when global search needs everything). The index maps every
+// table name to its chunk so we can build the table list immediately.
 async function fetchLootTables() {
     try {
-        // Load version manifest and use the latest version
         const versionsResponse = await fetch('versions.json');
-        if (!versionsResponse.ok) {
-            throw new Error(`Failed to load versions manifest`);
-        }
+        if (!versionsResponse.ok) throw new Error('Failed to load versions manifest');
         const versions = await versionsResponse.json();
         const latestVersion = versions[versions.length - 1];
 
         const response = await fetch(latestVersion.file);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
 
-        // Filter out Camp Chest entries (no longer dropping loot)
-        lootTables = Object.fromEntries(
-            Object.entries(data).filter(([key]) => !key.startsWith('Camp Chest'))
-        );
+        if (data && data.chunks && data.tables) {
+            // New chunked format: { version, chunks, tables: { name → chunkKey } }
+            lootIndex = data;
+            chunkBaseDir = '';
+            // Filter out Camp Chest entries (no longer dropping loot) at the
+            // index level so they don't appear in the table list at all.
+            lootIndex.tables = Object.fromEntries(
+                Object.entries(lootIndex.tables).filter(([k]) => !k.startsWith('Camp Chest'))
+            );
+            // lootTables starts empty — items get hydrated on demand.
+            lootTables = {};
+        } else {
+            // Legacy flat format: { tableName: [item, item, ...] }
+            lootIndex = null;
+            lootTables = Object.fromEntries(
+                Object.entries(data).filter(([k]) => !k.startsWith('Camp Chest'))
+            );
+        }
+
         populateTablesList();
     } catch (error) {
         console.error('Error fetching loot tables:', error);
         showError('Failed to load loot tables data. Please try again later.');
     }
+}
+
+// Fetch a single chunk file and merge its tables into `lootTables`. Returns
+// a promise that resolves when the chunk is loaded. Multiple callers asking
+// for the same chunk share one in-flight request.
+function loadChunk(chunkKey) {
+    if (!lootIndex) return Promise.resolve();
+    if (chunkCache[chunkKey]) return Promise.resolve();
+    if (chunkPromises[chunkKey]) return chunkPromises[chunkKey];
+    const meta = lootIndex.chunks[chunkKey];
+    if (!meta) return Promise.resolve();
+    const url = chunkBaseDir + meta.file;
+    chunkPromises[chunkKey] = fetch(url)
+        .then(r => {
+            if (!r.ok) throw new Error(`Failed to fetch chunk ${chunkKey}: ${r.status}`);
+            return r.json();
+        })
+        .then(json => {
+            chunkCache[chunkKey] = json;
+            Object.assign(lootTables, json);
+        })
+        .catch(err => {
+            console.error(`Error loading chunk ${chunkKey}:`, err);
+            delete chunkPromises[chunkKey];
+            throw err;
+        });
+    return chunkPromises[chunkKey];
+}
+
+// Ensure a single table is loaded (loads its chunk if needed).
+async function ensureTableLoaded(tableName) {
+    if (lootTables[tableName]) return;
+    if (!lootIndex) return;
+    const chunkKey = lootIndex.tables[tableName];
+    if (!chunkKey) return;
+    await loadChunk(chunkKey);
+}
+
+// Load every chunk. Used by global search. Returns a promise that resolves
+// once all chunks are merged into lootTables.
+async function loadAllChunks() {
+    if (!lootIndex) return;
+    const keys = Object.keys(lootIndex.chunks);
+    await Promise.all(keys.map(k => loadChunk(k)));
+}
+
+// Render an item entry. Items are objects { name, qty_min, qty_max, chance,
+// group, group_chance } as of v0.103. Older format files used plain strings,
+// so we still handle that for backwards compat.
+function itemDisplayName(item) {
+    if (typeof item === 'string') return item;
+    return item.name || '';
+}
+
+function formatQtyRange(item) {
+    if (typeof item === 'string') return '';
+    if (item.qty_min == null) return '';
+    if (item.qty_min === item.qty_max) return `${item.qty_min}× `;
+    return `${item.qty_min}–${item.qty_max}× `;
+}
+
+function formatChance(item) {
+    if (typeof item === 'string') return '';
+    if (item.chance == null) return '';
+    const pct = item.chance * 100;
+    if (pct >= 10) return ` (${pct.toFixed(0)}%)`;
+    if (pct >= 1) return ` (${pct.toFixed(1)}%)`;
+    return ` (${pct.toFixed(2)}%)`;
+}
+
+// Build the formatted display string for an item entry: "1–3× Item (50%)".
+function formatItemEntry(item) {
+    if (typeof item === 'string') return item;
+    return `${formatQtyRange(item)}${item.name}${formatChance(item)}`;
+}
+
+// Returns a stable comparison key for ordering items in display: name first,
+// then qty range, then chance descending.
+function itemSortKey(item) {
+    if (typeof item === 'string') return [item, 0, 0, 0];
+    return [item.name || '', item.qty_min || 0, item.qty_max || 0, -(item.chance || 0)];
+}
+
+// Tables list helper: returns the list of table names (sorted alphabetically),
+// preferring the index when available so the list is built before any items
+// are fetched.
+function allTableNames() {
+    if (lootIndex) return Object.keys(lootIndex.tables);
+    return Object.keys(lootTables);
+}
+
+// Returns the items array for a table, or empty array if not loaded yet.
+function getTableItems(tableName) {
+    return lootTables[tableName] || [];
 }
 
 // Determine category based on table name
@@ -183,9 +294,9 @@ function applyCompareFilters() {
 // Populate tables list
 function populateTablesList() {
     tablesList.innerHTML = '';
-    
+
     // Sort table names alphabetically
-    const sortedTableNames = Object.keys(lootTables).sort();
+    const sortedTableNames = allTableNames().sort();
     
     sortedTableNames.forEach(tableName => {
         const li = document.createElement('li');
@@ -232,9 +343,9 @@ function populateTablesList() {
 // Populate tables list for comparison mode
 function populateCompareTablesList() {
     compareTablesList.innerHTML = '';
-    
+
     // Sort table names alphabetically
-    const sortedTableNames = Object.keys(lootTables).sort();
+    const sortedTableNames = allTableNames().sort();
     
     sortedTableNames.forEach(tableName => {
         const li = document.createElement('li');
@@ -352,35 +463,53 @@ function updateTableSelectionUI() {
     table2ItemSearch.value = '';
 }
 
-// Filter items in a list based on search term
+// Filter items in a list based on search term. Items are objects with
+// { name, qty_min, qty_max, chance, group, group_chance }; older versions
+// store plain strings, which we still handle.
 function filterItems(items, searchTerm, containerElement) {
     containerElement.innerHTML = '';
-    
+
     if (!items || items.length === 0) {
         const li = document.createElement('li');
         li.textContent = 'No items in this loot table';
         containerElement.appendChild(li);
         return;
     }
-    
-    // Sort items alphabetically
-    const sortedItems = [...items].sort();
-    
-    let itemsFound = 0;
-    
-    sortedItems.forEach(item => {
-        // Filter by search term if provided
-        if (searchTerm && !item.toLowerCase().includes(searchTerm.toLowerCase())) {
-            return;
+
+    // Sort by display name then by chance descending so duplicates with
+    // different odds list highest-odds-first.
+    const sorted = [...items].sort((a, b) => {
+        const ka = itemSortKey(a);
+        const kb = itemSortKey(b);
+        for (let i = 0; i < ka.length; i++) {
+            if (ka[i] < kb[i]) return -1;
+            if (ka[i] > kb[i]) return 1;
         }
-        
+        return 0;
+    });
+
+    const term = (searchTerm || '').toLowerCase();
+    let itemsFound = 0;
+    let lastGroup = null;
+
+    sorted.forEach(item => {
+        const display = itemDisplayName(item);
+        if (term && !display.toLowerCase().includes(term)) return;
         itemsFound++;
-        
+
+        // Insert a group separator row whenever the group changes (sorted
+        // by name, so groups will interleave; this is a light visual cue
+        // rather than a strict grouping).
         const li = document.createElement('li');
-        li.textContent = item;
+        li.textContent = formatItemEntry(item);
+        if (typeof item === 'object' && item.group) {
+            li.dataset.group = item.group;
+            li.title = `Group: ${item.group}` +
+                (item.group_chance != null ? ` (${(item.group_chance * 100).toFixed(1)}% group roll)` : '');
+        }
         containerElement.appendChild(li);
     });
-    
+
     if (itemsFound === 0) {
         const li = document.createElement('li');
         li.textContent = 'No matching items found';
@@ -389,142 +518,157 @@ function filterItems(items, searchTerm, containerElement) {
     }
 }
 
-// Display items for a specific table
-function displayTableItems(tableName, searchTerm = '') {
+// Display items for a specific table. Loads the table's chunk if needed.
+async function displayTableItems(tableName, searchTerm = '') {
     currentTable = tableName;
     selectedTableHeading.textContent = tableName;
-    
-    const items = lootTables[tableName];
-    filterItems(items, searchTerm, itemsList);
+
+    if (lootIndex && !lootTables[tableName]) {
+        itemsList.innerHTML = '';
+        const li = document.createElement('li');
+        li.textContent = 'Loading items…';
+        li.classList.add('no-items-message');
+        itemsList.appendChild(li);
+        try {
+            await ensureTableLoaded(tableName);
+        } catch (e) {
+            itemsList.innerHTML = '';
+            const err = document.createElement('li');
+            err.textContent = 'Failed to load items for this table';
+            err.classList.add('no-items-message');
+            itemsList.appendChild(err);
+            return;
+        }
+        // If the user has clicked another table since we started loading,
+        // bail out so we don't overwrite the newer view.
+        if (currentTable !== tableName) return;
+    }
+
+    filterItems(getTableItems(tableName), searchTerm, itemsList);
 }
 
-// Display comparison between two tables
-function displayCompareTables() {
-    if (!currentTable) {
-        return;
-    }
-    
-    // Clear existing items
+// Display comparison between two tables. Both tables' chunks are loaded
+// (in parallel) before rendering so the diff highlighting is accurate.
+async function displayCompareTables() {
+    if (!currentTable) return;
+
+    // Show a loading indicator while we fetch any missing chunks.
     table1Items.innerHTML = '';
     table2Items.innerHTML = '';
-    
-    // Get items for first table
-    const items1 = lootTables[currentTable] || [];
-    
-    // Get items for second table if selected
-    const items2 = secondTable ? lootTables[secondTable] || [] : [];
-    
-    // Find unique items in both tables
-    const uniqueToTable1 = secondTable 
-        ? items1.filter(item => !items2.includes(item))
-        : [];
-        
-    const uniqueToTable2 = secondTable 
-        ? items2.filter(item => !items1.includes(item))
-        : [];
-    
-    // Apply search filters
-    const searchTerm1 = table1ItemSearch.value.trim();
-    const searchTerm2 = table2ItemSearch.value.trim();
-    
-    // Display items for first table
-    if (items1.length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'No items in this loot table';
-        li.classList.add('no-items-message');
-        table1Items.appendChild(li);
-    } else {
-        // Sort items alphabetically
-        const sortedItems = [...items1].sort();
-        let itemsFound = 0;
-        
-        sortedItems.forEach(item => {
-            // Apply search filter
-            if (searchTerm1 && !item.toLowerCase().includes(searchTerm1.toLowerCase())) {
-                return;
-            }
-            
-            itemsFound++;
+    if (lootIndex && (!lootTables[currentTable] || (secondTable && !lootTables[secondTable]))) {
+        const placeholder = (parent, msg) => {
             const li = document.createElement('li');
-            li.textContent = item;
-            
-            // Highlight unique items
-            if (secondTable && uniqueToTable1.includes(item)) {
-                li.classList.add('unique-item');
+            li.textContent = msg;
+            li.classList.add('no-items-message');
+            parent.appendChild(li);
+        };
+        placeholder(table1Items, 'Loading items…');
+        if (secondTable) placeholder(table2Items, 'Loading items…');
+        try {
+            await Promise.all([
+                ensureTableLoaded(currentTable),
+                secondTable ? ensureTableLoaded(secondTable) : Promise.resolve(),
+            ]);
+        } catch (e) {
+            // Fall through to render whatever we have.
+        }
+        table1Items.innerHTML = '';
+        table2Items.innerHTML = '';
+    }
+
+    const items1 = getTableItems(currentTable);
+    const items2 = secondTable ? getTableItems(secondTable) : [];
+
+    // Compare by display name only — qty/chance differences within the same
+    // item still show up in both lists, but the "unique" highlight is about
+    // which items appear in one table but not the other.
+    const namesIn = list => new Set(list.map(itemDisplayName));
+    const names2 = namesIn(items2);
+    const names1 = namesIn(items1);
+    const isUnique1 = item => secondTable && !names2.has(itemDisplayName(item));
+    const isUnique2 = item => !names1.has(itemDisplayName(item));
+
+    const renderInto = (parent, items, searchTerm, uniquePred, emptyMsg) => {
+        if (items.length === 0) {
+            const li = document.createElement('li');
+            li.textContent = emptyMsg;
+            li.classList.add('no-items-message');
+            parent.appendChild(li);
+            return;
+        }
+        const sorted = [...items].sort((a, b) => {
+            const ka = itemSortKey(a), kb = itemSortKey(b);
+            for (let i = 0; i < ka.length; i++) {
+                if (ka[i] < kb[i]) return -1;
+                if (ka[i] > kb[i]) return 1;
             }
-            
-            table1Items.appendChild(li);
+            return 0;
         });
-        
-        if (itemsFound === 0) {
+        const term = (searchTerm || '').toLowerCase();
+        let found = 0;
+        sorted.forEach(item => {
+            const display = itemDisplayName(item);
+            if (term && !display.toLowerCase().includes(term)) return;
+            found++;
+            const li = document.createElement('li');
+            li.textContent = formatItemEntry(item);
+            if (uniquePred(item)) li.classList.add('unique-item');
+            if (typeof item === 'object' && item.group) {
+                li.title = `Group: ${item.group}` +
+                    (item.group_chance != null ? ` (${(item.group_chance * 100).toFixed(1)}% group roll)` : '');
+            }
+            parent.appendChild(li);
+        });
+        if (found === 0) {
             const li = document.createElement('li');
             li.textContent = 'No matching items found';
             li.classList.add('no-items-message');
-            table1Items.appendChild(li);
+            parent.appendChild(li);
         }
-    }
-    
-    // Display items for second table if selected
+    };
+
+    renderInto(table1Items, items1, table1ItemSearch.value.trim(), isUnique1, 'No items in this loot table');
     if (!secondTable) {
         const li = document.createElement('li');
         li.textContent = 'Please select a second table for comparison';
         li.classList.add('no-items-message');
         table2Items.appendChild(li);
-    } else if (items2.length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'No items in this loot table';
-        li.classList.add('no-items-message');
-        table2Items.appendChild(li);
     } else {
-        // Sort items alphabetically
-        const sortedItems = [...items2].sort();
-        let itemsFound = 0;
-        
-        sortedItems.forEach(item => {
-            // Apply search filter
-            if (searchTerm2 && !item.toLowerCase().includes(searchTerm2.toLowerCase())) {
-                return;
-            }
-            
-            itemsFound++;
-            const li = document.createElement('li');
-            li.textContent = item;
-            
-            // Highlight unique items
-            if (uniqueToTable2.includes(item)) {
-                li.classList.add('unique-item');
-            }
-            
-            table2Items.appendChild(li);
-        });
-        
-        if (itemsFound === 0) {
-            const li = document.createElement('li');
-            li.textContent = 'No matching items found';
-            li.classList.add('no-items-message');
-            table2Items.appendChild(li);
-        }
+        renderInto(table2Items, items2, table2ItemSearch.value.trim(), isUnique2, 'No items in this loot table');
     }
 }
 
-// Global search across all loot tables
-function performGlobalSearch(searchTerm) {
+// Global search across all loot tables. With the chunked format we have to
+// fetch every chunk before we can search them; we do that on the first
+// global search and let the chunkCache hang on to results.
+async function performGlobalSearch(searchTerm) {
     if (!searchTerm || searchTerm.trim() === '') {
         return;
     }
-    
+
     searchTerm = searchTerm.trim().toLowerCase();
     searchTermDisplay.textContent = `"${searchTerm}"`;
+    globalResults.innerHTML = '<div class="no-results">Searching…</div>';
+
+    if (lootIndex) {
+        try {
+            await loadAllChunks();
+        } catch (e) {
+            globalResults.innerHTML = '<div class="no-results">Failed to load loot data</div>';
+            return;
+        }
+    }
+
     globalResults.innerHTML = '';
-    
+
     // Find all tables containing the search term in their items
     const matchingTables = {};
-    
+
     Object.entries(lootTables).forEach(([tableName, items]) => {
-        const matchingItems = items.filter(item => 
-            item.toLowerCase().includes(searchTerm)
+        const matchingItems = items.filter(item =>
+            itemDisplayName(item).toLowerCase().includes(searchTerm)
         );
-        
+
         if (matchingItems.length > 0) {
             matchingTables[tableName] = matchingItems;
         }
@@ -551,28 +695,43 @@ function performGlobalSearch(searchTerm) {
         const itemsList = document.createElement('ul');
         itemsList.className = 'result-items';
         
-        // Sort items alphabetically
-        const sortedItems = [...matchingTables[tableName]].sort();
-        
+        // Sort items by display name then chance
+        const sortedItems = [...matchingTables[tableName]].sort((a, b) => {
+            const ka = itemSortKey(a), kb = itemSortKey(b);
+            for (let i = 0; i < ka.length; i++) {
+                if (ka[i] < kb[i]) return -1;
+                if (ka[i] > kb[i]) return 1;
+            }
+            return 0;
+        });
+
         sortedItems.forEach(item => {
             const li = document.createElement('li');
             li.className = 'result-item';
-            
-            // Highlight the matching part
-            const itemText = item;
-            const lowerItem = itemText.toLowerCase();
-            const index = lowerItem.indexOf(searchTerm);
-            
-            if (index !== -1) {
-                const before = itemText.substring(0, index);
-                const match = itemText.substring(index, index + searchTerm.length);
-                const after = itemText.substring(index + searchTerm.length);
-                
-                li.innerHTML = `${before}<strong>${match}</strong>${after}`;
+
+            // Build prefix/highlight/suffix around the match in the
+            // formatted entry. Search hits the display name, but the line
+            // we render shows qty/chance too.
+            const display = itemDisplayName(item);
+            const qty = formatQtyRange(item);
+            const chance = formatChance(item);
+            const lower = display.toLowerCase();
+            const idx = lower.indexOf(searchTerm);
+
+            if (idx !== -1) {
+                const before = display.substring(0, idx);
+                const match  = display.substring(idx, idx + searchTerm.length);
+                const after  = display.substring(idx + searchTerm.length);
+                li.innerHTML = `${qty}${before}<strong>${match}</strong>${after}${chance}`;
             } else {
-                li.textContent = item;
+                li.textContent = formatItemEntry(item);
             }
-            
+
+            if (typeof item === 'object' && item.group) {
+                li.title = `Group: ${item.group}` +
+                    (item.group_chance != null ? ` (${(item.group_chance * 100).toFixed(1)}% group roll)` : '');
+            }
+
             itemsList.appendChild(li);
         });
         

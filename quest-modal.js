@@ -56,8 +56,10 @@ const QuestModal = (() => {
         return `<a href="https://corepunk.help/npcs/${slug}" target="_blank" rel="noopener" class="npc-map-link">${name}</a>`;
     }
 
-    function getItemType(itemName) {
-        const lower = itemName.toLowerCase();
+    function getItemType(item) {
+        // Items may be plain strings (legacy) or { name, qty, ... } objects
+        // (v0.103+); accept either.
+        const lower = (typeof item === 'string' ? item : (item?.name || '')).toLowerCase();
         if (lower.startsWith('art t') || lower.startsWith('art_t')) return 'artifact';
         if (lower.startsWith('rec ') || lower.startsWith('rec_')) return 'recipe';
         if (lower.startsWith('con ') || lower.startsWith('con_')) return 'consumable';
@@ -220,11 +222,18 @@ const QuestModal = (() => {
             .map(([type, count]) => `<span class="reward-tag reward-tag-${type}">${count} ${typeLabels[type] || type}</span>`)
             .join('');
 
-        // Item list
-        const sorted = [...items].sort();
+        // Item list — items may be plain strings (legacy) or
+        // { name, qty, ... } objects (v0.103+).
+        const displayName = item => (typeof item === 'string' ? item : (item?.name || ''));
+        const formatItem = item => {
+            if (typeof item === 'string') return item;
+            if (item.qty != null && item.qty > 1) return `${item.qty}× ${item.name}`;
+            return item.name || '';
+        };
+        const sorted = [...items].sort((a, b) => displayName(a).localeCompare(displayName(b)));
         const itemsHTML = sorted.map(item => {
             const type = getItemType(item);
-            return `<li class="item-type-${type}">${item}</li>`;
+            return `<li class="item-type-${type}">${formatItem(item)}</li>`;
         }).join('');
 
         return `

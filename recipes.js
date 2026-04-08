@@ -59,8 +59,56 @@ async function init() {
 
 // Predicate matching the same single-item filter we apply in renderSynthesis.
 // Used by both the tab counter and the system filter so they stay in sync.
+//
+// As of v0.103 the parser emits structured `ingredients` arrays plus an
+// `output` object. Older version files only have `items: [string, ...]`
+// without distinguishing roles. This predicate keeps both forms in scope.
 function isDisplayableSynth(r) {
-    return r.items && r.items.length > 1;
+    if (Array.isArray(r.ingredients)) return r.ingredients.length > 0;
+    return Array.isArray(r.items) && r.items.length > 1;
+}
+
+// Normalize a recipe to a unified shape `{ output, ingredients }` regardless
+// of whether it came from the new structured parser or an old version file.
+// `output` is { name, qty } (or null), `ingredients` is [{ name, qty, slot }].
+function recipeShape(recipe) {
+    if (Array.isArray(recipe.ingredients)) {
+        return {
+            output: recipe.output || null,
+            ingredients: recipe.ingredients.map(i => ({
+                name: i.name || i,
+                qty:  typeof i === 'object' ? i.qty  : null,
+                slot: typeof i === 'object' ? i.slot : null,
+            })),
+        };
+    }
+    // Legacy items[] shape — fall back to the fuzzy token classifier so the
+    // diff and recipe pages still work for older version files.
+    const items = recipe.items || [];
+    if (recipe.kind === 'synthesis' || (recipe.system && !recipe.profession)) {
+        const { product, ingredients } = classifySynthesisItems({ name: recipe.name, items });
+        return {
+            output: product ? { name: product } : null,
+            ingredients: ingredients.map(n => ({ name: n })),
+        };
+    }
+    const { product, ingredients } = classifyCraftingItems({ name: recipe.name, items });
+    return {
+        output: product && product !== '__recipe_name__' ? { name: product } : null,
+        ingredients: ingredients.map(n => ({ name: n })),
+    };
+}
+
+// Iterate every (recipe, item-name) pair so the search predicate can match
+// either old-style strings or new-style { name, qty } objects.
+function recipeItemNames(recipe) {
+    const names = [];
+    if (Array.isArray(recipe.ingredients)) {
+        recipe.ingredients.forEach(i => names.push(typeof i === 'object' ? i.name : i));
+    }
+    if (recipe.output && recipe.output.name) names.push(recipe.output.name);
+    if (Array.isArray(recipe.items)) recipe.items.forEach(i => names.push(i));
+    return names.filter(Boolean);
 }
 
 async function loadRecipes(file) {
@@ -148,45 +196,59 @@ function prettyItem(name) {
 
 // Identify the product item produced by a crafting recipe.
 //
-// Recipe entity names come in two flavors:
-//   Recipe_Iron_ingot                     → product "Iron_ingot"
-//   rec_wp_knuckle_..._steam_blitz_unlocked → product "wp_knuckle_..._steam_blitzers"
+// Recipe naming is messy in the source data:
+//   Recipe_Iron_ingot                          → product Iron_ingot                       (exact)
+//   rec_wp_knuckle_..._steam_blitz_unlocked    → product wp_knuckle_..._steam_blitzers    (prefix mismatch)
+//   rec_con_ap_t2_double_biosteroids_shot_*    → product con_t2_double_biosteroids_shot   (recipe has extra "ap_" infix)
+//   Recipe_food_corn_flour                     → product res_food_corn_flour              (product has extra "res_" prefix)
+//   rec_con_t3_tripple_biosteroids_shot_*      → product con_t3_triple_biosteroids_shot   (typo in recipe name)
 //
-// Note the second case: the recipe-name "core" is sometimes a *prefix* of the
-// actual product name (e.g. "steam_blitz" vs "steam_blitzers"), so an exact
-// equality check isn't enough. We strip the known prefix/suffix to derive a
-// core, then match items by exact equality first, prefix-startsWith second,
-// and longest-common-prefix as a last resort.
+// A pure prefix or substring match can't handle all these. We tokenize both
+// the recipe core and each candidate item on underscores, then score by
+// overlapping tokens. The item with the highest score (and at least half of
+// the core's tokens matched) wins.
 function recipeCore(name) {
     let core = name;
-    if (/^[Rr]ecipe_/.test(core))   core = core.replace(/^[Rr]ecipe_/, '');
+    if (/^[Rr]ecipe_/.test(core))     core = core.replace(/^[Rr]ecipe_/, '');
     else if (core.startsWith('rec_')) core = core.substring(4);
-    core = core.replace(/_unlocked$/, '');
+    core = core.replace(/_unlocked$/, '').replace(/_unlock$/, '');
     return core.toLowerCase();
 }
 
-function commonPrefixLen(a, b) {
-    let i = 0;
-    while (i < a.length && i < b.length && a[i] === b[i]) i++;
-    return i;
+function tokens(s) {
+    return s.toLowerCase().split(/[_\-]/).filter(t => t.length > 0);
+}
+
+function tokenScore(coreTokens, itemTokens) {
+    // Count how many core tokens appear (anywhere) in the item tokens.
+    // Tokens can appear in either order so we use a multiset intersection.
+    const remaining = [...itemTokens];
+    let matches = 0;
+    for (const t of coreTokens) {
+        const idx = remaining.indexOf(t);
+        if (idx >= 0) {
+            matches++;
+            remaining.splice(idx, 1);
+        }
+    }
+    return matches;
 }
 
 function classifyCraftingItems(recipe) {
     const core = recipeCore(recipe.name);
+    const coreTokens = tokens(core);
 
-    // Pass 1: exact match
+    // Pass 1: exact match (cheapest, most certain)
     let productIndex = recipe.items.findIndex(it => it.toLowerCase() === core);
-    // Pass 2: item starts with core (handles steam_blitz → steam_blitzers)
-    if (productIndex < 0) {
-        productIndex = recipe.items.findIndex(it => it.toLowerCase().startsWith(core));
-    }
-    // Pass 3: longest common prefix, requiring at least half of `core` to match
-    if (productIndex < 0 && core.length > 0) {
-        let bestLen = Math.floor(core.length / 2);
+
+    // Pass 2: token-overlap scoring
+    if (productIndex < 0 && coreTokens.length > 0) {
+        const minMatch = Math.max(2, Math.ceil(coreTokens.length / 2));
+        let bestScore = minMatch - 1;
         recipe.items.forEach((it, i) => {
-            const len = commonPrefixLen(it.toLowerCase(), core);
-            if (len > bestLen) {
-                bestLen = len;
+            const score = tokenScore(coreTokens, tokens(it));
+            if (score > bestScore) {
+                bestScore = score;
                 productIndex = i;
             }
         });
@@ -201,6 +263,14 @@ function classifyCraftingItems(recipe) {
             ingredients.push(it);
         }
     });
+
+    // Final fallback: if there's still no product (e.g. mend-o-matic, where
+    // the actual item simply isn't referenced by any of the recipe's IDs),
+    // synthesize a "virtual" product from the recipe name itself so the UI
+    // doesn't show an unhelpful "(unknown)".
+    if (!product) {
+        product = '__recipe_name__'; // sentinel handled by the renderer
+    }
     return { product, ingredients };
 }
 
@@ -343,7 +413,7 @@ function renderCrafting() {
         if (r.display_name && r.display_name.toLowerCase().includes(search)) return true;
         if (r.name.toLowerCase().includes(search)) return true;
         if (r.profession && r.profession.toLowerCase().includes(search)) return true;
-        return r.items.some(i => i.toLowerCase().includes(search));
+        return recipeItemNames(r).some(n => n.toLowerCase().includes(search));
     });
 
     if (filtered.length === 0) {
@@ -372,7 +442,7 @@ function renderCrafting() {
 }
 
 function renderCraftingCard(recipe) {
-    const { product, ingredients } = classifyCraftingItems(recipe);
+    const { output, ingredients } = recipeShape(recipe);
 
     const card = document.createElement('div');
     card.className = 'recipe-card';
@@ -395,14 +465,13 @@ function renderCraftingCard(recipe) {
     body.className = 'recipe-card-body';
 
     if (ingredients.length > 0) {
-        const inSide = renderItemColumn('Ingredients', ingredients);
-        body.appendChild(inSide);
+        body.appendChild(renderItemColumn('Ingredients', ingredients));
     }
     const arrow = document.createElement('div');
     arrow.className = 'recipe-arrow';
     arrow.innerHTML = '&#x2192;';
     body.appendChild(arrow);
-    body.appendChild(renderItemColumn('Produces', product ? [product] : []));
+    body.appendChild(renderItemColumn('Produces', output ? [output] : []));
 
     card.appendChild(body);
     return card;
@@ -420,12 +489,12 @@ function renderSynthesis() {
         // referenced item (the item being upgraded). They are noise on the
         // recipes page but still tracked in the data file so the Patch Diff
         // view can pick them up.
-        if (!r.items || r.items.length <= 1) return false;
+        if (!isDisplayableSynth(r)) return false;
         if (system !== 'all' && r.system !== system) return false;
         if (!search) return true;
         if (r.display_name && r.display_name.toLowerCase().includes(search)) return true;
         if (r.name.toLowerCase().includes(search)) return true;
-        return r.items.some(i => i.toLowerCase().includes(search));
+        return recipeItemNames(r).some(n => n.toLowerCase().includes(search));
     });
 
     if (filtered.length === 0) {
@@ -474,7 +543,7 @@ function renderSynthesis() {
 }
 
 function renderSynthesisCard(recipe) {
-    const { product, scroll, ingredients } = classifySynthesisItems(recipe);
+    const { output, ingredients } = recipeShape(recipe);
 
     const card = document.createElement('div');
     card.className = 'recipe-card';
@@ -503,14 +572,7 @@ function renderSynthesisCard(recipe) {
     arrow.className = 'recipe-arrow';
     arrow.innerHTML = '&#x2192;';
     body.appendChild(arrow);
-    body.appendChild(renderItemColumn('Produces', product ? [product] : []));
-
-    if (scroll) {
-        const scrollLine = document.createElement('div');
-        scrollLine.className = 'recipe-scroll-note';
-        scrollLine.textContent = `Recipe scroll: ${prettyItem(scroll)}`;
-        card.appendChild(scrollLine);
-    }
+    body.appendChild(renderItemColumn('Produces', output ? [output] : []));
 
     card.appendChild(body);
     return card;
@@ -532,7 +594,13 @@ function renderItemColumn(label, items) {
         items.forEach(it => {
             const div = document.createElement('div');
             div.className = 'recipe-item';
-            div.textContent = prettyItem(it);
+            // Items can be plain strings (legacy `items[]` shape) or
+            // { name, qty, slot } objects (new shape). Prefix with quantity
+            // when it's > 1 since "1× Iron Ore" is just visual noise.
+            const name = typeof it === 'object' ? it.name : it;
+            const qty  = typeof it === 'object' ? it.qty  : null;
+            const display = prettyItem(name || '');
+            div.textContent = (qty != null && qty > 1) ? `${qty}× ${display}` : display;
             col.appendChild(div);
         });
     }
