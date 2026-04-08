@@ -161,16 +161,22 @@ function formatQtyRange(item) {
     return `${item.qty_min}–${item.qty_max}× `;
 }
 
-// Format a probability for display. Drop chances span ~7 orders of magnitude
-// (from 0.001% loot to 100% guaranteed coins) so we adapt the precision.
+// Format a probability for display. Drop chances span ~9 orders of magnitude
+// (from <0.0001% T3 Epic upgrade kits to 100% guaranteed coins) so we adapt
+// the precision. For sub-0.0001% values we drop into scientific notation
+// rather than showing "0.0000%", which the user correctly pointed out hides
+// the fact that the item CAN drop, just very rarely.
 function formatPct(p) {
+    if (p == null || p === 0) return '0%';
     const pct = p * 100;
     if (pct >= 100) return '100%';
     if (pct >= 10)  return `${pct.toFixed(0)}%`;
     if (pct >= 1)   return `${pct.toFixed(1)}%`;
     if (pct >= 0.1) return `${pct.toFixed(2)}%`;
     if (pct >= 0.01) return `${pct.toFixed(3)}%`;
-    return `${pct.toFixed(4)}%`;
+    if (pct >= 0.0001) return `${pct.toFixed(5)}%`;
+    // Below 0.0001% switch to scientific notation so the magnitude is visible.
+    return `${pct.toExponential(1)}%`;
 }
 
 function formatChance(item) {

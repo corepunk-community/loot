@@ -87,6 +87,18 @@ function formatDelta(delta) {
     return sign + formatBytes(Math.abs(delta));
 }
 
+// Returns true if a quest_rewards data object is in the pre-v0.103 format
+// where each quest's reward list is an array of strings rather than an
+// array of { name, qty, head, flag } objects.
+function isLegacyQuestRewards(data) {
+    for (const items of Object.values(data || {})) {
+        if (Array.isArray(items) && items.length > 0) {
+            return typeof items[0] === 'string';
+        }
+    }
+    return false;
+}
+
 // Items used to be plain strings ("Iron Ingot"); they are now objects.
 // Loot items: { name, qty_min, qty_max, weight, chance, rarity, group,
 //              group_chance }
@@ -107,13 +119,15 @@ function itemKey(item) {
 const RARITY_SHORT = ['C', 'U', 'R', 'E'];
 
 function formatPctDiff(p) {
+    if (p == null || p === 0) return '0%';
     const pct = p * 100;
     if (pct >= 100) return '100%';
     if (pct >= 10)  return `${pct.toFixed(0)}%`;
     if (pct >= 1)   return `${pct.toFixed(1)}%`;
     if (pct >= 0.1) return `${pct.toFixed(2)}%`;
     if (pct >= 0.01) return `${pct.toFixed(3)}%`;
-    return `${pct.toFixed(4)}%`;
+    if (pct >= 0.0001) return `${pct.toFixed(5)}%`;
+    return `${pct.toExponential(1)}%`;
 }
 
 function itemDisplayString(item) {
@@ -354,7 +368,33 @@ const ADAPTERS = {
         versionKey: 'quest_rewards_file',
         searchPlaceholder: 'Search quests or items...',
         helpHtml: 'Diffs quest rewards. Items now include quantity, so a "modified" entry catches both items added/removed AND items whose qty changed.',
-        compute(oldData, newData) { return diffObjectOfItemEntries(oldData, newData); },
+        compute(oldData, newData) {
+            // The quest reward format changed in v0.103: pre-v0.103 files
+            // store items as plain strings, v0.103+ as { name, qty, head,
+            // flag } objects. When either side is in the legacy format we
+            // can't compare qty/flag fields, but we CAN still diff item
+            // names — downgrade both sides to bare { name } objects so
+            // itemKey() collapses to just the name, then surface a notice
+            // so the user knows qty changes are invisible in this diff.
+            const oldLegacy = isLegacyQuestRewards(oldData);
+            const newLegacy = isLegacyQuestRewards(newData);
+            if (oldLegacy || newLegacy) {
+                const downgrade = (data) => {
+                    const out = {};
+                    for (const [quest, items] of Object.entries(data)) {
+                        out[quest] = (items || []).map(it =>
+                            typeof it === 'string' ? { name: it } : { name: it.name });
+                    }
+                    return out;
+                };
+                const result = diffObjectOfItemEntries(downgrade(oldData), downgrade(newData));
+                result.notice = 'Quest reward format changed in v0.103 to include quantity and flag info. ' +
+                    'This diff spans the v0.103 boundary, so item additions and removals are shown by name only — ' +
+                    'qty changes are not detectable here.';
+                return result;
+            }
+            return diffObjectOfItemEntries(oldData, newData);
+        },
         renderItem(entry, type) {
             return type === 'modified' ? renderModifiedItemListCard(entry)
                                        : renderItemListCard(entry, type);
@@ -894,6 +934,8 @@ async function runDiff() {
     diffResults.innerHTML = '';
     diffSummary.classList.add('hidden');
     diffFilterBar.classList.add('hidden');
+    const noticeEl = document.getElementById('diff-notice');
+    if (noticeEl) noticeEl.classList.add('hidden');
 
     try {
         const adapter = getAdapter();
@@ -917,6 +959,19 @@ function updateSummary() {
     document.getElementById('count-unchanged').textContent = (diffResult.unchanged || 0).toLocaleString();
     diffSummary.classList.remove('hidden');
     diffFilterBar.classList.remove('hidden');
+
+    // Surface a per-comparison notice (e.g. cross-format compatibility
+    // warning) above the summary if the adapter attached one.
+    const noticeEl = document.getElementById('diff-notice');
+    if (noticeEl) {
+        if (diffResult.notice) {
+            noticeEl.textContent = diffResult.notice;
+            noticeEl.classList.remove('hidden');
+        } else {
+            noticeEl.textContent = '';
+            noticeEl.classList.add('hidden');
+        }
+    }
 }
 
 function rebuildBucketFilters() {

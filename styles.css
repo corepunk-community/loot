@@ -643,6 +643,16 @@ footer {
     font-size: 12px;
 }
 
+.diff-notice {
+    background-color: #fff8e1;
+    border-left: 4px solid #f5a623;
+    padding: 8px 14px;
+    margin: 8px 0 12px 0;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #5a4a1f;
+}
+
 /* File-row layout used by the Files mode of diff.html (path + secondary metadata) */
 .diff-item .file-path {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;

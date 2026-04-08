@@ -578,6 +578,11 @@ function renderSynthesisCard(recipe) {
     return card;
 }
 
+// Quality-tier names matching the loot-table rarity field. Same colors used
+// in the Loot Tables viewer for consistency.
+const RECIPE_RARITY_NAMES = ['Common', 'Uncommon', 'Rare', 'Epic'];
+const RECIPE_RARITY_SHORT = ['C', 'U', 'R', 'E'];
+
 function renderItemColumn(label, items) {
     const col = document.createElement('div');
     col.className = 'recipe-col';
@@ -595,12 +600,24 @@ function renderItemColumn(label, items) {
             const div = document.createElement('div');
             div.className = 'recipe-item';
             // Items can be plain strings (legacy `items[]` shape) or
-            // { name, qty, slot } objects (new shape). Prefix with quantity
-            // when it's > 1 since "1× Iron Ore" is just visual noise.
+            // { name, qty, slot, rarity } objects (new shape). Prefix with
+            // quantity when > 1, and prepend a colored rarity badge for
+            // synth recipe items (which carry a rarity tier inferred from
+            // the recipe's _common/_uncommon/_rare/_epic suffix).
             const name = typeof it === 'object' ? it.name : it;
             const qty  = typeof it === 'object' ? it.qty  : null;
+            const rarity = (typeof it === 'object' && it.rarity != null) ? it.rarity : null;
             const display = prettyItem(name || '');
-            div.textContent = (qty != null && qty > 1) ? `${qty}× ${display}` : display;
+            if (rarity != null && RECIPE_RARITY_SHORT[rarity]) {
+                const badge = document.createElement('span');
+                badge.className = `rarity-badge rarity-${rarity}`;
+                badge.textContent = RECIPE_RARITY_SHORT[rarity];
+                badge.title = RECIPE_RARITY_NAMES[rarity];
+                div.appendChild(badge);
+                div.appendChild(document.createTextNode(' '));
+            }
+            const text = (qty != null && qty > 1) ? `${qty}× ${display}` : display;
+            div.appendChild(document.createTextNode(text));
             col.appendChild(div);
         });
     }

@@ -9,7 +9,7 @@
     "other": {
       "file": "loot_tables_v0.103/other.json",
       "tables": 55,
-      "size": 7001928
+      "size": 6988652
     },
     "camp_chest": {
       "file": "loot_tables_v0.103/camp_chest.json",
@@ -44,12 +44,12 @@
     "monster": {
       "file": "loot_tables_v0.103/monster.json",
       "tables": 244,
-      "size": 18742720
+      "size": 18741490
     },
     "poi_chest": {
       "file": "loot_tables_v0.103/poi_chest.json",
       "tables": 13,
-      "size": 3046099
+      "size": 3045666
     },
     "reactive": {
       "file": "loot_tables_v0.103/reactive.json",
@@ -59,7 +59,7 @@
     "searchable": {
       "file": "loot_tables_v0.103/searchable.json",
       "tables": 29,
-      "size": 1922706
+      "size": 1919242
     }
   },
   "tables": {
