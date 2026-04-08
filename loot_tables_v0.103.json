@@ -4,62 +4,62 @@
     "arena": {
       "file": "loot_tables_v0.103/arena.json",
       "tables": 56,
-      "size": 5624825
+      "size": 6877135
     },
     "other": {
       "file": "loot_tables_v0.103/other.json",
       "tables": 55,
-      "size": 5745566
+      "size": 7001928
     },
     "camp_chest": {
       "file": "loot_tables_v0.103/camp_chest.json",
       "tables": 95,
-      "size": 7520117
+      "size": 9210751
     },
     "creeps": {
       "file": "loot_tables_v0.103/creeps.json",
       "tables": 12,
-      "size": 2149
+      "size": 2618
     },
     "destroyable": {
       "file": "loot_tables_v0.103/destroyable.json",
       "tables": 20,
-      "size": 229335
+      "size": 279197
     },
     "dm": {
       "file": "loot_tables_v0.103/dm.json",
       "tables": 3,
-      "size": 117445
+      "size": 142734
     },
     "dungeon": {
       "file": "loot_tables_v0.103/dungeon.json",
       "tables": 50,
-      "size": 5540899
+      "size": 6759505
     },
     "gathering": {
       "file": "loot_tables_v0.103/gathering.json",
       "tables": 59,
-      "size": 27884
+      "size": 34310
     },
     "monster": {
       "file": "loot_tables_v0.103/monster.json",
       "tables": 244,
-      "size": 15316831
+      "size": 18742720
     },
     "poi_chest": {
       "file": "loot_tables_v0.103/poi_chest.json",
       "tables": 13,
-      "size": 2480394
+      "size": 3046099
     },
     "reactive": {
       "file": "loot_tables_v0.103/reactive.json",
       "tables": 11,
-      "size": 1584
+      "size": 1909
     },
     "searchable": {
       "file": "loot_tables_v0.103/searchable.json",
       "tables": 29,
-      "size": 1576048
+      "size": 1922706
     }
   },
   "tables": {

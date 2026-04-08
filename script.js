@@ -9,6 +9,9 @@ let secondTable = null;
 let compareMode = false;
 let globalSearchActive = false;
 let currentCategoryFilter = "all";
+// "all" or a 0-indexed rarity tier; filters items in the currently-shown
+// table to only that tier. Items with no rarity field always pass through.
+let currentRarityFilter = 'all';
 
 // DOM elements
 const tablesList = document.getElementById('tables-list');
@@ -140,9 +143,12 @@ async function loadAllChunks() {
     await Promise.all(keys.map(k => loadChunk(k)));
 }
 
-// Render an item entry. Items are objects { name, qty_min, qty_max, chance,
-// group, group_chance } as of v0.103. Older format files used plain strings,
-// so we still handle that for backwards compat.
+// Render an item entry. Items are objects of shape:
+//   { name, qty_min, qty_max, weight, chance, rarity, group, group_chance }
+// as of v0.103. The `chance` field is now a computed *real* drop probability
+// (group_chance × weight / sum_of_group_weights), not a raw weight. Older
+// format files used plain strings, so we still handle that for backwards
+// compat.
 function itemDisplayName(item) {
     if (typeof item === 'string') return item;
     return item.name || '';
@@ -155,13 +161,39 @@ function formatQtyRange(item) {
     return `${item.qty_min}–${item.qty_max}× `;
 }
 
+// Format a probability for display. Drop chances span ~7 orders of magnitude
+// (from 0.001% loot to 100% guaranteed coins) so we adapt the precision.
+function formatPct(p) {
+    const pct = p * 100;
+    if (pct >= 100) return '100%';
+    if (pct >= 10)  return `${pct.toFixed(0)}%`;
+    if (pct >= 1)   return `${pct.toFixed(1)}%`;
+    if (pct >= 0.1) return `${pct.toFixed(2)}%`;
+    if (pct >= 0.01) return `${pct.toFixed(3)}%`;
+    return `${pct.toFixed(4)}%`;
+}
+
 function formatChance(item) {
-    if (typeof item === 'string') return '';
-    if (item.chance == null) return '';
-    const pct = item.chance * 100;
-    if (pct >= 10) return ` (${pct.toFixed(0)}%)`;
-    if (pct >= 1) return ` (${pct.toFixed(1)}%)`;
-    return ` (${pct.toFixed(2)}%)`;
+    if (typeof item === 'string' || item.chance == null) return '';
+    return ` (${formatPct(item.chance)})`;
+}
+
+// The rarity field is a 0-indexed quality tier. Across the full v0.103 data
+// it only ever takes values 0–3, which matches the four standard Corepunk
+// quality colors. (PvE arena / Prison Island tables technically use the
+// same field for a 1–3 level-tier axis, but we don't have a way to tell
+// the two interpretations apart, so we always show colors.)
+const RARITY_NAMES   = ['Common', 'Uncommon', 'Rare', 'Epic'];
+const RARITY_SHORT   = ['C', 'U', 'R', 'E'];
+
+function rarityLabel(item) {
+    if (typeof item === 'string' || item.rarity == null) return null;
+    return RARITY_NAMES[item.rarity] || `T${item.rarity}`;
+}
+
+function rarityShort(item) {
+    if (typeof item === 'string' || item.rarity == null) return null;
+    return RARITY_SHORT[item.rarity] || `${item.rarity}`;
 }
 
 // Build the formatted display string for an item entry: "1–3× Item (50%)".
@@ -463,9 +495,59 @@ function updateTableSelectionUI() {
     table2ItemSearch.value = '';
 }
 
-// Filter items in a list based on search term. Items are objects with
-// { name, qty_min, qty_max, chance, group, group_chance }; older versions
-// store plain strings, which we still handle.
+// Build a single item-row element. Used by filterItems and the compare
+// view. Includes a rarity color badge when the item carries a rarity field.
+function buildItemRow(item) {
+    const li = document.createElement('li');
+    li.textContent = formatItemEntry(item);
+
+    if (typeof item === 'object') {
+        const label = rarityLabel(item);
+        if (label) {
+            const badge = document.createElement('span');
+            badge.className = `rarity-badge rarity-${item.rarity}`;
+            badge.textContent = rarityShort(item);
+            badge.title = label;
+            li.prepend(badge);
+        }
+        if (item.group) {
+            li.dataset.group = item.group;
+            li.title = `Group: ${item.group}` +
+                (item.group_chance != null
+                    ? ` · group roll ${formatPct(Math.min(item.group_chance, 1))}`
+                    : '') +
+                (item.weight != null ? ` · weight ${item.weight}` : '');
+        }
+    }
+    return li;
+}
+
+// Build the group section header row.
+function buildGroupHeader(group, groupChance, count) {
+    const header = document.createElement('li');
+    header.className = 'loot-group-header';
+    const left = document.createElement('span');
+    left.className = 'loot-group-name';
+    left.textContent = group;
+    const right = document.createElement('span');
+    right.className = 'loot-group-meta';
+    let metaParts = [];
+    if (groupChance != null) {
+        metaParts.push(groupChance > 1
+            ? `${groupChance.toFixed(2)}× draws`
+            : `${formatPct(groupChance)} group roll`);
+    }
+    metaParts.push(`${count} ${count === 1 ? 'item' : 'items'}`);
+    right.textContent = metaParts.join(' · ');
+    header.appendChild(left);
+    header.appendChild(right);
+    return header;
+}
+
+// Filter items in a list based on search term + active rarity filter.
+// Items with the new structured shape (`{ name, qty_min, qty_max, weight,
+// chance, rarity, group, group_chance }`) are organized into per-group
+// sections; legacy plain-string items still render as a flat list.
 function filterItems(items, searchTerm, containerElement) {
     containerElement.innerHTML = '';
 
@@ -476,50 +558,106 @@ function filterItems(items, searchTerm, containerElement) {
         return;
     }
 
-    // Sort by display name then by chance descending so duplicates with
-    // different odds list highest-odds-first.
-    const sorted = [...items].sort((a, b) => {
-        const ka = itemSortKey(a);
-        const kb = itemSortKey(b);
-        for (let i = 0; i < ka.length; i++) {
-            if (ka[i] < kb[i]) return -1;
-            if (ka[i] > kb[i]) return 1;
-        }
-        return 0;
-    });
-
     const term = (searchTerm || '').toLowerCase();
-    let itemsFound = 0;
-    let lastGroup = null;
+    const rarity = currentRarityFilter;
 
-    sorted.forEach(item => {
+    // Apply search + rarity filter first.
+    const matched = items.filter(item => {
         const display = itemDisplayName(item);
-        if (term && !display.toLowerCase().includes(term)) return;
-        itemsFound++;
-
-        // Insert a group separator row whenever the group changes (sorted
-        // by name, so groups will interleave; this is a light visual cue
-        // rather than a strict grouping).
-        const li = document.createElement('li');
-        li.textContent = formatItemEntry(item);
-        if (typeof item === 'object' && item.group) {
-            li.dataset.group = item.group;
-            li.title = `Group: ${item.group}` +
-                (item.group_chance != null ? ` (${(item.group_chance * 100).toFixed(1)}% group roll)` : '');
+        if (term && !display.toLowerCase().includes(term)) return false;
+        if (rarity !== 'all' && typeof item === 'object' && item.rarity != null) {
+            if (item.rarity !== rarity) return false;
         }
-        containerElement.appendChild(li);
+        return true;
     });
 
-    if (itemsFound === 0) {
+    if (matched.length === 0) {
         const li = document.createElement('li');
         li.textContent = 'No matching items found';
         li.classList.add('no-items-message');
         containerElement.appendChild(li);
+        return;
     }
+
+    // Group by `group` field if items have one. Falls back to a single
+    // unnamed bucket for legacy string items.
+    const groups = new Map();
+    matched.forEach(item => {
+        const key = (typeof item === 'object' && item.group) || '';
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(item);
+    });
+
+    // Sort groups by their highest group_chance descending (most likely
+    // groups first), then alphabetically as a tiebreaker.
+    const sortedGroups = [...groups.entries()].sort((a, b) => {
+        const ga = a[1][0]?.group_chance ?? -1;
+        const gb = b[1][0]?.group_chance ?? -1;
+        if (gb !== ga) return gb - ga;
+        return a[0].localeCompare(b[0]);
+    });
+
+    sortedGroups.forEach(([groupName, groupItems]) => {
+        if (groupName) {
+            containerElement.appendChild(
+                buildGroupHeader(groupName, groupItems[0]?.group_chance, groupItems.length)
+            );
+        }
+        // Within a group, sort by chance desc, then name.
+        groupItems.sort((a, b) => {
+            const ca = (typeof a === 'object' && a.chance) || 0;
+            const cb = (typeof b === 'object' && b.chance) || 0;
+            if (cb !== ca) return cb - ca;
+            return itemDisplayName(a).localeCompare(itemDisplayName(b));
+        });
+        groupItems.forEach(item => containerElement.appendChild(buildItemRow(item)));
+    });
+}
+
+// Recompute the list of rarity tiers present in the current table and
+// rebuild the rarity filter button bar accordingly. Called whenever a new
+// table is selected.
+function rebuildRarityFilter(tableName) {
+    const bar = document.getElementById('rarity-filters');
+    if (!bar) return;
+    const items = getTableItems(tableName);
+    const tiers = new Set();
+    items.forEach(i => {
+        if (typeof i === 'object' && i.rarity != null) tiers.add(i.rarity);
+    });
+
+    bar.innerHTML = '';
+    if (tiers.size <= 1) {
+        bar.classList.add('hidden');
+        currentRarityFilter = 'all';
+        return;
+    }
+    bar.classList.remove('hidden');
+
+    const mkBtn = (label, value) => {
+        const b = document.createElement('button');
+        b.className = 'rarity-btn';
+        if (value === currentRarityFilter) b.classList.add('active');
+        b.textContent = label;
+        b.dataset.tier = value;
+        b.addEventListener('click', () => {
+            currentRarityFilter = value;
+            bar.querySelectorAll('.rarity-btn').forEach(x => x.classList.remove('active'));
+            b.classList.add('active');
+            if (currentTable) displayTableItems(currentTable, itemSearchInput.value.trim());
+        });
+        return b;
+    };
+
+    bar.appendChild(mkBtn('All Rarities', 'all'));
+    [...tiers].sort((a, b) => a - b).forEach(t => {
+        bar.appendChild(mkBtn(RARITY_NAMES[t] || `Tier ${t}`, t));
+    });
 }
 
 // Display items for a specific table. Loads the table's chunk if needed.
 async function displayTableItems(tableName, searchTerm = '') {
+    const previousTable = currentTable;
     currentTable = tableName;
     selectedTableHeading.textContent = tableName;
 
@@ -542,6 +680,14 @@ async function displayTableItems(tableName, searchTerm = '') {
         // If the user has clicked another table since we started loading,
         // bail out so we don't overwrite the newer view.
         if (currentTable !== tableName) return;
+    }
+
+    // Rebuild the rarity filter when switching tables (different tables
+    // expose different rarity tiers). Reset the filter to "all" so a
+    // narrowing choice from the previous table doesn't hide everything.
+    if (previousTable !== tableName) {
+        currentRarityFilter = 'all';
+        rebuildRarityFilter(tableName);
     }
 
     filterItems(getTableItems(tableName), searchTerm, itemsList);
@@ -597,12 +743,10 @@ async function displayCompareTables() {
             return;
         }
         const sorted = [...items].sort((a, b) => {
-            const ka = itemSortKey(a), kb = itemSortKey(b);
-            for (let i = 0; i < ka.length; i++) {
-                if (ka[i] < kb[i]) return -1;
-                if (ka[i] > kb[i]) return 1;
-            }
-            return 0;
+            const ca = (typeof a === 'object' && a.chance) || 0;
+            const cb = (typeof b === 'object' && b.chance) || 0;
+            if (cb !== ca) return cb - ca;
+            return itemDisplayName(a).localeCompare(itemDisplayName(b));
         });
         const term = (searchTerm || '').toLowerCase();
         let found = 0;
@@ -610,13 +754,8 @@ async function displayCompareTables() {
             const display = itemDisplayName(item);
             if (term && !display.toLowerCase().includes(term)) return;
             found++;
-            const li = document.createElement('li');
-            li.textContent = formatItemEntry(item);
+            const li = buildItemRow(item);
             if (uniquePred(item)) li.classList.add('unique-item');
-            if (typeof item === 'object' && item.group) {
-                li.title = `Group: ${item.group}` +
-                    (item.group_chance != null ? ` (${(item.group_chance * 100).toFixed(1)}% group roll)` : '');
-            }
             parent.appendChild(li);
         });
         if (found === 0) {

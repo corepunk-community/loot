@@ -88,23 +88,40 @@ function formatDelta(delta) {
 }
 
 // Items used to be plain strings ("Iron Ingot"); they are now objects.
-// Loot items: { name, qty_min, qty_max, chance, group, group_chance }
+// Loot items: { name, qty_min, qty_max, weight, chance, rarity, group,
+//              group_chance }
 // Quest rewards: { name, qty, head, flag }
 // These helpers normalize either shape into a stable comparison key (so the
-// diff considers qty/chance changes) and a display string the renderers can
-// use directly.
+// diff considers qty/chance/rarity changes) and a display string the
+// renderers can use directly.
 function itemKey(item) {
     if (typeof item === 'string') return item;
     const parts = [item.name || ''];
     if (item.qty_min != null) parts.push(`q${item.qty_min}-${item.qty_max}`);
     if (item.qty != null && item.qty_min == null) parts.push(`q${item.qty}`);
+    if (item.rarity != null) parts.push(`r${item.rarity}`);
     if (item.chance != null) parts.push(`c${item.chance}`);
     return parts.join('|');
+}
+
+const RARITY_SHORT = ['C', 'U', 'R', 'E'];
+
+function formatPctDiff(p) {
+    const pct = p * 100;
+    if (pct >= 100) return '100%';
+    if (pct >= 10)  return `${pct.toFixed(0)}%`;
+    if (pct >= 1)   return `${pct.toFixed(1)}%`;
+    if (pct >= 0.1) return `${pct.toFixed(2)}%`;
+    if (pct >= 0.01) return `${pct.toFixed(3)}%`;
+    return `${pct.toFixed(4)}%`;
 }
 
 function itemDisplayString(item) {
     if (typeof item === 'string') return item;
     let s = '';
+    if (item.rarity != null) {
+        s += `[${RARITY_SHORT[item.rarity] || item.rarity}] `;
+    }
     if (item.qty_min != null) {
         s += item.qty_min === item.qty_max
             ? `${item.qty_min}× `
@@ -114,9 +131,7 @@ function itemDisplayString(item) {
     }
     s += item.name || '';
     if (item.chance != null) {
-        const pct = item.chance * 100;
-        const fmt = pct >= 10 ? pct.toFixed(0) : pct >= 1 ? pct.toFixed(1) : pct.toFixed(2);
-        s += ` (${fmt}%)`;
+        s += ` (${formatPctDiff(item.chance)})`;
     }
     return s;
 }
