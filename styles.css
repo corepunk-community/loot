@@ -1297,6 +1297,28 @@ footer {
 .item-type-weapon     { border-left: 3px solid #e84393; }
 .item-type-other      { border-left: 3px solid #95a5a6; }
 
+/* Reward quality/rarity — colours the reward item name by the binary `flag`
+   value (0 Common = default text, 1 Uncommon, 2 Rare, 3 Epic, 4 Legendary).
+   Scoped to the reward lists so it beats their default `li` colour. */
+#items-list li.rq-1, .modal-rewards-list li.rq-1, .result-item.rq-1 { color: #27ae60; }
+#items-list li.rq-2, .modal-rewards-list li.rq-2, .result-item.rq-2 { color: #2980d9; }
+#items-list li.rq-3, .modal-rewards-list li.rq-3, .result-item.rq-3 { color: #9b59b6; }
+#items-list li.rq-4, .modal-rewards-list li.rq-4, .result-item.rq-4 { color: #e67e22; }
+#items-list li[class*="rq-"]:not(.rq-0), .modal-rewards-list li[class*="rq-"]:not(.rq-0),
+.result-item[class*="rq-"]:not(.rq-0) { font-weight: 600; }
+
+/* Mirrored artifact/weapon reward icons (from corepunk.help's CDN). */
+.reward-item-icon {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 6px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+}
+#items-list li.has-icon, .modal-rewards-list li.has-icon { line-height: 22px; }
+
 /* === Analysis Page === */
 
 .analysis-section {

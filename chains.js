@@ -3,6 +3,7 @@ let questRewards = {};
 let apiQuests = {};
 let slugMap = {};
 let questNotes = {};
+let itemIcons = {}; // reward item name -> mirrored icon path
 let allChainGroups = []; // Unified chain groups for rendering
 
 function toSlug(name) {
@@ -35,6 +36,10 @@ async function fetchData() {
             // doesn't wipe out all enrichment.
             const latestWithApi = [...versions].reverse().find(v => v.api_quests_file);
             const apiQuestsFile = latestVersion.api_quests_file || latestWithApi?.api_quests_file;
+            // Item icons are version-independent (an item's icon doesn't change),
+            // so fall back to the most recent version that mirrored them.
+            const latestWithIcons = [...versions].reverse().find(v => v.item_icons_file);
+            const iconsFile = latestVersion.item_icons_file || latestWithIcons?.item_icons_file;
 
             // Use fixed slots so positional destructuring stays correct even when
             // the API or metadata fetch is skipped for this version.
@@ -42,9 +47,11 @@ async function fetchData() {
                 fetch(rewardsFile),
                 apiQuestsFile ? fetch(apiQuestsFile) : Promise.resolve(null),
                 latestVersion.quest_metadata_file ? fetch(latestVersion.quest_metadata_file) : Promise.resolve(null),
+                iconsFile ? fetch(iconsFile) : Promise.resolve(null),
             ];
 
-            const [rewardsRes, apiRes, metaRes] = await Promise.all(fetches);
+            const [rewardsRes, apiRes, metaRes, iconsRes] = await Promise.all(fetches);
+            if (iconsRes && iconsRes.ok) itemIcons = await iconsRes.json();
             if (rewardsRes.ok) {
                 questRewards = await rewardsRes.json();
             }
@@ -66,7 +73,7 @@ async function fetchData() {
         } catch (e) { /* optional */ }
 
         // Initialize quest modal
-        QuestModal.init({ questRewards, apiQuests, slugMap, questMeta, questNotes });
+        QuestModal.init({ questRewards, apiQuests, slugMap, questMeta, questNotes, itemIcons });
 
         allChainGroups = buildUnifiedChains();
         renderSummary();
@@ -228,15 +235,6 @@ function buildUnifiedChains() {
             }
         });
 
-        // Mark quests that have binary reward data
-        apiChain.forEach(q => {
-            const hasRewards = Object.keys(questRewards).some(name => {
-                const s = toSlug(name);
-                return s === q.slug || slugMap[s] === q.slug;
-            });
-            q.hasRewards = hasRewards;
-        });
-
         merged.push({
             chain: apiChain,
             source: hasBinaryOverlap ? 'both' : 'api',
@@ -262,17 +260,28 @@ function buildUnifiedChains() {
                 slug: toSlug(q.name),
                 requires: q.requires || [],
                 unlocks: q.unlocks || [],
-                hasRewards: questRewards.hasOwnProperty(q.name),
                 source: 'binary'
             }));
             merged.push({ chain: converted, source: 'binary' });
         }
     });
 
-    // Sort by chain length descending
-    merged.sort((a, b) => b.chain.length - a.chain.length);
+    // Drop Prison Island quests that are no longer in the game: flagged
+    // PI-related in the metadata but absent from corepunk.help (the "?" quests).
+    // Remove them from each chain, then discard chains left with < 2 quests.
+    merged.forEach(g => { g.chain = g.chain.filter(q => !isRemovedPI(q)); });
+    const filtered = merged.filter(g => g.chain.length >= 2);
 
-    return merged;
+    // Sort by chain length descending
+    filtered.sort((a, b) => b.chain.length - a.chain.length);
+
+    return filtered;
+}
+
+// Pruned from the chain viewer — see QuestModal.isRemovedPI (shared so every
+// quest UI cuts the same set).
+function isRemovedPI(q) {
+    return QuestModal.isRemovedPI(q.name, q.slug);
 }
 
 function renderSummary() {
@@ -356,7 +365,7 @@ function createQuestNode(q) {
     const node = document.createElement('div');
     node.className = 'chain-node';
 
-    const hasRewards = q.hasRewards !== undefined ? q.hasRewards : questRewards.hasOwnProperty(q.name);
+    const hasRewards = QuestModal.hasRewards(q.name, q.slug);
     const api = apiQuests[q.slug] || getApiQuest(q.name);
 
     const title = document.createElement('div');

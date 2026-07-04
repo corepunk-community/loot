@@ -10,6 +10,7 @@ let chainFilterActive = false;
 let showPIActive = false;
 let apiPrereqTargets = new Set(); // slugs that are prerequisites of other quests
 let questNotes = {}; // quest name -> { piRelated, note }
+let itemIcons = {}; // reward item name -> mirrored icon path
 
 // DOM elements
 const tablesList = document.getElementById('tables-list');
@@ -137,6 +138,8 @@ async function fetchQuestRewards() {
         const apiQuestsFile = latestVersion.api_quests_file || latestWithApi?.api_quests_file;
 
         const metaFile = latestVersion.quest_metadata_file;
+        const latestWithIcons = [...versions].reverse().find(v => v.item_icons_file);
+        const iconsFile = latestVersion.item_icons_file || latestWithIcons?.item_icons_file;
         // Use fixed slots so positional destructuring stays correct even when
         // the API or metadata fetch is skipped (e.g. versions where parse_all
         // ran with --skip-api).
@@ -144,9 +147,11 @@ async function fetchQuestRewards() {
             fetch(rewardsFile),
             apiQuestsFile ? fetch(apiQuestsFile) : Promise.resolve(null),
             metaFile ? fetch(metaFile) : Promise.resolve(null),
+            iconsFile ? fetch(iconsFile) : Promise.resolve(null),
         ];
 
-        const [rewardsResponse, apiResponse, metaResponse] = await Promise.all(fetches);
+        const [rewardsResponse, apiResponse, metaResponse, iconsResponse] = await Promise.all(fetches);
+        if (iconsResponse && iconsResponse.ok) itemIcons = await iconsResponse.json();
 
         if (!rewardsResponse.ok) {
             throw new Error(`HTTP error! Status: ${rewardsResponse.status}`);
@@ -179,8 +184,18 @@ async function fetchQuestRewards() {
             if (notesRes.ok) questNotes = await notesRes.json();
         } catch (e) { /* notes are optional */ }
 
-        // Initialize quest modal (used for chain links to quests without rewards)
-        QuestModal.init({ questRewards, apiQuests, slugMap, questMeta, questNotes });
+        // Initialize quest modal (used for chain links to quests without rewards).
+        // It gets the raw (slug-keyed) data so its slug lookups stay exact.
+        QuestModal.init({ questRewards, apiQuests, slugMap, questMeta, questNotes, itemIcons });
+
+        // quest_rewards is slug-keyed ({ slug: { name, items } }) as of v0.113;
+        // normalize to the name-keyed shape this page's list/search/detail code
+        // expects. Legacy name-keyed files pass through unchanged.
+        questRewards = QuestModal.toNameKeyed(questRewards);
+
+        // Cut Prison Island quests that are no longer in the game from every
+        // surface (list, global search, detail). The raw JSON keeps them.
+        Object.keys(questRewards).forEach(n => { if (QuestModal.isRemovedPI(n)) delete questRewards[n]; });
 
         populateTablesList();
 
@@ -442,7 +457,7 @@ function buildChainHTML(questName) {
         html += '<div class="chain-section chain-prereqs">';
         html += '<span class="chain-label">Requires:</span>';
         prerequisites.forEach(prereq => {
-            const hasRewards = questRewards.hasOwnProperty(prereq);
+            const hasRewards = QuestModal.hasRewards(prereq);
             html += `<a class="chain-link chain-prereq-link${hasRewards ? '' : ' chain-link-dim'}" data-quest="${prereq}">${prereq}</a>`;
         });
         html += '</div>';
@@ -452,7 +467,7 @@ function buildChainHTML(questName) {
         html += '<div class="chain-section chain-followups">';
         html += '<span class="chain-label">Unlocks:</span>';
         followups.forEach(followup => {
-            const hasRewards = questRewards.hasOwnProperty(followup);
+            const hasRewards = QuestModal.hasRewards(followup);
             html += `<a class="chain-link chain-followup-link${hasRewards ? '' : ' chain-link-dim'}" data-quest="${followup}">${followup}</a>`;
         });
         html += '</div>';
@@ -622,10 +637,22 @@ function filterItems(items, searchTerm, containerElement) {
         if (term && !display.toLowerCase().includes(term)) return;
         itemsFound++;
         const li = document.createElement('li');
-        li.textContent = formatItemEntry(item);
+        const icon = QuestModal.itemIcon(item);
+        if (icon) {
+            const img = document.createElement('img');
+            img.className = 'reward-item-icon';
+            img.src = icon; img.alt = ''; img.loading = 'lazy';
+            li.appendChild(img);
+            li.appendChild(document.createTextNode(formatItemEntry(item)));
+            li.classList.add('has-icon');
+        } else {
+            li.textContent = formatItemEntry(item);
+        }
 
-        // Add a subtle type indicator
+        // Type indicator (left border) + quality/rarity color (from binary flag)
         li.classList.add(`item-type-${getItemType(item)}`);
+        const rq = QuestModal.itemRarity(item);
+        if (rq) { li.classList.add(`rq-${rq.rank}`); li.title = rq.name; }
 
         containerElement.appendChild(li);
     });
@@ -681,6 +708,8 @@ function performGlobalSearch(searchTerm) {
         sortedItems.forEach(item => {
             const li = document.createElement('li');
             li.className = 'result-item';
+            const rq = QuestModal.itemRarity(item);
+            if (rq) { li.classList.add(`rq-${rq.rank}`); li.title = rq.name; }
 
             const display = itemDisplayName(item);
             const qtyPrefix = (typeof item === 'object' && item.qty != null && item.qty > 1)

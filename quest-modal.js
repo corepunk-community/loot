@@ -8,6 +8,7 @@ const QuestModal = (() => {
     let data = {};
     let overlay = null;
     let currentSlug = null;
+    let rewardIndex = null; // slug -> reward items, built lazily from questRewards
 
     function toSlug(name) {
         return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').trim();
@@ -40,6 +41,14 @@ const QuestModal = (() => {
         return false;
     }
 
+    // A quest is "removed content" if the metadata flags it Prison Island-related
+    // but it isn't on corepunk.help (it shows the "?" tag) — i.e. no longer
+    // reachable in-game. These are cut from every quest UI; the raw JSON keeps
+    // them (useful for version diffs, and reversible if a quest returns).
+    function isRemovedPI(questName, slug) {
+        return !getApiQuest(questName, slug) && isPIRelated(questName);
+    }
+
     function formatQuestId(id) {
         const meta = data.questMeta[id];
         if (meta) return meta.name;
@@ -68,6 +77,26 @@ const QuestModal = (() => {
         if (lower.startsWith('wp ') || lower.startsWith('wp_')) return 'weapon';
         if (lower.includes('ancient coin')) return 'currency';
         return 'other';
+    }
+
+    // Reward rarity comes from the binary `flag` field on each reward item:
+    // 0 Common, 1 Uncommon, 2 Rare, 3 Epic, 4 Legendary — the same 0-4 scale as
+    // loot rarity. This is the quality the *quest* awards the item at (the same
+    // item shows different flags in different quests), which is why it's read
+    // from our own files rather than the item's base catalog quality.
+    const REWARD_RARITY = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary'];
+    function itemRarity(item) {
+        if (typeof item !== 'object' || item === null) return null;
+        const f = item.flag;
+        if (typeof f !== 'number' || f < 0 || f > 4) return null;
+        return { rank: f, name: REWARD_RARITY[f] };
+    }
+
+    // Local mirrored icon path for a reward item (only artifacts/weapons have
+    // them), or null. Keyed by the reward item's display name.
+    function itemIcon(item) {
+        const name = (typeof item === 'string') ? item : (item && item.name);
+        return (name && data.itemIcons && data.itemIcons[name]) || null;
     }
 
     function buildDetailHTML(questName) {
@@ -204,8 +233,62 @@ const QuestModal = (() => {
         return html;
     }
 
+    // Quest rewards are addressed by SLUG — the same stable identity the chain
+    // and API data use. As of v0.113 the data file is slug-keyed
+    // ({ slug: { name, items } }); older files are name-keyed ({ name: [items] }).
+    // We index either shape by slug so a single lookup path serves every caller,
+    // which is what stops the dim-flag and the modal from disagreeing (the API
+    // display name frequently differs from the binary name, e.g. "A Spark in the
+    // Dark" vs "Campfire Crafting Lesson", or "Star-Powered Shot" vs the binary
+    // "Star-powered Shot").
+    function buildRewardIndex() {
+        rewardIndex = {};
+        const raw = data.questRewards || {};
+        Object.keys(raw).forEach(key => {
+            const val = raw[key];
+            const items = Array.isArray(val) ? val : (val && val.items);
+            if (!Array.isArray(items)) return;
+            const slug = Array.isArray(val) ? toSlug(key) : key; // legacy key is a name
+            if (slug && rewardIndex[slug] === undefined) rewardIndex[slug] = items;
+            // Bridge the few binary slugs that map to a different API slug.
+            const mapped = data.slugMap[slug];
+            if (mapped && rewardIndex[mapped] === undefined) rewardIndex[mapped] = items;
+        });
+    }
+
+    // Canonical reward lookup: resolve a quest to its reward items by slug.
+    // getApiQuest recovers the slug even when none was passed (modal-internal
+    // Requires/Unlocks links navigate by name only).
+    function findRewardItems(questName, slug) {
+        if (!rewardIndex) buildRewardIndex();
+        const ns = toSlug(questName);
+        const api = getApiQuest(questName, slug);
+        const candidates = [slug, ns, data.slugMap[ns], api && api.slug];
+        for (const c of candidates) {
+            if (c && rewardIndex[c]) return rewardIndex[c];
+        }
+        return null;
+    }
+
+    function hasRewards(questName, slug) {
+        const items = findRewardItems(questName, slug);
+        return !!(items && items.length);
+    }
+
+    // Normalize a loaded quest_rewards file (either shape) into a name-keyed
+    // { name: [items] } map for the name-centric browser pages.
+    function toNameKeyed(raw) {
+        const out = {};
+        Object.keys(raw || {}).forEach(key => {
+            const val = raw[key];
+            if (Array.isArray(val)) out[key] = val;
+            else if (val && Array.isArray(val.items)) out[val.name || key] = val.items;
+        });
+        return out;
+    }
+
     function buildRewardsHTML(questName) {
-        const items = data.questRewards[questName];
+        const items = findRewardItems(questName, currentSlug);
         if (!items || items.length === 0) return '';
 
         const typeLabels = {
@@ -233,7 +316,12 @@ const QuestModal = (() => {
         const sorted = [...items].sort((a, b) => displayName(a).localeCompare(displayName(b)));
         const itemsHTML = sorted.map(item => {
             const type = getItemType(item);
-            return `<li class="item-type-${type}">${formatItem(item)}</li>`;
+            const rq = itemRarity(item);
+            const cls = `item-type-${type}${rq ? ` rq-${rq.rank}` : ''}${itemIcon(item) ? ' has-icon' : ''}`;
+            const title = rq ? ` title="${rq.name}"` : '';
+            const icon = itemIcon(item);
+            const img = icon ? `<img class="reward-item-icon" src="${icon}" alt="" loading="lazy">` : '';
+            return `<li class="${cls}"${title}>${img}${formatItem(item)}</li>`;
         }).join('');
 
         return `
@@ -300,9 +388,11 @@ const QuestModal = (() => {
             apiQuests: opts.apiQuests || {},
             slugMap: opts.slugMap || {},
             questMeta: opts.questMeta || {},
-            questNotes: opts.questNotes || {}
+            questNotes: opts.questNotes || {},
+            itemIcons: opts.itemIcons || {}
         };
+        rewardIndex = null; // rebuilt lazily against the new data
     }
 
-    return { init, show, hide };
+    return { init, show, hide, getRewards: findRewardItems, hasRewards, toNameKeyed, isPIRelated, isRemovedPI, getApiQuest, itemRarity, itemIcon };
 })();

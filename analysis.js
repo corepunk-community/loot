@@ -64,6 +64,8 @@ async function init() {
         // wipe out all enrichment.
         const latestWithApi = [...versions].reverse().find(v => v.api_quests_file);
         const apiQuestsFile = latest.api_quests_file || latestWithApi?.api_quests_file;
+        const latestWithIcons = [...versions].reverse().find(v => v.item_icons_file);
+        const iconsFile = latest.item_icons_file || latestWithIcons?.item_icons_file;
 
         // Use fixed slots so positional destructuring stays correct even when
         // the API or metadata fetch is skipped for this version.
@@ -71,9 +73,12 @@ async function init() {
             fetch(rewardsFile),
             apiQuestsFile ? fetch(apiQuestsFile) : Promise.resolve(null),
             latest.quest_metadata_file ? fetch(latest.quest_metadata_file) : Promise.resolve(null),
+            iconsFile ? fetch(iconsFile) : Promise.resolve(null),
         ];
 
-        const [rewardsRes, apiRes, metaRes] = await Promise.all(fetches);
+        let itemIcons = {};
+        const [rewardsRes, apiRes, metaRes, iconsRes] = await Promise.all(fetches);
+        if (iconsRes && iconsRes.ok) itemIcons = await iconsRes.json();
         if (!rewardsRes.ok) throw new Error('Failed to load quest rewards');
         questRewards = await rewardsRes.json();
 
@@ -94,7 +99,15 @@ async function init() {
         } catch (e) { /* notes are optional */ }
 
         // Initialize quest modal
-        QuestModal.init({ questRewards, apiQuests, slugMap, questMeta, questNotes });
+        QuestModal.init({ questRewards, apiQuests, slugMap, questMeta, questNotes, itemIcons });
+
+        // quest_rewards is slug-keyed as of v0.113; normalize to the name-keyed
+        // shape this page's stats/lists expect (legacy files pass through).
+        questRewards = QuestModal.toNameKeyed(questRewards);
+
+        // Cut Prison Island quests that are no longer in the game from the stats,
+        // region breakdowns and lists. The raw JSON keeps them.
+        Object.keys(questRewards).forEach(n => { if (QuestModal.isRemovedPI(n)) delete questRewards[n]; });
 
         renderStats();
         renderQuestLists();

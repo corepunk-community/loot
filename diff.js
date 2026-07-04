@@ -99,6 +99,19 @@ function isLegacyQuestRewards(data) {
     return false;
 }
 
+// quest_rewards became slug-keyed ({ slug: { name, items } }) in v0.113; older
+// files are name-keyed ({ name: [items] }). Normalize either shape to the
+// name-keyed form the diff logic below works with, so a diff can span the
+// v0.113 boundary.
+function toNameKeyedRewards(data) {
+    const out = {};
+    for (const [key, val] of Object.entries(data || {})) {
+        if (Array.isArray(val)) out[key] = val;
+        else if (val && Array.isArray(val.items)) out[val.name || key] = val.items;
+    }
+    return out;
+}
+
 // Items used to be plain strings ("Iron Ingot"); they are now objects.
 // Loot items: { name, qty_min, qty_max, weight, chance, rarity, group,
 //              group_chance }
@@ -369,6 +382,10 @@ const ADAPTERS = {
         searchPlaceholder: 'Search quests or items...',
         helpHtml: 'Diffs quest rewards. Items now include quantity, so a "modified" entry catches both items added/removed AND items whose qty changed.',
         compute(oldData, newData) {
+            // Normalize away the v0.113 slug-keyed shape first so both sides are
+            // name-keyed { name: [items] } regardless of version.
+            oldData = toNameKeyedRewards(oldData);
+            newData = toNameKeyedRewards(newData);
             // The quest reward format changed in v0.103: pre-v0.103 files
             // store items as plain strings, v0.103+ as { name, qty, head,
             // flag } objects. When either side is in the legacy format we
