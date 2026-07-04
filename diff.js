@@ -112,6 +112,19 @@ function toNameKeyedRewards(data) {
     return out;
 }
 
+// Paths under Content/ that are our own tooling/output (parser scripts, the loot
+// viewer, extracted map data), not game data. Mirrors EXCLUDE_PREFIXES in
+// parse_file_manifest.rb, and is ALSO applied here at diff time so older
+// manifests generated before a given exclusion don't surface those paths.
+const MANIFEST_EXCLUDE_PREFIXES = [
+    'Entities/loot/', 'Entities/dist/', 'Entities/loot.bak/',
+    'Entities/backups/', 'Entities/.claude/', 'Entities/.git/',
+    'World/npcs/', 'World/trees/',
+];
+function isExcludedManifestPath(p) {
+    return MANIFEST_EXCLUDE_PREFIXES.some(prefix => p.startsWith(prefix));
+}
+
 // Items used to be plain strings ("Iron Ingot"); they are now objects.
 // Loot items: { name, qty_min, qty_max, weight, chance, rarity, group,
 //              group_chance }
@@ -653,6 +666,7 @@ const ADAPTERS = {
             let unchanged = 0;
 
             for (const path of all) {
+                if (isExcludedManifestPath(path)) continue; // our tooling/output, not game data
                 const inOld = path in oldFiles;
                 const inNew = path in newFiles;
                 if (!inOld && inNew) {
