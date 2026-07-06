@@ -64,19 +64,56 @@ const QuestModal = (() => {
     // An NPC links to the World Map only if it actually exists there (in friendly_npcs);
     // otherwise it's plain text. No corepunk.help links, no dead links.
     function npcOnMap(name) { return !!(name && data.mapNpcs && data.mapNpcs.has(name.toLowerCase())); }
+    // Link an NPC to the World Map. Prefer the SLUG (targets the exact entity — clones like
+    // greta-grubb vs greta-grubb-steppe are distinct), else fall back to the display name.
     function npcLink(slug, name) {
         if (!name) return '';
-        if (!npcOnMap(name)) return name;
-        return `<a href="worldmap.html?npc=${encodeURIComponent(name)}" class="map-link" title="Show ${name} on the World Map">${name}</a>`;
+        const q = (slug && data.mapSlugs && data.mapSlugs.has(slug.toLowerCase())) ? slug
+                : (npcOnMap(name) ? name : null);
+        if (!q) return name;
+        return `<a href="worldmap.html?npc=${encodeURIComponent(q)}" class="map-link" title="Show ${name} on the World Map">${name}</a>`;
+    }
+    // Kill-goal monster phrases -> the World Map species filter (matches creatures.json `k`).
+    // Order matters: "boar mammoth" before "boar". First match wins.
+    const MOB_SPECIES = [
+      [/boar\s*mammoth|mammoth/i, 'boarmammoth'], [/wood\s*raptor|woodraptor/i, 'woodraptor'],
+      [/wooden\s*deer/i, 'wooden-deer'], [/dendroid/i, 'dendroid'], [/leaf/i, 'leaf'],
+      [/fungus/i, 'fungus'], [/spider/i, 'spider'], [/scrag/i, 'scrag'], [/ribbit/i, 'ribbits'],
+      [/hyena/i, 'hyena'], [/archosaur/i, 'archosaur'], [/golem/i, 'golem'], [/timber/i, 'timber'],
+      [/lacertian/i, 'lacertian'], [/gnoos/i, 'gnoose'], [/wolves|\bwolf/i, 'wolves'],
+      [/occultist/i, 'sabbath'], [/chicken/i, 'domestic'], [/turkey/i, 'turkey'],
+      [/mutated\s*rat|\brat/i, 'rat'], [/\bimp/i, 'imp'], [/\bboar\b/i, 'boar']
+    ];
+    // Linkify the monster in a kill/hunt goal -> the map, showing that species' spawns.
+    function linkifyMob(desc) {
+        if (!desc) return desc;
+        for (const [rx, species] of MOB_SPECIES) {
+            const m = desc.match(rx);
+            if (m) {
+                const i = m.index, len = m[0].length;
+                return desc.slice(0, i) +
+                    `<a href="worldmap.html?mob=${encodeURIComponent(species)}" class="map-link mob-link" title="Show ${desc.substr(i, len)} spawns on the World Map">${desc.substr(i, len)}</a>` +
+                    desc.slice(i + len);
+            }
+        }
+        return desc;
     }
     // Linkify any on-map NPC names embedded in free text (e.g. goal "Talk to Varkus Drov").
     function linkifyNpcs(text) {
         if (!text || !data.mapNpcNames || !data.mapNpcNames.length) return text;
+        const lower = text.toLowerCase();
         for (const name of data.mapNpcNames) {           // longest-first (set in init)
-            const i = text.toLowerCase().indexOf(name.toLowerCase());
-            if (i >= 0) {
-                return text.slice(0, i) + npcLink(null, text.substr(i, name.length)) +
-                       linkifyNpcs(text.slice(i + name.length));
+            const ln = name.toLowerCase();
+            let from = 0, i;
+            while ((i = lower.indexOf(ln, from)) >= 0) {
+                // require WORD boundaries so "Thorn" doesn't match inside "Thornfeld"
+                const okBefore = i === 0 || !/[a-z0-9]/i.test(text[i - 1]);
+                const okAfter = i + ln.length >= text.length || !/[a-z0-9']/i.test(text[i + ln.length]);
+                if (okBefore && okAfter) {
+                    return text.slice(0, i) + npcLink(null, text.substr(i, name.length)) +
+                           linkifyNpcs(text.slice(i + name.length));
+                }
+                from = i + 1;
             }
         }
         return text;
@@ -152,10 +189,10 @@ const QuestModal = (() => {
         if (giverName || apiFinisherName) {
             html += '<div class="quest-detail-npcs">';
             if (giverName) {
-                html += `<span class="quest-detail-npc"><span class="quest-detail-label">Giver:</span> ${npcLink(null, giverName)}</span>`;
+                html += `<span class="quest-detail-npc"><span class="quest-detail-label">Giver:</span> ${npcLink(apiGiverSlug, giverName)}</span>`;
             }
             if (apiFinisherName && apiFinisherSlug !== apiGiverSlug) {
-                html += `<span class="quest-detail-npc"><span class="quest-detail-label">Finisher:</span> ${npcLink(null, apiFinisherName)}</span>`;
+                html += `<span class="quest-detail-npc"><span class="quest-detail-label">Finisher:</span> ${npcLink(apiFinisherSlug, apiFinisherName)}</span>`;
             }
             html += '</div>';
         }
@@ -165,7 +202,8 @@ const QuestModal = (() => {
             html += '<div class="quest-detail-goals"><span class="quest-detail-label">Goals:</span><ul>';
             api.goals.forEach(g => {
                 const qty = g.quantity > 1 ? ` (${g.quantity})` : '';
-                html += `<li>${linkifyNpcs(g.description)}${qty}</li>`;
+                const kill = /kill|hunt/i.test(g.type || '') || /^\s*(kill|hunt)\b/i.test(g.description || '');
+                html += `<li>${kill ? linkifyMob(g.description) : linkifyNpcs(g.description)}${qty}</li>`;
             });
             html += '</ul></div>';
         } else if (meta?.goals && meta.goals.length > 0) {
@@ -403,8 +441,9 @@ const QuestModal = (() => {
             questMeta: opts.questMeta || {},
             questNotes: opts.questNotes || {},
             itemIcons: opts.itemIcons || {},
-            mapNpcs: new Set(),
-            mapNpcNames: []
+            mapNpcs: new Set(),      // display names on the map
+            mapNpcNames: [],         // names, longest-first, for linkifying goal text
+            mapSlugs: new Set()      // slugs on the map (uniquely identify clone entities)
         };
         rewardIndex = null; // rebuilt lazily against the new data
         // NPCs that actually exist on the World Map — so we only ever link those (no dead links).
@@ -415,12 +454,17 @@ const QuestModal = (() => {
             fetch('map_npcs.json').then(r => r.ok ? r.json() : []).then(setMapNpcs).catch(() => {});
         }
     }
-    function setMapNpcs(list) {
-        if (!list || !list.length) return;
-        data.mapNpcs = new Set(list.map(n => n.toLowerCase()));
-        data.mapNpcNames = list.slice().sort((a, b) => b.length - a.length); // longest first
+    function setMapNpcs(src) {
+        if (!src) return;
+        const names = Array.isArray(src) ? src : (src.names || []);
+        const slugs = Array.isArray(src) ? [] : (src.slugs || []);
+        if (names.length) {
+            data.mapNpcs = new Set(names.map(n => n.toLowerCase()));
+            data.mapNpcNames = names.slice().sort((a, b) => b.length - a.length); // longest first
+        }
+        if (slugs.length) data.mapSlugs = new Set(slugs.map(s => s.toLowerCase()));
     }
 
     return { init, show, hide, getRewards: findRewardItems, hasRewards, toNameKeyed, isPIRelated, isRemovedPI, getApiQuest, itemRarity, itemIcon,
-             npcMapLink: (name) => npcLink(null, name), npcOnMap, linkifyNpcs };
+             npcMapLink: (a, b) => (b === undefined ? npcLink(null, a) : npcLink(a, b)), npcOnMap, linkifyNpcs, linkifyMob };
 })();

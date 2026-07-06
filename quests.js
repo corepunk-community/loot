@@ -497,7 +497,7 @@ function navigateToQuest(questName) {
 
 // Build a clickable NPC map link
 function npcMapLink(slug, name) {
-    return QuestModal.npcMapLink(name);   // -> World Map if the NPC is on it, else plain text
+    return QuestModal.npcMapLink(slug, name);   // -> World Map (by slug so clones resolve), else plain
 }
 
 // Build quest detail HTML from binary metadata (primary) + API (fallback)
@@ -556,7 +556,8 @@ function buildQuestDetailHTML(questName) {
         html += '<div class="quest-detail-goals"><span class="quest-detail-label">Goals:</span><ul>';
         api.goals.forEach(g => {
             const qty = g.quantity > 1 ? ` (${g.quantity})` : '';
-            html += `<li>${QuestModal.linkifyNpcs(g.description)}${qty}</li>`;
+            const kill = /kill|hunt/i.test(g.type || '') || /^\s*(kill|hunt)\b/i.test(g.description || '');
+            html += `<li>${kill ? QuestModal.linkifyMob(g.description) : QuestModal.linkifyNpcs(g.description)}${qty}</li>`;
         });
         html += '</ul></div>';
     } else if (meta?.goals && meta.goals.length > 0) {

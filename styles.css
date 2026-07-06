@@ -1995,3 +1995,7 @@ footer {
     background: #eaf7ee;
 }
 .map-link::before { content: '\1F4CD'; font-size: 0.85em; margin-right: 2px; opacity: 0.75; }
+/* kill-goal monster links -> map spawns (crossed swords instead of the pin) */
+.map-link.mob-link { color: #b23b3b; border-bottom-color: #dd9999; }
+.map-link.mob-link:hover { color: #8a2020; background: #fbeaea; }
+.map-link.mob-link::before { content: '\2694'; }
