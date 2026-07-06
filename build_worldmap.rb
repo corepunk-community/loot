@@ -39,10 +39,12 @@ add.({id:"critters", section:"Creatures", label:"Ambient critters", color:"#6e76
 fn = items("#{NPCS}/friendly_npcs.json").map{|r|[rnd.(r["x"]),rnd.(r["z"]),r["name"]]}
 add.({id:"friendly_npcs", section:"NPCs", label:"Friendly NPCs (named)", color:"#2dd4bf", style:"dot", on:true, search:true, pts:fn})
 npc = items("#{NPCS}/npcs.json")
-{"miner"=>["Miner NPCs","#58a6ff","dot"],"guard"=>["Guards","#d2a8ff","star"]}.each do |g,(label,color,style)|
-  pts = npc.select{|r|r["g"]==g}.map{|r|[rnd.(r["x"]),rnd.(r["z"])]}
-  add.({id:"npc_#{g}", section:"NPCs", label:label, color:color, style:style, on:false, search:false, pts:pts})
-end
+# 'miner' is actually ORE / mining harvest nodes (Steppes + Rivergleam mining zones, @PHOGS@ gather
+# blueprint) — NOT NPCs. User-confirmed in-game. So it belongs in Gathering, not NPCs.
+add.({id:"gather_miner", section:"Gathering", label:"Ore nodes (miner)", color:"#d98a2b", style:"dot",
+      on:false, search:false, pts:npc.select{|r|r["g"]=="miner"}.map{|r|[rnd.(r["x"]),rnd.(r["z"])]}})
+add.({id:"npc_guard", section:"NPCs", label:"Guards", color:"#d2a8ff", style:"star",
+      on:false, search:false, pts:npc.select{|r|r["g"]=="guard"}.map{|r|[rnd.(r["x"]),rnd.(r["z"])]}})
 
 # ---- Bosses ----
 # (Troll Sites layer removed — the trolls are instanced; only an arena door + 2 scarecrow props

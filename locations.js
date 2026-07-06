@@ -172,14 +172,8 @@ function buildQuestTable(quests, options) {
         const tdGiver = document.createElement('td');
         tdGiver.className = 'location-table-giver';
         const giverName = meta?.questGiver || api?.questGiver?.name || '';
-        if (api?.questGiver?.slug && giverName) {
-            const npcLink = document.createElement('a');
-            npcLink.href = `https://corepunk.help/npcs/${api.questGiver.slug}`;
-            npcLink.target = '_blank';
-            npcLink.rel = 'noopener';
-            npcLink.className = 'npc-map-link';
-            npcLink.textContent = giverName;
-            tdGiver.appendChild(npcLink);
+        if (giverName && QuestModal.npcOnMap(giverName)) {
+            tdGiver.innerHTML = QuestModal.npcMapLink(giverName);   // -> World Map
         } else {
             tdGiver.textContent = giverName;
         }

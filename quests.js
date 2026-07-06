@@ -497,7 +497,7 @@ function navigateToQuest(questName) {
 
 // Build a clickable NPC map link
 function npcMapLink(slug, name) {
-    return `<a href="https://corepunk.help/npcs/${slug}" target="_blank" rel="noopener" class="npc-map-link" title="View on corepunk.help">${name}</a>`;
+    return QuestModal.npcMapLink(name);   // -> World Map if the NPC is on it, else plain text
 }
 
 // Build quest detail HTML from binary metadata (primary) + API (fallback)
@@ -556,7 +556,7 @@ function buildQuestDetailHTML(questName) {
         html += '<div class="quest-detail-goals"><span class="quest-detail-label">Goals:</span><ul>';
         api.goals.forEach(g => {
             const qty = g.quantity > 1 ? ` (${g.quantity})` : '';
-            html += `<li>${g.description}${qty}</li>`;
+            html += `<li>${QuestModal.linkifyNpcs(g.description)}${qty}</li>`;
         });
         html += '</ul></div>';
     } else if (meta?.goals && meta.goals.length > 0) {

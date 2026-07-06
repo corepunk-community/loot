@@ -1982,21 +1982,16 @@ footer {
         max-height: calc(100vh - 40px);
     }
 }
-/* World Map cross-link from quest modal */
-.quest-detail-map {
-    margin: 8px 0 4px;
-}
-.quest-map-link {
+/* NPC names that link to the World Map (givers, finishers, goal text) */
+.map-link {
     color: #2c7a3f;
-    background: #eaf7ee;
-    border: 1px solid #b7e0c2;
-    border-radius: 4px;
-    padding: 3px 9px;
     text-decoration: none;
-    font-size: 0.85em;
-    display: inline-block;
+    border-bottom: 1px dotted #7fbf95;
+    cursor: pointer;
 }
-.quest-map-link:hover {
-    background: #d6efdd;
-    border-color: #2c7a3f;
+.map-link:hover {
+    color: #1e5c2e;
+    border-bottom-style: solid;
+    background: #eaf7ee;
 }
+.map-link::before { content: '\1F4CD'; font-size: 0.85em; margin-right: 2px; opacity: 0.75; }

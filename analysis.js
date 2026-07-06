@@ -378,7 +378,7 @@ function buildQuestTable(results) {
         const giverName = meta?.questGiver || api?.questGiver?.name || '';
         const giverSlug = api?.questGiver?.slug || '';
         if (giverName && giverSlug) {
-            tdGiver.innerHTML = `<a href="https://corepunk.help/npcs/${giverSlug}" target="_blank" rel="noopener" class="npc-map-link">${giverName}</a>`;
+            tdGiver.innerHTML = QuestModal.npcMapLink(giverName);   // -> World Map if on it
         } else {
             tdGiver.textContent = giverName;
         }

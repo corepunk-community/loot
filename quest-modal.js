@@ -61,8 +61,25 @@ const QuestModal = (() => {
         return slug.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
     }
 
+    // An NPC links to the World Map only if it actually exists there (in friendly_npcs);
+    // otherwise it's plain text. No corepunk.help links, no dead links.
+    function npcOnMap(name) { return !!(name && data.mapNpcs && data.mapNpcs.has(name.toLowerCase())); }
     function npcLink(slug, name) {
-        return `<a href="https://corepunk.help/npcs/${slug}" target="_blank" rel="noopener" class="npc-map-link">${name}</a>`;
+        if (!name) return '';
+        if (!npcOnMap(name)) return name;
+        return `<a href="worldmap.html?npc=${encodeURIComponent(name)}" class="map-link" title="Show ${name} on the World Map">${name}</a>`;
+    }
+    // Linkify any on-map NPC names embedded in free text (e.g. goal "Talk to Varkus Drov").
+    function linkifyNpcs(text) {
+        if (!text || !data.mapNpcNames || !data.mapNpcNames.length) return text;
+        for (const name of data.mapNpcNames) {           // longest-first (set in init)
+            const i = text.toLowerCase().indexOf(name.toLowerCase());
+            if (i >= 0) {
+                return text.slice(0, i) + npcLink(null, text.substr(i, name.length)) +
+                       linkifyNpcs(text.slice(i + name.length));
+            }
+        }
+        return text;
     }
 
     function getItemType(item) {
@@ -135,28 +152,20 @@ const QuestModal = (() => {
         if (giverName || apiFinisherName) {
             html += '<div class="quest-detail-npcs">';
             if (giverName) {
-                html += `<span class="quest-detail-npc"><span class="quest-detail-label">Giver:</span> ${apiGiverSlug ? npcLink(apiGiverSlug, giverName) : giverName}</span>`;
+                html += `<span class="quest-detail-npc"><span class="quest-detail-label">Giver:</span> ${npcLink(null, giverName)}</span>`;
             }
             if (apiFinisherName && apiFinisherSlug !== apiGiverSlug) {
-                html += `<span class="quest-detail-npc"><span class="quest-detail-label">Finisher:</span> ${npcLink(apiFinisherSlug, apiFinisherName)}</span>`;
+                html += `<span class="quest-detail-npc"><span class="quest-detail-label">Finisher:</span> ${npcLink(null, apiFinisherName)}</span>`;
             }
             html += '</div>';
         }
 
-        // Cross-link to the World Map — focus on the giver NPC (precise) or the location region
-        const mapParams = [];
-        if (giverName) mapParams.push('npc=' + encodeURIComponent(giverName));
-        if (location) mapParams.push('loc=' + encodeURIComponent(location));
-        if (mapParams.length) {
-            html += `<div class="quest-detail-map"><a href="worldmap.html?${mapParams.join('&')}" class="quest-map-link">📍 View on World Map</a></div>`;
-        }
-
-        // Goals
+        // Goals — NPC names inside them (e.g. "Talk to Varkus Drov") link to the World Map
         if (api?.goals && api.goals.length > 0) {
             html += '<div class="quest-detail-goals"><span class="quest-detail-label">Goals:</span><ul>';
             api.goals.forEach(g => {
                 const qty = g.quantity > 1 ? ` (${g.quantity})` : '';
-                html += `<li>${g.description}${qty}</li>`;
+                html += `<li>${linkifyNpcs(g.description)}${qty}</li>`;
             });
             html += '</ul></div>';
         } else if (meta?.goals && meta.goals.length > 0) {
@@ -171,13 +180,9 @@ const QuestModal = (() => {
             html += `<div class="quest-detail-notes"><span class="quest-detail-label">Notes:</span> <span class="quest-detail-note-text">${note}</span></div>`;
         }
 
-        // Unverified notice / external link
-        if (!api) {
-            if (!note) {
-                html += `<div class="quest-unverified-notice">Not listed on corepunk.help \u2014 data from game files only.</div>`;
-            }
-        } else {
-            html += `<div class="quest-modal-ext-link"><a href="https://corepunk.help/quests/${api.slug}" target="_blank" rel="noopener" class="npc-map-link">View on corepunk.help &#8599;</a></div>`;
+        // Unverified notice (kept as provenance text \u2014 no external link)
+        if (!api && !note) {
+            html += `<div class="quest-unverified-notice">Not listed on corepunk.help \u2014 data from game files only.</div>`;
         }
 
         html += '</div>';
@@ -397,10 +402,25 @@ const QuestModal = (() => {
             slugMap: opts.slugMap || {},
             questMeta: opts.questMeta || {},
             questNotes: opts.questNotes || {},
-            itemIcons: opts.itemIcons || {}
+            itemIcons: opts.itemIcons || {},
+            mapNpcs: new Set(),
+            mapNpcNames: []
         };
         rewardIndex = null; // rebuilt lazily against the new data
+        // NPCs that actually exist on the World Map — so we only ever link those (no dead links).
+        // Prefer the synchronous embedded list (map_npcs.js) so links render on first paint.
+        const embedded = (typeof window !== 'undefined') && window.MAP_NPCS;
+        setMapNpcs(opts.mapNpcs || embedded);
+        if (!opts.mapNpcs && !embedded) {
+            fetch('map_npcs.json').then(r => r.ok ? r.json() : []).then(setMapNpcs).catch(() => {});
+        }
+    }
+    function setMapNpcs(list) {
+        if (!list || !list.length) return;
+        data.mapNpcs = new Set(list.map(n => n.toLowerCase()));
+        data.mapNpcNames = list.slice().sort((a, b) => b.length - a.length); // longest first
     }
 
-    return { init, show, hide, getRewards: findRewardItems, hasRewards, toNameKeyed, isPIRelated, isRemovedPI, getApiQuest, itemRarity, itemIcon };
+    return { init, show, hide, getRewards: findRewardItems, hasRewards, toNameKeyed, isPIRelated, isRemovedPI, getApiQuest, itemRarity, itemIcon,
+             npcMapLink: (name) => npcLink(null, name), npcOnMap, linkifyNpcs };
 })();

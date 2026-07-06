@@ -119,17 +119,26 @@ function fmatch(m){ return !state.filter || (m && (''+m).toLowerCase().indexOf(s
 function draw(){
   const {w,h}=dims(); ctx.clearRect(0,0,w,h);
   if(bgReady){ ctx.globalAlpha=.9; ctx.drawImage(BG, sx(BGX0), sy(BGZ1), MAPW*state.scale, MAPH*state.scale); ctx.globalAlpha=1; }
-  const base=Math.max(1,state.scale*0.85);
+  const base=Math.max(1.1,state.scale*0.9);
   // draw dots first, stars/rings on top
   const order=[...L].sort((a,b)=>{const w={dot:0,ring:1,star:2}; return (w[a.style]||0)-(w[b.style]||0);});
   for(const l of order){ if(!l.on) continue;
-    const r=base*(l.style==='star'?2.1:(l.style==='ring'?2.4:1.0));
-    if(l.style==='ring'){ ctx.strokeStyle=l.color; ctx.lineWidth=Math.max(.7,base*.45);
-      for(const p of l.pts){ ctx.beginPath(); ctx.arc(sx(p[0]),sy(p[1]),r,0,7); ctx.stroke(); } }
-    else if(l.style==='star'){ ctx.fillStyle=l.color; ctx.strokeStyle='rgba(0,0,0,.6)'; ctx.lineWidth=.8;
+    const r=base*(l.style==='star'?2.2:(l.style==='ring'?2.8:1.15));
+    if(l.style==='ring'){
+      // dark backing ring + bright colored ring + solid centre dot -> visible on any terrain
+      for(const p of l.pts){ const X=sx(p[0]),Y=sy(p[1]);
+        ctx.beginPath(); ctx.arc(X,Y,r,0,7); ctx.strokeStyle='rgba(0,0,0,.75)'; ctx.lineWidth=Math.max(2.4,base*1.1); ctx.stroke();
+        ctx.beginPath(); ctx.arc(X,Y,r,0,7); ctx.strokeStyle=l.color; ctx.lineWidth=Math.max(1.1,base*0.55); ctx.stroke();
+        ctx.beginPath(); ctx.arc(X,Y,Math.max(.9,base*0.6),0,7); ctx.fillStyle=l.color; ctx.fill(); }
+    }
+    else if(l.style==='star'){ ctx.fillStyle=l.color; ctx.strokeStyle='rgba(0,0,0,.8)'; ctx.lineWidth=1.1;
       for(const p of l.pts){ if(l.search&&!fmatch(p[2]))continue; const X=sx(p[0]),Y=sy(p[1]);
         ctx.save();ctx.translate(X,Y);ctx.rotate(Math.PI/4);ctx.fillRect(-r,-r,r*2,r*2);ctx.strokeRect(-r,-r,r*2,r*2);ctx.restore(); } }
-    else { ctx.fillStyle=l.color; for(const p of l.pts){ if(l.search&&!fmatch(p[2]))continue; ctx.beginPath(); ctx.arc(sx(p[0]),sy(p[1]),r,0,7); ctx.fill(); } }
+    else { // dots: coloured fill + thin dark rim for contrast against the backdrop
+      ctx.fillStyle=l.color; ctx.strokeStyle='rgba(0,0,0,.5)'; ctx.lineWidth=Math.min(0.9,base*0.5);
+      const rim = base>1.3;
+      for(const p of l.pts){ if(l.search&&!fmatch(p[2]))continue; const X=sx(p[0]),Y=sy(p[1]);
+        ctx.beginPath(); ctx.arc(X,Y,r,0,7); ctx.fill(); if(rim) ctx.stroke(); } }
   }
   if(state.scale>0.05){ ctx.font='600 12px sans-serif'; ctx.textAlign='center';
     for(const rg of D.regions){ const X=sx(rg.x),Y=sy(rg.z); const wpx=ctx.measureText(rg.name).width+8;
