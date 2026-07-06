@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk World Map</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+  /* dark map widget embedded in the light site */
+  #map-wrap{display:flex;height:calc(100vh - 150px);min-height:520px;border:1px solid #30363d;
+    border-radius:8px;overflow:hidden;background:#0d1117;color:#e6edf3;
+    font:13px/1.4 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  #side{width:290px;flex:none;background:#161b22;border-right:1px solid #30363d;display:flex;flex-direction:column;overflow-y:auto}
+  #side .searchrow{padding:12px;border-bottom:1px solid #30363d;position:sticky;top:0;background:#161b22;z-index:2}
+  #wsearch{width:100%;background:#1c2330;border:1px solid #30363d;color:#e6edf3;border-radius:6px;padding:7px 9px;font-size:13px}
+  #side .hint{color:#8b949e;font-size:11px;margin-top:6px}
+  .sec{border-bottom:1px solid #30363d;padding:8px 12px}
+  .sec h3{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#8b949e;margin:2px 0 6px;
+    display:flex;justify-content:space-between;cursor:pointer;user-select:none}
+  .sec h3 .tg{color:#f0883e;font-size:10px}
+  .row{display:flex;align-items:center;gap:8px;padding:2px 0;cursor:pointer}
+  .row:hover{color:#fff}
+  .row input{accent-color:#f0883e;margin:0;cursor:pointer}
+  .sw{width:11px;height:11px;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
+  .sw.ring{background:transparent!important;border-width:2px}
+  .sw.star{border-radius:2px;transform:rotate(45deg)}
+  .row .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+  .row .ct{margin-left:auto;color:#8b949e;font-variant-numeric:tabular-nums;font-size:11px;padding-left:6px}
+  #mapmain{flex:1;position:relative;overflow:hidden}
+  #mapmain canvas{position:absolute;inset:0;cursor:grab}
+  #mapmain canvas.drag{cursor:grabbing}
+  #wtip{position:absolute;pointer-events:none;background:#000d;border:1px solid #30363d;border-radius:6px;
+    padding:6px 9px;font-size:12px;display:none;max-width:250px;z-index:5}
+  #wtip b{color:#f0883e}
+  #whud{position:absolute;left:10px;bottom:10px;background:#000a;border:1px solid #30363d;border-radius:6px;
+    padding:5px 9px;font-size:11px;color:#8b949e;z-index:4}
+  #wstats{padding:8px 12px;color:#8b949e;font-size:11px}
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Corepunk World Map</h1>
+            <nav class="site-nav">
+                <a href="index.html">Loot Tables</a>
+                <a href="quests.html">Quest Rewards</a>
+                <a href="chains.html">Quest Chains</a>
+                <a href="locations.html">Quest Locations</a>
+                <a href="analysis.html">Quest Analysis</a>
+                <a href="recipes.html">Recipes</a>
+                <a href="diff.html">Patch Diff</a>
+                <a href="worldmap.html" class="active">World Map</a>
+            </nav>
+        </header>
+        <main>
+          <div id="map-wrap">
+            <aside id="side">
+              <div class="searchrow">
+                <input id="wsearch" placeholder="Filter markers: spider, chest, dragon, camps…" autocomplete="off">
+                <div class="hint">Drag to pan · scroll to zoom · double-click resets. Toggle layers below.</div>
+              </div>
+              <div id="secs"></div>
+              <div id="wstats"></div>
+            </aside>
+            <div id="mapmain">
+              <canvas id="wcv"></canvas>
+              <div id="wtip"></div>
+              <div id="whud"></div>
+            </div>
+          </div>
+        </main>
+        <footer><p>Created with &#10084;&#65039;</p></footer>
+    </div>
+
+<script src="worldmap_data.js"></script>
+<script>
+const D = window.WORLD_DATA;
+// backdrop calibration — same frame as the trees/entity extractions (north-up, Z-flipped)
+const BGX0=300, BGX1=6200, BGZ0=40, BGZ1=5360, MAPW=BGX1-BGX0, MAPH=BGZ1-BGZ0;
+const BG=new Image(); let bgReady=false; BG.onload=()=>{bgReady=true;draw();}; BG.src='kwalat_map.jpg';
+
+const SECTION_ORDER=["Gathering","Creatures","NPCs","Bosses & harvest","Quest","Objects"];
+const L = D.layers.map(l=>({...l, on:!!l.on}));
+const state={ filter:"", scale:1, ox:0, oy:0 };
+const cv=document.getElementById('wcv'), ctx=cv.getContext('2d');
+const tip=document.getElementById('wtip'), hud=document.getElementById('whud');
+const mapmain=document.getElementById('mapmain');
+
+// ---- build sectioned controls ----
+const secBox=document.getElementById('secs');
+SECTION_ORDER.forEach(sec=>{
+  const ls=L.filter(l=>l.section===sec); if(!ls.length) return;
+  const box=document.createElement('div'); box.className='sec';
+  const h=document.createElement('h3');
+  h.innerHTML=`<span>${sec}</span><span class="tg" data-sec="${sec}">toggle</span>`;
+  box.appendChild(h);
+  ls.forEach(l=>{
+    const el=document.createElement('label'); el.className='row';
+    el.innerHTML=`<input type=checkbox ${l.on?'checked':''}>
+      <span class="sw ${l.style==='ring'?'ring':(l.style==='star'?'star':'')}" style="background:${l.color};${l.style==='ring'?'border-color:'+l.color:''}"></span>
+      <span class="lbl" title="${l.label}">${l.label}</span><span class="ct">${l.pts.length.toLocaleString()}</span>`;
+    const inp=el.querySelector('input'); l._input=inp;
+    inp.onchange=e=>{l.on=e.target.checked;draw();stats();};
+    box.appendChild(el);
+  });
+  h.querySelector('.tg').onclick=()=>{ const anyOff=ls.some(l=>!l.on); ls.forEach(l=>l.on=anyOff);
+    box.querySelectorAll('input').forEach((i,idx)=>i.checked=ls[idx].on); draw();stats(); };
+  secBox.appendChild(box);
+});
+
+// ---- transform (north-up) ----
+function sx(x){ return (x-BGX0)*state.scale + state.ox; }
+function sy(z){ return (BGZ1-z)*state.scale + state.oy; }
+function dims(){ return {w:mapmain.clientWidth||900, h:mapmain.clientHeight||600}; }
+function fit(){ const {w,h}=dims(); const s=Math.min(w/MAPW,h/MAPH)*0.98; state.scale=s; state.ox=(w-MAPW*s)/2; state.oy=(h-MAPH*s)/2; }
+function resize(){ const {w,h}=dims(); cv.width=w*devicePixelRatio; cv.height=h*devicePixelRatio; cv.style.width=w+'px'; cv.style.height=h+'px'; ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0); }
+function fmatch(m){ return !state.filter || (m && (''+m).toLowerCase().indexOf(state.filter)>=0); }
+
+function draw(){
+  const {w,h}=dims(); ctx.clearRect(0,0,w,h);
+  if(bgReady){ ctx.globalAlpha=.9; ctx.drawImage(BG, sx(BGX0), sy(BGZ1), MAPW*state.scale, MAPH*state.scale); ctx.globalAlpha=1; }
+  const base=Math.max(1,state.scale*0.85);
+  // draw dots first, stars/rings on top
+  const order=[...L].sort((a,b)=>{const w={dot:0,ring:1,star:2}; return (w[a.style]||0)-(w[b.style]||0);});
+  for(const l of order){ if(!l.on) continue;
+    const r=base*(l.style==='star'?2.1:(l.style==='ring'?2.4:1.0));
+    if(l.style==='ring'){ ctx.strokeStyle=l.color; ctx.lineWidth=Math.max(.7,base*.45);
+      for(const p of l.pts){ ctx.beginPath(); ctx.arc(sx(p[0]),sy(p[1]),r,0,7); ctx.stroke(); } }
+    else if(l.style==='star'){ ctx.fillStyle=l.color; ctx.strokeStyle='rgba(0,0,0,.6)'; ctx.lineWidth=.8;
+      for(const p of l.pts){ if(l.search&&!fmatch(p[2]))continue; const X=sx(p[0]),Y=sy(p[1]);
+        ctx.save();ctx.translate(X,Y);ctx.rotate(Math.PI/4);ctx.fillRect(-r,-r,r*2,r*2);ctx.strokeRect(-r,-r,r*2,r*2);ctx.restore(); } }
+    else { ctx.fillStyle=l.color; for(const p of l.pts){ if(l.search&&!fmatch(p[2]))continue; ctx.beginPath(); ctx.arc(sx(p[0]),sy(p[1]),r,0,7); ctx.fill(); } }
+  }
+  if(state.scale>0.05){ ctx.font='600 12px sans-serif'; ctx.textAlign='center';
+    for(const rg of D.regions){ const X=sx(rg.x),Y=sy(rg.z); const wpx=ctx.measureText(rg.name).width+8;
+      ctx.fillStyle='rgba(0,0,0,.55)'; ctx.fillRect(X-wpx/2,Y-8,wpx,15); ctx.fillStyle='#e6edf3'; ctx.fillText(rg.name,X,Y+3); } }
+}
+function stats(){ let shown=0,tot=0; for(const l of L){ tot+=l.pts.length; if(!l.on)continue;
+    shown+= state.filter&&l.search ? l.pts.filter(p=>fmatch(p[2])).length : l.pts.length; }
+  document.getElementById('wstats').innerHTML=`<b style="color:#e6edf3">${shown.toLocaleString()}</b> markers shown · ${tot.toLocaleString()} mapped`;
+  hud.textContent=`zoom ${state.scale.toFixed(3)}×`; }
+
+// ---- interaction ----
+let drag=null;
+cv.addEventListener('mousedown',e=>{drag={x:e.clientX,y:e.clientY,ox:state.ox,oy:state.oy};cv.classList.add('drag')});
+addEventListener('mouseup',()=>{drag=null;cv.classList.remove('drag')});
+addEventListener('mousemove',e=>{ if(drag){state.ox=drag.ox+(e.clientX-drag.x);state.oy=drag.oy+(e.clientY-drag.y);draw();return;} hover(e); });
+cv.addEventListener('wheel',e=>{ e.preventDefault(); const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
+  const f=e.deltaY<0?1.15:1/1.15, ns=Math.min(12,Math.max(0.02,state.scale*f));
+  state.ox=mx-(mx-state.ox)*(ns/state.scale); state.oy=my-(my-state.oy)*(ns/state.scale); state.scale=ns; draw();stats(); },{passive:false});
+cv.addEventListener('dblclick',()=>{fit();draw();stats();});
+function hover(e){ const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top; let best=null,bl=null,bd=64;
+  for(const l of L){ if(!l.on)continue; for(const p of l.pts){ if(l.search&&!fmatch(p[2]))continue;
+    const dx=sx(p[0])-mx,dy=sy(p[1])-my,d=dx*dx+dy*dy; if(d<bd){bd=d;best=p;bl=l;} } }
+  if(best){ tip.style.display='block'; tip.style.left=(mx+14)+'px'; tip.style.top=(my+12)+'px';
+    const meta=best[2]?' · '+best[2]:''; tip.innerHTML=`<b>${bl.label}</b>${meta}<br><span style="color:#8b949e">world ${best[0]}, ${best[1]}</span>`;
+  } else tip.style.display='none'; }
+document.getElementById('wsearch').oninput=e=>{state.filter=e.target.value.trim().toLowerCase();draw();stats();};
+
+// ---- deep-link focus (from quest pages): ?npc=<name> / ?loc=<region> / ?q=<text> ----
+function focusPoint(x,z,zoom){ const {w,h}=dims(); state.scale=zoom;
+  state.ox = w/2 - (x-BGX0)*state.scale; state.oy = h/2 - (BGZ1-z)*state.scale; }
+function applyURL(){
+  const p=new URLSearchParams(location.search);
+  const npc=p.get('npc'), loc=p.get('loc'), q=p.get('q'); let focused=false;
+  if(npc){
+    const nl=L.find(l=>l.id==='friendly_npcs');
+    const key=npc.toLowerCase();
+    const hit=nl && (nl.pts.find(pt=>(''+pt[2]).toLowerCase()===key) || nl.pts.find(pt=>(''+pt[2]).toLowerCase().indexOf(key)>=0));
+    if(hit){ nl.on=true; if(nl._input)nl._input.checked=true;
+      state.filter=key; document.getElementById('wsearch').value=npc;
+      focusPoint(hit[0],hit[1], Math.max(state.scale,1.1)); focused=true; }
+  }
+  if(!focused && loc){
+    const k=loc.toLowerCase();
+    const rg=D.regions.find(r=>r.name.toLowerCase()===k)
+      || D.regions.find(r=>k.indexOf(r.name.toLowerCase())>=0 || r.name.toLowerCase().indexOf(k)>=0);
+    if(rg){ focusPoint(rg.x,rg.z, Math.max(state.scale,0.45)); focused=true; }
+  }
+  if(q){ state.filter=q.toLowerCase(); document.getElementById('wsearch').value=q; }
+  if(focused) moved=true;    // keep the focus; don't let resize re-fit over it
+  return focused||!!q;
+}
+
+let moved=false, urlDone=false; cv.addEventListener('mousedown',()=>moved=true); cv.addEventListener('wheel',()=>moved=true,{passive:true});
+function init(){ resize(); if(!moved) fit(); if(!urlDone){ urlDone=true; applyURL(); } draw(); stats(); }
+addEventListener('resize',init);
+requestAnimationFrame(()=>requestAnimationFrame(init)); addEventListener('load',init); setTimeout(init,150);
+</script>
+</body>
+</html>

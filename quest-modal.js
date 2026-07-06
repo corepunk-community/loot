@@ -143,6 +143,14 @@ const QuestModal = (() => {
             html += '</div>';
         }
 
+        // Cross-link to the World Map — focus on the giver NPC (precise) or the location region
+        const mapParams = [];
+        if (giverName) mapParams.push('npc=' + encodeURIComponent(giverName));
+        if (location) mapParams.push('loc=' + encodeURIComponent(location));
+        if (mapParams.length) {
+            html += `<div class="quest-detail-map"><a href="worldmap.html?${mapParams.join('&')}" class="quest-map-link">📍 View on World Map</a></div>`;
+        }
+
         // Goals
         if (api?.goals && api.goals.length > 0) {
             html += '<div class="quest-detail-goals"><span class="quest-detail-label">Goals:</span><ul>';

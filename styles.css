@@ -1982,3 +1982,21 @@ footer {
         max-height: calc(100vh - 40px);
     }
 }
+/* World Map cross-link from quest modal */
+.quest-detail-map {
+    margin: 8px 0 4px;
+}
+.quest-map-link {
+    color: #2c7a3f;
+    background: #eaf7ee;
+    border: 1px solid #b7e0c2;
+    border-radius: 4px;
+    padding: 3px 9px;
+    text-decoration: none;
+    font-size: 0.85em;
+    display: inline-block;
+}
+.quest-map-link:hover {
+    background: #d6efdd;
+    border-color: #2c7a3f;
+}

@@ -121,8 +121,12 @@ const MANIFEST_EXCLUDE_PREFIXES = [
     'Entities/backups/', 'Entities/.claude/', 'Entities/.git/',
     'World/npcs/', 'World/trees/',
 ];
+// Extensions the game never ships — a file with one is always ours.
+const MANIFEST_EXCLUDE_EXTENSIONS = ['.rb'];
 function isExcludedManifestPath(p) {
-    return MANIFEST_EXCLUDE_PREFIXES.some(prefix => p.startsWith(prefix));
+    if (MANIFEST_EXCLUDE_PREFIXES.some(prefix => p.startsWith(prefix))) return true;
+    const dot = p.lastIndexOf('.');
+    return dot !== -1 && MANIFEST_EXCLUDE_EXTENSIONS.includes(p.slice(dot).toLowerCase());
 }
 
 // Items used to be plain strings ("Iron Ingot"); they are now objects.
