@@ -81,7 +81,7 @@ const BG=new Image(); let bgReady=false; BG.onload=()=>{bgReady=true;draw();}; B
 
 const SECTION_ORDER=["Gathering","Creatures","NPCs","Bosses & harvest","Quest","Objects"];
 const L = D.layers.map(l=>({...l, on:!!l.on}));
-const state={ filter:"", scale:1, ox:0, oy:0 };
+const state={ filter:"", scale:1, ox:0, oy:0, focus:null };
 const cv=document.getElementById('wcv'), ctx=cv.getContext('2d');
 const tip=document.getElementById('wtip'), hud=document.getElementById('whud');
 const mapmain=document.getElementById('mapmain');
@@ -134,6 +134,13 @@ function draw(){
   if(state.scale>0.05){ ctx.font='600 12px sans-serif'; ctx.textAlign='center';
     for(const rg of D.regions){ const X=sx(rg.x),Y=sy(rg.z); const wpx=ctx.measureText(rg.name).width+8;
       ctx.fillStyle='rgba(0,0,0,.55)'; ctx.fillRect(X-wpx/2,Y-8,wpx,15); ctx.fillStyle='#e6edf3'; ctx.fillText(rg.name,X,Y+3); } }
+  // focus highlight (from a quest deep-link) — bright pin so the NPC is unmistakable
+  if(state.focus){ const X=sx(state.focus.x), Y=sy(state.focus.z);
+    ctx.strokeStyle='#ffd33d'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(X,Y,13,0,7); ctx.stroke();
+    ctx.beginPath(); ctx.arc(X,Y,7,0,7); ctx.stroke();
+    ctx.fillStyle='#ffd33d'; ctx.font='700 13px sans-serif'; ctx.textAlign='center';
+    const t=state.focus.name; const w=ctx.measureText(t).width+10;
+    ctx.fillStyle='rgba(0,0,0,.7)'; ctx.fillRect(X-w/2,Y-32,w,17); ctx.fillStyle='#ffd33d'; ctx.fillText(t,X,Y-19); }
 }
 function stats(){ let shown=0,tot=0; for(const l of L){ tot+=l.pts.length; if(!l.on)continue;
     shown+= state.filter&&l.search ? l.pts.filter(p=>fmatch(p[2])).length : l.pts.length; }
@@ -148,7 +155,7 @@ addEventListener('mousemove',e=>{ if(drag){state.ox=drag.ox+(e.clientX-drag.x);s
 cv.addEventListener('wheel',e=>{ e.preventDefault(); const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
   const f=e.deltaY<0?1.15:1/1.15, ns=Math.min(12,Math.max(0.02,state.scale*f));
   state.ox=mx-(mx-state.ox)*(ns/state.scale); state.oy=my-(my-state.oy)*(ns/state.scale); state.scale=ns; draw();stats(); },{passive:false});
-cv.addEventListener('dblclick',()=>{fit();draw();stats();});
+cv.addEventListener('dblclick',()=>{state.focus=null;fit();draw();stats();});
 function hover(e){ const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top; let best=null,bl=null,bd=64;
   for(const l of L){ if(!l.on)continue; for(const p of l.pts){ if(l.search&&!fmatch(p[2]))continue;
     const dx=sx(p[0])-mx,dy=sy(p[1])-my,d=dx*dx+dy*dy; if(d<bd){bd=d;best=p;bl=l;} } }
@@ -167,9 +174,13 @@ function applyURL(){
     const nl=L.find(l=>l.id==='friendly_npcs');
     const key=npc.toLowerCase();
     const hit=nl && (nl.pts.find(pt=>(''+pt[2]).toLowerCase()===key) || nl.pts.find(pt=>(''+pt[2]).toLowerCase().indexOf(key)>=0));
-    if(hit){ nl.on=true; if(nl._input)nl._input.checked=true;
+    if(hit){
+      // isolate: only the NPC layer, filtered to this NPC, so nothing else clutters the view
+      L.forEach(l=>{ l.on = (l.id==='friendly_npcs'); if(l._input) l._input.checked=l.on; });
       state.filter=key; document.getElementById('wsearch').value=npc;
-      focusPoint(hit[0],hit[1], Math.max(state.scale,1.1)); focused=true; }
+      state.focus={x:hit[0], z:hit[1], name:(hit[2]||npc)};
+      focusPoint(hit[0],hit[1], 2.6); focused=true;   // tight zoom on the NPC
+    }
   }
   if(!focused && loc){
     const k=loc.toLowerCase();

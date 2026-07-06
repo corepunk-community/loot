@@ -906,6 +906,48 @@
         "qty": 1,
         "head": null,
         "flag": 2
+      },
+      {
+        "name": "Art T2 Battle Mage Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Cerebral Interface",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Cyberbiker Arm",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Inductive Coil",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Modular Glove",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Soldiers Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Battle Sleeve",
+        "qty": 1,
+        "head": null,
+        "flag": 3
       }
     ]
   },
@@ -2201,6 +2243,72 @@
         "qty": 6,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Con T1 Biosteroids Shot",
+        "qty": 5,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Magic Pills",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T1 Counterfeit Painkillers",
+        "qty": 5,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Short Mana Vial",
+        "qty": 5,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -2402,6 +2510,48 @@
         "qty": 1,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T3 Invictus Plate",
+        "qty": 1,
+        "head": 7,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Raptor Augment",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Sonic Cloak",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Havoc Diskblade",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Plated Lungs",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Ardent Cannister",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Dragonfly Drone",
+        "qty": 1,
+        "head": null,
+        "flag": 2
       }
     ]
   },
@@ -2754,6 +2904,84 @@
         "qty": 3,
         "head": null,
         "flag": 0
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 2
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Doomsday Bomber Male Legs Pink",
+        "qty": 1,
+        "head": 6,
+        "flag": 1
+      },
+      {
+        "name": "Doomsday Bomber Female Legs Pink",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Doomsday Champion Male Legs Blue",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Doomsday Champion Female Legs Blue",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Doomsday Orc Male Legs Green",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Doomsday Orc Female Legs Green",
+        "qty": 1,
+        "head": null,
+        "flag": 1
       }
     ]
   },
@@ -2971,6 +3199,48 @@
         "qty": 6,
         "head": 1,
         "flag": 0
+      },
+      {
+        "name": "Wp Sword Cha Des 2h Crimson Eclipse",
+        "qty": 1,
+        "head": 7,
+        "flag": 1
+      },
+      {
+        "name": "Wp Bow Cha Ran 2h Marrowbone Longbow",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Wp Spear Warm Legion 1h Brightcoil",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Wp Gun Bom Bm 2h Marrowbone Barrage",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Wp Dagger Bom Inf 1h Tech Slicer",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Wp Knuckle Warm Shaman 1h Moonlight Gauntlets",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Wp Sword Cha Def 1h Forgemasters Requiem",
+        "qty": 1,
+        "head": null,
+        "flag": 1
       }
     ]
   },
@@ -3544,6 +3814,48 @@
         "qty": 3,
         "head": null,
         "flag": 0
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 1
       }
     ]
   },
@@ -3638,6 +3950,48 @@
         "qty": 2,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T2 Warlocks Lamp",
+        "qty": 1,
+        "head": 7,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Vitality Augmenter",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Petrified Mana Talisman",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Mental Nano Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Mana Phaser",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Cyberbiker Arm",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Psionic Backpack",
+        "qty": 1,
+        "head": null,
+        "flag": 2
       }
     ]
   },
@@ -3914,6 +4268,48 @@
         "qty": 2,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T2 Cyber Plate Carrier",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Magic Amplifier",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Modular Glove",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Paramedic Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Petrified Mana Talisman",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Recovery Device",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Atomic Breastplate",
+        "qty": 1,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -4172,6 +4568,149 @@
       }
     ]
   },
+  "crafting-lessons": {
+    "name": "Crafting Lessons",
+    "items": [
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Herbalism Hazelnut",
+        "qty": 5,
+        "head": 4,
+        "flag": 0
+      },
+      {
+        "name": "Tree Root",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Iron Ore",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Spine",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Jute",
+        "qty": 5,
+        "head": 4,
+        "flag": 0
+      },
+      {
+        "name": "Wood",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Soft Crystal",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Large Bone",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Herbalism Silkworm Caterpillar",
+        "qty": 5,
+        "head": 4,
+        "flag": 0
+      },
+      {
+        "name": "Stone Bark",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Ancient Fossils",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Xiphoid Process",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Fragrant Root",
+        "qty": 5,
+        "head": 4,
+        "flag": 0
+      },
+      {
+        "name": "Heartwood",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Meteoric Metal",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Animal Fat",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      }
+    ]
+  },
   "culinary-diplomacy": {
     "name": "Culinary Diplomacy",
     "items": [
@@ -4315,6 +4854,84 @@
         "qty": 1,
         "head": 1,
         "flag": 3
+      },
+      {
+        "name": "Art T2 Hormone Booster",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Paramedic Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Primal Energy Invertor",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Soldiers Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Vital Nano Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Vitality Augmenter",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Steam Cells Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Gentlemans Mana Pipe",
+        "qty": 3,
+        "head": 4,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Restorative Analgesic Ointment",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Double Biosteroids Shot",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Adrenaline Double Dose",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T2 Batch Of Painkillers",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T2 Mana Flask",
+        "qty": 3,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -6232,6 +6849,120 @@
         "qty": 12,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": 3,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Rec Art T1 Body Scaner Unlocked",
+        "qty": 1,
+        "head": 3,
+        "flag": 0
+      },
+      {
+        "name": "Rec Art T1 Immuno Stimulating Implant Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Rec Art T1 Magic Circle Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Adv Cp T1 Rhythm Setter",
+        "qty": 1,
+        "head": 3,
+        "flag": 0
+      },
+      {
+        "name": "Adv Cp T1 Arcane Amplifier",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Adv Cp T1 Blitz",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Rec Adv Cp T1 Rhythm Setter Unlocked",
+        "qty": 1,
+        "head": 3,
+        "flag": 0
+      },
+      {
+        "name": "Rec Adv Cp T1 Arcane Amplifier Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Rec Adv Cp T1 Blitz Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -7262,6 +7993,96 @@
         "qty": 1,
         "head": null,
         "flag": 0
+      },
+      {
+        "name": "Art T2 Hormone Booster",
+        "qty": 1,
+        "head": 7,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Paramedic Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Primal Energy Invertor",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Soldiers Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Vital Nano Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Vitality Augmenter",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Steam Cells Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Con Short T2 Mana Flask",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T2 Batch Of Painkillers",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Restorative Analgesic Ointment",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Gentlemans Mana Pipe",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Ceramics",
+        "qty": 3,
+        "head": 4,
+        "flag": 0
+      },
+      {
+        "name": "Jewellery Bone",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Jewellery Wood",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Composite Material",
+        "qty": 3,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -7477,6 +8298,77 @@
       }
     ]
   },
+  "gnat-a-problem": {
+    "name": "Gnat A Problem",
+    "items": [
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T1 Counterfeit Painkillers",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Short Mana Vial",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Dish Fish Sushi Roll",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con Dish Purple Dragon",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      }
+    ]
+  },
   "grimbletons-great-recipe-hunt": {
     "name": "Grimbletons Great Recipe Hunt",
     "items": [
@@ -7544,6 +8436,60 @@
         "qty": 2,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T2 Warlocks Lamp",
+        "qty": 1,
+        "head": 7,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Vitality Augmenter",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Petrified Mana Talisman",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Mental Nano Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Mana Phaser",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Cyberbiker Arm",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Psionic Backpack",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Con Short T2 Batch Of Painkillers",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T2 Mana Flask",
+        "qty": 3,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -8039,6 +8985,48 @@
         "qty": 3,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -8404,6 +9392,96 @@
         "qty": 6,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Con Short T1 Counterfeit Painkillers",
+        "qty": 5,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Short Mana Vial",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 3,
+        "flag": 2
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Rec Art T1 Immuno Stimulating Implant Unlocked",
+        "qty": 1,
+        "head": 3,
+        "flag": 2
+      },
+      {
+        "name": "Rec Art T1 Magic Circle Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Rec Art T1 Mana Amulet Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 2
       }
     ]
   },
@@ -8468,6 +9546,90 @@
         "qty": 5,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T3 Invictus Plate",
+        "qty": 1,
+        "head": 7,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Raptor Augment",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Sonic Cloak",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Havoc Diskblade",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Plated Lungs",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Ardent Cannister",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Dragonfly Drone",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Stealth Cloak",
+        "qty": 1,
+        "head": 7,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Steam Cells Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Atomic Breastplate",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Psionic Backpack",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Matter Shaker",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Battle Sleeve",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Resonance Armor",
+        "qty": 1,
+        "head": null,
+        "flag": 3
       }
     ]
   },
@@ -9397,6 +10559,72 @@
         "qty": 1,
         "head": null,
         "flag": 0
+      },
+      {
+        "name": "Art T3 V6 Heart",
+        "qty": 1,
+        "head": 7,
+        "flag": 3
+      },
+      {
+        "name": "Art T3 Riftbreakers Shell G",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T3 Magitech Visor G",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T3 Magenta Medallion G",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T3 Gadgetron Cube G",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T3 Arcane Visage G",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T3 Bloodstone Ring G",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Con T3 Magic Bomb",
+        "qty": 5,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T3 Absurd Pills",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T3 Triple Biosteroids Shot",
+        "qty": 5,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T3 Hugh Mangus Blunt",
+        "qty": 5,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -9467,6 +10695,132 @@
         "qty": 2,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Con T1 Biosteroids Shot",
+        "qty": 5,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Titanium Ointment",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Restorative Ointment",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Burn Relief",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Magic Pills",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Short Mana Vial",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T1 Counterfeit Painkillers",
+        "qty": 5,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Dish Baked Eggplant",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con Dish Dorpurplu Cheese",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": 3,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Rec Art T1 Nano Tissue Unlocked",
+        "qty": 1,
+        "head": 3,
+        "flag": 1
+      },
+      {
+        "name": "Rec Art T1 Steroid Implant Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Rec Art T1 Armor Plate Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Adv Cp T1 Blitz",
+        "qty": 1,
+        "head": 3,
+        "flag": 0
+      },
+      {
+        "name": "Adv Cp T1 Cardio",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Adv Cp T1 Combo Crusher",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Rec Adv Cp T1 Blitz Unlocked",
+        "qty": 1,
+        "head": 3,
+        "flag": 0
+      },
+      {
+        "name": "Rec Adv Cp T1 Cardio Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Rec Adv Cp T1 Combo Crusher Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -9867,6 +11221,48 @@
         "qty": 5,
         "head": 1,
         "flag": 0
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 3
       }
     ]
   },
@@ -10909,6 +12305,48 @@
         "qty": 3,
         "head": null,
         "flag": 0
+      },
+      {
+        "name": "Art T2 Battle Mage Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Cerebral Interface",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Cyberbiker Arm",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Inductive Coil",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Modular Glove",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Soldiers Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Battle Sleeve",
+        "qty": 1,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -11156,6 +12594,84 @@
         "qty": 5,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Biosteroids Shot",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Magic Pills",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Restorative Ointment",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Mana Pipe",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T1 Counterfeit Painkillers",
+        "qty": 5,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Short Mana Vial",
+        "qty": 5,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -11220,6 +12736,60 @@
         "qty": 2,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T2 Cyber Plate Carrier",
+        "qty": 1,
+        "head": 7,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Magic Amplifier",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Modular Glove",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Paramedic Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Petrified Mana Talisman",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Recovery Device",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Atomic Breastplate",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Con Short T2 Batch Of Painkillers",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T2 Mana Flask",
+        "qty": 3,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -12403,6 +13973,48 @@
         "qty": 2,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T2 Warlocks Lamp",
+        "qty": 1,
+        "head": 7,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Vitality Augmenter",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Petrified Mana Talisman",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Mental Nano Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Mana Phaser",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Cyberbiker Arm",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T2 Psionic Backpack",
+        "qty": 1,
+        "head": null,
+        "flag": 1
       }
     ]
   },
@@ -12513,6 +14125,48 @@
       {
         "name": "Con Dish Sweet Baked Pumpkin",
         "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
         "head": null,
         "flag": 0
       }
@@ -12657,6 +14311,60 @@
         "qty": 1,
         "head": null,
         "flag": 2
+      },
+      {
+        "name": "Art T3 Invictus Plate",
+        "qty": 1,
+        "head": 7,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Raptor Augment",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Sonic Cloak",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Havoc Diskblade",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Plated Lungs",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Ardent Cannister",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Dragonfly Drone",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Synthesis Item Reroll Main Stats T1",
+        "qty": 5,
+        "head": 2,
+        "flag": 1
+      },
+      {
+        "name": "Synthesis Item Reroll Secondary Baskets T1",
+        "qty": 5,
+        "head": null,
+        "flag": 1
       }
     ]
   },
@@ -13428,6 +15136,48 @@
         "qty": 5,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T3 V6 Heart",
+        "qty": 1,
+        "head": 7,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Riftbreakers Shell G",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Magitech Visor G",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Magenta Medallion G",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Gadgetron Cube G",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Arcane Visage G",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T3 Bloodstone Ring G",
+        "qty": 1,
+        "head": null,
+        "flag": 2
       }
     ]
   },
@@ -13510,6 +15260,60 @@
         "qty": 1,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T2 Battle Sleeve",
+        "qty": 1,
+        "head": 7,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Matter Shaker",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Psionic Backpack",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Stealth Cloak",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Steam Cells Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Atomic Breastplate",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Resonance Armor",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Con Dish Energy Egg Toast",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con Dish Titansandwich",
+        "qty": 3,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -14134,6 +15938,60 @@
         "qty": 2,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T2 Hormone Booster",
+        "qty": 1,
+        "head": 7,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Paramedic Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Primal Energy Invertor",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Soldiers Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Vital Nano Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Vitality Augmenter",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Steam Cells Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Con Short T2 Batch Of Painkillers",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T2 Mana Flask",
+        "qty": 3,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -15619,6 +17477,48 @@
         "qty": 1,
         "head": null,
         "flag": 2
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 3
       }
     ]
   },
@@ -16360,6 +18260,48 @@
         "qty": 1,
         "head": 1,
         "flag": 1
+      },
+      {
+        "name": "Art T2 Vitality Augmenter",
+        "qty": 1,
+        "head": 7,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Vital Nano Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Steam Cells Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Paramedic Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Soldiers Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Primal Energy Invertor",
+        "qty": 1,
+        "head": null,
+        "flag": 2
+      },
+      {
+        "name": "Art T2 Hormone Booster",
+        "qty": 1,
+        "head": null,
+        "flag": 2
       }
     ]
   },
@@ -16394,6 +18336,84 @@
         "name": "Con Reset Passive Talents",
         "qty": 1,
         "head": 1,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Warlocks Lamp",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Vitality Augmenter",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Petrified Mana Talisman",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Mental Nano Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Mana Phaser",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Cyberbiker Arm",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T2 Psionic Backpack",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Adv Cp T2 Fusion Demolisher",
+        "qty": 1,
+        "head": 3,
+        "flag": 0
+      },
+      {
+        "name": "Adv Cp T2 Glacial Enthraller",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Adv Cp T2 Hyper Blitz",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Rec Adv Cp T2 Fusion Demolisher Unlocked",
+        "qty": 1,
+        "head": 3,
+        "flag": 0
+      },
+      {
+        "name": "Rec Adv Cp T2 Glacial Enthraller Unlocked",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Rec Adv Cp T2 Hyper Blitz Unlocked",
+        "qty": 1,
+        "head": null,
         "flag": 0
       }
     ]
@@ -16507,6 +18527,114 @@
         "qty": 4,
         "head": 1,
         "flag": 0
+      },
+      {
+        "name": "Art T2 Cyber Plate Carrier",
+        "qty": 1,
+        "head": 7,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Magic Amplifier",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Modular Glove",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Paramedic Bracer",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Petrified Mana Talisman",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Recovery Device",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Art T2 Atomic Breastplate",
+        "qty": 1,
+        "head": null,
+        "flag": 3
+      },
+      {
+        "name": "Con T2 Double Biosteroids Shot",
+        "qty": 3,
+        "head": 5,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Adrenaline Double Dose",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Magic Capsules",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Joyful Pills",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Strong Joint",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Fortified Titanium Ointment",
+        "qty": 3,
+        "head": 4,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Unseen Sunscreen",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Restorative Analgesic Ointment",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T2 Gentlemans Mana Pipe",
+        "qty": 3,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T2 Mana Flask",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T2 Batch Of Painkillers",
+        "qty": 3,
+        "head": null,
+        "flag": 0
       }
     ]
   },
@@ -16582,6 +18710,96 @@
         "name": "Con Food Bread",
         "qty": 3,
         "head": 1,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Doomsday Bomber Male Body Pink",
+        "qty": 1,
+        "head": 6,
+        "flag": 0
+      },
+      {
+        "name": "Doomsday Bomber Female Body Pink",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Doomsday Champion Male Body Blue",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Doomsday Champion Female Body Blue",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Doomsday Orc Male Body Green",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Doomsday Orc Female Body Green",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Biosteroids Shot",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Magic Pills",
+        "qty": 3,
+        "head": null,
         "flag": 0
       }
     ]
@@ -16798,6 +19016,48 @@
         "name": "Talent Fragmenter",
         "qty": 1,
         "head": 1,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Invictus Plate",
+        "qty": 1,
+        "head": 7,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Raptor Augment",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Sonic Cloak",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Havoc Diskblade",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Plated Lungs",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Ardent Cannister",
+        "qty": 1,
+        "head": null,
+        "flag": 1
+      },
+      {
+        "name": "Art T3 Dragonfly Drone",
+        "qty": 1,
+        "head": null,
         "flag": 1
       }
     ]
@@ -17611,6 +19871,60 @@
         "name": "Res Food Sugar",
         "qty": 3,
         "head": 1,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Immuno Stimulating Implant",
+        "qty": 1,
+        "head": 7,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Mana Amulet",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Steroid Implant",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Magic Circle",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Body Scaner",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Armor Plate",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Art T1 Nano Tissue",
+        "qty": 1,
+        "head": null,
+        "flag": 0
+      },
+      {
+        "name": "Con Short T1 Counterfeit Painkillers",
+        "qty": 3,
+        "head": 2,
+        "flag": 0
+      },
+      {
+        "name": "Con T1 Short Mana Vial",
+        "qty": 3,
+        "head": null,
         "flag": 0
       }
     ]

@@ -45,10 +45,12 @@ npc = items("#{NPCS}/npcs.json")
 end
 
 # ---- Bosses ----
-troll = (JSON.parse(File.read("#{NPCS}/troll_sites.json"))["items"] rescue []).map{|r|[rnd.(r["x"]),rnd.(r["z"]), r["id"].to_s=~/arena/i ? "Troll Arena (Trolltaken Hamlet)" : "Troll scarecrow"]}
-add.({id:"troll_sites", section:"Bosses & harvest", label:"Troll sites (arena/scarecrows)", color:"#ff4d4d", style:"star", on:true, search:false, pts:troll})
-rb = (JSON.parse(File.read("#{NPCS}/wandering_bosses.json"))["groups"] rescue []).select{|g|g["kind"]=="wandering-monsters"}.flat_map{|g|(g["points"]||[]).map{|p|[rnd.(p[0]),rnd.(p[1]),"Wandering boss (lvl-20)"]}}
-add.({id:"roaming_bosses", section:"Bosses & harvest", label:"Roaming bosses (lvl-20)", color:"#f43f5e", style:"star", on:true, search:false, pts:rb})
+# (Troll Sites layer removed — the trolls are instanced; only an arena door + 2 scarecrow props
+#  were ever on the open map, which isn't useful here.)
+# The generic 'wandering-monsters' spawns are the roaming ARMORED HYENA elites: 97% overlap the
+# regular hyena population's footprint in the Steppes (centroids ~identical), matching in-game sightings.
+rb = (JSON.parse(File.read("#{NPCS}/wandering_bosses.json"))["groups"] rescue []).select{|g|g["kind"]=="wandering-monsters"}.flat_map{|g|(g["points"]||[]).map{|p|[rnd.(p[0]),rnd.(p[1]),"Armored hyena (wandering elite)"]}}
+add.({id:"roaming_bosses", section:"Bosses & harvest", label:"Armored hyenas (wandering, Steppes)", color:"#f43f5e", style:"star", on:true, search:false, pts:rb})
 
 # ---- Harvestable (rings) ----
 HC = {"dragon"=>"#22d3ee","hyena"=>"#f59e0b","golem"=>"#a78bfa","archosaur"=>"#84cc16",
