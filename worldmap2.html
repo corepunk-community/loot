@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="leaflet/leaflet.css">
     <link rel="stylesheet" href="styles.css">
 <style>
-  /* dark map widget embedded in the light site */
   #map-wrap{display:flex;height:calc(100vh - 150px);min-height:520px;border:1px solid #30363d;
     border-radius:8px;overflow:hidden;background:#0d1117;color:#e6edf3;
     font:13px/1.4 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
@@ -40,7 +39,6 @@
   .leaflet-container{background:#0d1117}
   .leaflet-control-zoom a{background:#161b22;color:#e6edf3;border-color:#30363d}
   .leaflet-control-zoom a:hover{background:#1c2330;color:#f0883e}
-  #mcv{position:absolute;inset:0;z-index:450;pointer-events:none}
   #wtip{position:absolute;pointer-events:none;background:#000d;border:1px solid #30363d;border-radius:6px;
     padding:6px 9px;font-size:12px;display:none;max-width:250px;z-index:500}
   #wtip b{color:#f0883e}
@@ -83,7 +81,6 @@
             </aside>
             <div id="mapmain">
               <div id="lmap"></div>
-              <canvas id="mcv"></canvas>
               <div id="wtip"></div>
               <div id="whud"></div>
             </div>
@@ -126,69 +123,104 @@ function ptVisible(l,p){ if(l.search && !fmatch(p[2])) return false;
 for(const l of LAYERS){ const n=l.pts.length; l._px=new Float64Array(n); l._py=new Float64Array(n);
   for(let i=0;i<n;i++){ const p=l.pts[i]; l._px[i]=(p[0]-M.world.x0)*PXW; l._py[i]=(M.world.z1-p[1])*PXH; } }
 
-// ---- Leaflet map (CRS.Simple: pixel coords, no geo) ----
+// ---- Leaflet map (CRS.Simple: pixel coords, no geo). Zoom animation ON = smooth, flicker-free. ----
 const map = L.map('lmap', {
   crs: L.CRS.Simple, minZoom: M.minZoom, maxZoom: M.maxZoom + (M.overZoom||3),
-  zoomSnap: 0, zoomDelta: 0.6, wheelPxPerZoomLevel: 90, wheelDebounceTime: 18,
-  zoomAnimation: false, doubleClickZoom: false, attributionControl: false, zoomControl: true
+  zoomSnap: 0, zoomDelta: 0.6, wheelPxPerZoomLevel: 100, wheelDebounceTime: 40,
+  zoomAnimation: true, doubleClickZoom: false, attributionControl: false, zoomControl: true
 });
 function px2ll(px,py){ return map.unproject([px,py], M.maxZoom); }      // full-res image px -> latlng
 function world2ll(x,z){ return px2ll((x-M.world.x0)*PXW, (M.world.z1-z)*PXH); }
 const BOUNDS = L.latLngBounds(px2ll(0, M.imgH), px2ll(M.imgW, 0));
 L.tileLayer('tiles2/{z}/{x}/{y}.jpg', {
   tileSize: M.tileSize, minZoom: M.minZoom, maxNativeZoom: M.maxZoom,
-  maxZoom: M.maxZoom + (M.overZoom||3), noWrap: true, bounds: BOUNDS, keepBuffer: 2
+  maxZoom: M.maxZoom + (M.overZoom||3), noWrap: true, bounds: BOUNDS, keepBuffer: 4,
+  updateWhenZooming: false
 }).addTo(map);
 map.fitBounds(BOUNDS);
 map.setMaxBounds(BOUNDS.pad(0.25));
 
-// ---- marker canvas overlay (we draw all points ourselves; Leaflet just gives us the transform) ----
-const cv=document.getElementById('mcv'), ctx=cv.getContext('2d');
 const tip=document.getElementById('wtip'), hud=document.getElementById('whud');
-const lmapEl=document.getElementById('lmap');
-const dpr=window.devicePixelRatio||1;
-function fitCanvas(){ const s=map.getSize();
-  if(cv.width!==Math.round(s.x*dpr)||cv.height!==Math.round(s.y*dpr)){
-    cv.width=Math.round(s.x*dpr); cv.height=Math.round(s.y*dpr); cv.style.width=s.x+'px'; cv.style.height=s.y+'px'; }
-  ctx.setTransform(dpr,0,0,dpr,0,0); }
 const STZ={dot:0,ring:1,star:2};
-function redraw(){
-  fitCanvas(); const s=map.getSize(); ctx.clearRect(0,0,s.x,s.y);
-  const A=map.getZoomScale(map.getZoom(), M.maxZoom);   // container px per master px
-  const o=map.latLngToContainerPoint(px2ll(0,0));       // container pt of master px (0,0)
-  const ox=o.x, oy=o.y, sWorld=A*PXW, base=Math.max(1.0, sWorld*0.9);
+
+// draw every marker into ctx. layer-point of master pixel (px,py) = px*A - PO.x, py*A - PO.y
+function drawMarkers(ctx, A, POx, POy){
+  const sWorld=A*PXW, base=Math.max(1.0, sWorld*0.9);
   const order=[...LAYERS].sort((a,b)=>(STZ[a.style]||0)-(STZ[b.style]||0));
   for(const l of order){ if(!l.on) continue;
     const r=base*(l.style==='star'?2.2:(l.style==='ring'?2.8:1.15)), px=l._px, py=l._py, n=px.length, pts=l.pts;
     if(l.style==='ring'){
-      for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=ox+A*px[i],Y=oy+A*py[i];
+      for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=px[i]*A-POx,Y=py[i]*A-POy;
         ctx.beginPath();ctx.arc(X,Y,r,0,7);ctx.strokeStyle='rgba(0,0,0,.75)';ctx.lineWidth=Math.max(2.4,base*1.1);ctx.stroke();
         ctx.beginPath();ctx.arc(X,Y,r,0,7);ctx.strokeStyle=l.color;ctx.lineWidth=Math.max(1.1,base*0.55);ctx.stroke();
         ctx.beginPath();ctx.arc(X,Y,Math.max(.9,base*0.6),0,7);ctx.fillStyle=l.color;ctx.fill(); }
     } else if(l.style==='star'){ ctx.fillStyle=l.color;ctx.strokeStyle='rgba(0,0,0,.8)';ctx.lineWidth=1.1;
-      for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=ox+A*px[i],Y=oy+A*py[i];
+      for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=px[i]*A-POx,Y=py[i]*A-POy;
         ctx.save();ctx.translate(X,Y);ctx.rotate(Math.PI/4);ctx.fillRect(-r,-r,r*2,r*2);ctx.strokeRect(-r,-r,r*2,r*2);ctx.restore(); }
     } else { ctx.fillStyle=l.color;ctx.strokeStyle='rgba(0,0,0,.5)';ctx.lineWidth=Math.min(0.9,base*0.5); const rim=base>1.3;
-      for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=ox+A*px[i],Y=oy+A*py[i];
+      for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=px[i]*A-POx,Y=py[i]*A-POy;
         ctx.beginPath();ctx.arc(X,Y,r,0,7);ctx.fill();if(rim)ctx.stroke(); } }
   }
-  // region labels
   ctx.font='600 12px sans-serif'; ctx.textAlign='center';
-  for(const rg of D.regions){ const c=map.latLngToContainerPoint(world2ll(rg.x,rg.z));
-    if(c.x<-60||c.x>s.x+60||c.y<-20||c.y>s.y+20) continue;
+  for(const rg of D.regions){ const lp=map.latLngToLayerPoint(world2ll(rg.x,rg.z)), X=lp.x, Y=lp.y;
     const w=ctx.measureText(rg.name).width+8;
-    ctx.fillStyle='rgba(0,0,0,.55)';ctx.fillRect(c.x-w/2,c.y-8,w,15);ctx.fillStyle='#e6edf3';ctx.fillText(rg.name,c.x,c.y+3); }
-  // focus highlight (from a quest deep-link)
-  if(state.focus){ const c=map.latLngToContainerPoint(world2ll(state.focus.x,state.focus.z));
-    ctx.strokeStyle='#ffd33d';ctx.lineWidth=2;ctx.beginPath();ctx.arc(c.x,c.y,13,0,7);ctx.stroke();
-    ctx.beginPath();ctx.arc(c.x,c.y,7,0,7);ctx.stroke();
+    ctx.fillStyle='rgba(0,0,0,.55)';ctx.fillRect(X-w/2,Y-8,w,15);ctx.fillStyle='#e6edf3';ctx.fillText(rg.name,X,Y+3); }
+  if(state.focus){ const lp=map.latLngToLayerPoint(world2ll(state.focus.x,state.focus.z)), X=lp.x, Y=lp.y;
+    ctx.strokeStyle='#ffd33d';ctx.lineWidth=2;ctx.beginPath();ctx.arc(X,Y,13,0,7);ctx.stroke();
+    ctx.beginPath();ctx.arc(X,Y,7,0,7);ctx.stroke();
     ctx.fillStyle='#ffd33d';ctx.font='700 13px sans-serif';ctx.textAlign='center';
     const t=state.focus.name, w=ctx.measureText(t).width+10;
-    ctx.fillStyle='rgba(0,0,0,.7)';ctx.fillRect(c.x-w/2,c.y-32,w,17);ctx.fillStyle='#ffd33d';ctx.fillText(t,c.x,c.y-19); }
+    ctx.fillStyle='rgba(0,0,0,.7)';ctx.fillRect(X-w/2,Y-32,w,17);ctx.fillStyle='#ffd33d';ctx.fillText(t,X,Y-19); }
 }
-let rafPending=false;
-function scheduleRedraw(){ if(rafPending)return; rafPending=true; requestAnimationFrame(()=>{rafPending=false;redraw();}); }
-map.on('move zoom viewreset zoomend moveend resize', scheduleRedraw);
+
+// A zoom-animation-aware canvas layer (mirrors Leaflet's L.Canvas): the canvas lives in the overlayPane
+// and is scaled/translated to track the zoom animation, then redrawn crisply on zoomend — no flicker.
+const MarkerCanvas = L.Layer.extend({
+  options:{ padding:0.12 },
+  onAdd(map){
+    this._map=map;
+    const c=this._container=L.DomUtil.create('canvas');
+    c.style.position='absolute'; c.style.pointerEvents='none'; L.DomUtil.addClass(c,'leaflet-zoom-animated');
+    map.getPane('overlayPane').appendChild(c);
+    this._ctx=c.getContext('2d');
+    map.on('moveend viewreset resize zoomend', this._reset, this);
+    map.on('zoom', this._onZoom, this);
+    if(map.options.zoomAnimation) map.on('zoomanim', this._onAnimZoom, this);
+    this._reset();
+  },
+  onRemove(map){ map.off('moveend viewreset resize zoomend', this._reset, this);
+    map.off('zoom', this._onZoom, this); map.off('zoomanim', this._onAnimZoom, this); L.DomUtil.remove(this._container); },
+  _onAnimZoom(e){ this._updateTransform(e.center, e.zoom); },
+  _onZoom(){ this._updateTransform(this._map.getCenter(), this._map.getZoom()); },
+  _updateTransform(center, zoom){
+    const map=this._map, scale=map.getZoomScale(zoom, this._zoom),
+      viewHalf=map.getSize().multiplyBy(0.5+this.options.padding),
+      currentCenterPoint=map.project(this._center, zoom),
+      topLeftOffset=viewHalf.multiplyBy(-scale).add(currentCenterPoint).subtract(map._getNewPixelOrigin(center, zoom));
+    L.DomUtil.setTransform(this._container, topLeftOffset, scale);
+  },
+  _reset(){
+    const map=this._map, p=this.options.padding, size=map.getSize(),
+      min=map.containerPointToLayerPoint(size.multiplyBy(-p)).round();
+    this._bounds=L.bounds(min, min.add(size.multiplyBy(1+p*2)).round());
+    this._center=map.getCenter(); this._zoom=map.getZoom();
+    const b=this._bounds, sz=b.getSize(), dpr=window.devicePixelRatio||1, c=this._container;
+    L.DomUtil.setPosition(c, b.min);
+    c.width=Math.round(dpr*sz.x); c.height=Math.round(dpr*sz.y);
+    c.style.width=sz.x+'px'; c.style.height=sz.y+'px';
+    this._updateTransform(this._center, this._zoom);
+    this._draw();
+  },
+  _draw(){
+    const map=this._map, b=this._bounds, sz=b.getSize(), dpr=window.devicePixelRatio||1, ctx=this._ctx;
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,sz.x,sz.y); ctx.translate(-b.min.x,-b.min.y);
+    const A=map.getZoomScale(map.getZoom(), M.maxZoom), PO=map.getPixelOrigin();
+    drawMarkers(ctx, A, PO.x, PO.y);
+  },
+  redraw(){ if(this._map && !this._raf) this._raf=requestAnimationFrame(()=>{ this._raf=0; this._reset(); }); }
+});
+const markerLayer = new MarkerCanvas().addTo(map);
+function scheduleRedraw(){ markerLayer.redraw(); }
 
 // ---- stats + zoom HUD ----
 function stats(){ let shown=0,tot=0; for(const l of LAYERS){ tot+=l.pts.length; if(!l.on)continue;
