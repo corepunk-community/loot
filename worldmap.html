@@ -87,13 +87,19 @@
 <script src="worldmap_data.js"></script>
 <script>
 const D = window.WORLD_DATA;
-// backdrop calibration — same frame as the trees/entity extractions (north-up, Z-flipped)
-const BGX0=300, BGX1=6200, BGZ0=40, BGZ1=5360, MAPW=BGX1-BGX0, MAPH=BGZ1-BGZ0;
+// backdrop calibration (north-up, Z-flipped). North crop extended to Z=6144 so the World
+// Map's northern markers (critters/creatures reach ~6067) sit on terrain, not the void;
+// the trees/npcs viewers keep Z=5360. Must match the backdrop's MINIMAP_CZ1 at build time.
+const BGX0=300, BGX1=6200, BGZ0=40, BGZ1=6144, MAPW=BGX1-BGX0, MAPH=BGZ1-BGZ0;
 const BG=new Image(); let bgReady=false; BG.onload=()=>{bgReady=true;draw();}; BG.src='kwalat_map.jpg';
 
 const SECTION_ORDER=["Gathering","Creatures","NPCs","Harvestable mobs","Quest","Objects"];
 const L = D.layers.map(l=>({...l, on:!!l.on}));
 const state={ filter:"", scale:1, ox:0, oy:0, focus:null };
+// backdrop is ~1.36 px/world (8000px across the 5900-unit-wide world). Cap zoom so the
+// image never magnifies far past its native detail into blocky JPEG artefacts. Markers are
+// vector-drawn so they stay crisp regardless; raise this if a tile-pyramid backdrop lands.
+const MAXZOOM=4;
 // ---- persist layer toggles + search across refresh / navigation ----
 const LS_KEY='corepunk_worldmap_v1';
 function saveState(){ try{ const on={}; L.forEach(l=>on[l.id]=l.on);
@@ -164,7 +170,7 @@ function fmatch(m){ return !state.filter || (m && (''+m).toLowerCase().indexOf(s
 
 function draw(){
   const {w,h}=dims(); ctx.clearRect(0,0,w,h);
-  if(bgReady){ ctx.globalAlpha=.9; ctx.drawImage(BG, sx(BGX0), sy(BGZ1), MAPW*state.scale, MAPH*state.scale); ctx.globalAlpha=1; }
+  if(bgReady){ ctx.imageSmoothingQuality='high'; ctx.globalAlpha=.9; ctx.drawImage(BG, sx(BGX0), sy(BGZ1), MAPW*state.scale, MAPH*state.scale); ctx.globalAlpha=1; }
   const base=Math.max(1.1,state.scale*0.9);
   // draw dots first, stars/rings on top
   const order=[...L].sort((a,b)=>{const w={dot:0,ring:1,star:2}; return (w[a.style]||0)-(w[b.style]||0);});
@@ -208,7 +214,7 @@ cv.addEventListener('mousedown',e=>{drag={x:e.clientX,y:e.clientY,ox:state.ox,oy
 addEventListener('mouseup',()=>{drag=null;cv.classList.remove('drag')});
 addEventListener('mousemove',e=>{ if(drag){state.ox=drag.ox+(e.clientX-drag.x);state.oy=drag.oy+(e.clientY-drag.y);draw();return;} hover(e); });
 cv.addEventListener('wheel',e=>{ e.preventDefault(); const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
-  const f=e.deltaY<0?1.15:1/1.15, ns=Math.min(12,Math.max(0.02,state.scale*f));
+  const f=e.deltaY<0?1.15:1/1.15, ns=Math.min(MAXZOOM,Math.max(0.02,state.scale*f));
   state.ox=mx-(mx-state.ox)*(ns/state.scale); state.oy=my-(my-state.oy)*(ns/state.scale); state.scale=ns; draw();stats(); },{passive:false});
 cv.addEventListener('dblclick',()=>{state.focus=null;fit();draw();stats();});
 function hover(e){ const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top; let best=null,bl=null,bd=64;
