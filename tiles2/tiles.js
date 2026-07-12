@@ -1,0 +1,1 @@
+window.TILES2_META={"imgW":11800,"imgH":12208,"tileSize":512,"minZoom":0,"maxZoom":5,"overZoom":3,"world":{"x0":300,"x1":6200,"z0":40,"z1":6144},"tilesPerZoom":{"5":576,"4":144,"3":36,"2":9,"1":4,"0":1}};

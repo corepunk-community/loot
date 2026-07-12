@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk — Prison Island Loot Comparison</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      :root{
+        --ink:#1c2430; --muted:#6a7583; --faint:#aab3bd; --line:#e6eaee; --surface:#fff; --paper:#f6f8fa;
+        --hc:#c9791f; --hc-tint:#fdf3e6; --hc-ink:#8a5011;
+        --pvp:#33506e; --pvp-tint:#eaf1fb; --pvp-ink:#2a4056;
+        --win:#1f9d55; --win-tint:#e7f6ed; --win-line:#8fd3ab;
+        --epic:#8e44ad; --epic-tint:#f5edfa;
+        --mono: ui-monospace, 'Cascadia Code', 'Cascadia Mono', Consolas, 'SFMono-Regular', 'Courier New', monospace;
+      }
+      /* ---- hero / thesis ---- */
+      .lc-hero{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:22px 24px; margin-bottom:18px; }
+      .lc-eyebrow{ font-size:.7rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--hc); margin:0 0 8px; }
+      .lc-eyebrow::before{ content:"▚ "; color:var(--faint); letter-spacing:0; }
+      .lc-hero h2{ margin:0 0 8px; font-size:1.5rem; line-height:1.18; font-weight:800; letter-spacing:-.015em; color:var(--ink); max-width:34ch; }
+      .lc-hero p{ margin:0; color:var(--muted); font-size:.92rem; line-height:1.55; max-width:78ch; }
+      .lc-hero p b{ color:var(--ink); font-weight:600; }
+
+      /* ---- controls: labelled segmented groups ---- */
+      .lc-controls{ display:flex; flex-wrap:wrap; gap:14px 26px; margin-bottom:16px; align-items:flex-end; }
+      .lc-grp{ display:flex; flex-direction:column; gap:7px; }
+      .lc-grp .glabel{ font-size:.68rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; }
+      .lc-seg{ display:inline-flex; flex-wrap:wrap; gap:4px; padding:4px; background:#eef1f4; border-radius:9px; }
+      .lc-seg button{ font-family:inherit; font-size:.82rem; font-weight:600; border:none; background:transparent; color:#4a5561; padding:6px 12px; border-radius:6px; cursor:pointer; transition:background .12s, color .12s, box-shadow .12s; }
+      .lc-seg button:hover{ color:var(--ink); }
+      .lc-seg button:focus-visible{ outline:2px solid var(--pvp); outline-offset:1px; }
+      .lc-seg button.on{ background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(20,30,45,.12); }
+      /* quality-tinted active */
+      .q.on.q-Common  { color:#5b6670; box-shadow:inset 0 0 0 1.5px #95a5a6, 0 1px 2px rgba(20,30,45,.1); }
+      .q.on.q-Uncommon{ color:#1e8e4e; box-shadow:inset 0 0 0 1.5px #2ecc71, 0 1px 2px rgba(20,30,45,.1); }
+      .q.on.q-Rare    { color:#1f6f9a; box-shadow:inset 0 0 0 1.5px #3498db, 0 1px 2px rgba(20,30,45,.1); }
+      .q.on.q-Epic    { color:#7a3596; box-shadow:inset 0 0 0 1.5px #9b59b6, 0 1px 2px rgba(20,30,45,.1); }
+      .m.on.m-hc { background:var(--hc); color:#fff; box-shadow:0 1px 2px rgba(140,80,17,.35); }
+      .m.on.m-pvp{ background:var(--pvp); color:#fff; box-shadow:0 1px 2px rgba(42,64,86,.35); }
+
+      /* ---- takeaway line ---- */
+      .lc-read{ font-size:.95rem; line-height:1.5; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--win); border-radius:8px; padding:12px 16px; margin-bottom:14px; }
+      .lc-read .lv{ font-family:var(--mono); font-weight:700; color:var(--win); }
+      .lc-read.pveonly{ border-left-color:var(--epic); }
+      .lc-read.pveonly .lv{ color:var(--epic); }
+
+      /* ---- readout table ---- */
+      .lc-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--surface); }
+      table.lc{ border-collapse:separate; border-spacing:0; width:100%; font-size:12.5px; }
+      .lc th, .lc td{ padding:7px 8px; text-align:center; white-space:nowrap; border-bottom:1px solid var(--line); }
+      .lc thead th{ background:#28323e; color:#e8ecf0; position:sticky; top:0; z-index:3; font-weight:600; font-size:11px; letter-spacing:.02em; }
+      .lc thead .lvlgrp{ background:#323d4a; font-weight:600; text-transform:uppercase; letter-spacing:.09em; font-size:10px; color:#c4ccd4; }
+      .lc thead .lvlnum th{ background:#28323e; font-family:var(--mono); font-weight:600; color:#9fb0c0; min-width:46px; }
+      .lc th.src, .lc td.src{ position:sticky; left:0; background:var(--surface); text-align:left; z-index:2; border-right:1px solid var(--line); min-width:238px; max-width:238px; white-space:normal; }
+      .lc thead th.src{ z-index:4; background:#28323e; vertical-align:middle; }
+      .lc td.src{ font-weight:600; color:var(--ink); font-size:12.5px; line-height:1.3; }
+      .lc td.src .tbl{ display:block; font-family:var(--mono); font-size:10px; color:var(--faint); font-weight:400; margin-top:3px; }
+      .lc tr.grp td{ background:var(--paper); text-align:left; padding:5px 8px; }
+      .lc tr.grp .glab{ font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+      .lc tbody tr:hover td.src{ background:#fafcff; }
+
+      /* number cells */
+      .lc td.num{ font-family:var(--mono); font-variant-numeric:tabular-nums; color:#33404e; }
+      .lc td.num.zero{ color:var(--faint); }
+      /* compare-mode anchor column: neutral by default; tinted only when the mode leads at every Level */
+      .lc .anchor{ font-weight:700; }
+      .lc td.anchor{ background:var(--surface); border-right:2px solid var(--line); }
+      .lc td.leads{ background:var(--win-tint); color:#12703b; box-shadow:inset 0 0 0 2px var(--win); }
+      .lc thead th.anchor-hc{ background:var(--hc); color:#fff; }
+      .lc thead th.anchor-pvp{ background:var(--pvp); color:#fff; }
+      .lc .anchor .sub{ display:block; font-family:inherit; font-weight:400; font-size:9.5px; opacity:.7; margin-top:1px; }
+      /* threshold: PvE Level cells that beat the chosen mode */
+      .lc td.beats{ background:var(--win-tint); color:#12703b; }
+      .lc td.cross{ box-shadow:inset 0 0 0 2px var(--win); font-weight:700; position:relative; }
+      .lc td.cross::after{ content:"Lv " attr(data-lv); position:absolute; top:-8px; left:50%; transform:translateX(-50%); background:var(--win); color:#fff; font-family:var(--mono); font-size:9px; font-weight:700; padding:0 5px; border-radius:7px; white-space:nowrap; }
+      .lc td.pchip{ background:var(--epic-tint); color:#7a3596; font-family:var(--mono); }
+
+      @media (prefers-reduced-motion: reduce){ .lc-seg button{ transition:none; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Prison Island — Loot Comparison</h1>
+            <nav class="site-nav">
+                <a href="index.html">Loot Tables</a>
+                <a href="quests.html">Quest Rewards</a>
+                <a href="chains.html">Quest Chains</a>
+                <a href="locations.html">Quest Locations</a>
+                <a href="analysis.html">Quest Analysis</a>
+                <a href="recipes.html">Recipes</a>
+                <a href="diff.html">Patch Diff</a>
+                <a href="worldmap.html">World Map</a>
+                <a href="worldmap2.html">World Map v2</a>
+                <a href="loot_compare.html" class="active">Loot Comparison</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="lc-hero">
+                <p class="lc-eyebrow">Prison Island</p>
+                <h2>PvE key card vs. PvP loot</h2>
+                <p>Drop chance per kill / open. <b>Green</b> = a PvE Level beats your chosen mode (flag = the first one). <b>Hardcore</b> = normal PvP +30%; <b>PvE</b> = base rate × the card's in‑game Loot‑chance.</p>
+            </section>
+
+            <div class="lc-controls">
+                <div class="lc-grp"><span class="glabel">Loot item</span><div class="lc-seg" id="item-seg"></div></div>
+                <div class="lc-grp"><span class="glabel">PvE card quality</span><div class="lc-seg" id="qual-seg"></div></div>
+                <div class="lc-grp"><span class="glabel">Compare against</span><div class="lc-seg" id="mode-seg"></div></div>
+            </div>
+
+            <div class="lc-read" id="read"></div>
+            <div class="lc-wrap">
+                <table class="lc" id="lc-table"></table>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="loot_compare_data.js"></script>
+    <script>
+      const D = LOOT_COMPARE_DATA;
+      const SRCS = D.sources.filter(s => s.group !== "Bosses" || s.key === "troll");
+      // deep-link state via ?item=&qual=&mode= (validated, with fallbacks)
+      const P = new URLSearchParams(location.search);
+      const okItem = k => D.items.some(i => i.key === k);
+      let selItem = okItem(P.get("item")) ? P.get("item") : D.items[0].key;
+      let selQual = D.qualities.includes(P.get("qual")) ? P.get("qual") : "Epic";
+      let selMode = (P.get("mode")==="pvp"||P.get("mode")==="hc") ? P.get("mode") : "hc";
+      const MODES = { hc:{label:"Hardcore PvP", mult:1.3, cls:"anchor-hc", sub:"PvP +30%"},
+                      pvp:{label:"Normal PvP",   mult:1.0, cls:"anchor-pvp", sub:"base"} };
+
+      const fmt = v => !v ? "—"
+        : v>=10 ? v.toFixed(1)+"%" : v>=1 ? v.toFixed(2)+"%"
+        : v>=0.1 ? v.toFixed(3)+"%" : v>=0.0001 ? v.toFixed(4)+"%" : "<0.0001%";
+      const oneIn = v => { if(!v) return ""; const n=100/v;
+        return n>=1000 ? "~1 per "+Math.round(n/100)*100 : n>=20 ? "~1 per "+Math.round(n) : "~1 per "+n.toFixed(1); };
+      const tiersOf = (base,q) => D.lootChance[q].map(m => base*m);
+      const art = w => /^[aeiou]/i.test(w) ? "an" : "a";
+      function crossover(pveBase, modeVal, q){
+        if (modeVal===0) return pveBase>0 ? {t:"pveonly"} : {t:"none"};
+        const t = tiersOf(pveBase,q);
+        for (let i=0;i<12;i++) if (t[i]>=modeVal) return {t:"al", al:i+1};
+        return {t:"never"};
+      }
+
+      function seg(id, opts, sel, extra){
+        document.getElementById(id).innerHTML = opts.map(o =>
+          `<button class="${extra||""} ${o.k===sel?"on":""} ${o.cls||""}" data-k="${o.k}">${o.label}</button>`).join("");
+      }
+      function render(){
+        try { history.replaceState(null, "", `?item=${selItem}&qual=${selQual}&mode=${selMode}`); } catch(e){}
+        const mode = MODES[selMode];
+        seg("item-seg", D.items.map(i=>({k:i.key,label:i.label})), selItem);
+        seg("qual-seg", D.qualities.map(q=>({k:q,label:q,cls:"q q-"+q})), selQual, "q");
+        seg("mode-seg", Object.keys(MODES).map(k=>({k,label:MODES[k].label,cls:"m m-"+k})), selMode, "m");
+
+        const item = D.items.find(i=>i.key===selItem);
+        const anyMode = SRCS.some(s => s.items[selItem].pvp*mode.mult > 0);
+
+        let head = `<thead><tr>`+
+          `<th class="src" rowspan="2">Source</th>`+
+          `<th class="anchor ${mode.cls}" rowspan="2">${mode.label}<span class="sub">${mode.sub}</span></th>`+
+          `<th class="lvlgrp" colspan="12">PvE — key‑card Level</th></tr>`+
+          `<tr class="lvlnum">`;
+        for (let l=1;l<=12;l++) head += `<th>${l}</th>`;
+        head += `</tr></thead>`;
+
+        let body = "<tbody>", lastG=null;
+        SRCS.forEach(s=>{
+          if (s.group!==lastG){ body += `<tr class="grp"><td class="src glab">${s.group}</td><td colspan="13"></td></tr>`; lastG=s.group; }
+          const rec=s.items[selItem], modeVal=rec.pvp*mode.mult, t=tiersOf(rec.pve,selQual);
+          const cx=crossover(rec.pve, modeVal, selQual);
+          let chip="", acls="";
+          if (cx.t==="pveonly"){ chip=`<span class="sub" style="color:var(--epic)">PvE‑only</span>`; acls="pchip"; }
+          else if (cx.t==="never"){ chip=`<span class="sub">always ahead</span>`; acls="leads"; }
+
+          body += `<tr>`;
+          body += `<td class="src">${s.label}<span class="tbl">PvE: ${s.pveTable}</span></td>`;
+          body += `<td class="num anchor ${acls} ${modeVal?"":"zero"}" title="${oneIn(modeVal)}">${cx.t==="pveonly"?"—":fmt(modeVal)}${chip}</td>`;
+          t.forEach((v,i)=>{
+            const beats = modeVal>0 && v>=modeVal;
+            const isX = cx.t==="al" && cx.al===i+1;
+            body += `<td class="num ${v?"":"zero"} ${beats?"beats":""} ${isX?"cross":""}" ${isX?`data-lv="${cx.al}"`:""} title="${oneIn(v)}">${fmt(v)}</td>`;
+          });
+          body += `</tr>`;
+        });
+        document.getElementById("lc-table").innerHTML = head + body + "</tbody>";
+
+        // takeaway
+        const read = document.getElementById("read");
+        if (!anyMode){
+          read.className = "lc-read pveonly";
+          read.innerHTML = `<b>${item.label}</b> drops <b>only in PvE</b> — 0% in every PvP table — so <b>${mode.label} can't get it at all</b>. The Level columns show how a card scales it.`;
+        } else {
+          // summarise the spread of crossover points
+          const pts = SRCS.map(s=>crossover(s.items[selItem].pve, s.items[selItem].pvp*mode.mult, selQual));
+          const early = pts.filter(p=>p.t==="al").map(p=>p.al);
+          const never = pts.filter(p=>p.t==="never").length;
+          const minL = early.length ? Math.min(...early) : null;
+          let bits = [];
+          if (minL!==null) bits.push(`PvE overtakes <b>${mode.label}</b> from as early as <span class="lv">Level ${minL}</span> with ${art(selQual)} <b>${selQual}</b> card`);
+          if (never>0) bits.push(`but for ${never} source${never>1?"s":""} ${mode.label} stays ahead at every Level`);
+          read.className = "lc-read";
+          read.innerHTML = `<b>${item.label}</b> — ${bits.join(", ")}.`;
+        }
+
+        document.querySelectorAll("#item-seg button").forEach(b=>b.onclick=()=>{selItem=b.dataset.k;render();});
+        document.querySelectorAll("#qual-seg button").forEach(b=>b.onclick=()=>{selQual=b.dataset.k;render();});
+        document.querySelectorAll("#mode-seg button").forEach(b=>b.onclick=()=>{selMode=b.dataset.k;render();});
+      }
+      render();
+    </script>
+</body>
+</html>
