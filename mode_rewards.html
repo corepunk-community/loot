@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk — Mode Rewards</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      :root{ --ink:#1c2430; --muted:#6a7583; --faint:#aab3bd; --line:#e6eaee; --surface:#fff; --paper:#f6f8fa;
+        --pve:#1f9d55; --pve-tint:#e7f6ed; --mono: ui-monospace,'Cascadia Code',Consolas,'SFMono-Regular','Courier New',monospace; }
+      .mr-intro{ color:var(--muted); font-size:.9rem; line-height:1.5; margin:0 0 18px; max-width:80ch; }
+      .mr-intro code{ font-family:var(--mono); background:var(--paper); padding:1px 5px; border-radius:4px; color:var(--ink); }
+      .mr-block{ margin-bottom:22px; }
+      .mr-block h2{ font-size:1.02rem; font-weight:800; color:var(--ink); margin:0 0 3px; letter-spacing:-.01em; }
+      .mr-block .sub{ color:var(--muted); font-size:.82rem; margin:0 0 9px; }
+      .mr-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:9px; background:var(--surface); }
+      table.mr{ border-collapse:separate; border-spacing:0; width:100%; font-size:12.5px; }
+      .mr th,.mr td{ padding:6px 9px; text-align:center; white-space:nowrap; border-bottom:1px solid var(--line); }
+      .mr thead th{ background:#28323e; color:#e8ecf0; font-weight:600; font-size:11px; }
+      .mr th.src,.mr td.src{ text-align:left; font-weight:600; color:var(--ink); border-right:1px solid var(--line); min-width:180px; }
+      .mr thead th.src{ background:#28323e; color:#e8ecf0; }
+      .mr td.num{ font-family:var(--mono); font-variant-numeric:tabular-nums; color:#33404e; }
+      .mr td.flat{ color:var(--faint); background:#fbfcfd; }
+      .mr td.best{ background:var(--pve-tint); color:#12703b; font-weight:700; }
+      .mr tbody tr:hover td.src{ background:#fafcff; }
+      .mr-foot{ color:var(--faint); font-size:.8rem; margin-top:8px; }
+      .mr-qual{ display:flex; align-items:center; gap:12px; margin:0 0 18px; flex-wrap:wrap; }
+      .mr-qual .lbl{ font-size:.72rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+      .mr-qual .lbl small{ font-weight:600; text-transform:none; letter-spacing:0; color:var(--faint); }
+      .mr-qual .seg{ display:inline-flex; gap:4px; padding:4px; background:#eef1f4; border-radius:9px; }
+      .mr-qual .seg button{ font-family:inherit; font-size:.82rem; font-weight:600; border:none; background:transparent; color:#4a5561; padding:5px 12px; border-radius:6px; cursor:pointer; }
+      .mr-qual .seg button:hover{ color:var(--ink); }
+      .mr-qual .seg button.on{ background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(20,30,45,.12); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Prison Island &amp; Arena — Mode Rewards</h1>
+            <nav class="site-nav">
+                <a href="index.html">Loot Tables</a>
+                <a href="quests.html">Quest Rewards</a>
+                <a href="chains.html">Quest Chains</a>
+                <a href="locations.html">Quest Locations</a>
+                <a href="analysis.html">Quest Analysis</a>
+                <a href="recipes.html">Recipes</a>
+                <a href="diff.html">Patch Diff</a>
+                <a href="worldmap.html">World Map</a>
+                <a href="worldmap2.html">World Map v2</a>
+                <a href="loot_compare.html">Loot Comparison</a>
+                <a href="loot_compare2.html">PI vs Arena</a>
+                <a href="mode_rewards.html" class="active">Mode Rewards</a>
+                <a href="recipe_chart.html">Recipe Drops</a>
+            </nav>
+        </header>
+        <main>
+            <p class="mr-intro">Weapon mastery = Catalyst Points per kill = <code>round((level + 2) × (1 + keycard bonus))</code>, shown at level 20. <b>GLCK</b> is the global loot-chance multiplier — its base tracks the keycard <i>level</i>, and keycard <i>quality</i> multiplies it further (selectable below). PvE Arena and PvE Prison Island are identical for these per-kill values.</p>
+
+            <div class="mr-qual"><span class="lbl">Keycard quality <small>(affects loot bonus only)</small></span><span class="seg" id="qual-seg"></span></div>
+
+            <div id="tables"></div>
+        </main>
+    </div>
+
+    <script src="loot_compare_data.js"></script>
+    <script src="island_arena_fields.js"></script>
+    <script>
+      const F = window.ISLAND_ARENA_FIELDS, I = F.island, LVL = 20;
+      const LC = LOOT_COMPARE_DATA, QUALS = LC.qualities;
+      let selQual = "Epic";
+      const ROWS = [
+        { label:"PvE — Arena & Prison Island", node:n=>I["PvE_key"+n] },
+        { label:"PvP — Prison Island",         flat:I["base"] },
+        { label:"Hardcore — Prison Island",    flat:I["solo_duo_Hardcore"] },
+      ];
+      const mastery = n => n ? Math.max(Math.round((LVL+2)*(1+(n["CPM"]||0))), 1) : null;
+      const hp      = n => n ? 1+(n["m_HP_km"]||0) : null;
+      const qf      = l => LC.lootChance[selQual][l-1] / LC.lootChance["Common"][l-1];   // keycard-quality factor vs base
+      const loot    = (n,l,flat) => n ? (n["GLCK"]||1) * (flat ? 1 : qf(l)) : null;       // quality scales the PvE keycard loot bonus
+      const eff     = n => { const m=mastery(n), h=hp(n); return (m!=null&&h) ? m/h : null; };
+
+      const BLOCKS = [
+        { title:"Farming efficiency", lead:true, sub:"Weapon mastery per unit of mob HP — higher = more mastery per unit of kill effort. Mobs are far less tanky at low keycards.",
+          calc:eff, fmt:v=>v==null?"—":v.toFixed(1), best:true, foot:"Efficiency = mastery ÷ mob-HP multiplier. <b>Assumes zero walking/travel time between kills</b> — real farming rates are lower, and low keycards (dense, squishy mobs) fare best here. Armor is constant across modes, so HP gives the correct relative comparison." },
+        { title:"Weapon mastery / kill", sub:"Catalyst Points per kill at level 20.", calc:mastery, fmt:v=>v==null?"—":String(v) },
+        { title:"Mob HP (tankiness)", sub:"Health multiplier vs base (Attack &amp; Spell power scale on the same curve).", calc:hp, fmt:v=>v==null?"—":"×"+v.toFixed(2) },
+        { title:"Loot bonus (GLCK)", sub:"Loot-chance multiplier = keycard <b>level</b> bonus × the selected keycard <b>quality</b>. PvP / Hardcore have no PvE keycard, so they show the base.", calc:loot, fmt:v=>v==null?"—":"×"+v.toFixed(2), foot:"Base (Common) loot bonus tracks the keycard level; each quality tier layers on roughly +30 / +60 / +90% (Uncommon / Rare / Epic) on top." },
+      ];
+
+      function tableHTML(B){
+        let head = `<thead><tr><th class="src">Mode</th>`;
+        for(let l=1;l<=12;l++) head += `<th>Key ${l}</th>`;
+        head += `</tr></thead>`;
+        let body = "<tbody>";
+        for(const r of ROWS){
+          body += `<tr><td class="src">${r.label}</td>`;
+          for(let l=1;l<=12;l++){
+            const node = r.flat || r.node(l);
+            const v = B.calc(node, l, !!r.flat);
+            body += `<td class="num ${r.flat?"flat":""}" data-v="${v==null?'':v}">${B.fmt(v)}</td>`;
+          }
+          body += `</tr>`;
+        }
+        return head + body + "</tbody>";
+      }
+
+      function renderAll(){
+        document.getElementById("tables").innerHTML = BLOCKS.map((B,i)=>
+          `<div class="mr-block"><h2>${B.lead?"① ":""}${B.title}</h2><p class="sub">${B.sub}</p>`+
+          `<div class="mr-wrap"><table class="mr" id="blk${i}">${tableHTML(B)}</table></div>`+
+          (B.foot?`<p class="mr-foot">${B.foot}</p>`:"")+`</div>`).join("");
+        BLOCKS.forEach((B,i)=>{ if(!B.best) return;
+          const cells=[...document.querySelectorAll(`#blk${i} td.num`)].filter(c=>c.dataset.v!=="");
+          const max=Math.max(...cells.map(c=>+c.dataset.v));
+          cells.filter(c=>+c.dataset.v===max).forEach(c=>c.classList.add("best"));
+        });
+      }
+      document.getElementById("qual-seg").innerHTML = QUALS.map(q=>`<button class="${q===selQual?'on':''}" data-q="${q}">${q}</button>`).join("");
+      document.querySelectorAll("#qual-seg button").forEach(b=>b.onclick=()=>{ selQual=b.dataset.q;
+        document.querySelectorAll("#qual-seg button").forEach(x=>x.classList.toggle("on",x.dataset.q===selQual)); renderAll(); });
+      renderAll();
+    </script>
+</body>
+</html>

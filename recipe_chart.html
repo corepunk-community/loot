@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk — Recipe Drops</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      :root{ --ink:#1c2430; --muted:#6a7583; --faint:#aab3bd; --line:#e6eaee; --surface:#fff; --paper:#f6f8fa;
+        --pi:#8a5011; --pi-tint:#fdf3e6; --arena:#2a4056; --arena-tint:#eaf1fb;
+        --duo:#1f6f9a; --duo-tint:#e8f2f9; --tri:#7a3596; --tri-tint:#f5edfa; --win:#1f9d55;
+        --mono: ui-monospace,'Cascadia Code',Consolas,'SFMono-Regular','Courier New',monospace; }
+      .rc-intro{ color:var(--muted); font-size:.9rem; line-height:1.5; margin:0 0 16px; max-width:82ch; }
+      .rc-intro b{ color:var(--ink); }
+      .ic{ width:22px; height:22px; object-fit:contain; vertical-align:middle; border-radius:4px; background:#f0f2f5; flex:none; }
+      .rc-obs{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:18px; }
+      @media (max-width:860px){ .rc-obs{ grid-template-columns:1fr; } }
+      .rc-card{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+      .rc-card h3{ margin:0 0 10px; font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
+      .rc-card h3 .pill{ font-size:.62rem; padding:2px 7px; border-radius:20px; margin-left:6px; font-weight:700; text-transform:none; }
+      .pill.pi{ background:var(--pi-tint); color:var(--pi); } .pill.arena{ background:var(--arena-tint); color:var(--arena); }
+      .rc-sig{ display:flex; align-items:center; gap:8px; padding:5px 0; border-bottom:1px dashed var(--line); font-size:.9rem; }
+      .rc-sig:last-child{ border-bottom:none; }
+      .rc-sig .b{ color:var(--muted); font-weight:600; min-width:112px; } .rc-sig .arrow{ color:var(--faint); }
+      .rc-sig .a{ color:var(--ink); font-weight:700; display:flex; align-items:center; gap:7px; }
+      .rc-pool{ margin:8px 0 12px; } .rc-pool .lead{ font-weight:700; color:var(--ink); font-size:.88rem; }
+      .rc-pool .lead .pct{ font-family:var(--mono); color:var(--duo); font-weight:700; font-size:.78rem; margin-left:6px; }
+      .rc-pool .items{ display:flex; flex-wrap:wrap; gap:5px 10px; margin-top:6px; }
+      .rc-pool .chip{ display:inline-flex; align-items:center; gap:6px; color:var(--ink); font-size:.83rem; }
+      /* boss heads — PvE vs PvP PI side by side */
+      .rc-heads{ background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 16px; margin-bottom:18px; }
+      .rc-heads h3{ margin:0 0 4px; font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
+      .rc-heads p{ margin:0 0 10px; color:var(--muted); font-size:.82rem; } .rc-heads p b{ color:var(--pi); }
+      .heads-tbl{ border:1px solid var(--line); border-radius:8px; overflow:hidden; max-width:380px; }
+      .heads-head,.rc-head{ display:grid; grid-template-columns:1fr 56px 56px; align-items:center; padding:5px 12px; }
+      .heads-head{ background:var(--paper); font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+      .heads-head span:not(:first-child){ text-align:right; }
+      .rc-head{ border-top:1px solid var(--line); font-size:.86rem; }
+      .rc-head .hb{ color:var(--ink); font-weight:600; } .rc-head .hr{ font-family:var(--mono); text-align:right; color:var(--muted); }
+      .rc-head.diff{ background:var(--pi-tint); } .rc-head.diff .hb,.rc-head.diff .hr{ color:var(--pi); font-weight:700; }
+      /* table */
+      .rc-controls{ display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; margin-bottom:12px; }
+      .rc-controls select,.rc-controls input{ font-family:inherit; font-size:.85rem; padding:6px 9px; border:1px solid var(--line); border-radius:7px; background:var(--surface); color:var(--ink); }
+      .rc-controls input{ min-width:200px; } .rc-count{ color:var(--muted); font-size:.82rem; margin-left:auto; }
+      .rc-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--surface); }
+      table.rc{ border-collapse:separate; border-spacing:0; width:100%; font-size:12.5px; }
+      .rc th,.rc td{ padding:7px 10px; text-align:left; white-space:nowrap; border-bottom:1px solid var(--line); }
+      .rc thead th{ background:#28323e; color:#e8ecf0; font-weight:600; font-size:11px; cursor:pointer; user-select:none; }
+      .rc thead th.num,.rc td.num{ text-align:right; font-family:var(--mono); font-variant-numeric:tabular-nums; }
+      .rc tbody tr:hover{ background:#fafcff; }
+      .rc td.art{ font-weight:700; color:var(--ink); }
+      .rc td.art .cell{ display:flex; align-items:center; gap:8px; }
+      .badge{ font-size:10px; font-weight:700; padding:1px 6px; border-radius:5px; }
+      .badge.duo{ background:var(--duo-tint); color:var(--duo); } .badge.tri{ background:var(--tri-tint); color:var(--tri); }
+      .badge.single{ background:#eef1f4; color:#516070; }
+      .badge.pi{ background:var(--pi-tint); color:var(--pi); } .badge.arena{ background:var(--arena-tint); color:var(--arena); }
+      .rc-pool.all .lead{ color:var(--arena); } .rc-pool .tag{ font-size:.6rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--arena); background:var(--arena-tint); padding:1px 6px; border-radius:10px; margin-left:7px; }
+      .rc-pool .chip.all{ font-style:italic; color:var(--muted); }
+      .rc td.num.hi{ color:var(--win); font-weight:700; } .muted{ color:var(--faint); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Recipe Drops — bosses × artifacts</h1>
+            <nav class="site-nav">
+                <a href="index.html">Loot Tables</a>
+                <a href="quests.html">Quest Rewards</a>
+                <a href="chains.html">Quest Chains</a>
+                <a href="locations.html">Quest Locations</a>
+                <a href="analysis.html">Quest Analysis</a>
+                <a href="recipes.html">Recipes</a>
+                <a href="diff.html">Patch Diff</a>
+                <a href="worldmap.html">World Map</a>
+                <a href="worldmap2.html">World Map v2</a>
+                <a href="loot_compare.html">Loot Comparison</a>
+                <a href="loot_compare2.html">PI vs Arena</a>
+                <a href="mode_rewards.html">Mode Rewards</a>
+                <a href="recipe_chart.html" class="active">Recipe Drops</a>
+            </nav>
+        </header>
+        <main>
+            <p class="rc-intro">T3 artifact recipes only. Every <b>Prison Island boss</b> has one signature <b>triple-stat</b> recipe; every <b>double-stat</b> recipe is <b>arena-only</b>. Drop rates are per-kill chance and <b>don't change with keycard level</b> (flat across T1–T3 bands).</p>
+
+            <div class="rc-obs">
+              <div class="rc-card">
+                <h3>Prison Island boss signatures <span class="pill pi">triple-stat</span></h3>
+                <div id="sig-list"></div>
+              </div>
+              <div class="rc-card">
+                <h3>Arena double-stat pools <span class="pill arena">duo-stat</span></h3>
+                <div id="pool-list"></div>
+              </div>
+            </div>
+
+            <div class="rc-heads">
+              <h3>Boss heads</h3>
+              <p>Each Prison Island boss drops its own head 1:1. PvE and PvP rates match except the two <b>highlighted</b> bosses — Werewolf Rat (never drops in PvP) and Goblin Druid (only 30% in PvE).</p>
+              <div class="heads-tbl">
+                <div class="heads-head"><span>Boss</span><span>PvE</span><span>PvP</span></div>
+                <div id="heads-grid"></div>
+              </div>
+            </div>
+
+            <div class="rc-controls">
+              <label>Source <select id="f-src"><option value="">all</option><option value="PI boss">Prison Island</option><option value="PvE arena">PvE Arena</option></select></label>
+              <label>Stats <select id="f-stat"><option value="">all</option><option value="duo">double</option><option value="triple">triple</option><option value="single">single</option></select></label>
+              <label>Boss <select id="f-boss"></select></label>
+              <input id="f-search" placeholder="search artifact…" autocomplete="off">
+              <span class="rc-count" id="count"></span>
+            </div>
+            <div class="rc-wrap"><table class="rc" id="rc-table"></table></div>
+        </main>
+    </div>
+
+    <script src="recipe_drops.js"></script>
+    <script>
+      const D = window.RECIPE_DROPS;
+      const DROPS = D.drops.filter(d => d.cls);   // classified T3 artifact recipes
+      const isPI = d => d.st === "PI boss";
+      const fmt = v => v==null ? "—" : (v>=10 ? v.toFixed(0) : v>=1 ? v.toFixed(1) : v.toFixed(2)) + "%";
+      const slug = a => a.toLowerCase().replace(/['`’]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+      const icon = a => `<img class="ic" src="item-icons/implant/implant-${slug(a)}-t3.png" alt="" onerror="this.remove()">`;
+      const statBadge = c => c==="triple" ? '<span class="badge tri">triple</span>' : c==="single" ? '<span class="badge single">single</span>' : '<span class="badge duo">duo</span>';
+
+      // PI boss signatures — no %, with icons
+      (function(){
+        const byBoss={}; DROPS.filter(isPI).forEach(d=>{ if(!byBoss[d.src]||d.pve>byBoss[d.src].pve) byBoss[d.src]=d; });
+        const rows=Object.values(byBoss).sort((a,b)=>b.pve-a.pve);
+        document.getElementById("sig-list").innerHTML = rows.map(d=>
+          `<div class="rc-sig"><span class="b">${d.src}</span><span class="arrow">→</span><span class="a">${icon(d.a)}${d.a}</span></div>`).join("");
+      })();
+
+      // Arena double-stat pools — icons + names. Archosaur is the catch-all (drops every double-stat recipe).
+      (function(){
+        const pools={}; DROPS.filter(d=>d.cls==="duo" && !/archosaur/i.test(d.src)).forEach(d=>{ (pools[d.src]=pools[d.src]||{pct:d.pve,set:new Set()}).set.add(d.a); });
+        const order=Object.keys(pools).sort((a,b)=>pools[b].pct-pools[a].pct);
+        let html = order.map(b=>
+          `<div class="rc-pool"><div class="lead">${b}<span class="pct">${fmt(pools[b].pct)}</span></div>`+
+          `<div class="items">${[...pools[b].set].map(a=>`<span class="chip">${icon(a)}${a}</span>`).join("")}</div></div>`).join("");
+        const arch=DROPS.filter(d=>/archosaur/i.test(d.src) && d.cls==="duo");
+        if(arch.length) html += `<div class="rc-pool all"><div class="lead">Archosaur Big 02 Brown<span class="tag">catch-all</span><span class="pct">${fmt(Math.max(...arch.map(d=>d.pve)))}</span></div>`+
+          `<div class="items"><span class="chip all">All ${new Set(arch.map(d=>d.a)).size} double-stat recipes (every arena pool)</span></div></div>`;
+        document.getElementById("pool-list").innerHTML = html;
+      })();
+
+      // Boss heads — PvE vs PvP PI (differ only for Werewolf Rat and Goblin Druid)
+      (function(){
+        const HEADS=[{b:"Troll Rusty",pve:100,pvp:100},{b:"Werewolf Alpha",pve:100,pvp:100},
+          {b:"Werewolf Rat",pve:100,pvp:0},{b:"Werewolf Soldier",pve:100,pvp:100},
+          {b:"Wolf Undead",pve:100,pvp:100},{b:"Yaga",pve:100,pvp:100},{b:"Goblin Druid",pve:30,pvp:100}];
+        document.getElementById("heads-grid").innerHTML = HEADS.map(h=>
+          `<div class="rc-head${h.pve!==h.pvp?' diff':''}"><span class="hb">${h.b}</span>`+
+          `<span class="hr">${h.pve}%</span><span class="hr">${h.pvp}%</span></div>`).join("");
+      })();
+
+      // table
+      const bossSel=document.getElementById("f-boss");
+      bossSel.innerHTML='<option value="">all</option>'+[...new Set(DROPS.map(d=>d.src))].sort().map(b=>`<option>${b}</option>`).join("");
+      let sortKey="pve", sortDir=-1;
+      const COLS=[["a","Artifact",false],["cls","Stats",false],["st","Source",false],["src","Boss",false],["pve","PvE %",true],["pvp","PvP %",true]];
+      function render(){
+        const fs=f_src.value, fst=f_stat.value, fb=f_boss.value, q=f_search.value.toLowerCase();
+        let rows=DROPS.filter(d=>(!fs||d.st===fs)&&(!fst||d.cls===fst)&&(!fb||d.src===fb)&&(!q||d.a.toLowerCase().includes(q)));
+        rows.sort((x,y)=>{ let a=x[sortKey],b=y[sortKey]; if(a==null)a=-1; if(b==null)b=-1;
+          return typeof a==="string" ? sortDir*a.localeCompare(b) : sortDir*(a-b); });
+        let head="<thead><tr>"+COLS.map(([k,l,n])=>`<th class="${n?'num':''}" data-k="${k}">${l}${sortKey===k?(sortDir<0?' ▼':' ▲'):''}</th>`).join("")+"</tr></thead>";
+        let body="<tbody>"+rows.map(d=>`<tr>`+
+          `<td class="art"><span class="cell">${icon(d.a)}${d.a}</span></td>`+
+          `<td>${statBadge(d.cls)}</td>`+
+          `<td><span class="badge ${isPI(d)?'pi':'arena'}">${isPI(d)?'PI':'Arena'}</span></td>`+
+          `<td>${d.src}${d.bt?` <span class="muted">T${d.bt}</span>`:''}</td>`+
+          `<td class="num ${d.pve>=30?'hi':''}">${fmt(d.pve)}</td>`+
+          `<td class="num ${d.pvp>=100?'hi':''}">${fmt(d.pvp)}</td></tr>`).join("")+"</tbody>";
+        document.getElementById("rc-table").innerHTML=head+body;
+        document.getElementById("count").textContent=rows.length+" of "+DROPS.length+" T3 drops";
+        document.querySelectorAll("#rc-table thead th").forEach(th=>th.onclick=()=>{const k=th.dataset.k; if(sortKey===k)sortDir*=-1; else{sortKey=k; sortDir=(k==="pve"||k==="pvp")?-1:1;} render();});
+      }
+      const f_src=document.getElementById("f-src"), f_stat=document.getElementById("f-stat"), f_boss=document.getElementById("f-boss"), f_search=document.getElementById("f-search");
+      [f_src,f_stat,f_boss].forEach(e=>e.onchange=render); f_search.oninput=render;
+      render();
+    </script>
+</body>
+</html>

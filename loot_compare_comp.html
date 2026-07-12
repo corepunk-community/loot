@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk ? Competitive Arena Loot</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      :root{ --ink:#1c2430; --muted:#6a7583; --faint:#aab3bd; --line:#e6eaee; --surface:#fff; --paper:#f6f8fa;
+        --pi:#8a5011; --pi-tint:#fdf3e6; --arena:#2a4056; --arena-tint:#eaf1fb; --win:#1f9d55; --win-tint:#e7f6ed;
+        --pin:#c9791f; --pin-tint:#fdf1e2; --mono: ui-monospace,'Cascadia Code',Consolas,'SFMono-Regular','Courier New',monospace; }
+      .lc-intro{ color:var(--muted); font-size:.9rem; line-height:1.5; margin:0 0 14px; max-width:82ch; }
+      .lc-intro b{ color:var(--ink); }
+      .lc-controls{ display:flex; flex-wrap:wrap; gap:14px 26px; align-items:flex-end; margin-bottom:14px; }
+      .lc-grp{ display:flex; flex-direction:column; gap:7px; }
+      .lc-grp .glabel{ font-size:.68rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; }
+      .lc-seg{ display:inline-flex; flex-wrap:wrap; gap:4px; padding:4px; background:#eef1f4; border-radius:9px; }
+      .lc-seg button{ font-family:inherit; font-size:.82rem; font-weight:600; border:none; background:transparent; color:#4a5561; padding:6px 12px; border-radius:6px; cursor:pointer; }
+      .lc-seg button:hover{ color:var(--ink); } .lc-seg button.on{ background:var(--surface); color:var(--ink); box-shadow:0 1px 2px rgba(20,30,45,.12); }
+      .lc-read{ font-size:.92rem; line-height:1.5; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--pin); border-radius:8px; padding:11px 15px; margin-bottom:14px; }
+      .lc-read .v{ font-family:var(--mono); font-weight:700; color:var(--pin); } .lc-read .g{ color:var(--win); font-weight:700; }
+      .lc-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--surface); }
+      table.lc{ border-collapse:separate; border-spacing:0; width:100%; font-size:12.5px; }
+      .lc th,.lc td{ padding:6px 9px; text-align:center; white-space:nowrap; border-bottom:1px solid var(--line); }
+      .lc thead th{ background:#28323e; color:#e8ecf0; position:sticky; top:0; z-index:3; font-weight:600; font-size:11px; }
+      .lc th.src,.lc td.src{ position:sticky; left:0; text-align:left; background:var(--surface); border-right:1px solid var(--line); min-width:220px; z-index:2; }
+      .lc thead th.src{ background:#28323e; z-index:4; }
+      .lc td.src{ font-weight:600; color:var(--ink); }
+      .lc tr.grp td{ background:var(--paper); text-align:left; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+      .lc tr.grp.arena td{ background:var(--arena-tint); color:var(--arena); }
+      .lc td.num{ font-family:var(--mono); font-variant-numeric:tabular-nums; color:#33404e; cursor:pointer; }
+      .lc td.num.zero{ color:var(--faint); cursor:default; }
+      .lc td.pvp{ background:#fbfcfd; border-right:2px solid var(--line); }
+      .lc td.beats{ background:var(--win-tint); color:#12703b; }
+      .lc td.pinned{ background:var(--pin-tint); color:#8a5011; box-shadow:inset 0 0 0 2px var(--pin); font-weight:700; }
+      .lc td.num:hover{ outline:1px solid var(--pin); }
+      .lc-foot{ color:var(--faint); font-size:.8rem; margin-top:8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Loot — Prison Island vs PvE Arena</h1>
+            <nav class="site-nav">
+                <a href="index.html">Loot Tables</a>
+                <a href="quests.html">Quest Rewards</a>
+                <a href="chains.html">Quest Chains</a>
+                <a href="locations.html">Quest Locations</a>
+                <a href="analysis.html">Quest Analysis</a>
+                <a href="recipes.html">Recipes</a>
+                <a href="diff.html">Patch Diff</a>
+                <a href="worldmap.html">World Map</a>
+                <a href="worldmap2.html">World Map v2</a>
+                <a href="loot_compare.html">Loot Comparison</a>
+                <a href="loot_compare2.html">PI vs Arena</a>
+                <a href="mode_rewards.html">Mode Rewards</a>
+                <a href="recipe_chart.html">Recipe Drops</a>
+            </nav>
+        </header>
+        <main>
+            <p class="lc-intro">Drop chance per kill across PvE keycard <b>levels 1?12</b> and card <b>quality</b>, for <b>Prison Island</b> and <b>Competitive (ranked) Arena</b> bosses. Competitive rewards are <b>much richer</b> than the regular keyed arena (see the <b>PI vs Arena</b> page). <b>Click any cell to pin a baseline.</b></p>
+
+            <div class="lc-controls">
+                <div class="lc-grp"><span class="glabel">Loot item</span><div class="lc-seg" id="item-seg"></div></div>
+                <div class="lc-grp"><span class="glabel">Keycard quality</span><div class="lc-seg" id="qual-seg"></div></div>
+            </div>
+
+            <div class="lc-read" id="read">Click a cell to pin a baseline (e.g. Prison Island trash at Level 12) and see which sources beat it.</div>
+            <div class="lc-wrap"><table class="lc" id="lc-table"></table></div>
+            <p class="lc-foot" id="foot"></p>
+        </main>
+    </div>
+
+    <script src="loot_compare_comp_data.js"></script>
+    <script>
+      const D = LOOT_COMPARE_DATA;
+      let selItem = D.items[0].key, selQual = "Epic", pin = null;   // pin = {key, lvl, val}
+      const fmt = v => !v ? "—" : v>=10 ? v.toFixed(1)+"%" : v>=1 ? v.toFixed(2)+"%" : v>=0.01 ? v.toFixed(3)+"%" : "<0.01%";
+      const mult = (q,l) => D.lootChance[q][l-1];
+      const pveVal = (s,l) => s.items[selItem].pve * mult(selQual,l);
+
+      function seg(id, opts, sel){ document.getElementById(id).innerHTML =
+        opts.map(o=>`<button class="${o.k===sel?'on':''}" data-k="${o.k}">${o.label}</button>`).join(""); }
+
+      function render(){
+        seg("item-seg", D.items.map(i=>({k:i.key,label:i.label})), selItem);
+        seg("qual-seg", D.qualities.map(q=>({k:q,label:q})), selQual);
+
+        let head = `<thead><tr><th class="src">Source</th><th class="pvp">PvP</th>`;
+        for(let l=1;l<=12;l++) head += `<th>Lv ${l}</th>`;
+        head += `</tr></thead>`;
+
+        let body = "<tbody>", lastG = null;
+        D.sources.forEach(s=>{
+          if(s.group!==lastG){ const ar=/Arena/.test(s.group); body += `<tr class="grp ${ar?'arena':''}"><td class="src">${s.group}</td><td colspan="13"></td></tr>`; lastG=s.group; }
+          const pvp = s.items[selItem].pvp;
+          body += `<tr><td class="src">${s.label}</td>`;
+          body += `<td class="num pvp ${pvp?'':'zero'}">${s.pvpExists?fmt(pvp):"—"}</td>`;
+          for(let l=1;l<=12;l++){
+            const v = pveVal(s,l);
+            const isPin = pin && pin.key===s.key && pin.lvl===l;
+            const beats = pin && !isPin && v>0 && v>=pin.val;
+            body += `<td class="num ${v?'':'zero'} ${isPin?'pinned':''} ${beats?'beats':''}" data-k="${s.key}" data-l="${l}" data-v="${v}">${fmt(v)}</td>`;
+          }
+          body += `</tr>`;
+        });
+        document.getElementById("lc-table").innerHTML = head + body + "</tbody>";
+
+        // read line
+        const read = document.getElementById("read"), item = D.items.find(i=>i.key===selItem);
+        if(pin){
+          const s = D.sources.find(x=>x.key===pin.key);
+          const n = [...document.querySelectorAll("#lc-table td.beats")].length;
+          read.innerHTML = `Baseline: <b>${item.label}</b> from <b>${s.label}</b> at <span class="v">Level ${pin.lvl} / ${selQual}</span> = <span class="v">${fmt(pin.val)}</span>. <span class="g">${n}</span> other cell${n===1?"":"s"} meet or beat it (green). Click it again to clear.`;
+        } else {
+          read.innerHTML = `Click a cell to pin a baseline (e.g. Prison Island trash at Level 12) and see which sources beat it.`;
+        }
+        document.getElementById("foot").textContent = item.note ? item.note + " · " : "";
+        document.getElementById("foot").textContent += `Level = PvE keycard access level; each column = base rate × the card's loot-chance multiplier. Data v${D.version}.`;
+
+        // wire cells
+        document.querySelectorAll("#lc-table td.num:not(.zero):not(.pvp)").forEach(td=>td.onclick=()=>{
+          const k=td.dataset.k, l=+td.dataset.l, v=+td.dataset.v;
+          pin = (pin && pin.key===k && pin.lvl===l) ? null : {key:k, lvl:l, val:v};
+          render();
+        });
+        document.querySelectorAll("#item-seg button").forEach(b=>b.onclick=()=>{selItem=b.dataset.k; render();});
+        document.querySelectorAll("#qual-seg button").forEach(b=>b.onclick=()=>{selQual=b.dataset.k; render();});
+      }
+      render();
+    </script>
+</body>
+</html>

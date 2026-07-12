@@ -90,6 +90,7 @@
     "quest_metadata_file": "quest_metadata_v0.113.1.json",
     "recipes_file": "recipes_v0.113.1.json",
     "entity_index_file": "entity_index_v0.113.1.json",
-    "file_manifest_file": "file_manifest_v0.113.1.json"
+    "file_manifest_file": "file_manifest_v0.113.1.json",
+    "asset_catalog_file": "asset_catalog_v0.113.1.json"
   }
 ]

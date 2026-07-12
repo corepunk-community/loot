@@ -758,6 +758,128 @@ const ADAPTERS = {
             return [...set].sort();
         },
     },
+
+    // ========================================================== Assets (art)
+    // Diffs the art packed in Corepunk_Data/resources.assets (meshes, textures,
+    // materials, animations, sprites) between versions — the "what art shipped"
+    // signal the icon/entity data can't see. Identity is a per-type CONTENT
+    // fingerprint (cfp), so a renamed-but-identical asset is NOT flagged; only
+    // genuinely new/removed/changed art shows. Data: asset_catalog_v*.json.
+    assets: {
+        versionKey: 'asset_catalog_file',
+        searchPlaceholder: 'Search asset names (meshes, textures, materials…)',
+        helpHtml: 'Compares the art packed in <code>Corepunk_Data/resources.assets</code> — meshes, textures, materials, animations, sprites. Identity is a per-type <em>content fingerprint</em>, so renamed-but-identical assets are ignored; only genuinely new, removed, or changed art shows. Cards are grouped by asset type; added textures &amp; sprites show a thumbnail where one was extracted at build time.',
+        async load(file) {
+            const r = await fetch(file);
+            if (!r.ok) throw new Error(`Failed to load ${file}`);
+            return r.json();
+        },
+        // Content-fingerprint diff: for each asset type, compare the multiset of
+        // cfps. A name that gains content = added; loses content = removed; a name
+        // on both sides of the add/remove split = modified (content changed under a
+        // stable name). Renames (same cfp, new name) never enter add/remove.
+        compute(oldData, newData) {
+            const oldA = (oldData && oldData.assets) || {};
+            const newA = (newData && newData.assets) || {};
+            const types = new Set([...Object.keys(oldA), ...Object.keys(newA)]);
+            const added = [], removed = [], modified = [];
+            let unchanged = 0;
+
+            const index = (names) => {
+                const m = new Map();               // cfp -> {count, names:Set, raws:Set}
+                for (const nm in names) {
+                    for (const rec of names[nm]) {
+                        let e = m.get(rec.cfp);
+                        if (!e) { e = { count: 0, names: new Set(), raws: new Set() }; m.set(rec.cfp, e); }
+                        e.count++; e.names.add(nm); e.raws.add(rec.raw);
+                    }
+                }
+                return m;
+            };
+
+            for (const t of types) {
+                const oldCfp = index(oldA[t] || {});
+                const newCfp = index(newA[t] || {});
+                const addN = new Map(), remN = new Map();   // name -> {raws:Set}
+                const bump = (map, nm, raws) => {
+                    let e = map.get(nm); if (!e) { e = { raws: new Set() }; map.set(nm, e); }
+                    raws.forEach(r => e.raws.add(r));
+                };
+                for (const [cfp, e] of newCfp) {
+                    const o = oldCfp.get(cfp);
+                    if (!o || e.count > o.count) e.names.forEach(nm => bump(addN, nm, e.raws));
+                    else unchanged += Math.min(e.count, o.count);
+                }
+                for (const [cfp, e] of oldCfp) {
+                    const n = newCfp.get(cfp);
+                    if (!n || e.count > n.count) e.names.forEach(nm => bump(remN, nm, e.raws));
+                }
+                for (const [nm, e] of addN) {
+                    const raw = [...e.raws][0];
+                    (remN.has(nm) ? modified : added).push({ type: t, name: nm, raw });
+                }
+                for (const [nm, e] of remN) {
+                    if (!addN.has(nm)) removed.push({ type: t, name: nm, raw: [...e.raws][0] });
+                }
+            }
+            return { added, removed, modified, unchanged };
+        },
+        render(diff, { changeFilter, bucketFilter, search }) {
+            diffResults.innerHTML = '';
+            const types = changeFilter === 'all' ? ['added', 'removed', 'modified'] : [changeFilter];
+            const RENDER_LIMIT = 500;
+            const cards = [];
+
+            types.forEach(type => {
+                const items = (diff[type] || []).filter(a => {
+                    if (bucketFilter !== 'all' && a.type !== bucketFilter) return false;
+                    if (!search) return true;
+                    return a.name.toLowerCase().includes(search) || a.type.toLowerCase().includes(search);
+                });
+                if (items.length === 0) return;
+
+                const byType = new Map();
+                items.forEach(a => {
+                    if (!byType.has(a.type)) byType.set(a.type, []);
+                    byType.get(a.type).push(a);
+                });
+
+                [...byType.entries()]
+                    .sort((x, y) => y[1].length - x[1].length)
+                    .forEach(([atype, list]) => {
+                        list.sort((a, b) => a.name.localeCompare(b.name));
+                        const stat = `${list.length.toLocaleString()} ${list.length === 1 ? 'asset' : 'assets'}`;
+                        const card = createDiffCard(`${atype}  —  ${type}`, type, stat);
+                        const body = card.querySelector('.diff-card-body');
+                        list.slice(0, RENDER_LIMIT).forEach(a => body.appendChild(renderAssetRow(a, type)));
+                        if (list.length > RENDER_LIMIT) {
+                            const more = document.createElement('button');
+                            more.className = 'view-table-btn';
+                            more.textContent = `Show ${(list.length - RENDER_LIMIT).toLocaleString()} more`;
+                            more.addEventListener('click', () => {
+                                more.remove();
+                                list.slice(RENDER_LIMIT).forEach(a => body.appendChild(renderAssetRow(a, type)));
+                            });
+                            body.appendChild(more);
+                        }
+                        cards.push(card);
+                    });
+            });
+
+            if (cards.length === 0) {
+                diffResults.innerHTML = '<div class="no-tables-message">No asset changes match the current filter.</div>';
+                return;
+            }
+            cards.forEach(c => diffResults.appendChild(c));
+        },
+        bucketsOf(diff) {
+            const set = new Set();
+            ['added', 'removed', 'modified'].forEach(t => {
+                (diff[t] || []).forEach(a => set.add(a.type));
+            });
+            return [...set].sort();
+        },
+    },
 };
 
 // ---------------------------------------------------------------------------
@@ -862,6 +984,32 @@ function renderFileRow(file, type) {
     meta.textContent = metaText;
     row.appendChild(path);
     row.appendChild(meta);
+    return row;
+}
+
+// Asset types whose added/changed objects get a PNG thumbnail exported at build
+// time (see build_asset_catalog.py), named by content hash under
+// loot/asset-thumbs/. Thumbnails may be absent for older version pairs, so the
+// <img> removes itself on error.
+const ASSET_THUMB_TYPES = new Set(['Texture2D', 'Sprite']);
+
+function renderAssetRow(asset, type) {
+    const row = document.createElement('div');
+    row.className = `diff-item diff-item-${type}`;
+    if (type !== 'removed' && asset.raw && ASSET_THUMB_TYPES.has(asset.type)) {
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.src = `asset-thumbs/${asset.raw}.png`;
+        img.style.cssText = 'width:48px;height:48px;object-fit:contain;vertical-align:middle;' +
+            'margin-right:8px;background:rgba(128,128,128,.12);border-radius:4px';
+        img.onerror = () => img.remove();
+        row.appendChild(img);
+    }
+    const sign = type === 'added' ? '+ ' : type === 'removed' ? '- ' : '~ ';
+    const label = document.createElement('span');
+    label.className = 'file-path';
+    label.textContent = sign + asset.name;
+    row.appendChild(label);
     return row;
 }
 
