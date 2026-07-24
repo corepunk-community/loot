@@ -92,5 +92,16 @@
     "entity_index_file": "entity_index_v0.113.1.json",
     "file_manifest_file": "file_manifest_v0.113.1.json",
     "asset_catalog_file": "asset_catalog_v0.113.1.json"
+  },
+  {
+    "version": "0.114",
+    "file": "loot_tables_v0.114.json",
+    "quest_rewards_file": "quest_rewards_v0.114.json",
+    "quest_metadata_file": "quest_metadata_v0.114.json",
+    "recipes_file": "recipes_v0.114.json",
+    "entity_index_file": "entity_index_v0.114.json",
+    "item_icons_file": "item_icons_v0.114.json",
+    "asset_catalog_file": "asset_catalog_v0.114.json",
+    "file_manifest_file": "file_manifest_v0.114.json"
   }
 ]

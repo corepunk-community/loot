@@ -1,0 +1,453 @@
+{
+  "version": "0.114",
+  "island": {
+    "base": {
+      "LTI": 99.0,
+      "CKO": 0.0,
+      "MHC_K": 1.0,
+      "CpK+": 2.0,
+      "m_AP_km": 0.0,
+      "m_SP_km": 0.0,
+      "m_HP_km": 0.175
+    },
+    "solo_duo": {
+      "LTI": 99.0,
+      "CKO": 0.0,
+      "MHC_K": 1.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.0,
+      "m_SP_km": 0.0,
+      "m_HP_km": 0.175
+    },
+    "solo_duo_Hardcore": {
+      "LTI": 99.0,
+      "CKO": 0.0,
+      "MHC_K": 1.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.2,
+      "m_SP_km": 0.2,
+      "m_HP_km": 0.425,
+      "GLCK": 2.8
+    },
+    "PvE": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": -0.7,
+      "m_SP_km": -0.7,
+      "m_HP_km": -0.7,
+      "GLCK": 1.0,
+      "CPM": -0.7
+    },
+    "PvE_solo_duo": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.7,
+      "m_SP_km": -0.7,
+      "m_HP_km": -0.7,
+      "GLCK": 1.0,
+      "CPM": -0.7
+    },
+    "PvE_key1": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": -0.7,
+      "m_SP_km": -0.7,
+      "m_HP_km": -0.7,
+      "GLCK": 1.0,
+      "CPM": -0.7
+    },
+    "PvE_key2": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": -0.6,
+      "m_SP_km": -0.6,
+      "m_HP_km": -0.575,
+      "GLCK": 1.2,
+      "CPM": -0.6
+    },
+    "PvE_key3": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": -0.5,
+      "m_SP_km": -0.5,
+      "m_HP_km": -0.45,
+      "GLCK": 1.4,
+      "CPM": -0.5
+    },
+    "PvE_key4": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": -0.4,
+      "m_SP_km": -0.4,
+      "m_HP_km": -0.325,
+      "GLCK": 1.6,
+      "CPM": -0.4
+    },
+    "PvE_key5": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": -0.3,
+      "m_SP_km": -0.3,
+      "m_HP_km": -0.2,
+      "GLCK": 1.8,
+      "CPM": -0.3
+    },
+    "PvE_key6": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": -0.2,
+      "m_SP_km": -0.2,
+      "m_HP_km": -0.075,
+      "GLCK": 2.0,
+      "CPM": -0.2
+    },
+    "PvE_key7": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": -0.1,
+      "m_SP_km": -0.1,
+      "m_HP_km": 0.05,
+      "GLCK": 2.2,
+      "CPM": -0.1
+    },
+    "PvE_key8": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": 0.0,
+      "m_SP_km": 0.0,
+      "m_HP_km": 0.175,
+      "GLCK": 2.4,
+      "CPM": 0.0
+    },
+    "PvE_key9": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": 0.1,
+      "m_SP_km": 0.1,
+      "m_HP_km": 0.3,
+      "GLCK": 2.6,
+      "CPM": 0.1
+    },
+    "PvE_key10": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": 0.2,
+      "m_SP_km": 0.2,
+      "m_HP_km": 0.425,
+      "GLCK": 2.8,
+      "CPM": 0.2
+    },
+    "PvE_key11": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": 0.3,
+      "m_SP_km": 0.3,
+      "m_HP_km": 0.55,
+      "GLCK": 3.0,
+      "CPM": 0.3
+    },
+    "PvE_key12": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "m_AP_km": 0.4,
+      "m_SP_km": 0.4,
+      "m_HP_km": 0.675,
+      "GLCK": 3.2,
+      "CPM": 0.4
+    },
+    "PvE_solo_duo_key1": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.7,
+      "m_SP_km": -0.7,
+      "m_HP_km": -0.7,
+      "GLCK": 1.0,
+      "CPM": -0.7
+    },
+    "PvE_solo_duo_key2": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.6,
+      "m_SP_km": -0.6,
+      "m_HP_km": -0.575,
+      "GLCK": 1.2,
+      "CPM": -0.6
+    },
+    "PvE_solo_duo_key3": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.5,
+      "m_SP_km": -0.5,
+      "m_HP_km": -0.45,
+      "GLCK": 1.4,
+      "CPM": -0.5
+    },
+    "PvE_solo_duo_key4": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.4,
+      "m_SP_km": -0.4,
+      "m_HP_km": -0.325,
+      "GLCK": 1.6,
+      "CPM": -0.4
+    },
+    "PvE_solo_duo_key5": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.3,
+      "m_SP_km": -0.3,
+      "m_HP_km": -0.2,
+      "GLCK": 1.8,
+      "CPM": -0.3
+    },
+    "PvE_solo_duo_key6": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.2,
+      "m_SP_km": -0.2,
+      "m_HP_km": -0.075,
+      "GLCK": 2.0,
+      "CPM": -0.2
+    },
+    "PvE_solo_duo_key7": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.1,
+      "m_SP_km": -0.1,
+      "m_HP_km": 0.05,
+      "GLCK": 2.2,
+      "CPM": -0.1
+    },
+    "PvE_solo_duo_key8": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.0,
+      "m_SP_km": 0.0,
+      "m_HP_km": 0.175,
+      "GLCK": 2.4,
+      "CPM": 0.0
+    },
+    "PvE_solo_duo_key9": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.1,
+      "m_SP_km": 0.1,
+      "m_HP_km": 0.3,
+      "GLCK": 2.6,
+      "CPM": 0.1
+    },
+    "PvE_solo_duo_key10": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.2,
+      "m_SP_km": 0.2,
+      "m_HP_km": 0.425,
+      "GLCK": 2.8,
+      "CPM": 0.2
+    },
+    "PvE_solo_duo_key11": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.3,
+      "m_SP_km": 0.3,
+      "m_HP_km": 0.55,
+      "GLCK": 3.0,
+      "CPM": 0.3
+    },
+    "PvE_solo_duo_key12": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.4,
+      "m_SP_km": 0.4,
+      "m_HP_km": 0.675,
+      "GLCK": 3.2,
+      "CPM": 0.4
+    }
+  },
+  "arena": {
+    "PvE_solo_duo": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.7,
+      "m_SP_km": -0.7,
+      "m_HP_km": -0.7,
+      "GLCK": 1.0,
+      "CPM": -0.7
+    },
+    "PvE_solo_duo_key1": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.7,
+      "m_SP_km": -0.7,
+      "m_HP_km": -0.7,
+      "GLCK": 1.0,
+      "CPM": -0.7
+    },
+    "PvE_solo_duo_key2": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.6,
+      "m_SP_km": -0.6,
+      "m_HP_km": -0.575,
+      "GLCK": 1.2,
+      "CPM": -0.6
+    },
+    "PvE_solo_duo_key3": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.5,
+      "m_SP_km": -0.5,
+      "m_HP_km": -0.45,
+      "GLCK": 1.4,
+      "CPM": -0.5
+    },
+    "PvE_solo_duo_key4": {
+      "LTI": 96.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.4,
+      "m_SP_km": -0.4,
+      "m_HP_km": -0.325,
+      "GLCK": 1.6,
+      "CPM": -0.4
+    },
+    "PvE_solo_duo_key5": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.3,
+      "m_SP_km": -0.3,
+      "m_HP_km": -0.2,
+      "GLCK": 1.8,
+      "CPM": -0.3
+    },
+    "PvE_solo_duo_key6": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.2,
+      "m_SP_km": -0.2,
+      "m_HP_km": -0.075,
+      "GLCK": 2.0,
+      "CPM": -0.2
+    },
+    "PvE_solo_duo_key7": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": -0.1,
+      "m_SP_km": -0.1,
+      "m_HP_km": 0.05,
+      "GLCK": 2.2,
+      "CPM": -0.1
+    },
+    "PvE_solo_duo_key8": {
+      "LTI": 97.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.0,
+      "m_SP_km": 0.0,
+      "m_HP_km": 0.175,
+      "GLCK": 2.4,
+      "CPM": 0.0
+    },
+    "PvE_solo_duo_key9": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.1,
+      "m_SP_km": 0.1,
+      "m_HP_km": 0.3,
+      "GLCK": 2.6,
+      "CPM": 0.1
+    },
+    "PvE_solo_duo_key10": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.2,
+      "m_SP_km": 0.2,
+      "m_HP_km": 0.425,
+      "GLCK": 2.8,
+      "CPM": 0.2
+    },
+    "PvE_solo_duo_key11": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.3,
+      "m_SP_km": 0.3,
+      "m_HP_km": 0.55,
+      "GLCK": 3.0,
+      "CPM": 0.3
+    },
+    "PvE_solo_duo_key12": {
+      "LTI": 98.0,
+      "CKO": 0.0,
+      "CpK+": 2.0,
+      "HpK+": -0.5,
+      "m_AP_km": 0.4,
+      "m_SP_km": 0.4,
+      "m_HP_km": 0.675,
+      "GLCK": 3.2,
+      "CPM": 0.4
+    }
+  }
+}
