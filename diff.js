@@ -880,6 +880,102 @@ const ADAPTERS = {
             return [...set].sort();
         },
     },
+
+    // ================================================ Mode Rewards (island/arena per-mode fields)
+    // Diffs the per-mode reward/difficulty modifiers decoded by parse_island_fields.rb
+    // (island_arena_fields_v*.json). One entry per FIELD that changed inside a mode, so a
+    // loot buff like Hardcore PvP GLCK 1.3 -> 2.8 surfaces as a single "modified" row.
+    mode_rewards: {
+        versionKey: 'island_arena_fields_file',
+        searchPlaceholder: 'Search modes or fields (GLCK, Hardcore, key10…)',
+        helpHtml: 'Compares the per-mode reward &amp; difficulty modifiers decoded from <code>Entities.dat</code> (<code>ef_sys_island_*</code> / <code>ef_sys_arena_*</code>) — one row per <em>field</em> that changed within a mode. <b>GLCK</b> is the loot-chance multiplier (the Prison Island / Arena "loot bonus"); <code>CpK+</code> is catalyst-per-kill (weapon mastery); <code>m_AP/SP/HP_km</code> are mob difficulty scalars. Grouped by section (Prison Island vs PvE Arena).',
+        // Friendly names for the terse field keys; unknown keys fall back to the raw key.
+        _FIELDS: {
+            'GLCK':'GLCK · loot multiplier', 'CpK+':'CpK+ · catalyst / kill', 'HpK+':'HpK+ · honor / kill',
+            'CPM':'CPM · catalyst / min', 'LTI':'LTI · loot-table index', 'CKO':'CKO', 'MHC_K':'MHC_K',
+            'm_AP_km':'m_AP_km · mob attack scale', 'm_SP_km':'m_SP_km · mob spell scale', 'm_HP_km':'m_HP_km · mob health scale',
+        },
+        _SECNAME: { island:'Prison Island', arena:'PvE Arena' },
+        compute(oldData, newData) {
+            const added = [], removed = [], modified = [];
+            let unchanged = 0;
+            for (const sec of ['island', 'arena']) {
+                const O = (oldData && oldData[sec]) || {};
+                const N = (newData && newData[sec]) || {};
+                const modes = new Set([...Object.keys(O), ...Object.keys(N)]);
+                for (const mode of modes) {
+                    const om = O[mode] || {}, nm = N[mode] || {};
+                    const fields = new Set([...Object.keys(om), ...Object.keys(nm)]);
+                    for (const f of fields) {
+                        const inO = f in om, inN = f in nm;
+                        const rec = { section: sec, mode, field: f, oldVal: om[f], newVal: nm[f], bucket: sec };
+                        if (!inO && inN) added.push(rec);
+                        else if (inO && !inN) removed.push(rec);
+                        else if (om[f] !== nm[f]) modified.push(rec);
+                        else unchanged++;
+                    }
+                }
+            }
+            return { added, removed, modified, unchanged };
+        },
+        render(diff, { changeFilter, bucketFilter, search }) {
+            diffResults.innerHTML = '';
+            const types = changeFilter === 'all' ? ['added', 'removed', 'modified'] : [changeFilter];
+            const flabel = f => this._FIELDS[f] || f;
+            const secName = s => this._SECNAME[s] || s;
+            const fmtV = v => v === undefined ? '—' : v;
+            const cards = [];
+
+            types.forEach(type => {
+                const items = (diff[type] || []).filter(r => {
+                    if (bucketFilter !== 'all' && r.bucket !== bucketFilter) return false;
+                    if (!search) return true;
+                    return (r.mode + ' ' + r.field + ' ' + flabel(r.field) + ' ' + secName(r.section))
+                        .toLowerCase().includes(search);
+                });
+                if (items.length === 0) return;
+
+                const byMode = new Map();
+                items.forEach(r => {
+                    const k = r.section + '/' + r.mode;
+                    if (!byMode.has(k)) byMode.set(k, []);
+                    byMode.get(k).push(r);
+                });
+
+                [...byMode.entries()].sort((a, b) => a[0].localeCompare(b[0])).forEach(([k, list]) => {
+                    const [sec, mode] = k.split('/');
+                    const label = `${secName(sec)} · ${mode}  —  ${type}`;
+                    const stat = `${list.length} ${list.length === 1 ? 'field' : 'fields'}`;
+                    const card = createDiffCard(label, type, stat);
+                    const body = card.querySelector('.diff-card-body');
+                    list.sort((a, b) => a.field.localeCompare(b.field));
+                    list.forEach(r => {
+                        const row = document.createElement('div');
+                        row.className = `diff-item diff-item-${type}`;
+                        let main;
+                        if (type === 'modified') main = `~ ${flabel(r.field)}: ${fmtV(r.oldVal)} → ${fmtV(r.newVal)}`;
+                        else if (type === 'added') main = `+ ${flabel(r.field)}: ${fmtV(r.newVal)}`;
+                        else main = `- ${flabel(r.field)}: ${fmtV(r.oldVal)}`;
+                        row.innerHTML = `<div>${main}</div><div class="file-meta">${secName(sec)} · ${mode}</div>`;
+                        body.appendChild(row);
+                    });
+                    cards.push(card);
+                });
+            });
+
+            if (cards.length === 0) {
+                diffResults.innerHTML = '<div class="no-tables-message">No mode-reward changes match the current filter.</div>';
+                return;
+            }
+            cards.forEach(c => diffResults.appendChild(c));
+        },
+        bucketsOf(diff) {
+            const set = new Set();
+            ['added', 'removed', 'modified'].forEach(t => (diff[t] || []).forEach(r => set.add(r.bucket)));
+            return [...set].sort();
+        },
+        bucketLabels: { island: 'Prison Island', arena: 'PvE Arena' },
+    },
 };
 
 // ---------------------------------------------------------------------------

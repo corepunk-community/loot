@@ -104,7 +104,7 @@
             <section class="lc-hero">
                 <p class="lc-eyebrow">Prison Island</p>
                 <h2>PvE key card vs. PvP loot</h2>
-                <p>Drop chance per kill / open. <b>Green</b> = a PvE Level beats your chosen mode (flag = the first one). <b>Hardcore</b> = normal PvP +30%; <b>PvE</b> = base rate × the card's in‑game Loot‑chance.</p>
+                <p>Drop chance per kill / open. <b>Green</b> = a PvE Level beats your chosen mode (flag = the first one). <b>Hardcore</b> = normal PvP <span id="hc-cap">+30%</span>; <b>PvE</b> = base rate × the card's in‑game Loot‑chance.</p>
             </section>
 
             <div class="lc-controls">
@@ -131,8 +131,14 @@
       let selItem = okItem(P.get("item")) ? P.get("item") : D.items[0].key;
       let selQual = D.qualities.includes(P.get("qual")) ? P.get("qual") : "Epic";
       let selMode = (P.get("mode")==="pvp"||P.get("mode")==="hc") ? P.get("mode") : "hc";
-      const MODES = { hc:{label:"Hardcore PvP", mult:1.3, cls:"anchor-hc", sub:"PvP +30%"},
+      // Hardcore PvP loot multiplier comes live from the data (island solo_duo_Hardcore GLCK),
+      // so it tracks each patch instead of a hardcoded value.
+      const HC_MULT = D.hardcoreMult || 1.0;
+      const hcPct = Math.round((HC_MULT - 1) * 100);
+      const MODES = { hc:{label:"Hardcore PvP", mult:HC_MULT, cls:"anchor-hc", sub:"PvP +"+hcPct+"%"},
                       pvp:{label:"Normal PvP",   mult:1.0, cls:"anchor-pvp", sub:"base"} };
+      // keep the hero caption in sync with the live multiplier
+      (function(){ const el=document.getElementById("hc-cap"); if(el) el.textContent="+"+hcPct+"%"; })();
 
       const fmt = v => !v ? "—"
         : v>=10 ? v.toFixed(1)+"%" : v>=1 ? v.toFixed(2)+"%"

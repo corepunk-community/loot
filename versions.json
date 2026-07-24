@@ -91,17 +91,21 @@
     "recipes_file": "recipes_v0.113.1.json",
     "entity_index_file": "entity_index_v0.113.1.json",
     "file_manifest_file": "file_manifest_v0.113.1.json",
-    "asset_catalog_file": "asset_catalog_v0.113.1.json"
+    "asset_catalog_file": "asset_catalog_v0.113.1.json",
+    "island_arena_fields_file": "island_arena_fields_v0.113.1.json"
   },
   {
     "version": "0.114",
     "file": "loot_tables_v0.114.json",
     "quest_rewards_file": "quest_rewards_v0.114.json",
     "quest_metadata_file": "quest_metadata_v0.114.json",
+    "quest_metadata_frozen_from": "0.113.1",
+    "quest_metadata_note": "Carried forward, not extracted. v0.114 removed Content/World/Quests from the shipped client (quest logic moved server-side), so quest metadata is frozen at the 0.113.1 extraction. See HANDOFF.md.",
     "recipes_file": "recipes_v0.114.json",
     "entity_index_file": "entity_index_v0.114.json",
     "item_icons_file": "item_icons_v0.114.json",
     "asset_catalog_file": "asset_catalog_v0.114.json",
-    "file_manifest_file": "file_manifest_v0.114.json"
+    "file_manifest_file": "file_manifest_v0.114.json",
+    "island_arena_fields_file": "island_arena_fields_v0.114.json"
   }
 ]

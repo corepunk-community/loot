@@ -40,13 +40,18 @@ async function fetchData() {
             // so fall back to the most recent version that mirrored them.
             const latestWithIcons = [...versions].reverse().find(v => v.item_icons_file);
             const iconsFile = latestVersion.item_icons_file || latestWithIcons?.item_icons_file;
+            // Quest metadata is frozen at the v0.113.1 extraction — v0.114 removed
+            // Content/World/Quests from the client, so newer versions ship no
+            // metadata file. Fall back to the newest version that has one.
+            const latestWithMeta = [...versions].reverse().find(v => v.quest_metadata_file);
+            const metaFile = latestVersion.quest_metadata_file || latestWithMeta?.quest_metadata_file;
 
             // Use fixed slots so positional destructuring stays correct even when
             // the API or metadata fetch is skipped for this version.
             const fetches = [
                 fetch(rewardsFile),
                 apiQuestsFile ? fetch(apiQuestsFile) : Promise.resolve(null),
-                latestVersion.quest_metadata_file ? fetch(latestVersion.quest_metadata_file) : Promise.resolve(null),
+                metaFile ? fetch(metaFile) : Promise.resolve(null),
                 iconsFile ? fetch(iconsFile) : Promise.resolve(null),
             ];
 

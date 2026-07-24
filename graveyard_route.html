@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow">
+    <title>SW Graveyard Route</title>
+    <link rel="stylesheet" href="leaflet/leaflet.css">
+    <link rel="stylesheet" href="styles.css">
+<style>
+  #gw{display:flex;height:calc(100vh - 150px);min-height:520px;border:1px solid #30363d;
+    border-radius:8px;overflow:hidden;background:#0d1117;color:#e6edf3;
+    font:13px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  #gside{width:270px;flex:none;background:#161b22;border-right:1px solid #30363d;display:flex;flex-direction:column;overflow-y:auto}
+  #gside .pad{padding:14px}
+  #gside h2{font-size:14px;margin:0 0 4px;color:#e6edf3}
+  #gside .sub{color:#8b949e;font-size:11px;margin-bottom:12px}
+  .stat{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid #21262d}
+  .stat .k{color:#8b949e;font-size:12px}
+  .stat .v{font-variant-numeric:tabular-nums;font-weight:700;font-size:15px}
+  .stat .v.hi{color:#3fb950}.stat .v.warn{color:#f0883e}
+  .note{font-size:11px;color:#8b949e;margin-top:12px;line-height:1.5}
+  .note b{color:#c9d1d9}
+  .legend{margin-top:14px;font-size:11px}
+  .legend .li{display:flex;align-items:center;gap:8px;padding:3px 0}
+  .legend .sw{width:14px;height:14px;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
+  .legend .bar{width:46px;height:8px;flex:none;border-radius:4px;
+    background:linear-gradient(90deg,#2ea043,#d29922,#f85149)}
+  .gbtn{display:block;width:100%;margin-top:12px;background:#1c2330;border:1px solid #30363d;color:#e6edf3;
+    border-radius:6px;padding:7px 9px;font-size:12px;cursor:pointer;text-align:center}
+  .gbtn:hover{border-color:#f0883e;color:#fff}
+  .gbtn.off{opacity:.5}
+  #gmain{flex:1;position:relative;overflow:hidden}
+  #gmap{position:absolute;inset:0;z-index:1;background:#0d1117}
+  .leaflet-container{background:#0d1117}
+  .leaflet-control-zoom a{background:#161b22;color:#e6edf3;border-color:#30363d}
+  .leaflet-control-zoom a:hover{background:#1c2330;color:#f0883e}
+  #ghud{position:absolute;left:10px;bottom:10px;background:#000a;border:1px solid #30363d;border-radius:6px;
+    padding:5px 9px;font-size:11px;color:#8b949e;z-index:500}
+  .htag{display:inline-block;font-size:10px;font-weight:700;color:#0d1117;background:#8b949e;border-radius:4px;padding:1px 5px;margin-left:8px;vertical-align:middle}
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Southwest Graveyard &mdash; Efficient Route <span class="htag">unlisted</span></h1>
+        </header>
+        <main>
+          <div id="gw">
+            <aside id="gside">
+              <div class="pad">
+                <h2>Westwind graveyard run</h2>
+                <div class="sub">Shortest gravestone-farming loop through the dense southwest cluster.</div>
+                <div class="stat"><span class="k">Graves on route</span><span class="v hi" id="s_graves">&mdash;</span></div>
+                <div class="stat"><span class="k">Route length</span><span class="v" id="s_len">&mdash;</span></div>
+                <div class="stat"><span class="k">Cost per grave</span><span class="v" id="s_per">&mdash;</span></div>
+                <div class="stat"><span class="k">Outliers skipped</span><span class="v warn" id="s_excl">&mdash;</span></div>
+
+                <div class="legend">
+                  <div class="li"><span class="sw" style="background:#2ea043"></span>Start</div>
+                  <div class="li"><span class="sw" style="background:#f85149"></span>Finish</div>
+                  <div class="li"><span class="bar"></span>Travel direction</div>
+                  <div class="li"><span class="sw" style="background:#6e7681;opacity:.7"></span>Skipped outlier</div>
+                </div>
+
+                <button class="gbtn" id="tExcl">Show skipped outliers</button>
+                <button class="gbtn" id="tFit">Recenter on route</button>
+
+                <div class="note">
+                  <b>Why these are skipped.</b> Two detached pockets sit east of the main
+                  yard &mdash; a 17-grave group (~740&nbsp;u away) and a 4-grave group.
+                  Reaching them costs <b>~48&nbsp;u per grave</b> versus <b>~5.8&nbsp;u</b>
+                  inside the main cluster, so the route optimises for efficiency over volume
+                  and leaves them out. Toggle them on to judge for yourself.
+                </div>
+              </div>
+              <div id="ghud"></div>
+            </aside>
+            <div id="gmain"><div id="gmap"></div></div>
+          </div>
+        </main>
+        <footer><p>Created with &#10084;&#65039;</p></footer>
+    </div>
+
+<script src="leaflet/leaflet.js"></script>
+<script src="tiles2/tiles.js"></script>
+<script>
+const M = window.TILES2_META;
+const PXW = M.imgW/(M.world.x1-M.world.x0);
+const PXH = M.imgH/(M.world.z1-M.world.z0);
+
+// ---- route payload (main southwest cluster; outliers listed separately) ----
+const DATA = {"route":[[2104,2215.7],[2106.7,2217.4],[2117.4,2208.9],[2118.5,2207.1],[2121.3,2208.4],[2122.5,2206.5],[2125.6,2202.7],[2128.3,2204.5],[2126.4,2221.6],[2117.5,2234.8],[2119.7,2236],[2132.9,2232.3],[2135.9,2226.7],[2148.4,2249.3],[2168.4,2205.2],[2170.4,2201.6],[2172.1,2199],[2178.8,2211.9],[2176.8,2214.4],[2203.4,2221.8],[2216.2,2222.8],[2207.5,2235.8],[2212.5,2245.1],[2217.1,2243.2],[2222.7,2248],[2223.4,2245.7],[2226,2245.9],[2226.9,2252.3],[2225,2254.9],[2223.5,2257.3],[2223.9,2259],[2214.6,2253.9],[2213.8,2252.2],[2204.5,2255.5],[2200,2257],[2198.8,2266.5],[2208.3,2274.3],[2215.3,2274.3],[2215.5,2271.7],[2217.3,2271.1],[2220.1,2272.2],[2222,2267.7],[2224.8,2261.3],[2228.1,2259.7],[2230.6,2256.3],[2237.7,2250.6],[2237.9,2248.6],[2235.8,2244.6],[2234.4,2242.6],[2237.5,2241.9],[2239.8,2244.6],[2243.9,2247.3],[2245.7,2246],[2245.5,2248.8],[2242.2,2253.5],[2242.5,2256],[2240.8,2259.1],[2241.3,2261.4],[2245,2259.7],[2249.6,2257.4],[2251.4,2256.6],[2250.7,2258.4],[2256.4,2262.8],[2256.5,2265.3],[2256.5,2267.6],[2253.8,2265.5],[2246,2264.9],[2244.1,2265.5],[2233.8,2265.1],[2232.7,2266.7],[2230.3,2267.4],[2229.4,2277.1],[2224.8,2277.5],[2226.5,2278.5],[2231.2,2286.2],[2233.5,2285.6],[2239.1,2289.4],[2242.8,2280.5],[2245.6,2277.5],[2252.7,2276.7],[2258.1,2285.1],[2253,2303.1],[2257.8,2298.2],[2259.6,2293.1],[2261,2292.7],[2262.2,2291.1],[2264.8,2291.9],[2261.6,2286.1],[2262.1,2282.2],[2263.4,2283],[2268.2,2282.3],[2273.6,2290.5],[2270.8,2290.2],[2270.1,2292.4],[2267.9,2299.3],[2271.7,2298.1],[2274.4,2298.6],[2277.1,2300.5],[2275.4,2305],[2271,2303.7],[2269.1,2304.1],[2267,2306.6],[2264.4,2306.1],[2259.9,2304.4],[2257.5,2312.4],[2266.6,2325.8],[2269.9,2323.5],[2273.9,2317.8],[2276.2,2317.9],[2278.6,2320.6],[2283.5,2322.2],[2285,2319.9],[2280.3,2316.3],[2283.6,2315.3],[2284.3,2313.5],[2282.3,2313.3],[2282.2,2311.4],[2283.7,2303],[2283.4,2300.8],[2285.9,2300.3],[2288,2298.9],[2289.4,2303.8],[2285.9,2306],[2290.3,2310],[2293.6,2309.4],[2296.6,2308.6],[2294,2306.7],[2294.6,2302],[2298.3,2298.5],[2296,2298],[2294.4,2296.8],[2291.3,2294.9],[2285,2291.3],[2282.6,2292.1],[2279.2,2286.9],[2277.1,2285.9],[2279.1,2282],[2274.1,2279],[2272.8,2278.1],[2269.3,2278.4],[2267.9,2261],[2270.4,2259.5],[2264.2,2250.6],[2260.6,2244.9],[2260.1,2242.7],[2266.9,2231.1],[2265.4,2249.4],[2267.2,2250.7],[2271.7,2245.6],[2273.5,2245.2],[2278.6,2243.4],[2291.5,2249.7],[2296,2252.2],[2306.9,2244.2],[2307.4,2246.5],[2303.5,2254],[2301,2264],[2305.5,2265.2],[2306.8,2269.3],[2304.5,2269.7],[2298.2,2270.9],[2297,2272.5],[2296.1,2271.2],[2293.6,2269.3],[2294.7,2267.8],[2291.9,2267.6],[2286.2,2274.7],[2285.6,2269.5],[2284.6,2268.4],[2288.3,2268.6],[2288.7,2266.8],[2285.4,2258.3],[2283.2,2260.4],[2279.7,2260],[2275.3,2262.4],[2272.8,2262.9],[2271.8,2268.7],[2275,2269.3],[2279.2,2274.3],[2294.3,2286.5],[2295.5,2285.3],[2299.6,2287],[2300.2,2289.6],[2302.4,2287.5],[2304.9,2286.1],[2302.2,2284.9],[2301.2,2280.3],[2306.2,2276.7],[2312.2,2268.5],[2308.4,2276.7],[2308.4,2278.6],[2311.3,2286.5],[2319.5,2293.8],[2311.7,2294.1],[2312,2300.1],[2310.9,2302.1],[2318.5,2308.5],[2317.9,2310.4],[2310.3,2313],[2312.8,2315.4],[2314.7,2317.4],[2316.6,2317.3],[2320.9,2314.4],[2321,2338],[2319.8,2340.7],[2318.3,2341],[2318.6,2342.1],[2322.8,2341.8],[2324.1,2340.9]],"routeLen":1206,"excluded":[[3067.1,2143.3],[3051.1,2146.2],[3053.1,2144],[3045.2,2145.2],[3052.6,2140.7],[3058.7,2146.5],[3061.1,2133.2],[3056.8,2134],[3062.7,2137.8],[3055.1,2154.7],[3066.9,2132.6],[3059.8,2134.4],[3059,2152.6],[3061.5,2152.8],[3048.2,2149.7],[3059.4,2143.2],[3058.4,2141.6],[2605.6,2187.1],[2608.7,2181.1],[2598.4,2192.3],[2596.1,2189.4]],"mainBbox":{"x0":2104,"x1":2324,"z0":2199,"z1":2342}};
+
+// ---- Leaflet map (CRS.Simple: pixel coords, north-up) ----
+const map = L.map('gmap', {
+  crs: L.CRS.Simple, minZoom: M.minZoom, maxZoom: M.maxZoom + (M.overZoom||3),
+  zoomSnap: 0, zoomDelta: 0.6, wheelPxPerZoomLevel: 120, wheelDebounceTime: 40,
+  zoomAnimation: true, attributionControl: false, zoomControl: true
+});
+function px2ll(px,py){ return map.unproject([px,py], M.maxZoom); }
+function world2ll(x,z){ return px2ll((x-M.world.x0)*PXW, (M.world.z1-z)*PXH); }
+const FULL = L.latLngBounds(px2ll(0, M.imgH), px2ll(M.imgW, 0));
+L.tileLayer('tiles2/{z}/{x}/{y}.jpg', {
+  tileSize: M.tileSize, minZoom: M.minZoom, maxNativeZoom: M.maxZoom,
+  maxZoom: M.maxZoom + (M.overZoom||3), noWrap: true, bounds: FULL, keepBuffer: 4,
+  updateWhenZooming: false
+}).addTo(map);
+map.setMaxBounds(FULL.pad(0.25));
+
+// route latlngs
+const R = DATA.route.map(p=>world2ll(p[0],p[1]));
+const routeBounds = L.latLngBounds(R);
+
+// ---- direction-gradient route: many short polylines coloured start->finish ----
+const routeLayer = L.layerGroup().addTo(map);
+function hsl(t){ // 0 -> green(140), .5 -> amber(45), 1 -> red(0)
+  const h = t<0.5 ? 140-(140-45)*(t/0.5) : 45-45*((t-0.5)/0.5);
+  return `hsl(${h},70%,52%)`;
+}
+for(let i=0;i<R.length-1;i++){
+  const t=i/(R.length-2||1);
+  L.polyline([R[i],R[i+1]], {color:'#000', weight:6, opacity:.35, lineCap:'round'}).addTo(routeLayer);
+  L.polyline([R[i],R[i+1]], {color:hsl(t), weight:3.2, opacity:1, lineCap:'round'}).addTo(routeLayer);
+}
+// grave dots
+const graveLayer = L.layerGroup().addTo(map);
+DATA.route.forEach((p,i)=>{
+  L.circleMarker(R[i], {radius:2.4, color:'#0d1117', weight:.8, fillColor:'#e6edf3', fillOpacity:.9})
+    .bindTooltip(`Grave #${i+1} of ${DATA.route.length}<br>world ${p[0]}, ${p[1]}`, {direction:'top'})
+    .addTo(graveLayer);
+});
+// start / finish
+L.circleMarker(R[0], {radius:7, color:'#0d1117', weight:2, fillColor:'#2ea043', fillOpacity:1})
+  .bindTooltip('START', {permanent:false, direction:'top'}).addTo(map);
+L.circleMarker(R[R.length-1], {radius:7, color:'#0d1117', weight:2, fillColor:'#f85149', fillOpacity:1})
+  .bindTooltip('FINISH', {permanent:false, direction:'top'}).addTo(map);
+
+// ---- excluded outliers (hidden by default) ----
+const exclLayer = L.layerGroup();
+DATA.excluded.forEach(p=>{
+  L.circleMarker(world2ll(p[0],p[1]), {radius:3.5, color:'#484f58', weight:1, fillColor:'#6e7681', fillOpacity:.7, dashArray:'2'})
+    .bindTooltip(`Skipped outlier<br>world ${p[0]}, ${p[1]}`, {direction:'top'})
+    .addTo(exclLayer);
+});
+
+// ---- stats ----
+document.getElementById('s_graves').textContent = DATA.route.length;
+document.getElementById('s_len').textContent = DATA.routeLen.toLocaleString()+' u';
+document.getElementById('s_per').textContent = (DATA.routeLen/DATA.route.length).toFixed(1)+' u';
+document.getElementById('s_excl').textContent = DATA.excluded.length;
+
+// ---- fit ----
+function fit(){ map.fitBounds(routeBounds.pad(0.18)); }
+fit();
+
+// ---- controls ----
+let exclOn=false;
+const tExcl=document.getElementById('tExcl');
+tExcl.onclick=()=>{ exclOn=!exclOn;
+  if(exclOn){ exclLayer.addTo(map); tExcl.textContent='Hide skipped outliers'; tExcl.classList.remove('off');
+    map.fitBounds(L.latLngBounds([...R, ...DATA.excluded.map(p=>world2ll(p[0],p[1]))]).pad(0.12)); }
+  else { map.removeLayer(exclLayer); tExcl.textContent='Show skipped outliers'; fit(); }
+};
+document.getElementById('tFit').onclick=fit;
+
+// ---- zoom HUD ----
+const hud=document.getElementById('ghud');
+function upd(){ const pw=(map.getZoomScale(map.getZoom(),M.maxZoom)*PXW);
+  hud.textContent=`zoom ${map.getZoom().toFixed(2)} · ${pw.toFixed(1)} px/world`; }
+map.on('zoomend moveend', upd);
+map.whenReady(()=>{ map.invalidateSize(); fit(); upd(); });
+addEventListener('resize', ()=>{ map.invalidateSize(); });
+</script>
+</body>
+</html>
