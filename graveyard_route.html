@@ -4,37 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex,nofollow">
-    <title>SW Graveyard Route</title>
+    <title>Graveyard Farming Routes</title>
     <link rel="stylesheet" href="leaflet/leaflet.css">
     <link rel="stylesheet" href="styles.css">
 <style>
   #gw{display:flex;height:calc(100vh - 150px);min-height:520px;border:1px solid #30363d;
     border-radius:8px;overflow:hidden;background:#0d1117;color:#e6edf3;
     font:13px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-  #gside{width:270px;flex:none;background:#161b22;border-right:1px solid #30363d;display:flex;flex-direction:column;overflow-y:auto}
+  #gside{width:300px;flex:none;background:#161b22;border-right:1px solid #30363d;display:flex;flex-direction:column;overflow-y:auto}
   #gside .pad{padding:14px}
   #gside h2{font-size:14px;margin:0 0 4px;color:#e6edf3}
-  #gside .sub{color:#8b949e;font-size:11px;margin-bottom:12px}
-  .stat{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid #21262d}
-  .stat .k{color:#8b949e;font-size:12px}
-  .stat .v{font-variant-numeric:tabular-nums;font-weight:700;font-size:15px}
-  .stat .v.hi{color:#3fb950}.stat .v.warn{color:#f0883e}
+  #gside .sub{color:#8b949e;font-size:11px;margin-bottom:10px}
+  .gbtns{display:flex;gap:6px;margin-bottom:10px}
+  .gbtn{flex:1;background:#1c2330;border:1px solid #30363d;color:#e6edf3;border-radius:6px;padding:6px 8px;font-size:12px;cursor:pointer;text-align:center}
+  .gbtn:hover{border-color:#f0883e;color:#fff}
+  .ylist{display:flex;flex-direction:column;gap:5px}
+  .yrow{display:flex;align-items:center;gap:9px;background:#1c2330;border:1px solid #30363d;border-radius:7px;padding:7px 9px;cursor:pointer}
+  .yrow:hover{border-color:#484f58}
+  .yrow.off{opacity:.42}
+  .yrow input{accent-color:#f0883e;margin:0;cursor:pointer;flex:none}
+  .yrow .sw{width:12px;height:12px;border-radius:50%;flex:none;border:1px solid rgba(255,255,255,.3)}
+  .yrow .meta{min-width:0;flex:1}
+  .yrow .rname{font-size:12.5px;font-weight:600;color:#e6edf3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .yrow .rsub{font-size:10.5px;color:#8b949e}
+  .yrow .eff{font-variant-numeric:tabular-nums;text-align:right;flex:none}
+  .yrow .eff b{font-size:13px}
+  .yrow .eff small{display:block;font-size:9.5px;color:#8b949e}
+  .badge{display:inline-block;font-size:9px;font-weight:700;border-radius:3px;padding:0 4px;margin-left:5px;vertical-align:middle}
+  .badge.best{background:#238636;color:#fff}
+  .totrow{display:flex;justify-content:space-between;padding:7px 2px 0;font-size:11px;color:#8b949e;border-top:1px solid #21262d;margin-top:10px}
+  .totrow b{color:#e6edf3;font-variant-numeric:tabular-nums}
+  .legend{margin-top:12px;font-size:11px;color:#8b949e}
+  .legend .li{display:flex;align-items:center;gap:8px;padding:2px 0}
+  .legend .dot{width:11px;height:11px;border-radius:50%;flex:none}
   .note{font-size:11px;color:#8b949e;margin-top:12px;line-height:1.5}
   .note b{color:#c9d1d9}
-  .legend{margin-top:14px;font-size:11px}
-  .legend .li{display:flex;align-items:center;gap:8px;padding:3px 0}
-  .legend .sw{width:14px;height:14px;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
-  .legend .bar{width:46px;height:8px;flex:none;border-radius:4px;
-    background:linear-gradient(90deg,#2ea043,#d29922,#f85149)}
-  .gbtn{display:block;width:100%;margin-top:12px;background:#1c2330;border:1px solid #30363d;color:#e6edf3;
-    border-radius:6px;padding:7px 9px;font-size:12px;cursor:pointer;text-align:center}
-  .gbtn:hover{border-color:#f0883e;color:#fff}
-  .gbtn.off{opacity:.5}
   #gmain{flex:1;position:relative;overflow:hidden}
   #gmap{position:absolute;inset:0;z-index:1;background:#0d1117}
   .leaflet-container{background:#0d1117}
   .leaflet-control-zoom a{background:#161b22;color:#e6edf3;border-color:#30363d}
   .leaflet-control-zoom a:hover{background:#1c2330;color:#f0883e}
+  .yardlabel{background:rgba(0,0,0,.62);border:1px solid #30363d;border-radius:5px;color:#e6edf3;
+    font:600 11px/1.2 -apple-system,Segoe UI,sans-serif;padding:2px 6px;white-space:nowrap}
+  .yardlabel .q{color:#8b949e;font-weight:400}
   #ghud{position:absolute;left:10px;bottom:10px;background:#000a;border:1px solid #30363d;border-radius:6px;
     padding:5px 9px;font-size:11px;color:#8b949e;z-index:500}
   .htag{display:inline-block;font-size:10px;font-weight:700;color:#0d1117;background:#8b949e;border-radius:4px;padding:1px 5px;margin-left:8px;vertical-align:middle}
@@ -43,35 +55,29 @@
 <body>
     <div class="container">
         <header>
-            <h1>Southwest Graveyard &mdash; Efficient Route <span class="htag">unlisted</span></h1>
+            <h1>Corepunk Graveyards &mdash; Farming Routes <span class="htag">unlisted</span></h1>
         </header>
         <main>
           <div id="gw">
             <aside id="gside">
               <div class="pad">
-                <h2>Westwind graveyard run</h2>
-                <div class="sub">Shortest gravestone-farming loop through the dense southwest cluster.</div>
-                <div class="stat"><span class="k">Graves on route</span><span class="v hi" id="s_graves">&mdash;</span></div>
-                <div class="stat"><span class="k">Route length</span><span class="v" id="s_len">&mdash;</span></div>
-                <div class="stat"><span class="k">Cost per grave</span><span class="v" id="s_per">&mdash;</span></div>
-                <div class="stat"><span class="k">Outliers skipped</span><span class="v warn" id="s_excl">&mdash;</span></div>
-
-                <div class="legend">
-                  <div class="li"><span class="sw" style="background:#2ea043"></span>Start</div>
-                  <div class="li"><span class="sw" style="background:#f85149"></span>Finish</div>
-                  <div class="li"><span class="bar"></span>Travel direction</div>
-                  <div class="li"><span class="sw" style="background:#6e7681;opacity:.7"></span>Skipped outlier</div>
+                <h2>All gravestone yards</h2>
+                <div class="sub">Every tombstone cluster on the map with its own efficient (2-opt) route. Tick the ones you want; click a row to fly there. Sorted by walking cost — lowest u/grave first.</div>
+                <div class="gbtns">
+                  <button class="gbtn" id="bAll">Show all</button>
+                  <button class="gbtn" id="bNone">Hide all</button>
+                  <button class="gbtn" id="bFit">Fit all</button>
                 </div>
-
-                <button class="gbtn" id="tExcl">Show skipped outliers</button>
-                <button class="gbtn" id="tFit">Recenter on route</button>
-
+                <div class="ylist" id="ylist"></div>
+                <div class="totrow"><span>Selected</span><span><b id="t_yards">0</b> yards · <b id="t_graves">0</b> graves · <b id="t_len">0</b> u</span></div>
+                <div class="legend">
+                  <div class="li"><span class="dot" style="background:#2ea043"></span>Start &nbsp;·&nbsp; <span class="dot" style="background:#f85149"></span>Finish &nbsp;·&nbsp; coloured line = that yard's route</div>
+                </div>
                 <div class="note">
-                  <b>Why these are skipped.</b> Two detached pockets sit east of the main
-                  yard &mdash; a 17-grave group (~740&nbsp;u away) and a 4-grave group.
-                  Reaching them costs <b>~48&nbsp;u per grave</b> versus <b>~5.8&nbsp;u</b>
-                  inside the main cluster, so the route optimises for efficiency over volume
-                  and leaves them out. Toggle them on to judge for yourself.
+                  <b>u/grave</b> = world units walked per gravestone on the optimised loop — lower is more efficient.
+                  The two big Westwind (209) and Tempest (138) yards hold most of the volume; the small yards are
+                  denser per-grave but clear fast. Region names are best-effort from map coordinates &mdash; eyeball
+                  them against the labels on the map.
                 </div>
               </div>
               <div id="ghud"></div>
@@ -89,10 +95,9 @@ const M = window.TILES2_META;
 const PXW = M.imgW/(M.world.x1-M.world.x0);
 const PXH = M.imgH/(M.world.z1-M.world.z0);
 
-// ---- route payload (main southwest cluster; outliers listed separately) ----
-const DATA = {"route":[[2104,2215.7],[2106.7,2217.4],[2117.4,2208.9],[2118.5,2207.1],[2121.3,2208.4],[2122.5,2206.5],[2125.6,2202.7],[2128.3,2204.5],[2126.4,2221.6],[2117.5,2234.8],[2119.7,2236],[2132.9,2232.3],[2135.9,2226.7],[2148.4,2249.3],[2168.4,2205.2],[2170.4,2201.6],[2172.1,2199],[2178.8,2211.9],[2176.8,2214.4],[2203.4,2221.8],[2216.2,2222.8],[2207.5,2235.8],[2212.5,2245.1],[2217.1,2243.2],[2222.7,2248],[2223.4,2245.7],[2226,2245.9],[2226.9,2252.3],[2225,2254.9],[2223.5,2257.3],[2223.9,2259],[2214.6,2253.9],[2213.8,2252.2],[2204.5,2255.5],[2200,2257],[2198.8,2266.5],[2208.3,2274.3],[2215.3,2274.3],[2215.5,2271.7],[2217.3,2271.1],[2220.1,2272.2],[2222,2267.7],[2224.8,2261.3],[2228.1,2259.7],[2230.6,2256.3],[2237.7,2250.6],[2237.9,2248.6],[2235.8,2244.6],[2234.4,2242.6],[2237.5,2241.9],[2239.8,2244.6],[2243.9,2247.3],[2245.7,2246],[2245.5,2248.8],[2242.2,2253.5],[2242.5,2256],[2240.8,2259.1],[2241.3,2261.4],[2245,2259.7],[2249.6,2257.4],[2251.4,2256.6],[2250.7,2258.4],[2256.4,2262.8],[2256.5,2265.3],[2256.5,2267.6],[2253.8,2265.5],[2246,2264.9],[2244.1,2265.5],[2233.8,2265.1],[2232.7,2266.7],[2230.3,2267.4],[2229.4,2277.1],[2224.8,2277.5],[2226.5,2278.5],[2231.2,2286.2],[2233.5,2285.6],[2239.1,2289.4],[2242.8,2280.5],[2245.6,2277.5],[2252.7,2276.7],[2258.1,2285.1],[2253,2303.1],[2257.8,2298.2],[2259.6,2293.1],[2261,2292.7],[2262.2,2291.1],[2264.8,2291.9],[2261.6,2286.1],[2262.1,2282.2],[2263.4,2283],[2268.2,2282.3],[2273.6,2290.5],[2270.8,2290.2],[2270.1,2292.4],[2267.9,2299.3],[2271.7,2298.1],[2274.4,2298.6],[2277.1,2300.5],[2275.4,2305],[2271,2303.7],[2269.1,2304.1],[2267,2306.6],[2264.4,2306.1],[2259.9,2304.4],[2257.5,2312.4],[2266.6,2325.8],[2269.9,2323.5],[2273.9,2317.8],[2276.2,2317.9],[2278.6,2320.6],[2283.5,2322.2],[2285,2319.9],[2280.3,2316.3],[2283.6,2315.3],[2284.3,2313.5],[2282.3,2313.3],[2282.2,2311.4],[2283.7,2303],[2283.4,2300.8],[2285.9,2300.3],[2288,2298.9],[2289.4,2303.8],[2285.9,2306],[2290.3,2310],[2293.6,2309.4],[2296.6,2308.6],[2294,2306.7],[2294.6,2302],[2298.3,2298.5],[2296,2298],[2294.4,2296.8],[2291.3,2294.9],[2285,2291.3],[2282.6,2292.1],[2279.2,2286.9],[2277.1,2285.9],[2279.1,2282],[2274.1,2279],[2272.8,2278.1],[2269.3,2278.4],[2267.9,2261],[2270.4,2259.5],[2264.2,2250.6],[2260.6,2244.9],[2260.1,2242.7],[2266.9,2231.1],[2265.4,2249.4],[2267.2,2250.7],[2271.7,2245.6],[2273.5,2245.2],[2278.6,2243.4],[2291.5,2249.7],[2296,2252.2],[2306.9,2244.2],[2307.4,2246.5],[2303.5,2254],[2301,2264],[2305.5,2265.2],[2306.8,2269.3],[2304.5,2269.7],[2298.2,2270.9],[2297,2272.5],[2296.1,2271.2],[2293.6,2269.3],[2294.7,2267.8],[2291.9,2267.6],[2286.2,2274.7],[2285.6,2269.5],[2284.6,2268.4],[2288.3,2268.6],[2288.7,2266.8],[2285.4,2258.3],[2283.2,2260.4],[2279.7,2260],[2275.3,2262.4],[2272.8,2262.9],[2271.8,2268.7],[2275,2269.3],[2279.2,2274.3],[2294.3,2286.5],[2295.5,2285.3],[2299.6,2287],[2300.2,2289.6],[2302.4,2287.5],[2304.9,2286.1],[2302.2,2284.9],[2301.2,2280.3],[2306.2,2276.7],[2312.2,2268.5],[2308.4,2276.7],[2308.4,2278.6],[2311.3,2286.5],[2319.5,2293.8],[2311.7,2294.1],[2312,2300.1],[2310.9,2302.1],[2318.5,2308.5],[2317.9,2310.4],[2310.3,2313],[2312.8,2315.4],[2314.7,2317.4],[2316.6,2317.3],[2320.9,2314.4],[2321,2338],[2319.8,2340.7],[2318.3,2341],[2318.6,2342.1],[2322.8,2341.8],[2324.1,2340.9]],"routeLen":1206,"excluded":[[3067.1,2143.3],[3051.1,2146.2],[3053.1,2144],[3045.2,2145.2],[3052.6,2140.7],[3058.7,2146.5],[3061.1,2133.2],[3056.8,2134],[3062.7,2137.8],[3055.1,2154.7],[3066.9,2132.6],[3059.8,2134.4],[3059,2152.6],[3061.5,2152.8],[3048.2,2149.7],[3059.4,2143.2],[3058.4,2141.6],[2605.6,2187.1],[2608.7,2181.1],[2598.4,2192.3],[2596.1,2189.4]],"mainBbox":{"x0":2104,"x1":2324,"z0":2199,"z1":2342}};
+const DATA = {"yards":[{"n":17,"region":"Westwind Woods","cx":3057,"cz":2143,"len":79,"per":4.65,"route":[[3067.1,2143.3],[3062.7,2137.8],[3066.9,2132.6],[3061.1,2133.2],[3059.8,2134.4],[3056.8,2134],[3058.4,2141.6],[3059.4,2143.2],[3058.7,2146.5],[3061.5,2152.8],[3059,2152.6],[3055.1,2154.7],[3048.2,2149.7],[3051.1,2146.2],[3053.1,2144],[3052.6,2140.7],[3045.2,2145.2]],"id":"yard1","color":"#a371f7","quad":"SW"},{"n":26,"region":"Goldenfield Town","cx":3982,"cz":2689,"len":139,"per":5.35,"route":[[3997.1,2696.7],[3995.5,2688.7],[3998.5,2682.3],[4001,2684.3],[4002.8,2682.7],[4004.7,2677.7],[3997.6,2671.3],[3992.5,2676.8],[3986.8,2679.9],[3976.2,2683.7],[3980.3,2685.1],[3984.8,2691.1],[3984.3,2694.1],[3987.9,2693.9],[3986.6,2695.8],[3985.5,2707.3],[3976.3,2700.8],[3974.8,2698.7],[3972,2699.3],[3972.9,2693.6],[3968.9,2694.9],[3963.7,2692.8],[3962,2690.7],[3963.2,2685.4],[3964.3,2683.1],[3961.2,2683.1]],"id":"yard2","color":"#f0883e","quad":"SE"},{"n":209,"region":"Westwind Woods","cx":2257,"cz":2274,"len":1206,"per":5.77,"route":[[2104,2215.7],[2106.7,2217.4],[2117.4,2208.9],[2118.5,2207.1],[2121.3,2208.4],[2122.5,2206.5],[2125.6,2202.7],[2128.3,2204.5],[2126.4,2221.6],[2117.5,2234.8],[2119.7,2236],[2132.9,2232.3],[2135.9,2226.7],[2148.4,2249.3],[2168.4,2205.2],[2170.4,2201.6],[2172.1,2199],[2178.8,2211.9],[2176.8,2214.4],[2203.4,2221.8],[2216.2,2222.8],[2207.5,2235.8],[2212.5,2245.1],[2217.1,2243.2],[2222.7,2248],[2223.4,2245.7],[2226,2245.9],[2226.9,2252.3],[2225,2254.9],[2223.5,2257.3],[2223.9,2259],[2214.6,2253.9],[2213.8,2252.2],[2204.5,2255.5],[2200,2257],[2198.8,2266.5],[2208.3,2274.3],[2215.3,2274.3],[2215.5,2271.7],[2217.3,2271.1],[2220.1,2272.2],[2222,2267.7],[2224.8,2261.3],[2228.1,2259.7],[2230.6,2256.3],[2237.7,2250.6],[2237.9,2248.6],[2235.8,2244.6],[2234.4,2242.6],[2237.5,2241.9],[2239.8,2244.6],[2243.9,2247.3],[2245.7,2246],[2245.5,2248.8],[2242.2,2253.5],[2242.5,2256],[2240.8,2259.1],[2241.3,2261.4],[2245,2259.7],[2249.6,2257.4],[2251.4,2256.6],[2250.7,2258.4],[2256.4,2262.8],[2256.5,2265.3],[2256.5,2267.6],[2253.8,2265.5],[2246,2264.9],[2244.1,2265.5],[2233.8,2265.1],[2232.7,2266.7],[2230.3,2267.4],[2229.4,2277.1],[2224.8,2277.5],[2226.5,2278.5],[2231.2,2286.2],[2233.5,2285.6],[2239.1,2289.4],[2242.8,2280.5],[2245.6,2277.5],[2252.7,2276.7],[2258.1,2285.1],[2253,2303.1],[2257.8,2298.2],[2259.6,2293.1],[2261,2292.7],[2262.2,2291.1],[2264.8,2291.9],[2261.6,2286.1],[2262.1,2282.2],[2263.4,2283],[2268.2,2282.3],[2273.6,2290.5],[2270.8,2290.2],[2270.1,2292.4],[2267.9,2299.3],[2271.7,2298.1],[2274.4,2298.6],[2277.1,2300.5],[2275.4,2305],[2271,2303.7],[2269.1,2304.1],[2267,2306.6],[2264.4,2306.1],[2259.9,2304.4],[2257.5,2312.4],[2266.6,2325.8],[2269.9,2323.5],[2273.9,2317.8],[2276.2,2317.9],[2278.6,2320.6],[2283.5,2322.2],[2285,2319.9],[2280.3,2316.3],[2283.6,2315.3],[2284.3,2313.5],[2282.3,2313.3],[2282.2,2311.4],[2283.7,2303],[2283.4,2300.8],[2285.9,2300.3],[2288,2298.9],[2289.4,2303.8],[2285.9,2306],[2290.3,2310],[2293.6,2309.4],[2296.6,2308.6],[2294,2306.7],[2294.6,2302],[2298.3,2298.5],[2296,2298],[2294.4,2296.8],[2291.3,2294.9],[2285,2291.3],[2282.6,2292.1],[2279.2,2286.9],[2277.1,2285.9],[2279.1,2282],[2274.1,2279],[2272.8,2278.1],[2269.3,2278.4],[2267.9,2261],[2270.4,2259.5],[2264.2,2250.6],[2260.6,2244.9],[2260.1,2242.7],[2266.9,2231.1],[2265.4,2249.4],[2267.2,2250.7],[2271.7,2245.6],[2273.5,2245.2],[2278.6,2243.4],[2291.5,2249.7],[2296,2252.2],[2306.9,2244.2],[2307.4,2246.5],[2303.5,2254],[2301,2264],[2305.5,2265.2],[2306.8,2269.3],[2304.5,2269.7],[2298.2,2270.9],[2297,2272.5],[2296.1,2271.2],[2293.6,2269.3],[2294.7,2267.8],[2291.9,2267.6],[2286.2,2274.7],[2285.6,2269.5],[2284.6,2268.4],[2288.3,2268.6],[2288.7,2266.8],[2285.4,2258.3],[2283.2,2260.4],[2279.7,2260],[2275.3,2262.4],[2272.8,2262.9],[2271.8,2268.7],[2275,2269.3],[2279.2,2274.3],[2294.3,2286.5],[2295.5,2285.3],[2299.6,2287],[2300.2,2289.6],[2302.4,2287.5],[2304.9,2286.1],[2302.2,2284.9],[2301.2,2280.3],[2306.2,2276.7],[2312.2,2268.5],[2308.4,2276.7],[2308.4,2278.6],[2311.3,2286.5],[2319.5,2293.8],[2311.7,2294.1],[2312,2300.1],[2310.9,2302.1],[2318.5,2308.5],[2317.9,2310.4],[2310.3,2313],[2312.8,2315.4],[2314.7,2317.4],[2316.6,2317.3],[2320.9,2314.4],[2321,2338],[2319.8,2340.7],[2318.3,2341],[2318.6,2342.1],[2322.8,2341.8],[2324.1,2340.9]],"id":"yard3","color":"#58a6ff","quad":"SW"},{"n":38,"region":"The Steppes","cx":4386,"cz":4909,"len":230,"per":6.05,"route":[[4373.4,4905],[4373.1,4901.1],[4374.3,4902.8],[4377.6,4908.3],[4379.2,4911.2],[4373.3,4916.6],[4373.3,4920],[4372.6,4922],[4375.2,4919.8],[4381.8,4923],[4385.3,4922.7],[4393.7,4926],[4396.1,4924.8],[4395.1,4922],[4404.4,4922.6],[4405.9,4921.9],[4412,4919.7],[4412.7,4918.2],[4413.5,4915.4],[4403.2,4907],[4398.9,4915.6],[4393.3,4913.7],[4391.3,4912.9],[4396.1,4906.7],[4388.6,4905.6],[4389.5,4903],[4389.7,4896.6],[4394,4894.3],[4399.8,4886.4],[4390.9,4885.5],[4380.4,4893.2],[4370.9,4892.9],[4369.1,4887.9],[4359.6,4889],[4365.8,4900.3],[4367.4,4907.4],[4369.1,4908.9],[4364,4917.9]],"id":"yard4","color":"#3fb950","quad":"NE"},{"n":138,"region":"Tempest Timberland","cx":5624,"cz":2346,"len":1142,"per":8.28,"route":[[5557.8,2300],[5568.6,2317.3],[5578.4,2318.2],[5580.5,2317.1],[5591.2,2318.2],[5597.5,2302.8],[5606.4,2296.6],[5615,2291],[5617,2290.6],[5610.9,2286.8],[5612.3,2282.2],[5605.3,2285.6],[5597.6,2283],[5593.3,2285.8],[5586.4,2290],[5586.9,2293.6],[5579.3,2292.7],[5582.2,2282.4],[5588.7,2278.9],[5598.5,2275],[5604.5,2274.7],[5616,2271.3],[5615.1,2257.7],[5614,2255.6],[5612.7,2253.8],[5611.4,2251.2],[5610.1,2249.2],[5617.6,2244.8],[5620.3,2249.1],[5622,2251.4],[5623.1,2253.5],[5630.2,2269.9],[5639.7,2268.1],[5644.5,2265.3],[5650.3,2270.5],[5653.9,2273.1],[5645.5,2273.7],[5643.8,2279.7],[5648.1,2280.9],[5651.3,2283.8],[5647.9,2285.8],[5645.7,2292.5],[5644.8,2294.9],[5641.2,2290.8],[5635.2,2284.3],[5622.6,2285.8],[5634.7,2294.9],[5643.5,2307.2],[5647.6,2306.7],[5649.5,2312.7],[5651.3,2313.2],[5657.1,2313.7],[5660.9,2307.7],[5660,2306.3],[5658.2,2302.5],[5666.3,2293.8],[5664.3,2292.1],[5665.8,2282.3],[5668.3,2279.1],[5669.4,2284.4],[5675.6,2293.1],[5687.5,2295.5],[5689.9,2297.3],[5684.7,2300.5],[5666.9,2318],[5668.3,2318.9],[5665.9,2323.4],[5661.7,2324.1],[5663.6,2327],[5664.6,2340.7],[5653.7,2327.2],[5651.5,2319.2],[5641.7,2314.9],[5637.6,2313.6],[5635,2313.1],[5632.3,2308.7],[5620.2,2321.6],[5619.3,2312.3],[5617,2313.7],[5613.7,2313.5],[5600.8,2332.3],[5585.1,2337],[5601.7,2346.1],[5604.9,2343.5],[5610.2,2349.7],[5607.5,2352.5],[5605.1,2354.7],[5603.8,2365.8],[5597,2359.9],[5595.4,2358.7],[5591.8,2365.9],[5593.1,2367.5],[5590.4,2368.6],[5582.5,2380.5],[5586.3,2384.2],[5589.4,2384.5],[5583.8,2424],[5590.6,2432.1],[5588.4,2440.2],[5577.1,2443.5],[5580.5,2448.1],[5575.2,2452.5],[5579.6,2452.1],[5589.8,2463.4],[5593.4,2459.5],[5595.4,2462.5],[5602.5,2459.5],[5608.3,2460.3],[5625,2464.2],[5626,2458.8],[5631.9,2457.3],[5636.6,2465.4],[5638.2,2468],[5643.2,2456.2],[5650,2458.7],[5655.5,2448.4],[5662.2,2445.9],[5657.6,2441.3],[5654.4,2443.4],[5650.5,2431.1],[5648.8,2428.3],[5647.3,2432.5],[5643.3,2438],[5631.8,2442.5],[5621.4,2452.5],[5615.9,2445.9],[5610,2448.3],[5602.7,2450.4],[5607.7,2444.9],[5607.4,2439.8],[5599.4,2439.8],[5596.9,2441],[5592.9,2443.4],[5599.1,2428],[5646.6,2410.1],[5659.8,2407.9],[5662.6,2413.2],[5659.3,2415.3]],"id":"yard5","color":"#db61a2","quad":"SE"},{"n":13,"region":"Creeping Marsh","cx":5344,"cz":4702,"len":121,"per":9.31,"route":[[5325.5,4715.6],[5327,4711.9],[5321.6,4704.9],[5329.6,4698.1],[5335.6,4700.8],[5337,4707.8],[5345.2,4703.4],[5341.1,4693.3],[5359.3,4682],[5362.3,4685.3],[5361.8,4692.2],[5368.4,4714.9],[5361.5,4715.9]],"id":"yard6","color":"#d29922","quad":"NE"}]};
 
-// ---- Leaflet map (CRS.Simple: pixel coords, north-up) ----
+// ---- Leaflet map (CRS.Simple, north-up) ----
 const map = L.map('gmap', {
   crs: L.CRS.Simple, minZoom: M.minZoom, maxZoom: M.maxZoom + (M.overZoom||3),
   zoomSnap: 0, zoomDelta: 0.6, wheelPxPerZoomLevel: 120, wheelDebounceTime: 40,
@@ -108,68 +113,82 @@ L.tileLayer('tiles2/{z}/{x}/{y}.jpg', {
 }).addTo(map);
 map.setMaxBounds(FULL.pad(0.25));
 
-// route latlngs
-const R = DATA.route.map(p=>world2ll(p[0],p[1]));
-const routeBounds = L.latLngBounds(R);
+// ---- precompute latlngs + per-yard bounds; establish view BEFORE adding vectors ----
+// (Leaflet's SVG renderer throws on the first path insert if no view is set yet.)
+DATA.yards.forEach(y=>{ y.ll = y.route.map(p=>world2ll(p[0],p[1])); y.bounds = L.latLngBounds(y.ll); });
+const ALL = L.latLngBounds([]); DATA.yards.forEach(y=>ALL.extend(y.bounds));
+map.fitBounds(ALL.pad(0.08));
 
-// ---- direction-gradient route: many short polylines coloured start->finish ----
-const routeLayer = L.layerGroup().addTo(map);
-function hsl(t){ // 0 -> green(140), .5 -> amber(45), 1 -> red(0)
-  const h = t<0.5 ? 140-(140-45)*(t/0.5) : 45-45*((t-0.5)/0.5);
-  return `hsl(${h},70%,52%)`;
+// ---- build each yard's layer (route + grave dots + start/finish + label) ----
+function buildYard(y){
+  const g = L.layerGroup();
+  const R = y.ll;
+  for(let i=0;i<R.length-1;i++){
+    L.polyline([R[i],R[i+1]], {color:'#000', weight:5, opacity:.32, lineCap:'round'}).addTo(g);
+    L.polyline([R[i],R[i+1]], {color:y.color, weight:2.8, opacity:.95, lineCap:'round'}).addTo(g);
+  }
+  y.route.forEach((p,i)=>{
+    L.circleMarker(R[i], {radius:2.2, color:'#0d1117', weight:.7, fillColor:'#e6edf3', fillOpacity:.85})
+      .bindTooltip(`${y.region} — grave ${i+1}/${y.n}<br>world ${p[0]}, ${p[1]}`, {direction:'top'}).addTo(g);
+  });
+  L.circleMarker(R[0], {radius:5.5, color:'#0d1117', weight:1.6, fillColor:'#2ea043', fillOpacity:1})
+    .bindTooltip(`START — ${y.region}`, {direction:'top'}).addTo(g);
+  L.circleMarker(R[R.length-1], {radius:5.5, color:'#0d1117', weight:1.6, fillColor:'#f85149', fillOpacity:1})
+    .bindTooltip(`FINISH — ${y.region}`, {direction:'top'}).addTo(g);
+  L.marker(world2ll(y.cx, y.cz), {opacity:0, interactive:false})
+    .bindTooltip(`${y.region} <span class="q">· ${y.n}g · ${y.per}u</span>`,
+      {permanent:true, direction:'top', className:'yardlabel', offset:[0,-4]}).addTo(g);
+  y.layer = g;
 }
-for(let i=0;i<R.length-1;i++){
-  const t=i/(R.length-2||1);
-  L.polyline([R[i],R[i+1]], {color:'#000', weight:6, opacity:.35, lineCap:'round'}).addTo(routeLayer);
-  L.polyline([R[i],R[i+1]], {color:hsl(t), weight:3.2, opacity:1, lineCap:'round'}).addTo(routeLayer);
-}
-// grave dots
-const graveLayer = L.layerGroup().addTo(map);
-DATA.route.forEach((p,i)=>{
-  L.circleMarker(R[i], {radius:2.4, color:'#0d1117', weight:.8, fillColor:'#e6edf3', fillOpacity:.9})
-    .bindTooltip(`Grave #${i+1} of ${DATA.route.length}<br>world ${p[0]}, ${p[1]}`, {direction:'top'})
-    .addTo(graveLayer);
-});
-// start / finish
-L.circleMarker(R[0], {radius:7, color:'#0d1117', weight:2, fillColor:'#2ea043', fillOpacity:1})
-  .bindTooltip('START', {permanent:false, direction:'top'}).addTo(map);
-L.circleMarker(R[R.length-1], {radius:7, color:'#0d1117', weight:2, fillColor:'#f85149', fillOpacity:1})
-  .bindTooltip('FINISH', {permanent:false, direction:'top'}).addTo(map);
+DATA.yards.forEach(buildYard);
 
-// ---- excluded outliers (hidden by default) ----
-const exclLayer = L.layerGroup();
-DATA.excluded.forEach(p=>{
-  L.circleMarker(world2ll(p[0],p[1]), {radius:3.5, color:'#484f58', weight:1, fillColor:'#6e7681', fillOpacity:.7, dashArray:'2'})
-    .bindTooltip(`Skipped outlier<br>world ${p[0]}, ${p[1]}`, {direction:'top'})
-    .addTo(exclLayer);
+// ---- sidebar list (sorted by efficiency, best first) ----
+const listEl = document.getElementById('ylist');
+const sorted = [...DATA.yards].sort((a,b)=>a.per-b.per);
+sorted.forEach((y,idx)=>{
+  y.on = true;
+  const row = document.createElement('div'); row.className='yrow'; row.dataset.id=y.id;
+  row.innerHTML = `<input type="checkbox" checked>
+    <span class="sw" style="background:${y.color}"></span>
+    <span class="meta"><span class="rname">${y.region}${idx===0?'<span class="badge best">most efficient</span>':''}</span>
+      <span class="rsub">${y.quad} · ${y.n} graves · ${y.len.toLocaleString()} u</span></span>
+    <span class="eff"><b>${y.per}</b><small>u / grave</small></span>`;
+  const cb = row.querySelector('input');
+  cb.onclick = e=>{ e.stopPropagation(); setYard(y, cb.checked); };
+  row.onclick = ()=>{ if(!y.on){ cb.checked=true; setYard(y,true); } map.fitBounds(y.bounds.pad(0.25)); };
+  y._row = row;
+  listEl.appendChild(row);
+  y.layer.addTo(map);
 });
+
+function setYard(y, on){ y.on=on;
+  if(on) y.layer.addTo(map); else map.removeLayer(y.layer);
+  if(y._row){ y._row.classList.toggle('off', !on); const cb=y._row.querySelector('input'); if(cb) cb.checked=on; }
+  stats();
+}
+function setAll(on){ DATA.yards.forEach(y=>setYard(y,on)); }
+document.getElementById('bAll').onclick = ()=>{ setAll(true); map.fitBounds(ALL.pad(0.08)); };
+document.getElementById('bNone').onclick = ()=>setAll(false);
+document.getElementById('bFit').onclick = ()=>{
+  const b=L.latLngBounds([]); let any=false; DATA.yards.forEach(y=>{ if(y.on){ b.extend(y.bounds); any=true; } });
+  map.fitBounds((any?b:ALL).pad(0.08));
+};
 
 // ---- stats ----
-document.getElementById('s_graves').textContent = DATA.route.length;
-document.getElementById('s_len').textContent = DATA.routeLen.toLocaleString()+' u';
-document.getElementById('s_per').textContent = (DATA.routeLen/DATA.route.length).toFixed(1)+' u';
-document.getElementById('s_excl').textContent = DATA.excluded.length;
-
-// ---- fit ----
-function fit(){ map.fitBounds(routeBounds.pad(0.18)); }
-fit();
-
-// ---- controls ----
-let exclOn=false;
-const tExcl=document.getElementById('tExcl');
-tExcl.onclick=()=>{ exclOn=!exclOn;
-  if(exclOn){ exclLayer.addTo(map); tExcl.textContent='Hide skipped outliers'; tExcl.classList.remove('off');
-    map.fitBounds(L.latLngBounds([...R, ...DATA.excluded.map(p=>world2ll(p[0],p[1]))]).pad(0.12)); }
-  else { map.removeLayer(exclLayer); tExcl.textContent='Show skipped outliers'; fit(); }
-};
-document.getElementById('tFit').onclick=fit;
+function stats(){
+  const on = DATA.yards.filter(y=>y.on);
+  document.getElementById('t_yards').textContent = on.length;
+  document.getElementById('t_graves').textContent = on.reduce((s,y)=>s+y.n,0).toLocaleString();
+  document.getElementById('t_len').textContent = on.reduce((s,y)=>s+y.len,0).toLocaleString();
+}
+stats();
 
 // ---- zoom HUD ----
 const hud=document.getElementById('ghud');
 function upd(){ const pw=(map.getZoomScale(map.getZoom(),M.maxZoom)*PXW);
   hud.textContent=`zoom ${map.getZoom().toFixed(2)} · ${pw.toFixed(1)} px/world`; }
 map.on('zoomend moveend', upd);
-map.whenReady(()=>{ map.invalidateSize(); fit(); upd(); });
+map.whenReady(()=>{ map.invalidateSize(); map.fitBounds(ALL.pad(0.08)); upd(); });
 addEventListener('resize', ()=>{ map.invalidateSize(); });
 </script>
 </body>
