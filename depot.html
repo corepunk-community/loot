@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corepunk — Depot</title>
+    <link rel="stylesheet" href="leaflet/leaflet.css">
+    <link rel="stylesheet" href="styles.css">
+<style>
+  #map-wrap{display:flex;height:calc(100vh - 150px);min-height:520px;border:1px solid #30363d;
+    border-radius:8px;overflow:hidden;background:#0d1117;color:#e6edf3;
+    font:13px/1.4 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  #side{width:290px;flex:none;background:#161b22;border-right:1px solid #30363d;display:flex;flex-direction:column;overflow-y:auto}
+  #side .searchrow{padding:12px;border-bottom:1px solid #30363d;position:sticky;top:0;background:#161b22;z-index:2}
+  #wsearch{width:100%;background:#1c2330;border:1px solid #30363d;color:#e6edf3;border-radius:6px;padding:7px 9px;font-size:13px}
+  .wbtn{flex:1;background:#1c2330;border:1px solid #30363d;color:#e6edf3;border-radius:6px;padding:5px 8px;font-size:12px;cursor:pointer}
+  .wbtn:hover{border-color:#f0883e;color:#fff}
+  #side .hint{color:#8b949e;font-size:11px;margin-top:6px}
+  .sec{border-bottom:1px solid #30363d;padding:8px 12px}
+  .sec h3{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#8b949e;margin:2px 0 6px;
+    display:flex;justify-content:space-between;cursor:pointer;user-select:none}
+  .sec h3 .tg{color:#f0883e;font-size:10px}
+  .row{display:flex;align-items:center;gap:8px;padding:2px 0;cursor:pointer}
+  .row:hover{color:#fff}
+  .row input{accent-color:#f0883e;margin:0;cursor:pointer}
+  .sw{width:11px;height:11px;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
+  .sw.ring{background:transparent!important;border-width:2px}
+  .sw.star{border-radius:2px;transform:rotate(45deg)}
+  .row .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
+  .row .ct{margin-left:auto;color:#8b949e;font-variant-numeric:tabular-nums;font-size:11px;padding-left:6px}
+  #mapmain{flex:1;position:relative;overflow:hidden}
+  #lmap{position:absolute;inset:0;z-index:1;background:#0d1117}
+  .leaflet-container{background:#0d1117}
+  .leaflet-control-zoom a{background:#161b22;color:#e6edf3;border-color:#30363d}
+  .leaflet-control-zoom a:hover{background:#1c2330;color:#f0883e}
+  #wtip{position:absolute;pointer-events:none;background:#000d;border:1px solid #30363d;border-radius:6px;
+    padding:6px 9px;font-size:12px;display:none;max-width:300px;z-index:500}
+  #wtip b{color:#f0883e}
+  #whud{position:absolute;left:10px;bottom:10px;background:#000a;border:1px solid #30363d;border-radius:6px;
+    padding:5px 9px;font-size:11px;color:#8b949e;z-index:500}
+  #wstats{padding:8px 12px;color:#8b949e;font-size:11px}
+  .wiptag{display:inline-block;font-size:10px;font-weight:700;color:#0d1117;background:#d29922;border-radius:4px;padding:1px 5px;margin-left:8px;vertical-align:middle}
+  .note{color:#8b949e;font-size:12px;margin:0 0 10px}
+  .note code{color:#e6edf3}
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Depot <span class="wiptag">v0.116 · dev-only</span></h1>
+            <nav class="site-nav">
+                <a href="index.html">Loot Tables</a>
+                <a href="quests.html">Quest Rewards</a>
+                <a href="chains.html">Quest Chains</a>
+                <a href="locations.html">Quest Locations</a>
+                <a href="analysis.html">Quest Analysis</a>
+                <a href="recipes.html">Recipes</a>
+                <a href="diff.html">Patch Diff</a>
+                <a href="worldmap.html">World Map</a>
+                <a href="worldmap2.html">World Map v2</a>
+                <a href="depot.html" class="active">Depot</a>
+                <a href="loot_compare.html">Loot Comparison</a>
+                <a href="loot_compare2.html">PI vs Arena</a>
+                <a href="mode_rewards.html">Mode Rewards</a>
+                <a href="recipe_chart.html">Recipe Drops</a>
+            </nav>
+        </header>
+        <main>
+          <p class="note" id="blurb"></p>
+          <div id="map-wrap">
+            <aside id="side">
+              <div class="searchrow">
+                <input id="wsearch" placeholder="Filter: turret, boss, logging, mushroom…" autocomplete="off">
+                <div style="display:flex;gap:6px;margin-top:8px">
+                  <button id="showAll" class="wbtn">Show all</button>
+                  <button id="hideAll" class="wbtn">Hide all</button>
+                </div>
+                <div class="hint">Drag to pan · scroll to zoom · double-click resets. Filters are remembered.</div>
+              </div>
+              <div id="secs"></div>
+              <div id="wstats"></div>
+            </aside>
+            <div id="mapmain">
+              <div id="lmap"></div>
+              <div id="wtip"></div>
+              <div id="whud"></div>
+            </div>
+          </div>
+        </main>
+        <footer><p>Created with &#10084;&#65039;</p></footer>
+    </div>
+
+<script src="leaflet/leaflet.js"></script>
+<script src="tiles_depot/tiles.js"></script>
+<script src="depot.js"></script>
+<script>
+const D = window.DEPOT_DATA;
+const M = window.TILES_DEPOT_META;
+const PXW = M.imgW/(M.world.x1-M.world.x0);
+const PXH = M.imgH/(M.world.z1-M.world.z0);
+
+// Depot-native content first (that's what the instance is about), world dressing after.
+const KINDS=[
+  {k:'boss',        label:'Bosses',                color:'#f85149', style:'ring', on:true },
+  {k:'depot_big',   label:'Elites (big)',          color:'#fb923c', style:'ring', on:true },
+  {k:'depot_med',   label:'Robots (medium)',       color:'#facc15', style:'dot',  on:true },
+  {k:'depot_small', label:'Robots (small)',        color:'#fde68a', style:'dot',  on:true },
+  {k:'turret',      label:'Turrets',               color:'#38bdf8', style:'dot',  on:true },
+  {k:'monster',     label:'Monsters (world)',      color:'#f87171', style:'dot',  on:false},
+  {k:'creep',       label:'Creeps',                color:'#a3e635', style:'dot',  on:false},
+  {k:'animal',      label:'Animals',               color:'#4ade80', style:'dot',  on:false},
+  {k:'critter',     label:'Critters',              color:'#86efac', style:'dot',  on:false},
+  {k:'gathering',   label:'Gathering nodes',       color:'#22d3ee', style:'dot',  on:false},
+  {k:'searchable',  label:'Searchable / chests',   color:'#c084fc', style:'star', on:true },
+  {k:'destroyable', label:'Destroyable',           color:'#94a3b8', style:'dot',  on:false},
+  {k:'reactive',    label:'Reactive props',        color:'#64748b', style:'dot',  on:false},
+  {k:'other',       label:'Other',                 color:'#8b949e', style:'dot',  on:false},
+];
+const pretty = s => s.replace(/-/g,' ');
+const LAYERS = KINDS.map(spec=>{
+  const list = D.items.filter(r=>r.kind===spec.k);
+  return {...spec, id:'k_'+spec.k, label:spec.label,
+          pts:list.map(r=>[r.x, r.z, pretty(r.cat)])};
+}).filter(l=>l.pts.length);
+
+const state={ filter:"" };
+const LS_KEY='corepunk_depot_map';
+function saveState(){ try{ const on={}; LAYERS.forEach(l=>on[l.id]=l.on);
+  localStorage.setItem(LS_KEY, JSON.stringify({on, filter:state.filter})); }catch(e){} }
+(function loadState(){ try{ const s=JSON.parse(localStorage.getItem(LS_KEY)||'null'); if(!s)return;
+  if(s.on) LAYERS.forEach(l=>{ if(s.on[l.id]!==undefined) l.on=s.on[l.id]; });
+  if(typeof s.filter==='string') state.filter=s.filter;
+}catch(e){} })();
+function fmatch(m){ return !state.filter || (m && (''+m).toLowerCase().indexOf(state.filter)>=0); }
+function ptVisible(l,p){ return fmatch(p[2]); }
+
+for(const l of LAYERS){ const n=l.pts.length; l._px=new Float64Array(n); l._py=new Float64Array(n);
+  for(let i=0;i<n;i++){ const p=l.pts[i]; l._px[i]=(p[0]-M.world.x0)*PXW; l._py[i]=(M.world.z1-p[1])*PXH; } }
+
+const map = L.map('lmap', {
+  crs: L.CRS.Simple, minZoom: M.minZoom, maxZoom: M.maxZoom + (M.overZoom||2),
+  zoomSnap: 0, zoomDelta: 0.6, wheelPxPerZoomLevel: 100, wheelDebounceTime: 40,
+  zoomAnimation: true, doubleClickZoom: false, attributionControl: false, zoomControl: true
+});
+function px2ll(px,py){ return map.unproject([px,py], M.maxZoom); }
+function world2ll(x,z){ return px2ll((x-M.world.x0)*PXW, (M.world.z1-z)*PXH); }
+const BOUNDS = L.latLngBounds(px2ll(0, M.imgH), px2ll(M.imgW, 0));
+L.tileLayer('tiles_depot/{z}/{x}/{y}.jpg', {
+  tileSize: M.tileSize, minZoom: M.minZoom, maxNativeZoom: M.maxZoom,
+  maxZoom: M.maxZoom + (M.overZoom||2), noWrap: true, bounds: BOUNDS, keepBuffer: 4,
+  updateWhenZooming: false
+}).addTo(map);
+map.fitBounds(BOUNDS);
+map.setMaxBounds(BOUNDS.pad(0.25));
+
+const tip=document.getElementById('wtip'), hud=document.getElementById('whud');
+const STZ={dot:0,ring:1,star:2};
+
+function drawMarkers(ctx, A, POx, POy){
+  const sWorld=A*PXW, base=Math.max(1.2, sWorld*0.55);
+  const order=[...LAYERS].sort((a,b)=>(STZ[a.style]||0)-(STZ[b.style]||0));
+  for(const l of order){ if(!l.on) continue;
+    const r=base*(l.style==='star'?2.0:(l.style==='ring'?2.6:1.15)), px=l._px, py=l._py, n=px.length, pts=l.pts;
+    if(l.style==='ring'){
+      for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=px[i]*A-POx,Y=py[i]*A-POy;
+        ctx.beginPath();ctx.arc(X,Y,r,0,7);ctx.strokeStyle='rgba(0,0,0,.75)';ctx.lineWidth=Math.max(2.4,base*1.1);ctx.stroke();
+        ctx.beginPath();ctx.arc(X,Y,r,0,7);ctx.strokeStyle=l.color;ctx.lineWidth=Math.max(1.1,base*0.55);ctx.stroke();
+        ctx.beginPath();ctx.arc(X,Y,Math.max(.9,base*0.6),0,7);ctx.fillStyle=l.color;ctx.fill(); }
+    } else if(l.style==='star'){ ctx.fillStyle=l.color;ctx.strokeStyle='rgba(0,0,0,.8)';ctx.lineWidth=1.1;
+      for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=px[i]*A-POx,Y=py[i]*A-POy;
+        ctx.save();ctx.translate(X,Y);ctx.rotate(Math.PI/4);ctx.fillRect(-r,-r,r*2,r*2);ctx.strokeRect(-r,-r,r*2,r*2);ctx.restore(); }
+    } else { ctx.fillStyle=l.color;ctx.strokeStyle='rgba(0,0,0,.5)';ctx.lineWidth=Math.min(0.9,base*0.5); const rim=base>1.6;
+      for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=px[i]*A-POx,Y=py[i]*A-POy;
+        ctx.beginPath();ctx.arc(X,Y,r,0,7);ctx.fill();if(rim)ctx.stroke(); } }
+  }
+}
+
+// Zoom-animation-aware canvas layer — same approach as worldmap2.html.
+const MarkerCanvas = L.Layer.extend({
+  options:{ padding:0.12 },
+  onAdd(map){
+    this._map=map;
+    const c=this._container=L.DomUtil.create('canvas');
+    c.style.position='absolute'; c.style.pointerEvents='none'; L.DomUtil.addClass(c,'leaflet-zoom-animated');
+    map.getPane('overlayPane').appendChild(c);
+    this._ctx=c.getContext('2d');
+    map.on('moveend viewreset resize zoomend', this._reset, this);
+    map.on('zoom', this._onZoom, this);
+    if(map.options.zoomAnimation) map.on('zoomanim', this._onAnimZoom, this);
+    this._reset();
+  },
+  onRemove(map){ map.off('moveend viewreset resize zoomend', this._reset, this);
+    map.off('zoom', this._onZoom, this); map.off('zoomanim', this._onAnimZoom, this); L.DomUtil.remove(this._container); },
+  _onAnimZoom(e){ this._updateTransform(e.center, e.zoom); },
+  _onZoom(){ this._updateTransform(this._map.getCenter(), this._map.getZoom()); },
+  _updateTransform(center, zoom){
+    const map=this._map, scale=map.getZoomScale(zoom, this._zoom),
+      viewHalf=map.getSize().multiplyBy(0.5+this.options.padding),
+      currentCenterPoint=map.project(this._center, zoom),
+      topLeftOffset=viewHalf.multiplyBy(-scale).add(currentCenterPoint).subtract(map._getNewPixelOrigin(center, zoom));
+    L.DomUtil.setTransform(this._container, topLeftOffset, scale);
+  },
+  _reset(){
+    const map=this._map, p=this.options.padding, size=map.getSize(),
+      min=map.containerPointToLayerPoint(size.multiplyBy(-p)).round();
+    this._bounds=L.bounds(min, min.add(size.multiplyBy(1+p*2)).round());
+    this._center=map.getCenter(); this._zoom=map.getZoom();
+    const b=this._bounds, sz=b.getSize(), dpr=window.devicePixelRatio||1, c=this._container;
+    L.DomUtil.setPosition(c, b.min);
+    c.width=Math.round(dpr*sz.x); c.height=Math.round(dpr*sz.y);
+    c.style.width=sz.x+'px'; c.style.height=sz.y+'px';
+    this._updateTransform(this._center, this._zoom);
+    this._draw();
+  },
+  _draw(){
+    const map=this._map, b=this._bounds, sz=b.getSize(), dpr=window.devicePixelRatio||1, ctx=this._ctx;
+    ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,sz.x,sz.y); ctx.translate(-b.min.x,-b.min.y);
+    const A=map.getZoomScale(map.getZoom(), M.maxZoom), PO=map.getPixelOrigin();
+    drawMarkers(ctx, A, PO.x, PO.y);
+  },
+  redraw(){ if(this._map && !this._raf) this._raf=requestAnimationFrame(()=>{ this._raf=0; this._reset(); }); }
+});
+const markerLayer = new MarkerCanvas().addTo(map);
+function scheduleRedraw(){ markerLayer.redraw(); }
+
+function stats(){ let shown=0,tot=0; for(const l of LAYERS){ tot+=l.pts.length; if(!l.on)continue;
+    shown += state.filter ? l.pts.filter(p=>ptVisible(l,p)).length : l.pts.length; }
+  document.getElementById('wstats').innerHTML=`<b style="color:#e6edf3">${shown.toLocaleString()}</b> placements shown · ${tot.toLocaleString()} mapped`;
+  const pw=(map.getZoomScale(map.getZoom(),M.maxZoom)*PXW);
+  hud.textContent=`zoom ${map.getZoom().toFixed(2)} · ${pw.toFixed(2)} px/world`; }
+map.on('zoomend moveend', stats);
+
+const secBox=document.getElementById('secs');
+(function buildControls(){
+  const box=document.createElement('div'); box.className='sec';
+  const h=document.createElement('h3');
+  h.innerHTML=`<span>Placements</span><span class="tg">toggle</span>`;
+  box.appendChild(h);
+  LAYERS.forEach(l=>{
+    const el=document.createElement('label'); el.className='row';
+    el.innerHTML=`<input type=checkbox ${l.on?'checked':''}>
+      <span class="sw ${l.style==='ring'?'ring':(l.style==='star'?'star':'')}" style="background:${l.color};${l.style==='ring'?'border-color:'+l.color:''}"></span>
+      <span class="lbl" title="${l.label}">${l.label}</span><span class="ct">${l.pts.length.toLocaleString()}</span>`;
+    const inp=el.querySelector('input'); l._input=inp;
+    inp.onchange=e=>{l.on=e.target.checked;scheduleRedraw();stats();saveState();};
+    box.appendChild(el);
+  });
+  h.querySelector('.tg').onclick=()=>{ const anyOff=LAYERS.some(l=>!l.on); LAYERS.forEach(l=>{l.on=anyOff; if(l._input) l._input.checked=anyOff;});
+    scheduleRedraw();stats();saveState(); };
+  secBox.appendChild(box);
+})();
+function setAll(on){ LAYERS.forEach(l=>{ l.on=on; if(l._input) l._input.checked=on; }); scheduleRedraw();stats();saveState(); }
+document.getElementById('showAll').onclick=()=>setAll(true);
+document.getElementById('hideAll').onclick=()=>setAll(false);
+document.getElementById('wsearch').value = state.filter || '';
+document.getElementById('wsearch').oninput=e=>{state.filter=e.target.value.trim().toLowerCase();scheduleRedraw();stats();saveState();};
+
+function hover(e){ const mx=e.containerPoint.x, my=e.containerPoint.y;
+  const A=map.getZoomScale(map.getZoom(), M.maxZoom); const o=map.latLngToContainerPoint(px2ll(0,0));
+  let best=null,bl=null,bd=64;
+  for(const l of LAYERS){ if(!l.on)continue; const px=l._px,py=l._py,pts=l.pts;
+    for(let i=0;i<px.length;i++){ if(!ptVisible(l,pts[i]))continue; const dx=o.x+A*px[i]-mx,dy=o.y+A*py[i]-my,d=dx*dx+dy*dy; if(d<bd){bd=d;best=pts[i];bl=l;} } }
+  if(best){ tip.style.display='block'; tip.style.left=(mx+14)+'px'; tip.style.top=(my+12)+'px';
+    tip.innerHTML=`<b>${bl.label}</b> · ${best[2]}<br><span style="color:#8b949e">world ${best[0]}, ${best[1]}</span>`;
+  } else tip.style.display='none'; }
+map.on('mousemove', hover);
+map.on('mouseout movestart zoomstart', ()=>{ tip.style.display='none'; });
+map.on('dblclick', ()=>{ map.fitBounds(BOUNDS); });
+
+document.getElementById('blurb').innerHTML =
+  `Raid dungeon for up to 12 players &mdash; <em>"under development, available to developers only"</em> ` +
+  `(<code>ConstInstanceNames.xml</code>). Map is <b>${D.world.w}&times;${D.world.h}</b> world units ` +
+  `(${D.world.w/D.world.tile}&times;${D.world.h/D.world.tile} tiles); backdrop is the shipped minimap at ` +
+  `${M.pxPerWorld} px/world. <b>${D.counts.placements.toLocaleString()}</b> placements across ` +
+  `${D.counts.categories} categories, ${D.counts.in_window_pct}% inside their own tile window. ` +
+  `Data: <code>depot_v${D.version}.json</code>.`;
+stats();
+</script>
+</body>
+</html>

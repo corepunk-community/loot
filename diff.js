@@ -1092,6 +1092,121 @@ const ADAPTERS = {
             entity_id: 'Unnamed (entity id)', road: 'War roads',
         },
     },
+
+    // ================================================ Depot (raid-dungeon placements)
+    // Diffs the placements parse_depot.rb reads out of Maps/Depot/*._cmp (depot_v*.json).
+    // Placements have no stable id, so they key on category + position: a moved spawn shows
+    // as one removed + one added. Per-category count changes are surfaced as `modified`,
+    // which is the readable summary of a respawn/rebalance pass.
+    depot: {
+        versionKey: 'depot_file',
+        searchPlaceholder: 'Search categories (turret, boss, logging, mushroom…)',
+        helpHtml: 'Compares the <b>Depot</b> raid-dungeon placements extracted from <code>Content/World/Maps/Depot/*._cmp</code> (new in <b>v0.116</b>). Each row is one <code>fulfillment-manager-&lt;category&gt;</code> spawn at a world position. Placements carry no id, so a spawn that <em>moved</em> appears as a removal plus an addition; the <em>modified</em> rows are per-category count changes, which is usually what you actually want to read. Buckets group the Depot-native robots/turrets/bosses apart from the world dressing reused from Kwalat regions.',
+        _KINDS: {
+            boss: 'Bosses', depot_big: 'Elites (big)', depot_med: 'Robots (medium)',
+            depot_small: 'Robots (small)', turret: 'Turrets', monster: 'Monsters (world)',
+            creep: 'Creeps', animal: 'Animals', critter: 'Critters', gathering: 'Gathering nodes',
+            searchable: 'Searchable / chests', destroyable: 'Destroyable', reactive: 'Reactive props',
+            other: 'Other', category: 'Category counts',
+        },
+        compute(oldData, newData) {
+            const added = [], removed = [], modified = [];
+            let unchanged = 0;
+            // The map genuinely stacks a couple of props at identical coordinates (two
+            // reactive-mushrooms pairs in 0.116), so append an occurrence counter — otherwise
+            // those collide and silently drop out of the comparison.
+            const idx = d => {
+                const m = new Map(), seen = new Map();
+                ((d && d.items) || []).forEach(r => {
+                    const base = `${r.cat}|${r.x}|${r.z}`;
+                    const n = (seen.get(base) || 0) + 1;
+                    seen.set(base, n);
+                    m.set(n === 1 ? base : `${base}#${n}`, r);
+                });
+                return m;
+            };
+            const O = idx(oldData), N = idx(newData);
+            for (const k of new Set([...O.keys(), ...N.keys()])) {
+                const o = O.get(k), n = N.get(k);
+                if (!o && n) added.push({ kind: 'placement', id: k, bucket: n.kind, nw: n });
+                else if (o && !n) removed.push({ kind: 'placement', id: k, bucket: o.kind, od: o });
+                else unchanged++;
+            }
+            const counts = d => (d && d.by_category) || {};
+            const CO = counts(oldData), CN = counts(newData);
+            for (const cat of new Set([...Object.keys(CO), ...Object.keys(CN)])) {
+                const a = CO[cat], b = CN[cat];
+                if (a !== undefined && b !== undefined && a !== b) {
+                    modified.push({ kind: 'category', id: cat, bucket: 'category', oldN: a, newN: b });
+                }
+            }
+            return { added, removed, modified, unchanged };
+        },
+        render(diff, { changeFilter, bucketFilter, search }) {
+            diffResults.innerHTML = '';
+            const types = changeFilter === 'all' ? ['added', 'removed', 'modified'] : [changeFilter];
+            const kname = k => this._KINDS[k] || k;
+            const pretty = s => String(s).replace(/-/g, ' ');
+            const cards = [];
+
+            types.forEach(type => {
+                const items = (diff[type] || []).filter(r => {
+                    if (bucketFilter !== 'all' && r.bucket !== bucketFilter) return false;
+                    if (!search) return true;
+                    return (r.id + ' ' + kname(r.bucket)).toLowerCase().includes(search);
+                });
+                if (items.length === 0) return;
+
+                const byBucket = new Map();
+                items.forEach(r => {
+                    if (!byBucket.has(r.bucket)) byBucket.set(r.bucket, []);
+                    byBucket.get(r.bucket).push(r);
+                });
+
+                [...byBucket.entries()].sort((a, b) => a[0].localeCompare(b[0])).forEach(([bucket, list]) => {
+                    const card = createDiffCard(`${kname(bucket)}  —  ${type}`, type,
+                        `${list.length} ${list.length === 1 ? 'entry' : 'entries'}`);
+                    const body = card.querySelector('.diff-card-body');
+                    list.sort((a, b) => a.id.localeCompare(b.id));
+                    list.forEach(r => {
+                        const row = document.createElement('div');
+                        row.className = `diff-item diff-item-${type}`;
+                        let main, meta;
+                        if (r.kind === 'category') {
+                            const d = r.newN - r.oldN;
+                            main = `~ ${pretty(r.id)}: ${r.oldN} → ${r.newN}`;
+                            meta = `${d > 0 ? '+' : ''}${d} placement${Math.abs(d) === 1 ? '' : 's'}`;
+                        } else {
+                            const w = r.nw || r.od;
+                            main = `${type === 'added' ? '+' : '-'} ${pretty(w.cat)}`;
+                            meta = `world ${w.x}, ${w.z}${w.tile ? ` · tile ${w.tile[0]},${w.tile[1]}` : ''}`;
+                        }
+                        row.innerHTML = `<div>${main}</div><div class="file-meta">${meta}</div>`;
+                        body.appendChild(row);
+                    });
+                    cards.push(card);
+                });
+            });
+
+            if (cards.length === 0) {
+                diffResults.innerHTML = '<div class="no-tables-message">No Depot changes match the current filter.</div>';
+                return;
+            }
+            cards.forEach(c => diffResults.appendChild(c));
+        },
+        bucketsOf(diff) {
+            const set = new Set();
+            ['added', 'removed', 'modified'].forEach(t => (diff[t] || []).forEach(r => set.add(r.bucket)));
+            return [...set].sort();
+        },
+        bucketLabels: {
+            boss: 'Bosses', depot_big: 'Elites (big)', depot_med: 'Robots (medium)',
+            depot_small: 'Robots (small)', turret: 'Turrets', monster: 'Monsters (world)',
+            creep: 'Creeps', animal: 'Animals', critter: 'Critters', gathering: 'Gathering nodes',
+            searchable: 'Searchable / chests', destroyable: 'Destroyable', reactive: 'Reactive props',
+            other: 'Other', category: 'Category counts',
+        },
+    },
 };
 
 // ---------------------------------------------------------------------------

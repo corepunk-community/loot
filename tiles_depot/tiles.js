@@ -1,0 +1,1 @@
+window.TILES_DEPOT_META={"map": "Depot", "imgW": 3072, "imgH": 4096, "tileSize": 512, "minZoom": 0, "maxZoom": 3, "overZoom": 2, "world": {"x0": 0, "x1": 768, "z0": 0, "z1": 1024}, "pxPerWorld": 4.0, "tilesPerZoom": {"3": 48, "2": 12, "1": 4, "0": 1}};

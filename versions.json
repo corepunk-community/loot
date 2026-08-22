@@ -129,6 +129,7 @@
     "asset_catalog_file": "asset_catalog_v0.116.json",
     "file_manifest_file": "file_manifest_v0.116.json",
     "island_arena_fields_file": "island_arena_fields_v0.116.json",
-    "war_pois_file": "war_pois_v0.116.json"
+    "war_pois_file": "war_pois_v0.116.json",
+    "depot_file": "depot_v0.116.json"
   }
 ]

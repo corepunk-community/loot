@@ -63,6 +63,7 @@
                 <a href="diff.html">Patch Diff</a>
                 <a href="worldmap.html">World Map</a>
                 <a href="worldmap2.html" class="active">World Map v2</a>
+                <a href="depot.html">Depot</a>
                 <a href="loot_compare.html">Loot Comparison</a>
                 <a href="loot_compare2.html">PI vs Arena</a>
                 <a href="mode_rewards.html">Mode Rewards</a>
@@ -109,22 +110,29 @@ const SECTION_ORDER=["War / PoIs","Gathering","Creatures","NPCs","Harvestable mo
 // Folded into D.layers before LAYERS is built so they inherit the whole layer machinery:
 // per-layer toggles, persistence, search, species sub-filters and the hover tooltip.
 // The roads layer additionally carries `roads` (polylines), drawn under the markers.
+// Palette note: the backdrop is terrain — olive, brown, moss, sand. Warm yellows/greens/
+// oranges disappear into it, so every War/PoI layer sits in the cyan→magenta half of the
+// wheel, and markers are drawn with a dark halo (see drawMarkers) to hold edge contrast.
 const POI_KINDS=[
   {k:'base',      label:'Bases',               color:'#ffffff', style:'ring', on:true },
-  {k:'landmark',  label:'Named places',        color:'#facc15', style:'star', on:true },
-  {k:'monster',   label:'Monster camps',       color:'#f87171', style:'dot',  on:true,  sub:true},
-  {k:'quest',     label:'Quest objects',       color:'#c084fc', style:'dot',  on:false},
+  {k:'landmark',  label:'Named places',        color:'#22d3ee', style:'star', on:true },
+  {k:'monster',   label:'Monster camps',       color:'#ff2d6f', style:'dot',  on:true,  sub:true},
+  {k:'quest',     label:'Quest objects',       color:'#a78bfa', style:'dot',  on:false},
   {k:'station',   label:'Craft stations',      color:'#38bdf8', style:'dot',  on:false},
-  {k:'gathering', label:'Gathering nodes',     color:'#4ade80', style:'dot',  on:false},
-  {k:'object',    label:'World objects',       color:'#94a3b8', style:'dot',  on:false},
-  {k:'npc',       label:'NPCs / arena doors',  color:'#fb923c', style:'ring', on:false},
+  {k:'gathering', label:'Gathering nodes',     color:'#2dd4bf', style:'dot',  on:false},
+  {k:'object',    label:'World objects',       color:'#cbd5e1', style:'dot',  on:false},
+  {k:'npc',       label:'NPCs / arena doors',  color:'#f472b6', style:'ring', on:false},
   {k:'anomaly',   label:'Anomalies',           color:'#e879f9', style:'ring', on:false},
-  {k:'shrine',    label:'Teleport shrines',    color:'#5eead4', style:'star', on:false},
-  {k:'entity_id', label:'Unnamed (entity id)', color:'#64748b', style:'dot',  on:false},
+  {k:'shrine',    label:'Teleport shrines',    color:'#67e8f9', style:'star', on:false},
+  {k:'entity_id', label:'Unnamed (entity id)', color:'#94a3b8', style:'dot',  on:false},
 ];
+// Filled in by addWarPois: PoI id -> indices into the roads layer, so selecting a PoI can
+// light up everything it connects to.
+const POI_ROADS = new Map();
+let ROADS_LAYER = null;
 (function addWarPois(){
   const W = window.WAR_POIS; if(!W || !W.pois) return;
-  const pretty = s => s.replace(/_/g,' ');
+  const pretty = s => s.replace(/^poi_/,'').replace(/_\d+_\d+$/,'').replace(/_/g,' ');
   // p[2] is what search matches and what the tooltip shows after the layer name.
   POI_KINDS.forEach(spec=>{
     const list = W.pois.filter(p=>p.kind===spec.k); if(!list.length) return;
@@ -132,17 +140,27 @@ const POI_KINDS=[
       color:spec.color, style:spec.style, on:spec.on, search:true, sub:!!spec.sub,
       // `name`/`desc` come from MapMarkers.xml, joined on the display name by the parser.
       desc:list.map(p=>p.desc||null),
+      ids:list.map(p=>p.id), deg:list.map(p=>p.degree),
       pts:list.map(p=>[p.x, p.z, spec.k==='monster' && p.monster ? pretty(p.monster.species)
                                                                  : (p.name || pretty(p.slug))]) });
   });
-  // Roads: one point per road (its midpoint) so the count and hover behave like any layer,
-  // plus the full polyline set for the canvas pass.
-  const mid = r => r.pts[Math.floor(r.pts.length/2)];
-  D.layers.push({ id:'war_roads', section:'War / PoIs', label:'War roads', color:'#f0883e',
-    style:'line', on:true, search:true, roads:W.roads.map(r=>r.pts),
-    pts:W.roads.map(r=>{ const m=mid(r); return [m[0], m[1],
-      pretty(r.a.replace(/^poi_/,'').replace(/_\d+_\d+$/,'')) + ' ↔ ' +
-      pretty(r.b.replace(/^poi_/,'').replace(/_\d+_\d+$/,'')) + '  (' + Math.round(r.len) + 'u)']; }) });
+  // Roads carry their polylines in `roads`; `ends` keeps the two PoI ids per road so the
+  // tooltip can name them without a lookup. There is deliberately no `pts` array — an
+  // earlier version put one phantom point at each road's midpoint just to reuse the point
+  // hit-test, which made a road hoverable at exactly one invisible spot. Roads are now
+  // hit-tested against their actual segments (see hover()).
+  ROADS_LAYER = { id:'war_roads', section:'War / PoIs', label:'War roads', color:'#ff8a3d',
+    style:'line', on:true, search:true, pts:[],
+    roads:W.roads.map(r=>r.pts),
+    ends:W.roads.map(r=>[pretty(r.a), pretty(r.b)]),
+    lens:W.roads.map(r=>Math.round(r.len)) };
+  D.layers.push(ROADS_LAYER);
+  W.roads.forEach((r,i)=>{
+    for(const end of [r.a, r.b]){
+      if(!POI_ROADS.has(end)) POI_ROADS.set(end, []);
+      POI_ROADS.get(end).push(i);
+    }
+  });
 })();
 
 // NB: Leaflet owns the global `L`, so the layer array is LAYERS here (not `L` as in v1).

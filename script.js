@@ -238,7 +238,9 @@ function getTableCategory(tableName) {
     if (lowerName.includes('dungeon boss')) return 'dungeon boss';
     if (lowerName.includes('gathering')) return 'gathering';
     if (lowerName.includes('monster')) return 'monster';
-    if (lowerName.includes('poi chest')) return 'poi chest';
+    // Every `Poi *` table is POI content — keep this ahead of the 'searchable'
+    // test, or `Poi Searchable ...` splits off into the Searchable filter.
+    if (lowerName.startsWith('poi ')) return 'poi chest';
     if (lowerName.includes('reactive')) return 'reactive';
     if (lowerName.includes('searchable')) return 'searchable';
     
