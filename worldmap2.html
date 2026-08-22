@@ -32,6 +32,7 @@
   .sw{width:11px;height:11px;flex:none;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
   .sw.ring{background:transparent!important;border-width:2px}
   .sw.star{border-radius:2px;transform:rotate(45deg)}
+  .sw.line{border-radius:0;height:3px;border:none}
   .row .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}
   .row .ct{margin-left:auto;color:#8b949e;font-variant-numeric:tabular-nums;font-size:11px;padding-left:6px}
   #mapmain{flex:1;position:relative;overflow:hidden}
@@ -40,7 +41,7 @@
   .leaflet-control-zoom a{background:#161b22;color:#e6edf3;border-color:#30363d}
   .leaflet-control-zoom a:hover{background:#1c2330;color:#f0883e}
   #wtip{position:absolute;pointer-events:none;background:#000d;border:1px solid #30363d;border-radius:6px;
-    padding:6px 9px;font-size:12px;display:none;max-width:250px;z-index:500}
+    padding:6px 9px;font-size:12px;display:none;max-width:340px;z-index:500}
   #wtip b{color:#f0883e}
   #whud{position:absolute;left:10px;bottom:10px;background:#000a;border:1px solid #30363d;border-radius:6px;
     padding:5px 9px;font-size:11px;color:#8b949e;z-index:500}
@@ -95,13 +96,55 @@
 <script src="leaflet/leaflet.js"></script>
 <script src="tiles2/tiles.js"></script>
 <script src="worldmap_data.js"></script>
+<script src="war_pois.js"></script>
 <script>
 const D = window.WORLD_DATA;
 const M = window.TILES2_META;
 const PXW = M.imgW/(M.world.x1-M.world.x0);   // master px per world unit (x)
 const PXH = M.imgH/(M.world.z1-M.world.z0);   // master px per world unit (z)
 
-const SECTION_ORDER=["Gathering","Creatures","NPCs","Harvestable mobs","Quest","Objects"];
+const SECTION_ORDER=["War / PoIs","Gathering","Creatures","NPCs","Harvestable mobs","Quest","Objects"];
+
+// ---- War PoIs + war roads (war_pois.js, from Maps/*/aiPaths — new in v0.116) --------
+// Folded into D.layers before LAYERS is built so they inherit the whole layer machinery:
+// per-layer toggles, persistence, search, species sub-filters and the hover tooltip.
+// The roads layer additionally carries `roads` (polylines), drawn under the markers.
+const POI_KINDS=[
+  {k:'base',      label:'Bases',               color:'#ffffff', style:'ring', on:true },
+  {k:'landmark',  label:'Named places',        color:'#facc15', style:'star', on:true },
+  {k:'monster',   label:'Monster camps',       color:'#f87171', style:'dot',  on:true,  sub:true},
+  {k:'quest',     label:'Quest objects',       color:'#c084fc', style:'dot',  on:false},
+  {k:'station',   label:'Craft stations',      color:'#38bdf8', style:'dot',  on:false},
+  {k:'gathering', label:'Gathering nodes',     color:'#4ade80', style:'dot',  on:false},
+  {k:'object',    label:'World objects',       color:'#94a3b8', style:'dot',  on:false},
+  {k:'npc',       label:'NPCs / arena doors',  color:'#fb923c', style:'ring', on:false},
+  {k:'anomaly',   label:'Anomalies',           color:'#e879f9', style:'ring', on:false},
+  {k:'shrine',    label:'Teleport shrines',    color:'#5eead4', style:'star', on:false},
+  {k:'entity_id', label:'Unnamed (entity id)', color:'#64748b', style:'dot',  on:false},
+];
+(function addWarPois(){
+  const W = window.WAR_POIS; if(!W || !W.pois) return;
+  const pretty = s => s.replace(/_/g,' ');
+  // p[2] is what search matches and what the tooltip shows after the layer name.
+  POI_KINDS.forEach(spec=>{
+    const list = W.pois.filter(p=>p.kind===spec.k); if(!list.length) return;
+    D.layers.push({ id:'poi_'+spec.k, section:'War / PoIs', label:spec.label,
+      color:spec.color, style:spec.style, on:spec.on, search:true, sub:!!spec.sub,
+      // `name`/`desc` come from MapMarkers.xml, joined on the display name by the parser.
+      desc:list.map(p=>p.desc||null),
+      pts:list.map(p=>[p.x, p.z, spec.k==='monster' && p.monster ? pretty(p.monster.species)
+                                                                 : (p.name || pretty(p.slug))]) });
+  });
+  // Roads: one point per road (its midpoint) so the count and hover behave like any layer,
+  // plus the full polyline set for the canvas pass.
+  const mid = r => r.pts[Math.floor(r.pts.length/2)];
+  D.layers.push({ id:'war_roads', section:'War / PoIs', label:'War roads', color:'#f0883e',
+    style:'line', on:true, search:true, roads:W.roads.map(r=>r.pts),
+    pts:W.roads.map(r=>{ const m=mid(r); return [m[0], m[1],
+      pretty(r.a.replace(/^poi_/,'').replace(/_\d+_\d+$/,'')) + ' ↔ ' +
+      pretty(r.b.replace(/^poi_/,'').replace(/_\d+_\d+$/,'')) + '  (' + Math.round(r.len) + 'u)']; }) });
+})();
+
 // NB: Leaflet owns the global `L`, so the layer array is LAYERS here (not `L` as in v1).
 const LAYERS = D.layers.map(l=>({...l, on:!!l.on}));
 const state={ filter:"", focus:null };
@@ -125,6 +168,11 @@ function ptVisible(l,p){ if(l.search && !fmatch(p[2])) return false;
 // ---- precompute master-pixel coords per marker (world->image px, north-up) ----
 for(const l of LAYERS){ const n=l.pts.length; l._px=new Float64Array(n); l._py=new Float64Array(n);
   for(let i=0;i<n;i++){ const p=l.pts[i]; l._px[i]=(p[0]-M.world.x0)*PXW; l._py[i]=(M.world.z1-p[1])*PXH; } }
+// same, per polyline, for layers that carry `roads` (war roads)
+for(const l of LAYERS){ if(!l.roads) continue;
+  l._rp = l.roads.map(r=>{ const a=new Float64Array(r.length*2);
+    for(let i=0;i<r.length;i++){ a[i*2]=(r[i][0]-M.world.x0)*PXW; a[i*2+1]=(M.world.z1-r[i][1])*PXH; }
+    return a; }); }
 
 // ---- Leaflet map (CRS.Simple: pixel coords, no geo). Zoom animation ON = smooth, flicker-free. ----
 const map = L.map('lmap', {
@@ -149,8 +197,18 @@ const STZ={dot:0,ring:1,star:2};
 // draw every marker into ctx. layer-point of master pixel (px,py) = px*A - PO.x, py*A - PO.y
 function drawMarkers(ctx, A, POx, POy){
   const sWorld=A*PXW, base=Math.max(1.0, sWorld*0.9);
+  // roads first, so PoI markers sit on top of them
+  for(const l of LAYERS){ if(!l.on || !l._rp) continue;
+    ctx.strokeStyle=l.color; ctx.globalAlpha=0.55;
+    ctx.lineWidth=Math.max(1, base*0.9); ctx.lineJoin='round'; ctx.lineCap='round';
+    ctx.beginPath();
+    for(let k=0;k<l._rp.length;k++){ if(!ptVisible(l,l.pts[k])) continue;
+      const a=l._rp[k]; ctx.moveTo(a[0]*A-POx, a[1]*A-POy);
+      for(let i=1;i<a.length/2;i++) ctx.lineTo(a[i*2]*A-POx, a[i*2+1]*A-POy); }
+    ctx.stroke(); ctx.globalAlpha=1;
+  }
   const order=[...LAYERS].sort((a,b)=>(STZ[a.style]||0)-(STZ[b.style]||0));
-  for(const l of order){ if(!l.on) continue;
+  for(const l of order){ if(!l.on || l.style==='line') continue;
     const r=base*(l.style==='star'?2.2:(l.style==='ring'?2.8:1.15)), px=l._px, py=l._py, n=px.length, pts=l.pts;
     if(l.style==='ring'){
       for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=px[i]*A-POx,Y=py[i]*A-POy;
@@ -245,7 +303,7 @@ SECTION_ORDER.forEach(sec=>{
     const hasSub = l.sub && l.subSpecies.length>1;
     const el=document.createElement('label'); el.className='row';
     el.innerHTML=`<input type=checkbox ${l.on?'checked':''}>
-      <span class="sw ${l.style==='ring'?'ring':(l.style==='star'?'star':'')}" style="background:${l.color};${l.style==='ring'?'border-color:'+l.color:''}"></span>
+      <span class="sw ${l.style==='ring'?'ring':(l.style==='star'?'star':(l.style==='line'?'line':''))}" style="background:${l.color};${l.style==='ring'?'border-color:'+l.color:''}"></span>
       <span class="lbl" title="${l.label}">${l.label}</span><span class="ct">${l.pts.length.toLocaleString()}</span>${hasSub?'<span class="exp" title="filter by species">▸</span>':''}`;
     const inp=el.querySelector('input'); l._input=inp;
     inp.onchange=e=>{l.on=e.target.checked;scheduleRedraw();stats();saveState();};
@@ -277,11 +335,13 @@ document.getElementById('wsearch').oninput=e=>{state.filter=e.target.value.trim(
 // ---- hover tooltip (hit-test in container space) ----
 function hover(e){ const mx=e.containerPoint.x, my=e.containerPoint.y;
   const A=map.getZoomScale(map.getZoom(), M.maxZoom); const o=map.latLngToContainerPoint(px2ll(0,0));
-  let best=null,bl=null,bd=64;
+  let best=null,bl=null,bd=64,bi=-1;
   for(const l of LAYERS){ if(!l.on)continue; const px=l._px,py=l._py,pts=l.pts;
-    for(let i=0;i<px.length;i++){ if(!ptVisible(l,pts[i]))continue; const dx=o.x+A*px[i]-mx,dy=o.y+A*py[i]-my,d=dx*dx+dy*dy; if(d<bd){bd=d;best=pts[i];bl=l;} } }
+    for(let i=0;i<px.length;i++){ if(!ptVisible(l,pts[i]))continue; const dx=o.x+A*px[i]-mx,dy=o.y+A*py[i]-my,d=dx*dx+dy*dy; if(d<bd){bd=d;best=pts[i];bl=l;bi=i;} } }
   if(best){ tip.style.display='block'; tip.style.left=(mx+14)+'px'; tip.style.top=(my+12)+'px';
-    const meta=best[2]?' · '+best[2]:''; tip.innerHTML=`<b>${bl.label}</b>${meta}<br><span style="color:#8b949e">world ${best[0]}, ${best[1]}</span>`;
+    const meta=best[2]?' · '+best[2]:'';
+    const lore=(bl.desc&&bl.desc[bi])?`<br><span style="color:#c9d1d9">${bl.desc[bi]}</span>`:'';
+    tip.innerHTML=`<b>${bl.label}</b>${meta}<br><span style="color:#8b949e">world ${best[0]}, ${best[1]}</span>${lore}`;
   } else tip.style.display='none'; }
 map.on('mousemove', hover);
 map.on('mouseout movestart zoomstart', ()=>{ tip.style.display='none'; });

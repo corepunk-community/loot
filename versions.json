@@ -116,7 +116,8 @@
     "entity_index_file": "entity_index_v0.115.1.json",
     "item_icons_file": "item_icons_v0.115.1.json",
     "asset_catalog_file": "asset_catalog_v0.115.1.json",
-    "file_manifest_file": "file_manifest_v0.115.1.json"
+    "file_manifest_file": "file_manifest_v0.115.1.json",
+    "island_arena_fields_file": "island_arena_fields_v0.115.1.json"
   },
   {
     "version": "0.116",
@@ -126,6 +127,8 @@
     "entity_index_file": "entity_index_v0.116.json",
     "item_icons_file": "item_icons_v0.116.json",
     "asset_catalog_file": "asset_catalog_v0.116.json",
-    "file_manifest_file": "file_manifest_v0.116.json"
+    "file_manifest_file": "file_manifest_v0.116.json",
+    "island_arena_fields_file": "island_arena_fields_v0.116.json",
+    "war_pois_file": "war_pois_v0.116.json"
   }
 ]

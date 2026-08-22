@@ -888,18 +888,18 @@ const ADAPTERS = {
     mode_rewards: {
         versionKey: 'island_arena_fields_file',
         searchPlaceholder: 'Search modes or fields (GLCK, Hardcore, key10…)',
-        helpHtml: 'Compares the per-mode reward &amp; difficulty modifiers decoded from <code>Entities.dat</code> (<code>ef_sys_island_*</code> / <code>ef_sys_arena_*</code>) — one row per <em>field</em> that changed within a mode. <b>GLCK</b> is the loot-chance multiplier (the Prison Island / Arena "loot bonus"); <code>CpK+</code> is catalyst-per-kill (weapon mastery); <code>m_AP/SP/HP_km</code> are mob difficulty scalars. Grouped by section (Prison Island vs PvE Arena).',
+        helpHtml: 'Compares the per-mode reward &amp; difficulty modifiers decoded from <code>Entities.dat</code> (<code>ef_sys_island_*</code> / <code>ef_sys_arena_*</code> / <code>ef_sys_depot_*</code>) — one row per <em>field</em> that changed within a mode. <b>GLCK</b> is the loot-chance multiplier (the Prison Island / Arena "loot bonus"); <code>CpK+</code> is catalyst-per-kill (weapon mastery); <code>m_AP/SP/HP_km</code> are mob difficulty scalars. Grouped by section (Prison Island / PvE Arena / Depot — the keyed PvE mode added in v0.116).',
         // Friendly names for the terse field keys; unknown keys fall back to the raw key.
         _FIELDS: {
             'GLCK':'GLCK · loot multiplier', 'CpK+':'CpK+ · catalyst / kill', 'HpK+':'HpK+ · honor / kill',
             'CPM':'CPM · catalyst / min', 'LTI':'LTI · loot-table index', 'CKO':'CKO', 'MHC_K':'MHC_K',
             'm_AP_km':'m_AP_km · mob attack scale', 'm_SP_km':'m_SP_km · mob spell scale', 'm_HP_km':'m_HP_km · mob health scale',
         },
-        _SECNAME: { island:'Prison Island', arena:'PvE Arena' },
+        _SECNAME: { island:'Prison Island', arena:'PvE Arena', depot:'Depot' },
         compute(oldData, newData) {
             const added = [], removed = [], modified = [];
             let unchanged = 0;
-            for (const sec of ['island', 'arena']) {
+            for (const sec of ['island', 'arena', 'depot']) {
                 const O = (oldData && oldData[sec]) || {};
                 const N = (newData && newData[sec]) || {};
                 const modes = new Set([...Object.keys(O), ...Object.keys(N)]);
@@ -974,7 +974,123 @@ const ADAPTERS = {
             ['added', 'removed', 'modified'].forEach(t => (diff[t] || []).forEach(r => set.add(r.bucket)));
             return [...set].sort();
         },
-        bucketLabels: { island: 'Prison Island', arena: 'PvE Arena' },
+        bucketLabels: { island: 'Prison Island', arena: 'PvE Arena', depot: 'Depot' },
+    },
+
+    // ================================================ War PoIs (open-world PoI graph)
+    // Diffs the PoI set + war-road graph extracted by parse_war_pois.rb from
+    // Maps/<Map>/aiPaths (war_pois_v*.json). PoIs bucket by kind; roads get their own
+    // bucket. A PoI that moved more than MOVE_EPS world units counts as modified.
+    war_pois: {
+        versionKey: 'war_pois_file',
+        searchPlaceholder: 'Search PoIs or roads (sawmill, imp, logging, shrine…)',
+        helpHtml: 'Compares the open-world <b>PoI graph</b> extracted from <code>Content/World/Maps/&lt;Map&gt;/aiPaths/*.aiPaths</code> — path ids of the form <code>warroad__poi_&lt;A&gt;__poi_&lt;B&gt;</code>, new in <b>v0.116</b>. Each PoI row is a point of interest (position in world units, tile index, and how many war roads touch it); each road row is a link between two PoIs. PoIs that shifted more than 16 world units show as <em>modified</em>.',
+        _MOVE_EPS: 16,
+        _KINDS: {
+            base: 'Bases', landmark: 'Named places', monster: 'Monster camps', quest: 'Quest objects',
+            station: 'Craft stations', gathering: 'Gathering nodes', object: 'World objects',
+            npc: 'NPCs / arena doors', anomaly: 'Anomalies', shrine: 'Teleport shrines',
+            entity_id: 'Unnamed (entity id)', road: 'War roads',
+        },
+        compute(oldData, newData) {
+            const added = [], removed = [], modified = [];
+            let unchanged = 0;
+            const idx = d => {
+                const m = { pois: new Map(), roads: new Map() };
+                ((d && d.pois) || []).forEach(p => m.pois.set(p.id, p));
+                ((d && d.roads) || []).forEach(r => m.roads.set(r.id, r));
+                return m;
+            };
+            const O = idx(oldData), N = idx(newData);
+
+            for (const id of new Set([...O.pois.keys(), ...N.pois.keys()])) {
+                const o = O.pois.get(id), n = N.pois.get(id);
+                if (!o && n) { added.push({ kind: 'poi', id, bucket: n.kind, nw: n }); continue; }
+                if (o && !n) { removed.push({ kind: 'poi', id, bucket: o.kind, od: o }); continue; }
+                const moved = Math.hypot(n.x - o.x, n.z - o.z);
+                if (moved > this._MOVE_EPS || o.degree !== n.degree || o.kind !== n.kind) {
+                    modified.push({ kind: 'poi', id, bucket: n.kind, od: o, nw: n, moved });
+                } else unchanged++;
+            }
+            for (const id of new Set([...O.roads.keys(), ...N.roads.keys()])) {
+                const o = O.roads.get(id), n = N.roads.get(id);
+                if (!o && n) { added.push({ kind: 'road', id, bucket: 'road', nw: n }); continue; }
+                if (o && !n) { removed.push({ kind: 'road', id, bucket: 'road', od: o }); continue; }
+                if (Math.abs(o.len - n.len) > 1 || o.n !== n.n) {
+                    modified.push({ kind: 'road', id, bucket: 'road', od: o, nw: n });
+                } else unchanged++;
+            }
+            return { added, removed, modified, unchanged };
+        },
+        render(diff, { changeFilter, bucketFilter, search }) {
+            diffResults.innerHTML = '';
+            const types = changeFilter === 'all' ? ['added', 'removed', 'modified'] : [changeFilter];
+            const kname = k => this._KINDS[k] || k;
+            const pretty = s => String(s).replace(/^poi_/, '').replace(/_/g, ' ');
+            const cards = [];
+
+            types.forEach(type => {
+                const items = (diff[type] || []).filter(r => {
+                    if (bucketFilter !== 'all' && r.bucket !== bucketFilter) return false;
+                    if (!search) return true;
+                    return (r.id + ' ' + kname(r.bucket)).toLowerCase().includes(search);
+                });
+                if (items.length === 0) return;
+
+                const byBucket = new Map();
+                items.forEach(r => {
+                    if (!byBucket.has(r.bucket)) byBucket.set(r.bucket, []);
+                    byBucket.get(r.bucket).push(r);
+                });
+
+                [...byBucket.entries()].sort((a, b) => a[0].localeCompare(b[0])).forEach(([bucket, list]) => {
+                    const card = createDiffCard(`${kname(bucket)}  —  ${type}`, type,
+                        `${list.length} ${list.length === 1 ? 'entry' : 'entries'}`);
+                    const body = card.querySelector('.diff-card-body');
+                    list.sort((a, b) => a.id.localeCompare(b.id));
+                    list.forEach(r => {
+                        const row = document.createElement('div');
+                        row.className = `diff-item diff-item-${type}`;
+                        let main, meta;
+                        if (r.kind === 'road') {
+                            const w = r.nw || r.od;
+                            main = `${type === 'added' ? '+' : type === 'removed' ? '-' : '~'} ${pretty(w.a)} ↔ ${pretty(w.b)}`;
+                            meta = type === 'modified'
+                                ? `length ${r.od.len} → ${r.nw.len} · ${r.od.n} → ${r.nw.n} nodes`
+                                : `length ${w.len} · ${w.n} nodes`;
+                        } else {
+                            const w = r.nw || r.od;
+                            main = `${type === 'added' ? '+' : type === 'removed' ? '-' : '~'} ${pretty(w.slug)}`;
+                            const at = p => `(${Math.round(p.x)}, ${Math.round(p.z)})`;
+                            meta = type === 'modified'
+                                ? `${at(r.od)} → ${at(r.nw)}${r.moved > this._MOVE_EPS ? ` · moved ${Math.round(r.moved)}u` : ''}` +
+                                  (r.od.degree !== r.nw.degree ? ` · roads ${r.od.degree} → ${r.nw.degree}` : '')
+                                : `${at(w)}${w.tile ? ` · tile ${w.tile[0]},${w.tile[1]}` : ''} · ${w.degree} road${w.degree === 1 ? '' : 's'}`;
+                        }
+                        row.innerHTML = `<div>${main}</div><div class="file-meta">${meta}</div>`;
+                        body.appendChild(row);
+                    });
+                    cards.push(card);
+                });
+            });
+
+            if (cards.length === 0) {
+                diffResults.innerHTML = '<div class="no-tables-message">No PoI or road changes match the current filter.</div>';
+                return;
+            }
+            cards.forEach(c => diffResults.appendChild(c));
+        },
+        bucketsOf(diff) {
+            const set = new Set();
+            ['added', 'removed', 'modified'].forEach(t => (diff[t] || []).forEach(r => set.add(r.bucket)));
+            return [...set].sort();
+        },
+        bucketLabels: {
+            base: 'Bases', landmark: 'Named places', monster: 'Monster camps', quest: 'Quest objects',
+            station: 'Craft stations', gathering: 'Gathering nodes', object: 'World objects',
+            npc: 'NPCs / arena doors', anomaly: 'Anomalies', shrine: 'Teleport shrines',
+            entity_id: 'Unnamed (entity id)', road: 'War roads',
+        },
     },
 };
 
