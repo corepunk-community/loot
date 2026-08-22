@@ -25,7 +25,9 @@
   .sec{border-bottom:1px solid #30363d;padding:8px 12px}
   .sec h3{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#8b949e;margin:2px 0 6px;
     display:flex;justify-content:space-between;cursor:pointer;user-select:none}
-  .sec h3 .tg{color:#f0883e;font-size:10px}
+  .sec h3 .tg{color:#f0883e;font-size:10px;text-transform:none;letter-spacing:0}
+  .sec h3 .tg:hover{text-decoration:underline}
+  .sec h3 .seccount{color:#6e7681;font-variant-numeric:tabular-nums;letter-spacing:0}
   .row{display:flex;align-items:center;gap:8px;padding:2px 0;cursor:pointer}
   .row:hover{color:#fff}
   .row input{accent-color:#f0883e;margin:0;cursor:pointer}
@@ -118,18 +120,20 @@ const SECTION_ORDER=["War","Gathering","Creatures","NPCs","Harvestable mobs","Qu
 // is no sub-structure to split on either — mean degree is 5.2–5.9 for every kind, so nothing
 // acts as a junction and nothing is a leaf (bases 8.0 and shrines 6.25 sit highest, but n=2/n=4).
 // The `kind` values are just what the slug prefix says the endpoint *is*, not a separate system.
+// All on by default: a first-time visitor should land on the whole war-road network — every
+// road plus every point a road connects to, which is all 570 of them.
 const POI_KINDS=[
   {k:'base',      label:'Bases',               color:'#ffffff', style:'ring', on:true },
   {k:'landmark',  label:'Named places',        color:'#22d3ee', style:'star', on:true },
-  {k:'monster',   label:'Monster camps',       color:'#ff2d6f', style:'dot',  on:true,  sub:true},
-  {k:'quest',     label:'Quest objects',       color:'#a78bfa', style:'dot',  on:false},
-  {k:'station',   label:'Craft stations',      color:'#38bdf8', style:'dot',  on:false},
-  {k:'gathering', label:'Gathering nodes',     color:'#2dd4bf', style:'dot',  on:false},
-  {k:'object',    label:'World objects',       color:'#cbd5e1', style:'dot',  on:false},
-  {k:'npc',       label:'NPCs / arena doors',  color:'#f472b6', style:'ring', on:false},
-  {k:'anomaly',   label:'Anomalies',           color:'#e879f9', style:'ring', on:false},
-  {k:'shrine',    label:'Teleport shrines',    color:'#67e8f9', style:'star', on:false},
-  {k:'entity_id', label:'Unnamed (entity id)', color:'#94a3b8', style:'dot',  on:false},
+  {k:'monster',   label:'Monster camps',       color:'#ff2d6f', style:'dot',  on:true, sub:true},
+  {k:'quest',     label:'Quest objects',       color:'#a78bfa', style:'dot',  on:true },
+  {k:'station',   label:'Craft stations',      color:'#38bdf8', style:'dot',  on:true },
+  {k:'gathering', label:'Gathering nodes',     color:'#2dd4bf', style:'dot',  on:true },
+  {k:'object',    label:'World objects',       color:'#cbd5e1', style:'dot',  on:true },
+  {k:'npc',       label:'NPCs / arena doors',  color:'#f472b6', style:'ring', on:true },
+  {k:'anomaly',   label:'Anomalies',           color:'#e879f9', style:'ring', on:true },
+  {k:'shrine',    label:'Teleport shrines',    color:'#67e8f9', style:'star', on:true },
+  {k:'entity_id', label:'Unnamed (entity id)', color:'#94a3b8', style:'dot',  on:true },
 ];
 // Filled in by addWarPois: PoI id -> indices into the roads layer, so selecting a PoI can
 // light up everything it connects to.
@@ -190,6 +194,11 @@ function ptVisible(l,p){ if(l.search && !fmatch(p[2])) return false;
 // Roads have no `pts`; the search term matches either endpoint's name.
 function roadVisible(l,k){ if(!l.search || !state.filter) return true;
   const e=l.ends[k]; return fmatch(e[0]) || fmatch(e[1]); }
+// A layer with `search:false` carries no per-point labels, so nothing inside it can ever match
+// a filter. Leaving it fully drawn while a search is active made the search look broken (type
+// "boss", still see 20k trees) — so it sits out the search, unless the layer's OWN name matches,
+// in which case the whole layer is what you were looking for ("hyena", "tombstone", "campfire").
+function layerActive(l){ return l.on && (!state.filter || l.search || fmatch(l.label)); }
 // Roads to draw bright: the one under the cursor, else everything touching the selected PoI.
 function highlightedRoads(){
   if(state.hoverRoad>=0) return new Set([state.hoverRoad]);
@@ -231,7 +240,7 @@ function drawMarkers(ctx, A, POx, POy){
   const sWorld=A*PXW, base=Math.max(1.0, sWorld*0.9);
   // Roads first, so PoI markers sit on top of them. Two passes: everything dim, then the
   // highlighted set (hovered road, or every road touching the selected PoI) bright on top.
-  for(const l of LAYERS){ if(!l.on || !l._rp) continue;
+  for(const l of LAYERS){ if(!layerActive(l) || !l._rp) continue;
     const hi = highlightedRoads();
     const stroke = (idxs, alpha, width, colour) => {
       if(!idxs.length) return;
@@ -251,7 +260,7 @@ function drawMarkers(ctx, A, POx, POy){
     ctx.globalAlpha=1;
   }
   const order=[...LAYERS].sort((a,b)=>(STZ[a.style]||0)-(STZ[b.style]||0));
-  for(const l of order){ if(!l.on || l.style==='line') continue;
+  for(const l of order){ if(!layerActive(l) || l.style==='line') continue;
     const r=base*(l.style==='star'?2.2:(l.style==='ring'?2.8:1.15)), px=l._px, py=l._py, n=px.length, pts=l.pts;
     if(l.style==='ring'){
       for(let i=0;i<n;i++){ if(!ptVisible(l,pts[i]))continue; const X=px[i]*A-POx,Y=py[i]*A-POy;
@@ -336,8 +345,8 @@ function scheduleRedraw(){ markerLayer.redraw(); }
 
 // ---- stats + zoom HUD ----
 function stats(){ let shown=0,tot=0; for(const l of LAYERS){
-    if(l.roads){ tot+=l.roads.length; if(l.on) shown+=l.roads.filter((_,k)=>roadVisible(l,k)).length; continue; }
-    tot+=l.pts.length; if(!l.on)continue;
+    if(l.roads){ tot+=l.roads.length; if(layerActive(l)) shown+=l.roads.filter((_,k)=>roadVisible(l,k)).length; continue; }
+    tot+=l.pts.length; if(!layerActive(l))continue;
     shown+= (state.filter&&l.search)||l.sub ? l.pts.filter(p=>ptVisible(l,p)).length : l.pts.length; }
   const sel = state.sel
     ? ` · <b style="color:#ffd166">${state.sel.name}</b> selected (${(POI_ROADS.get(state.sel.id)||[]).length} roads) — click empty map to clear`
@@ -348,13 +357,26 @@ function stats(){ let shown=0,tot=0; for(const l of LAYERS){
 map.on('zoomend moveend', stats);
 
 // ---- build sectioned controls (ported from v1) ----
+// Each section header carries a live "n/total on" count and a button that says what it will
+// actually do. NB: never re-query the checkboxes out of the DOM to sync them — sub-species rows
+// also carry class `row`, so `.row > input` interleaves them with the layer rows and the index
+// mapping drifts. Every layer already holds its own input in `l._input`; use that.
 const secBox=document.getElementById('secs');
+const SECTIONS=[];
+function refreshSections(){
+  for(const s of SECTIONS){
+    const on=s.ls.filter(l=>l.on).length;
+    s.count.textContent=`${on}/${s.ls.length}`;
+    s.btn.textContent=on===s.ls.length?'hide all':'show all';
+  }
+}
 SECTION_ORDER.forEach(sec=>{
   const ls=LAYERS.filter(l=>l.section===sec); if(!ls.length) return;
   const box=document.createElement('div'); box.className='sec';
   const h=document.createElement('h3');
-  h.innerHTML=`<span>${sec}</span><span class="tg" data-sec="${sec}">toggle</span>`;
+  h.innerHTML=`<span>${sec} <span class="seccount"></span></span><span class="tg" data-sec="${sec}"></span>`;
   box.appendChild(h);
+  SECTIONS.push({ls, count:h.querySelector('.seccount'), btn:h.querySelector('.tg')});
   ls.forEach(l=>{
     const hasSub = l.sub && l.subSpecies.length>1;
     const el=document.createElement('label'); el.className='row';
@@ -362,7 +384,7 @@ SECTION_ORDER.forEach(sec=>{
       <span class="sw ${l.style==='ring'?'ring':(l.style==='star'?'star':(l.style==='line'?'line':''))}" style="background:${l.color};${l.style==='ring'?'border-color:'+l.color:''}"></span>
       <span class="lbl" title="${l.label}">${l.label}</span><span class="ct">${(l.roads?l.roads.length:l.pts.length).toLocaleString()}</span>${hasSub?'<span class="exp" title="filter by species">▸</span>':''}`;
     const inp=el.querySelector('input'); l._input=inp;
-    inp.onchange=e=>{l.on=e.target.checked;scheduleRedraw();stats();saveState();};
+    inp.onchange=e=>{l.on=e.target.checked;scheduleRedraw();stats();refreshSections();saveState();};
     box.appendChild(el);
     if(hasSub){
       const wrap=document.createElement('div'); wrap.className='subwrap'; wrap.style.display='none';
@@ -378,15 +400,19 @@ SECTION_ORDER.forEach(sec=>{
       exp.onclick=(ev)=>{ ev.preventDefault(); ev.stopPropagation(); const open=wrap.style.display==='none'; wrap.style.display=open?'block':'none'; exp.textContent=open?'▾':'▸'; };
     }
   });
-  h.querySelector('.tg').onclick=()=>{ const anyOff=ls.some(l=>!l.on); ls.forEach(l=>l.on=anyOff);
-    box.querySelectorAll('.row > input').forEach((i,idx)=>{ if(ls[idx]) i.checked=ls[idx].on; }); scheduleRedraw();stats();saveState(); };
+  h.querySelector('.tg').onclick=()=>{ const turnOn=ls.some(l=>!l.on);      // all on -> off, else on
+    ls.forEach(l=>{ l.on=turnOn; if(l._input) l._input.checked=turnOn; });
+    scheduleRedraw();stats();refreshSections();saveState(); };
   secBox.appendChild(box);
 });
-function setAll(on){ LAYERS.forEach(l=>{ l.on=on; if(l._input) l._input.checked=on; }); scheduleRedraw();stats();saveState(); }
+function setAll(on){ LAYERS.forEach(l=>{ l.on=on; if(l._input) l._input.checked=on; });
+  scheduleRedraw();stats();refreshSections();saveState(); }
 document.getElementById('showAll').onclick=()=>setAll(true);
 document.getElementById('hideAll').onclick=()=>setAll(false);
 document.getElementById('wsearch').value = state.filter || '';
-document.getElementById('wsearch').oninput=e=>{state.filter=e.target.value.trim().toLowerCase();scheduleRedraw();stats();saveState();};
+document.getElementById('wsearch').oninput=e=>{state.filter=e.target.value.trim().toLowerCase();
+  scheduleRedraw();stats();refreshSections();saveState();};
+refreshSections();
 
 // ---- hover tooltip (hit-test in container space) ----
 // squared distance from (px,py) to segment (ax,ay)-(bx,by), all in container space.
@@ -407,7 +433,7 @@ function segDist2(px,py,ax,ay,bx,by){
 // -> {k, x, z} for the nearest road, or null. x/z is the point ON the road closest to the
 // cursor, in world units — the coordinate the old midpoint tooltip should have been showing.
 function pickRoad(mx,my,A,o){
-  const l=ROADS_LAYER; if(!l || !l.on || !l._rp) return null;
+  const l=ROADS_LAYER; if(!l || !layerActive(l) || !l._rp) return null;
   let bestK=-1, bestI=-1, bestT=0, bestD=100;                // ~10 px pick radius
   for(let k=0;k<l._rp.length;k++){ if(!roadVisible(l,k)) continue;
     const a=l._rp[k], n=a.length/2;
@@ -421,7 +447,7 @@ function pickRoad(mx,my,A,o){
 }
 function pickPoint(mx,my,A,o){
   let best=null,bl=null,bd=64,bi=-1;
-  for(const l of LAYERS){ if(!l.on || l.style==='line')continue; const px=l._px,py=l._py,pts=l.pts;
+  for(const l of LAYERS){ if(!layerActive(l) || l.style==='line')continue; const px=l._px,py=l._py,pts=l.pts;
     for(let i=0;i<px.length;i++){ if(!ptVisible(l,pts[i]))continue;
       const dx=o.x+A*px[i]-mx, dy=o.y+A*py[i]-my, d=dx*dx+dy*dy;
       if(d<bd){bd=d;best=pts[i];bl=l;bi=i;} } }
