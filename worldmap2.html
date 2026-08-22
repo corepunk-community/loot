@@ -389,27 +389,35 @@ document.getElementById('wsearch').value = state.filter || '';
 document.getElementById('wsearch').oninput=e=>{state.filter=e.target.value.trim().toLowerCase();scheduleRedraw();stats();saveState();};
 
 // ---- hover tooltip (hit-test in container space) ----
-// squared distance from (px,py) to segment (ax,ay)-(bx,by), all in container space
+// squared distance from (px,py) to segment (ax,ay)-(bx,by), all in container space.
+// Also stashes how far along the segment the closest point fell, so the caller can turn a
+// road hit back into a real world coordinate instead of quoting the road's midpoint.
+let segT = 0;
 function segDist2(px,py,ax,ay,bx,by){
   const vx=bx-ax, vy=by-ay, wx=px-ax, wy=py-ay;
   const len=vx*vx+vy*vy;
   let t = len ? (wx*vx+wy*vy)/len : 0;
   t = t<0?0:(t>1?1:t);
+  segT = t;
   const dx=px-(ax+t*vx), dy=py-(ay+t*vy);
   return dx*dx+dy*dy;
 }
 // Nearest road to the cursor, hit-tested against every segment of every polyline — so a
 // road responds anywhere along its length, not at one invisible midpoint.
+// -> {k, x, z} for the nearest road, or null. x/z is the point ON the road closest to the
+// cursor, in world units — the coordinate the old midpoint tooltip should have been showing.
 function pickRoad(mx,my,A,o){
-  const l=ROADS_LAYER; if(!l || !l.on || !l._rp) return -1;
-  let bestK=-1, bestD=100;                                   // ~10 px pick radius
+  const l=ROADS_LAYER; if(!l || !l.on || !l._rp) return null;
+  let bestK=-1, bestI=-1, bestT=0, bestD=100;                // ~10 px pick radius
   for(let k=0;k<l._rp.length;k++){ if(!roadVisible(l,k)) continue;
     const a=l._rp[k], n=a.length/2;
     for(let i=0;i<n-1;i++){
       const d=segDist2(mx,my, o.x+A*a[i*2], o.y+A*a[i*2+1], o.x+A*a[(i+1)*2], o.y+A*a[(i+1)*2+1]);
-      if(d<bestD){ bestD=d; bestK=k; }
+      if(d<bestD){ bestD=d; bestK=k; bestI=i; bestT=segT; }
     } }
-  return bestK;
+  if(bestK<0) return null;
+  const w=l.roads[bestK], p=w[bestI], q=w[bestI+1];          // lerp in world space
+  return { k:bestK, x:+(p[0]+(q[0]-p[0])*bestT).toFixed(1), z:+(p[1]+(q[1]-p[1])*bestT).toFixed(1) };
 }
 function pickPoint(mx,my,A,o){
   let best=null,bl=null,bd=64,bi=-1;
@@ -422,8 +430,9 @@ function pickPoint(mx,my,A,o){
 function hover(e){ const mx=e.containerPoint.x, my=e.containerPoint.y;
   const A=map.getZoomScale(map.getZoom(), M.maxZoom); const o=map.latLngToContainerPoint(px2ll(0,0));
   const hit=pickPoint(mx,my,A,o);                            // markers win over roads
-  const road=hit ? -1 : pickRoad(mx,my,A,o);
-  if(road!==state.hoverRoad){ state.hoverRoad=road; scheduleRedraw(); }
+  const road=hit ? null : pickRoad(mx,my,A,o);
+  const rk=road?road.k:-1;
+  if(rk!==state.hoverRoad){ state.hoverRoad=rk; scheduleRedraw(); }
   const show = html => { tip.style.display='block'; tip.style.left=(mx+14)+'px'; tip.style.top=(my+12)+'px'; tip.innerHTML=html; };
   if(hit){
     const {pt,layer:bl,i:bi}=hit;
@@ -433,10 +442,11 @@ function hover(e){ const mx=e.containerPoint.x, my=e.containerPoint.y;
     const deg=(bl.deg&&bl.deg[bi]!==undefined)?bl.deg[bi]:(id&&POI_ROADS.has(id)?POI_ROADS.get(id).length:null);
     const roads=deg!==null&&deg!==undefined?`<br><span style="color:#8b949e">${deg} war road${deg===1?'':'s'} — click to trace</span>`:'';
     show(`<b>${bl.label}</b>${meta}<br><span style="color:#8b949e">world ${pt[0]}, ${pt[1]}</span>${lore}${roads}`);
-  } else if(road>=0){
-    const e2=ROADS_LAYER.ends[road];
-    show(`<b>War road</b><br>${e2[0]} <span style="color:#8b949e">↔</span> ${e2[1]}` +
-         `<br><span style="color:#8b949e">${ROADS_LAYER.lens[road]} world units</span>`);
+  } else if(road){
+    const e2=ROADS_LAYER.ends[road.k];
+    show(`<b>War road</b> <span style="color:#8b949e">· ${ROADS_LAYER.lens[road.k]} world units</span>` +
+         `<br>${e2[0]} <span style="color:#8b949e">↔</span> ${e2[1]}` +
+         `<br><span style="color:#8b949e">world ${road.x}, ${road.z}</span>`);
   } else tip.style.display='none';
 }
 map.on('mousemove', hover);
